@@ -1,0 +1,13 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.form-item__checkbox {
+    gap: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+    cursor: pointer;
+    width: max-content;
+    -webkit-tap-highlight-color: transparent;
+}

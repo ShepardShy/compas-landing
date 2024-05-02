@@ -1,0 +1,314 @@
+[
+    {
+        "id": 0,
+        "title": "Бесплатный",
+        "subtitle": "6 инструментов",
+        "advantages": [
+            {
+                "text": "Скидка на магазин модулей: 0 %"
+            },
+            {
+                "text": "Кол-во пользователей: 5 шт."
+            },
+            {
+                "text": "Обьем хранилища: 2.5 гб."
+            }
+        ],
+        "prices": [
+            {
+                "value": 0,
+                "price": {
+                    "old": null,
+                    "new": null
+                }
+            },
+            {
+                "value": 1,
+                "price": {
+                    "old": null,
+                    "new": null
+                }
+            },
+            {
+                "value": 2,
+                "price": {
+                    "old": null,
+                    "new": null
+                }
+            },
+            {
+                "value": 3,
+                "price": {
+                    "old": null,
+                    "new": null
+                }
+            }
+        ],
+        "day_prices": [
+            {
+                "value": 0,
+                "price": {
+                    "old": null,
+                    "new": null
+                }
+            },
+            {
+                "value": 1,
+                "price": {
+                    "old": null,
+                    "new": null
+                }
+            },
+            {
+                "value": 2,
+                "price": {
+                    "old": null,
+                    "new": null
+                }
+            },
+            {
+                "value": 3,
+                "price": {
+                    "old": null,
+                    "new": null
+                }
+            }
+        ],
+        "isShowMonthPay": false,
+        "discount_text": null
+    },
+    {
+        "id": 1,
+        "title": "Базовый тариф",
+        "subtitle": "7 инструментов",
+        "advantages": [
+            {
+                "text": "Скидка на магазин модулей: -10 %"
+            },
+            {
+                "text": "Кол-во пользователей: 10 шт."
+            },
+            {
+                "text": "Обьем хранилища: 5 гб."
+            }
+        ],
+        "prices": [
+            {
+                "value": 0,
+                "price": {
+                    "old": 0,
+                    "new": 990
+                }
+            },
+            {
+                "value": 1,
+                "price": {
+                    "old": 990,
+                    "new": 891
+                }
+            },
+            {
+                "value": 2,
+                "price": {
+                    "old": 990,
+                    "new": 743
+                }
+            },
+            {
+                "value": 3,
+                "price": {
+                    "old": 990,
+                    "new": 594
+                }
+            }
+        ],
+        "day_prices": [
+            {
+                "value": 0,
+                "price": {
+                    "old": 0,
+                    "new": 33
+                }
+            },
+            {
+                "value": 1,
+                "price": {
+                    "old": 1990,
+                    "new": 1791
+                }
+            },
+            {
+                "value": 2,
+                "price": {
+                    "old": 1990,
+                    "new": 1493
+                }
+            },
+            {
+                "value": 3,
+                "price": {
+                    "old": 1990,
+                    "new": 1194
+                }
+            }
+        ],
+        "isShowMonthPay": true,
+        "discount_text": "Скидка 10% при оплате на 1 год"
+    },
+    {
+        "id": 2,
+        "title": "Бизнес",
+        "subtitle": "11 инструментов",
+        "advantages": [
+            {
+                "text": "Скидка на магазин модулей: -20 %"
+            },
+            {
+                "text": "Кол-во пользователей: 40 шт."
+            },
+            {
+                "text": "Обьем хранилища: 50 гб."
+            }
+        ],
+        "prices": [
+            {
+                "value": 0,
+                "price": {
+                    "old": 0,
+                    "new": 1490
+                }
+            },
+            {
+                "value": 1,
+                "price": {
+                    "old": 1490,
+                    "new": 1341
+                }
+            },
+            {
+                "value": 2,
+                "price": {
+                    "old": 1490,
+                    "new": 1118 
+                }
+            },
+            {
+                "value": 3,
+                "price": {
+                    "old": 1490,
+                    "new": 894
+                }
+            }
+        ],
+        "day_prices": [
+            {
+                "value": 0,
+                "price": {
+                    "old": 0,
+                    "new": 49
+                }
+            },
+            {
+                "value": 1,
+                "price": {
+                    "old": 1990,
+                    "new": 1791
+                }
+            },
+            {
+                "value": 2,
+                "price": {
+                    "old": 1990,
+                    "new": 1493
+                }
+            },
+            {
+                "value": 3,
+                "price": {
+                    "old": 1990,
+                    "new": 1194
+                }
+            }
+        ],
+        "isShowMonthPay": true,
+        "discount_text": "Скидка 20% при оплате на 1 год"
+    },
+    {
+        "id": 3,
+        "title": "Профессиональный",
+        "subtitle": "14 инструментов",
+        "advantages": [
+            {
+                "text": "Скидка на магазин модулей: -40 %"
+            },
+            {
+                "text": "Кол-во пользователей: 100 шт."
+            },
+            {
+                "text": "Обьем хранилища: 100 гб."
+            }
+        ],
+        "prices": [
+            {
+                "value": 0,
+                "price": {
+                    "old": 0,
+                    "new": 1990
+                }
+            },
+            {
+                "value": 1,
+                "price": {
+                    "old": 1990,
+                    "new": 1791
+                }
+            },
+            {
+                "value": 2,
+                "price": {
+                    "old": 1990,
+                    "new": 1493
+                }
+            },
+            {
+                "value": 3,
+                "price": {
+                    "old": 1990,
+                    "new": 1194
+                }
+            }
+        ],
+        "day_prices": [
+            {
+                "value": 0,
+                "price": {
+                    "old": 0,
+                    "new": 67
+                }
+            },
+            {
+                "value": 1,
+                "price": {
+                    "old": 1990,
+                    "new": 1791
+                }
+            },
+            {
+                "value": 2,
+                "price": {
+                    "old": 1990,
+                    "new": 1493
+                }
+            },
+            {
+                "value": 3,
+                "price": {
+                    "old": 1990,
+                    "new": 1194
+                }
+            }
+        ],
+        "isShowMonthPay": true,
+        "discount_text": "Скидка 40% при оплате на 1 год"
+    }
+]

@@ -1,0 +1,113 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.table-template__buttons {
+    display: flex;
+    width: 100%;
+    z-index: 300;
+    position: absolute;
+    @include mixins.elemPositionOptions(calc(var(--stickyTop) + 16px), 0px);
+}
+
+.scroll-button {
+    &.scroll-button_disabled {
+        display: none;
+    }
+
+    &.scroll-button_left {
+        left: 0px;
+        position: absolute;
+
+        &::before {
+            content: url('/icons/scrollButtonLeft.svg');
+        }
+    }
+
+    &.scroll-button_right {
+        right: 0px;
+        position: absolute;
+
+        &::before {
+            content: url('/icons/scrollButtonRight.svg');
+        }
+    }
+}
+
+.table-template__loader {
+    z-index: 2;
+    width: 100%;
+    display: none;
+    position: absolute;
+    height: auto;
+    place-items: center;
+    @include mixins.elemPositionOptions(calc(var(--stickyTop) + 50px), 0px);
+
+    &::after {
+        margin: 0;
+        position: static;
+        @include mixins.elemResolutionOptions(32px, 32px);
+    }
+}
+
+.table-template {
+    &.table-template_loading, &.table-template_filtering {
+        .table-template__loader {
+            display: grid;
+        }
+
+        .table-template__buttons {
+            display: none;
+        }        
+
+        .table-template__body {
+            &.table-template__body_empty {
+                .table__empty-block {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    &.table-template_filtering {
+        .table-template__loader {
+            top: calc(var(--stickyTop) + 40px);
+        }
+    }
+}
+
+.table__empty-block {
+    left: 0px;
+    top: 0px;
+    white-space: nowrap;
+    height: 30vh;
+    place-items: center;
+    color:variables.$color-blue-grey;
+    position: sticky;
+    display: none;
+}
+
+
+.table-template__body {
+    &.table-template__body_empty {
+        .table__empty-block {
+            display: grid;
+        }
+
+        .table__item {
+            &.sortable-ghost {
+                &::after {
+                    content: '';
+                    position: absolute;
+                    top: 20px;
+                    left: -2px;
+                    width: calc(100% + 4px);
+                    height: 100px;
+                    border-radius: 0px 0px 5px 5px;
+                    background: #fbfcfd;
+                    border: 2px dashed variables.$color-blue-grey;
+                    border-top: none;
+                }
+            }
+        }
+    }
+}

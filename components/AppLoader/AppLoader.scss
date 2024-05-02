@@ -1,0 +1,59 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.loader {
+    position: relative;
+    color: variables.$color-blue;
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      border: 4px solid variables.$color-blue;
+      border-top-color: variables.$color-white;
+      border-radius: 50%;
+      animation: button-loading-spinner 1s ease infinite;
+    }
+
+    &.loader_grey {
+      &::after {
+          border: 4px solid variables.$color-blue-grey;
+          border-top-color: variables.$color-white;
+      }
+    }
+
+    &.loader_action {
+      padding: 20px 10px;
+
+      //&:after {
+      //  height: 37.8px;
+      //  width: 37.8px;
+      //}
+
+    }
+
+  &.loader_page {
+    height: 100%;
+  
+    &::after {
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
+
+@keyframes button-loading-spinner {
+  from {
+    transform: rotate(0turn);
+  }
+
+  to {
+    transform: rotate(1turn);
+  }
+}

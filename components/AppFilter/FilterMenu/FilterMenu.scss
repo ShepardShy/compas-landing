@@ -1,0 +1,15 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.filter__menu {
+    top: 45px;
+    width: 100%;
+    z-index: 1100;
+    display: grid;
+    position: absolute;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 1fr 180px;
+    background-color: variables.$color-white;
+    box-shadow: 0 5px 20px rgba(0,0,0,.07);
+    @include mixins.borderOptions(1px, solid, variables.$color-light-grey, 10px);
+}

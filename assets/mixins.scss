@@ -1,0 +1,208 @@
+@use '@/assets/variables.scss' as variables;
+
+// Опции текста
+@mixin textOptions($font-size: variables.$font-size-default, $font-weight: 400, $line-height: normal) {
+    line-height: $line-height;
+
+    font: {
+        weight: $font-weight;
+        size:  $font-size;
+    }
+}
+
+// Размер элемента
+@mixin elemResolutionOptions($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+// Положение элемента
+@mixin elemPositionOptions($top, $left) {
+    top: $top;
+    left: $left;
+}
+
+// Опции кнопки
+@mixin buttonOptions($width, $height, $padding) {
+    padding: $padding;
+    @include elemResolutionOptions($width, $height);
+}
+
+// Центрирование гридов по осям Х и У
+@mixin gridCenter() {
+    display: grid;
+    place-items: center;
+}
+
+@mixin flexColumn() {
+    display: flex;
+    flex-direction: column;
+}
+
+// Настройки бордера
+@mixin borderOptions($width, $style, $color, $radius) {
+    border: {
+        width: $width;
+        style: $style;
+        color: $color;
+        radius: $radius;
+    }
+}
+
+// Скроллбар
+@mixin scrollBar() {
+    /* scrollbar для Chrome/Edge/Safari */
+    &::-webkit-scrollbar {
+        border-radius: 5px;
+        @include elemResolutionOptions(4px, 4px);
+    }
+
+    &::-webkit-scrollbar-track {
+        background: variables.$color-light-grey;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: variables.$color-grey;
+        @include borderOptions(2px, solid, variables.$color-grey, 5px)
+    }
+}
+
+// Анимация
+@mixin initAnimation($name: none, $duration: 0s, $timing-function: ease, $delay: 0s, $fill-mode: none, $iteration-count: 1) {
+    animation: {
+        name: $name;
+        delay: $delay;
+        iteration-count: 1;
+        duration: $duration;
+        fill-mode: $fill-mode;
+        timing-function: $timing-function;
+    }
+}
+
+// Флексбокс
+@mixin flexBlock($vertical: auto, $horizontal: auto, $gap: 0px) {
+    gap: $gap;
+    display: flex;
+    align-items: $vertical;
+    justify-content: $horizontal;
+}
+
+// Скрытие текста тремя точками
+@mixin textHidden() {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+// Скрытие текста, длиннее 2 строк
+@mixin textVerticalHidden() {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-all;
+}
+
+// Выделение текста пользователем
+@mixin userSelect($value: text) {
+    -webkit-user-select: $value;
+    -moz-user-select: $value;
+    -khtml-user-select: $value;
+    -ms-user-select: $value;  
+    user-select: $value;
+    -webkit-tap-highlight-color: transparent;
+}
+
+// Стили для перетаскиваемого элемента
+@mixin sortableGhost() {
+    &.sortable-ghost {
+        position: relative;
+        z-index: 2000;
+        background: #fbfcfd;
+        @include borderOptions(2px, dashed, variables.$color-blue-grey, 5px);
+
+        & > * {
+            visibility: hidden;
+        }
+    }
+}
+
+// Стили для перетаскиваемого элемента
+@mixin sortableGhostRow() {
+    &.sortable-ghost {
+        .table__item {
+            z-index: 2000;
+            background: #fbfcfd;
+            @include borderOptions(2px, dashed, variables.$color-blue-grey, 0px);
+            border-left: none;
+            border-right: none;
+    
+            & > * {
+                visibility: hidden;
+            }
+
+            &:first-child {
+                border-left: 2px dashed variables.$color-blue-grey;
+                border-radius: 5px 0px 0px 5px;
+            }
+            &:last-child {
+                border-radius:  0px 5px 5px 0px;
+                border-right: 2px dashed variables.$color-blue-grey;
+            }
+        }        
+    }
+}
+
+
+// Наведение на блок
+@mixin hoverElem() {
+    &:hover {
+        cursor: pointer;
+        background: variables.$color-hover;
+        filter: brightness(1);
+    }
+}
+
+@mixin menuDropdown() {
+    position: absolute;
+    margin-top: 5px;
+    z-index: 10;
+    width: 100%;
+    overflow: hidden;
+    min-width: 200px;
+    border-radius: 5px;
+    max-height: 300px;
+    overflow-y: auto;
+    @include scrollBar();
+    background: variables.$color-white;
+    box-shadow: 0 0 3px 0 variables.$color-black, inset 0 1px 2px 0 variables.$color-white-opacity;
+}
+
+@mixin menuDropdownItem() {
+    padding: 12px;
+    cursor: pointer;
+    @include userSelect(none);
+    @include flexBlock($vertical: center, $horizontal: auto, $gap: 5px);
+    background: variables.$color-white;
+    font-size: variables.$font-size-default;
+
+    &:hover {
+        background: variables.$color-hover;
+    }
+}
+
+@mixin setSVGColor($color) {
+    svg {
+        * {
+            fill: $color
+        }
+    }
+}
+
+@mixin absoluteCenter() {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}

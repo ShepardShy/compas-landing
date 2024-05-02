@@ -1,0 +1,10 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.h-editable {
+    &.h-editable_h2 {
+        textarea, .textarea__mirror {
+            font-size: variables.$font-size-h2;           
+        }
+    }
+}

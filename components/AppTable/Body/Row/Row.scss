@@ -1,0 +1,92 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.table__body {
+    .table__row {
+        &:last-child {
+            .table__item {
+                &.sortable-ghost {
+                    border-radius: 0px 0px 5px 5px;
+                    border-bottom: 2px dashed variables.$color-blue-grey;
+                }
+            }
+        }
+
+        &.table__row_updated {
+            background: #fffbe2;
+            
+            .table__item {
+                background: #fffbe2;
+            }
+        }
+    
+        &.table__row_choosed {
+            background: #eef3f8;
+    
+            .table__item {
+                background: #eef3f8;
+            }
+        }
+    
+        &.table__row_edit {
+            background: #d9e4f0;
+    
+            .table__item {
+                background: #d9e4f0;
+    
+                .table-item__content {
+                    .form-item__relation {
+                        .relation__item {
+                            &.relation__item_empty:not(.relation__item_hidden) {
+                                display: block;
+
+                                .popup {
+                                    pointer-events: auto;
+                                }
+                            }
+                        }
+        
+                        .relation__actions {
+                            display: flex;
+                        }
+                    }
+        
+                    .form-item__checkbox {
+                        &.form-item__checkbox_disabled {
+                            .form-item__title {
+                                filter: opacity(1);    
+                            }
+                        }
+                    }
+                }
+    
+            }
+        }
+    
+        &.table_row_clicked {
+            z-index: 30;
+            position: relative;
+            
+            .table__item {
+                overflow: visible;
+            }
+        }
+    }
+}
+
+
+.table {
+    &.table_permanent-edit {
+		.table__body {
+			.table__row {
+				&.table__row_edit {
+					background: transparent;
+
+					.table__item {
+						background: transparent;
+					}
+				}
+			}
+		}
+    }
+}

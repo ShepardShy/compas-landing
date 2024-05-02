@@ -1,0 +1,32 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.breadcrambs {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.breadcrambs__item {
+    display: flex;
+    gap: 5px;
+    color: #383838;
+    
+    &:not(:last-child)::after {
+        content: '•';
+        color: #383838;
+    }
+
+    &:last-child {
+        pointer-events: none;
+        color: #8f8f8f;
+    }
+}
+
+@media (max-width: 650px) {
+    .breadcrambs {
+        margin-left: 25px;
+    }
+}

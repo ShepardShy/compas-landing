@@ -1,0 +1,79 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.autocomplete__popup {
+    &[open] {
+        .autocomplete__active-option {
+            filter: opacity(0.5);
+        }
+
+        .form-item__substring {
+            &::after {
+                transform: rotate(180deg);
+                top: 2px;
+                position: relative;
+            }
+        }
+    }
+
+    .popup__summary {
+        width: 100%;
+        @include mixins.flexBlock($vertical: center, $horizontal: flex-start, $gap: 10px);
+
+        .form-item__input {
+            width: 100%;
+            overflow: hidden;
+            min-width: 120px;
+            
+            input {
+                padding: 10px 20px 10px 15px;
+            }
+
+            .form-item__substring {
+                @include mixins.flexBlock($vertical: center, $horizontal: flex-start, $gap: 10px);
+                right: 10px;
+                top: 8px;
+                color: variables.$color-grey;
+
+                &::after {
+                    content: url('/icons/arrow.svg');
+                }
+
+                &::before {
+                    content: "";
+                    background: variables.$color-white;
+                    position: absolute;
+                    width: 130%;
+                    height: 38px;
+                    top: -7px;
+                    right: -10px;
+                    z-index: -1;
+                }
+            }
+        }
+    }
+
+    .popup__content {
+        top: 45px;
+        width: 100%;
+    }
+
+    &.popup_readonly  {
+        .popup__summary {
+            .form-item__input {
+                min-width: auto;
+            }
+        }
+    }
+}
+
+.autocomplete__active-option {
+    top: 0px;
+    overflow: hidden;
+    position: absolute;
+    padding: 10px 15px;
+    white-space: nowrap;
+    pointer-events: none;
+    @include mixins.elemResolutionOptions(100%, 40px);
+    @include mixins.flexBlock($vertical: center, $horizontal: flex-start);
+}

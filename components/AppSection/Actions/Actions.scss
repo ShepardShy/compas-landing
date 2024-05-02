@@ -1,0 +1,72 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.actions {
+    bottom: 0px;
+    left: 230px;
+    z-index: 1000;
+    position: fixed;
+    padding: 10px 16px;
+    background-color: variables.$color-white;
+    border: 1px solid variables.$color-light-grey;
+    box-shadow: 0 5px 20px rgba(0,0,0,.07);
+    width: calc(100% - 230px);
+}
+
+.actions__content {
+    gap: 10px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+
+    .actions__icon {
+        gap: 5px;
+        display: flex;
+        align-items: center;
+    }   
+
+    .action-button {
+        &.action-button_right {
+            position: absolute;
+            right: 15px;
+        }
+    }
+}
+
+@media (max-width: 750px) {
+    .actions__content {
+        .action-button {
+            &.action-button_right {
+                position: static;
+            }
+        }
+    }
+}
+
+@media (max-width: 650px) {
+    .actions {
+        left: 0px;
+        width: 100%;
+    }
+
+    .page_iphone {
+        .actions {
+            padding: 10px 16px 20px;
+        }
+    }
+}
+
+@media (max-width: 460px) {
+    .actions__content {
+        flex-direction: column;
+
+        & > * {
+            @include mixins.flexBlock($horizontal: center)
+        }
+
+        button {
+            width: 100%;
+        }
+    }
+}

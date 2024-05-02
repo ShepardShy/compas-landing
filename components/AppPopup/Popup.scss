@@ -1,0 +1,78 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.popup {
+    position: relative;
+
+    &[open] {
+        .icon__settings {
+            opacity: 1;
+        }
+
+        svg {
+            * {
+                fill: variables.$color-active;
+            }
+        }
+    }
+
+    &.popup_readonly {
+        .popup__summary {
+            cursor: default;
+        }
+    }
+
+    &.popup_up {
+        .popup__content {
+            top: auto;
+            bottom: calc(var(--popupHeight) + 10px);
+        }
+    }
+
+    &.popup_right {
+        .popup__content {
+            left: auto;
+            right: 0px;
+        }
+    }
+    
+    &.popup_visible {
+        .popup__content {
+            opacity: 1;
+        }
+    }
+
+    * {
+        @include mixins.userSelect($value: none);
+    }
+}
+
+.popup__summary {
+    display: block;
+    width: max-content;
+
+    &:hover {
+        cursor: pointer;
+        
+        svg {
+            * {
+                fill: variables.$color-active;
+            }
+        }
+    }
+}
+
+.popup__content {
+    top: 20px;
+    left: 0px;
+    opacity: 0;
+    z-index: 999;
+    min-width: 200px;
+    max-height: 300px;
+    overflow-y: auto;
+    position: absolute;
+    border-radius: 5px;
+    @include mixins.scrollBar();
+    background: variables.$color-white;
+    box-shadow: 0 0 3px #000, inset 0 1px 2px #ffffff80;
+}

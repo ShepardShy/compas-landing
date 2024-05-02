@@ -1,0 +1,17 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.section__title-wrapper {
+	padding: 10px 15px;
+	@include mixins.flexBlock($horizontal: space-between, $vertical: center);
+	border-bottom: 1px solid variables.$color-light-grey;
+
+	.section__title {
+		font-size: variables.$font-size-default;
+		font-weight: 600;
+	}
+
+	.button-text {
+		font-size: variables.$font-size-label;
+	}
+}

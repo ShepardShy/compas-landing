@@ -1,0 +1,20 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.icon__lasso {
+    @include mixins.elemResolutionOptions(15px, 15px);
+    fill: variables.$color-blue-grey;
+    
+    svg {
+        @include mixins.elemResolutionOptions(15px, 15px);
+    }
+
+    &:hover {
+        cursor: pointer;
+        fill: variables.$color-active
+    }
+}
+
+.icon__lasso_active {
+    fill: variables.$color-active
+}

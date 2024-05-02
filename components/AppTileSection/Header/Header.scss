@@ -1,0 +1,81 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.tile-section__header {
+    position: relative;
+    padding: 10px 15px 4px;
+    border-bottom: 1px solid variables.$color-light-grey;
+    @include mixins.flexBlock($vertical: flex-start, $horizontal: space-between, $gap: 15px);
+
+    &:hover {
+        .tile-section__title {
+            .icon__draggable, .icon__edit {
+                opacity: 1;
+            }
+        }
+    }
+
+    .h-editable {
+        &.h-editable_h3 {
+            width: 100%;
+
+            textarea, .textarea__mirror {
+                font-weight: 600;
+                font-size: variables.$font-size-default;           
+            }
+        }
+    }
+
+    h3 {
+        min-height: 25px;
+        font-size: variables.$font-size-default;           
+    }
+
+    .tile-section__title {
+        width: 80%;
+        font-weight: 600;
+        @include mixins.flexBlock($vertical: flex-start, $horizontal: flex-start, $gap: 10px);
+
+        .icon__draggable {
+            left: 2px;
+            opacity: 0;
+        }
+
+        .icon__edit {
+            opacity: 0;
+            cursor: pointer;
+
+            svg {
+                @include mixins.elemResolutionOptions(13px, 13px);
+
+                * {
+                    fill: variables.$color-blue-grey;
+                }
+            }
+
+            &:hover {
+                svg {
+                    * {
+                        fill: variables.$color-active;
+                    }
+                }
+            }
+        }
+    }
+
+    .tile-section__header-actions {
+        @include mixins.flexBlock($vertical: center, $horizontal: space-between, $gap: 10px);
+
+        .button-text {
+            font-size: variables.$font-size-label;
+        }
+
+        .popup {
+            &.popup_up {
+                .popup__content {
+                    bottom: 20px;
+                }
+            }
+        }
+    }
+}

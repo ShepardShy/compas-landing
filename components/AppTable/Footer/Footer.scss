@@ -1,0 +1,75 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.table-template__footer {
+    z-index: 2;
+    min-height: 55px;
+    padding: 10px 15px;
+    position: relative;
+    border-radius: 0 0 10px 10px;
+    border-top: 1px solid #eeeff1;
+    @include mixins.flexBlock($vertical: center, $horizontal: space-between, $gap: 10px);
+}
+
+.table-footer__count-selected {
+    width: 120px;
+}
+
+.table-footer__count-selected-title {
+    color: #bcbcbc;
+    font-size: 15px;
+    margin-right: 10px;
+}
+
+.table-footer__visible-elems {
+    .form-item__select {
+        @include mixins.flexBlock($vertical: center, $horizontal: flex-start, $gap: 15px);
+
+        .form-item__title {
+            color: #bcbcbc;
+            font-size: 15px;
+            margin-bottom: 0;
+        }
+
+        .select__popup {
+            width: 80px;
+
+            .form-item__input {
+                min-width: auto;
+
+                input {
+                    padding: 10px 10px 10px 15px;
+                }
+            }
+            
+            .select__active-option  {
+                width: 100%;
+            }
+
+            .popup__content {
+                top: auto;
+                left: auto;
+                bottom: 50px;
+                right: 0px;
+            }
+        }
+    }
+}
+
+@media (max-width: 1030px) {
+    .table-footer {
+        gap: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 410px) {
+    .pagination {
+        &.table-footer__pagination {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+    }
+}

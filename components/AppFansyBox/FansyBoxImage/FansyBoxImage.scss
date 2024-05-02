@@ -1,0 +1,24 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.file {
+    .fancybox-item {
+        height: auto;
+
+        .fancybox-item__link {
+            display: block;
+            position: relative;
+            height: auto;
+
+            .icon__loader-progress {
+                @include mixins.absoluteCenter();
+                @include mixins.flexBlock($vertical: center, $horizontal: center);
+                @include mixins.elemResolutionOptions(100px, 100px);
+            }
+        }
+
+        &.fancybox-item_show-title {
+            height: 142px;
+        }
+    }
+}

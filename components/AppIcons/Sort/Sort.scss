@@ -1,0 +1,8 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.icon__sort {
+    &.icon__sort_up {
+        transform: rotate(180deg);
+    }
+}

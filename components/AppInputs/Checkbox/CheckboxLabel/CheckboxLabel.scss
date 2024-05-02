@@ -1,0 +1,11 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.form-item__checkbox {
+    .form-item__title {
+        margin-bottom: 0px;
+        color: variables.$color-black;
+        font-size: variables.$font-size-default;
+        @include mixins.userSelect($value: none);
+    }
+}

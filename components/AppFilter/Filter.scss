@@ -1,0 +1,44 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.filter {
+    width: 600px;
+    position: relative;
+}
+
+@media (max-width: 1350px) {
+    .filter {
+        width: 100%;
+        grid-row: 2/3;
+        grid-column: 1/3;
+
+        &.filter_hidden-buttons {
+            position: relative;
+            left: unset;
+            transform: unset;
+        }
+    }
+}
+
+@media (max-width: 650px) {
+    .filter {
+        grid-column: 1/4;
+    }
+}
+
+@media (max-width: 720px) {
+    .filter {
+        .filter__fields {
+            grid-column: 1/4;
+            grid-row: 2/3;    }
+    
+        .filter__saves {
+            grid-column: 1/4;
+            grid-row: 1/2;
+        }
+    
+        .filter__actions  {
+            grid-column: 1/4;
+        }
+    }
+}

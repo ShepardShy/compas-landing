@@ -1,0 +1,21 @@
+<template>
+    <div class="wrapper">
+      <div class="page" :class="route.path == '/auth' ? 'page_auth' : ''">
+        <AppMenu />
+        <AppMain>
+          <NuxtPage
+              @showModal="(data) => showModal(data)"
+              @showMobileMenu="(data) => showMobileMenu(data)"
+          />
+      </AppMain>
+      <AppFooter />
+    </div>
+  </div>
+</template>
+
+<script setup>
+  import AppMenu from '@/components/AppMenu/AppMenu.vue'
+  import AppFooter from '@/components/AppFooter/Footer.vue'
+
+  let route = useRoute()
+</script>

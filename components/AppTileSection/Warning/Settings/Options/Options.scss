@@ -1,0 +1,194 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.warning_settings {
+    .warning__list_other {
+        position: relative;
+        margin-top: 0px;
+        padding: 10px 0px;
+        
+        &::before {
+            content: '';
+            z-index: -1;
+            width: calc(100% + 70px);
+            height: 100%;
+            top: 0px;
+            left: -35px;
+            position: absolute;
+            background: variables.$color-light-grey;
+        }
+
+        .warning-list__subtitle {
+            font-size: variables.$font-size-label;
+        }
+
+        .button-text {
+            color:variables.$color-blue;
+            text-decoration: underline;
+            font-size: 14px;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+
+        &.warning__list_options {
+            .warning-list__field {
+                gap: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+    
+                .form__item {
+                    width: 100%;
+                }
+    
+                .icon__delete {
+                    @include mixins.elemResolutionOptions(20px, 20px);
+    
+                    svg {
+                        * {
+                            fill:variables.$color-grey;
+                        }
+                    }
+    
+                    &:hover {
+                        svg {
+                            * {
+                                fill:variables.$color-active;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &.warning__list_settigns-statuses {
+            .warning-list__field {
+                .settings-status {
+                    position: relative;
+                    width: 100%;
+
+                    .form-item__file {
+                        position: absolute;
+                        z-index: 1;
+                        left: 40px;
+                        @include mixins.elemResolutionOptions(40px, 40px);
+
+                        .file-upload {
+                            border: 1px solid variables.$color-grey;
+                            border-top: none;
+                            border-bottom: none;
+                            border-radius: 0px;
+                            background: transparent;
+                            @include mixins.elemResolutionOptions(40px, 40px);
+
+                            .file-upload__button-title {
+                                display: none;
+                            }
+
+                            .file-upload__button {
+                                svg {
+                                    @include mixins.elemResolutionOptions(20px, 24px);
+                                }
+                            }
+                        }
+                    }
+
+                    .settings-status__popup {
+                        position: absolute;
+                        z-index: 1;
+                        top: 1px;
+                        left: 1px;
+    
+                        &[open] {
+                            z-index: 10;
+
+                            .popup__summary {
+                                svg {
+                                    * {
+                                        fill: revert-layer
+                                    }
+                                }
+                            }
+                        }
+    
+                        .popup__summary {
+                            &:hover {
+                                svg {
+                                    * {
+                                        fill: revert-layer
+                                    }
+                                }
+                            }
+                        }
+
+                        .settings-status__summary {
+                            display: grid;
+                            place-items: center;
+                            border-radius: 4px 0px 0px 4px;
+                            background: var(--statusColor);
+                            @include mixins.elemResolutionOptions(39px, 38px);
+                        }
+
+                        .popup__option_unhover {
+                            padding: 0px 0px 5px;
+                        }
+
+                        .colorpicker__button  {
+                            display: none;
+                        }
+                    }
+
+                    .form-item__input {
+                        input {
+                            padding-left: 90px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .warning-list__group-field {
+        & > *:not(:last-child) {
+            margin-bottom: 5px;
+        }
+    }
+
+    .warning__list_checkboxes {
+        margin-top: 20px;
+        
+        & > *:not(:last-child) {
+            margin-bottom: 10px;
+        }
+
+        .warning-list__group-field {
+            .warning-list__field {
+                margin-bottom: 15px;
+            }
+        }
+    }
+
+    .settings__popup {
+        .form-item__checkbox {
+            .form-item__title {
+                color: var(--textColor);
+                text-decoration: underline;
+            }
+        }
+
+        .popup__content {
+            top: auto;
+            bottom: 30px;
+        }
+
+        .colorpicker__button  {
+            display: none;
+        }
+
+        .popup__option_unhover {
+            padding: 0px 0px 5px;
+        }
+    }
+}

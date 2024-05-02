@@ -1,0 +1,44 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.docs {
+    margin-bottom: 100px;
+}
+
+.docs__list {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.docs__item {
+    padding: 25px 15px;
+    border-radius: 10px;
+    border: solid 1px #e2e2e2;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+.docs__title {
+    color: #1253a2;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.docs__desc {
+    flex: 1;
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.docs__footer {
+    font-size: 14px;
+}
+
+.docs__subtitle {
+    color: #8f8f8f;
+    margin-bottom: 5px;
+}
+.docs__date {
+}

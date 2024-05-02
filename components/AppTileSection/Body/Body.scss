@@ -1,0 +1,134 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.tile-section__body {
+    gap: 15px;
+    display: flex;
+    padding: 10px 0px;
+    flex-direction: column;
+
+    &.tile-section__body_empty {
+        margin-top: 10px;
+    }
+
+    .tile-section__item {
+        gap: 10px;
+        display: flex;
+        padding: 0px 15px;
+        position: relative;
+        flex-direction: column;
+        @include mixins.sortableGhost();
+    
+        .tile-section__settings {
+            top: 0px;
+            opacity: 0;
+            right: 15px;
+            position: absolute;
+    
+            &[open] {
+                opacity: 1;
+            }
+    
+            .icon__settings, .icon__settings > svg {
+                @include mixins.elemResolutionOptions(13px, 13px);
+            } 
+
+            &.popup {
+                &.popup_up {
+                    .popup__content {
+                        bottom: 20px;
+                    }
+                }
+            }
+        }
+    
+        .form-item__date {
+            .dp__outer_menu_wrap {
+                width: max-content;
+            }
+        }
+    
+        &.sortable-ghost {
+            height: 40px;
+    
+            .form__item {
+                display: none;
+            }
+        }
+    
+        .icon__draggable {
+            opacity: 0;
+            left: 1px;
+        }
+    
+        &:hover {
+            .tile-section__settings, 
+            .icon__draggable {
+                opacity: 1;
+            }
+        }
+    
+        &.tile-section__item_hidden {
+            display: none;
+        }
+    
+        .form-item__title {
+            width: 100%;
+        }
+    
+        .form-item__value_empty {
+            pointer-events: none;
+        }
+    
+        .form-item__value {
+            color: var(--textColor);
+            word-break: break-all;
+            
+            &.form-item__value_link {
+                color: variables.$color-blue;
+            }
+
+            &.form-item__value_empty {
+                color: variables.$color-grey;
+            }
+        }
+
+        .map {
+            background: variables.$color-pale-grey;
+            border: 1px solid variables.$color-light-grey;
+            border-radius: 10px;
+            padding: 15px;
+        }
+    }
+
+    .address__wrapper {
+        .__ymap {
+            max-height: 350px;
+            height: 65vh !important;
+        }
+
+        .ymaps3x0--map {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    }
+
+    &.tile-section__body_dragging {
+        .tile-section__item {
+            .tile-section__settings {
+                display: none;
+            }
+        }
+    }
+
+    &.clone-elem {
+        .tile-section__item {
+            background: variables.$color-white;
+
+            .tile-section__drag, 
+            .tile-section__settings {
+                opacity: 0 !important;
+            }
+        }
+    }
+}

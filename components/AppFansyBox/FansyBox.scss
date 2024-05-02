@@ -1,0 +1,75 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.fancybox__container {
+    z-index: 9999 !important;
+}
+
+.fancybox__slide {
+    &.has-html5video {
+        .fancybox__content {
+            margin: 0 auto;
+        }
+
+        .fancybox__html5video {
+            width: 100%;
+            object-fit: contain;
+            margin: 0 auto;
+        }
+    }
+}
+
+.fancybox__footer {
+    background: #0000004f;
+
+    .is-modern {
+        .f-thumbs__track {
+            gap: 10px;
+            margin: 0 auto;
+            transform: none !important;
+        }
+
+        .f-thumbs__slide {
+            -webkit-clip-path: none;
+            clip-path: none;
+            @include mixins.elemResolutionOptions(48px, 48px);
+            transform: none;
+
+            & > * {
+                clip-path: none;
+            }
+
+            .f-thumbs__slide__button {
+                width: 100%;
+                border-radius: 5px;
+                background: variables.$color-white;
+                border: 1px solid variables.$color-grey;
+
+                img {
+                    object-fit: cover;
+                }
+            }
+
+            &.for-pdf {
+                position: relative;
+
+                img {
+                    display: none;
+                } 
+
+                .f-thumbs__slide__button {
+                    &::after {
+                        content: url('/icons/new/pdfSmall.svg');
+                        position: absolute;
+                        left: 0px;
+                        top: 0px;
+                        width: 100%;
+                        height: 100%;
+                        object-fit: contain;
+                        z-index: 10;
+                    }
+                }
+            }
+        }
+    }
+}

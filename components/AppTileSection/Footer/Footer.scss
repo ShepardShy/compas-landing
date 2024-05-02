@@ -1,0 +1,15 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.tile-section__footer {
+    padding: 10px 15px 0px;
+    @include mixins.flexBlock($vertical: center, $horizontal: flex-start, $gap: 10px);
+
+    .popup {
+        &.popup_up {
+            .popup__content {
+                bottom: 25px;
+            }
+        }
+    }
+}

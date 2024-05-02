@@ -1,0 +1,55 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.error {
+    main {
+        height: 100%;
+        display: grid;
+        place-items: center;
+        
+        .container {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+        }
+    }
+
+    .error__title {
+        font-weight: 600;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .error__link {
+        color: variables.$color-blue-two;
+        font-size: 18px;
+        text-decoration: underline;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    .gamburger {
+        position: absolute;
+        left: 10px;
+    }
+
+    .error__img {
+        @include mixins.elemResolutionOptions(85%, 50vh);
+        margin-bottom: 25px;
+
+        img {
+            object-fit: contain;
+        }
+    }
+}
+
+@media (max-width: 648px) {
+    .error .error__img {
+        height: 33vh;
+        margin-top: -24px;
+        margin-bottom: 0;
+    }
+}

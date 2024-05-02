@@ -1,0 +1,173 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.form-item__date {
+    overflow: inherit;
+
+    .datepicker_multiple {
+        .dp__outer_menu_wrap {
+            width: auto;
+        }
+
+        .dp__menu_content_wrapper {
+            display: grid;
+            grid-template-columns: 1fr 200px;
+        }
+
+        .dp__sidebar_left {
+            padding: 0px;
+            grid-row: 2/3;
+            grid-column: 1/3;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .datapicker__footer {
+                gap: 10px;
+                width: 100%;
+                display: flex;
+                padding: 15px;
+                justify-content: space-between;
+            }
+
+            .datepicker__inputs {
+                display: flex;
+                gap: 20px;
+                align-items: center;
+            }
+        }
+    }
+
+    * {
+        font-family: PT Sans !important;
+        transition: none !important;
+    }
+
+    .dp__month_year_wrap {
+        justify-content: center;
+    }
+
+    .dp__date_hover_end, 
+    .dp__date_hover_start, 
+    .dp__date_hover, 
+    .dp__month_year_select, 
+    .dp__overlay_cell, 
+    .dp__button, 
+    .dp__cell_inner,
+    .dp__inner_nav {
+        @include mixins.hoverElem();
+    }
+
+    .dp__today {
+        border: none;
+        font-weight: 600;
+        color: variables.$color-red;
+
+        &.dp__active_date, &.dp__range_end, &.dp__range_start {
+            color: variables.$color-white;
+        }
+    }
+
+    .dp__calendar_row {
+        margin: 0px;
+    }
+
+    .dp__month_year_select {
+        padding: 5px 10px;
+    }
+
+    .dp__month_year_col_nav {
+        padding: 0px 10px;
+
+        &:hover {
+            filter: brightness(1);
+        }
+    }
+
+    .dp__overlay_cell_active, .dp__active_date {
+        background: variables.$color-blue;
+    }
+
+    .dp__inner_nav  {
+        width: 25px;
+        display: grid;
+        place-items: center;
+
+        svg {
+            @include mixins.elemResolutionOptions(25px, 20px);
+        }
+    }
+
+    .dp__action_row {
+        display: none;
+    }
+
+    .dp__input {
+        border: 1px solid variables.$color-grey;
+        font-size: variables.$font-size-default;
+        padding: 7px 15px;
+
+        &:hover {
+            border: 1px solid variables.$color-grey;
+        }
+
+        &.dp__input_focus {
+            border: 1px solid variables.$color-blue;
+
+            &:hover {
+                border: 1px solid variables.$color-blue;
+            }
+        }
+    }
+
+    .dp__input_wrap {
+        svg {
+            display: none;
+        }
+    }
+
+    .dp__arrow_top {
+        display: none;
+    }
+
+    .dp__outer_menu_wrap {
+        width: 100%;
+    }
+
+    .dp__menu  {
+        top: 45px !important;
+        transform: translate(0px, 0px) !important;
+
+        button {
+            width: auto;
+            min-width: auto;
+        }
+        
+        &.dp__menu_up {
+            transform: translateX(0px) translateY(-50px) translateY(-100%) !important;
+        }
+    }
+
+    .dp__menu_index {
+        z-index: 5;
+        background: variables.$color-white;
+        border-radius: 5px;
+        overflow: hidden;
+        box-shadow: 0 0 3px 0 variables.$color-black, inset 0 1px 2px 0 variables.$color-white-opacity;
+    }
+
+    .dp__sidebar_right {
+        padding: 0px;
+    }
+
+    .datapicker__preset-days {
+        .datapicker__preset-item {
+            padding: 8px 20px 8px 10px;
+            @include mixins.hoverElem();
+        }
+
+        .datapicker__preset-item_active {
+            background: variables.$color-hover;
+        }
+    }
+}

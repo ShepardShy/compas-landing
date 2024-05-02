@@ -1,0 +1,8 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.icon__draggable {
+    cursor: grab;
+    position: absolute;
+    left: 0px;
+}

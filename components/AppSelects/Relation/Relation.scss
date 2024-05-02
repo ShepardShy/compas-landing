@@ -1,0 +1,30 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.relation__list {
+    gap: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.relation {
+    .button-text {
+        margin-top: 10px;
+    }
+}
+
+.relation__actions {
+    @include mixins.flexBlock($vertical: center, $horizontal: flex-start, $gap: 30px);
+    
+    .relation__actions-all {
+        display: block;
+        width: 20px;
+        margin-left: 5px;
+        text-align: right;
+    }
+
+    .button-text {
+        display: flex;
+        overflow: visible;
+    }
+}

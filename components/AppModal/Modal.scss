@@ -1,0 +1,112 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+
+    &.modal_warning {
+        .modal__close {
+            z-index: 0;
+        }
+    }
+}
+.modal__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: rgba(0,0,0,.2)
+}
+.modal__list {
+    height: 100%;
+}
+.modal__item {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    z-index: var(--index);
+    justify-content: flex-end;
+}
+.modal__close {
+    grid-gap: 5px;
+    display: grid;
+    grid-template-columns: 15px 1fr;
+    align-items: center;
+    border-radius: 5px 0 0 5px;
+    background: var(--backgroundColor);
+    position: relative;
+    min-width: 110px;
+    left: 0px;
+    min-height: 40px;
+    height: max-content;
+    z-index: 2;
+    padding: 5px 10px 5px 15px;
+    top: calc(25px + 50px* var(--index));
+    cursor: pointer;
+    max-width: 200px;
+    visibility: hidden;
+    animation: showClose 0.3s ease-out 0.3s forwards;
+
+    .icon__close {
+        width: 15px;
+        height: 15px;
+
+        svg {
+            * {
+                fill: variables.$color-white
+            }
+        }
+    }
+}
+.modal__content {
+    position: relative;
+    z-index: 3;
+    height: 100%;
+    padding: 25px;
+    background-color: #fbfcfd;
+    max-height: 100%;
+    overflow: auto;
+    animation: showModal 0.3s ease-out 0s forwards;
+    @include mixins.elemResolutionOptions(calc(100% - (230px + var(--modalOrder))), 100%);
+}
+.modal__close-text {
+    color: variables.$color-white;
+}
+
+@keyframes showModal {
+    0% {
+        left: calc(100% + 100px);
+    }
+    100% {
+        left: 0px;
+    }
+}
+
+@keyframes showClose {
+    0% {
+        visibility: hidden
+    }
+    100% {
+        visibility:visible;
+    }
+}
+
+@media (max-width: 660px) {
+    .modal__close {
+        display: none;
+    }
+
+    .modal__content {
+        width: 100%;
+    }
+}

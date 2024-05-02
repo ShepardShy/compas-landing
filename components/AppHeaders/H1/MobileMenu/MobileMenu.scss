@@ -1,0 +1,14 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.h1_mobileMenu {
+    display: flex;
+    gap: 10px;
+    font-size: variables.$font-size-h1;
+
+    .menu {
+        &.menu_mobile {
+            position: static;
+        }
+    }
+}

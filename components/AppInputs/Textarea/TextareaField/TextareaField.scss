@@ -1,0 +1,43 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.textarea {
+    position: relative;
+
+    textarea {
+        min-height: 80px;
+        position: absolute;
+        height: 100%;
+        line-height: 120%;
+        white-space: pre-wrap;
+    }
+}
+
+.textarea__mirror {
+    position: relative;
+    top: 2px;
+    left: 0px;
+    min-height: 80px;
+    padding: 10px 15px;
+    user-select: none;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    line-height: 120%;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: pre-wrap;
+    font-family: inherit;
+}
+
+.table__item {
+    .textarea {
+        textarea {
+            min-height: 40px;
+        }
+        
+        .textarea__mirror {
+            min-height: 40px;
+        }
+    }    
+}

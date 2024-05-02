@@ -1,0 +1,190 @@
+{
+    "view": [
+        {
+            "id": 0,
+            "title": "Открыть",
+            "class": "",
+            "action": "showModal",
+            "children": []
+        },
+        {
+            "id": 1,
+            "title": "Редактировать",
+            "class": "",
+            "action": "edit",
+            "children": []
+        },
+        {
+            "id": 3,
+            "title": "Скопировать",
+            "class": "",
+            "action": "copyRow",
+            "children": []
+        },
+        {
+            "id": 2,
+            "title": "Удалить",
+            "class": "action_red",
+            "action": "initDelete",
+            "children": []
+        }
+    ],
+    "module": [
+        {
+            "id": 0,
+            "title": "Открыть",
+            "class": "",
+            "action": "showModal",
+            "children": []
+        },
+        {
+            "id": 1,
+            "title": "Редактировать",
+            "class": "",
+            "action": "edit",
+            "children": []
+        },
+        {
+            "id": 3,
+            "title": "Скопировать",
+            "class": "",
+            "action": "copyRow",
+            "children": []
+        },
+        {
+            "id": 2,
+            "title": "Отвязать",
+            "class": "",
+            "action": "untieRow",
+            "children": []
+        }
+    ],
+    "restore": [
+        {
+            "id": 0,
+            "title": "Открыть",
+            "class": "",
+            "action": "showModal",
+            "children": []
+        },
+
+        {
+            "id": 1,
+            "title": "Восстановить",
+            "class": "",
+            "action": "initRestore",
+            "children": []
+        }
+    ],
+    "edit": [
+        {
+            "id": 0,
+            "title": "Сохранить",
+            "class": "",
+            "action": "save",
+            "children": []
+        },
+        {
+            "id": 1,
+            "title": "Отмена",
+            "class": "",
+            "action": "cancel",
+            "children": []
+        },
+        {
+            "id": 2,
+            "title": "Удалить",
+            "class": "action_red",
+            "action": "initDelete",
+            "children": []
+        }
+    ],
+    "routes": [
+        {
+            "id": 0,
+            "title": "Открыть",
+            "class": "",
+            "action": "showModal",
+            "children": []
+        },
+        {
+            "id": 1,
+            "title": "Сменить машину",
+            "class": "",
+            "action": "changeCar",
+            "children": []
+        },
+        {
+            "id": 2,
+            "title": "Внешняя ссылка",
+            "class": "",
+            "action": "copyRow",
+            "children": [
+                {
+                    "id": 20,
+                    "title": "Ссылка на маршрут",
+                    "class": "",
+                    "action": "copyRow"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "title": "Редактировать",
+            "class": "",
+            "action": "edit",
+            "children": []
+        },
+        {
+            "id": 5,
+            "title": "Удалить",
+            "class": "action_red",
+            "action": "initDelete",
+            "children": []
+        }
+    ],
+    "tasksOfRoutes": [
+        {
+            "id": 0,
+            "title": "Синхронизировать заказ",
+            "class": "",
+            "action": "syncOrder",
+            "children": []
+        },
+        {
+            "id": 1,
+            "title": "Разделить заказ",
+            "class": "",
+            "action": "shareOrder",
+            "children": []
+        },
+        {
+            "id": 2,
+            "title": "Открыть",
+            "class": "",
+            "action": "showModal",
+            "children": []
+        },
+        {
+            "id": 3,
+            "title": "Скопировать",
+            "class": "",
+            "action": "copyRow",
+            "children": []
+        },
+        {
+            "id": 4,
+            "title": "Редактировать",
+            "class": "",
+            "action": "edit",
+            "children": []
+        },
+        {
+            "id": 5,
+            "title": "Удалить",
+            "class": "action_red",
+            "action": "initDelete",
+            "children": []
+        }
+    ]
+}

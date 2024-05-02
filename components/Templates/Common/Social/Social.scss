@@ -1,0 +1,41 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.social {
+    h2 {
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 100px;
+}
+
+.social__description {
+    color: #8f8f8f;
+    font-size: 18px;
+    text-align: center;
+    max-width: 660px;
+    margin: 0 auto 45px;
+}
+.social__icons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 100px
+}
+.social__icon {
+    @include mixins.elemResolutionOptions(185px, 33px);
+
+    img {
+        object-fit: contain;
+    }
+}
+
+@media (max-width: 900px) {
+    .social__icons {
+        grid-gap: 50px;
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

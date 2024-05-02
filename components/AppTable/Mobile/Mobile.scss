@@ -1,0 +1,125 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.table-mobile {
+    &.table-mobile_empty {
+        position: relative;
+        min-height: 50vh;
+
+        &::after {
+            content: 'Нет данных';
+            position: absolute;
+            display: grid;
+            place-items: center;
+            color: variables.$color-blue-grey;
+            @include mixins.elemPositionOptions(0px, 0px);
+            @include mixins.elemResolutionOptions(100%, 100%);
+        }
+    }
+
+    &.table-mobile_permanent-edit {
+        .table-mobile__row {
+            &.table__row_edit {
+                background: transparent;
+
+                &:nth-child(even) {
+                    background: variables.$color-light-blue;
+                }
+            }
+        }
+    }
+
+    .table__item {
+        overflow: visible;
+        @include mixins.userSelect(auto);
+
+        .form-item__checkbox {
+            flex-direction: column;
+            align-items: flex-start;
+    
+            .form-item__title {
+                font-size: 12px;
+            }
+        }
+
+        .form-item__file {
+            .file__list {
+                width: 40px;
+            }
+        }
+
+        .form-item__action {
+            width: max-content;
+        }
+
+        .relation__actions {
+            display: none;
+        }
+    }
+    
+}
+
+.table-mobile__row {
+    border-bottom: 1px solid #eeeff1;
+    padding: 15px;
+    @include mixins.sortableGhost();
+
+    &:nth-child(even) {
+        background: #f7fbff;
+    }
+
+    .relation__actions {
+        display: none;
+    }
+
+    &.table__row_edit {
+        background: #d9e4f0;
+        
+        .relation__actions {
+            display: flex;
+        }
+    }
+
+    &.table__row_choosed {
+        background: #eef3f8;
+    }
+}
+
+.table-mobile__field {
+    &:not(:last-child) {
+        margin-bottom: 15px;
+    }
+
+    .table-item__icon {
+        .icon__draggable {
+            position: static;
+        }
+    }
+    
+    .form-item__title {
+        width: max-content;
+    }
+
+    .file {
+        .fancybox-item {
+            .fancybox-item__link {
+                min-height: 40px;
+
+                .fancybox-item__img {
+                    min-height: 40px;
+                }
+            }
+        }
+    }
+}
+
+.table-template_loading {
+    .table-mobile {
+        height: 100%;
+        opacity: 0;
+
+        .table-template__loader {
+            top: var(--stickyTop);
+        }
+    }
+}

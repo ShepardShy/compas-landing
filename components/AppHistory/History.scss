@@ -1,0 +1,208 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.history__header {
+    margin-bottom: 40px;
+}
+
+.history__title {
+    padding: 15px 0;
+    font-weight: 600;
+    border-bottom: 1px solid variables.$color-light-grey;
+}
+
+.history__footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    
+    button {
+        width: calc(100% - 36px);
+    }
+}
+
+.history__body {
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+}
+
+.history__section {
+    position: relative;
+    margin-left: 15px;
+
+    &::before {
+        background-color: variables.$color-light-grey;
+        content: "";
+        height: 1px;
+        left: -20px;
+        position: absolute;
+        top: 20px;
+        width: calc(100% + 20px);
+    }
+
+    &::after {
+        background-color: variables.$color-light-grey;
+        content: "";
+        height: 56px;
+        left: -20px;
+        position: absolute;
+        top: 20px;
+        width: 1px;
+    }
+
+    &:last-child {
+        .history-section__item {
+            &:last-child {
+                &::after {
+                    content: none;
+                }
+            }
+        }
+    }
+}
+
+.history-section__title {
+    background-color: variables.$color-white;
+    border: 1px solid variables.$color-light-grey;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px variables.$color-light-grey;
+    margin: 0 auto 15px;
+    padding: 10px 20px;
+    position: relative;
+    width: max-content;
+    z-index: 2;
+
+    &.history-section__title_active {
+        background: variables.$color-blue;
+        color: variables.$color-white;
+        font-size: 0;
+
+        &::after {
+            content: 'Сегодня';
+            font-size: variables.$font-size-default;
+        }
+    }
+}
+
+.history-section__list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.history-section__item {
+    padding: 15px;
+    position: relative;
+    border-radius: 10px;
+    background-color: variables.$color-white;
+    border: 1px solid variables.$color-light-grey;
+    box-shadow: 0 5px 20px variables.$color-light-grey;
+    
+    &::after {
+        content: "";
+        top: 0;
+        width: 1px;
+        left: -21px;
+        position: absolute;
+        height: calc(100% + 40px);
+        background-color: variables.$color-light-grey;
+    }
+
+    &::before {
+        content: "";
+        top: 27px;
+        left: -10px;
+        height: 1px;
+        position: absolute;
+        width: 10px;
+        background-color: variables.$color-light-grey;
+    }
+}
+.history-section__icon {
+    @include mixins.elemResolutionOptions(25px, 25px);
+    position: absolute;
+    left: -33px;
+    z-index: 2;
+}
+
+.history-item__header {
+    gap: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.history-item__group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.history-item__title {
+    font-weight: 600;
+}
+
+.history-item__date {
+    color:variables.$color-grey;
+}
+
+.history-item__user {
+    cursor: pointer;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--backgroundColor);
+    @include mixins.elemResolutionOptions(25px, 25px);
+
+    figcaption {
+        display: grid;
+        place-items: center;
+        color: variables.$color-white;
+        font-size: variables.$font-size-label;
+        @include mixins.elemResolutionOptions(100%, 100%);
+    }
+}
+
+.history-item__field {
+    color:variables.$color-grey;
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.history-item__action {
+    display: inline;
+
+    & > * {
+        display: inline;
+    }
+
+    .history-item__action-icon {
+        margin: 0px 10px;
+    }
+
+    .history-item__text {
+        word-break: break-word;
+
+        &.history-item__text_empty {
+            &::after {
+                content: 'не заполнено';
+                color:variables.$color-grey;
+            }
+        }
+    }
+}
+.history-item__before {
+}
+.history-item__action-icon {
+}
+.history-item__after {
+}
+
+
+@media (max-width: 560px) {
+    .history-item__body {
+        flex-wrap: wrap;
+    }
+}

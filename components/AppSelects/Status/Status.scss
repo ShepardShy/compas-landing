@@ -1,0 +1,23 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.form-item__status {
+}
+
+.status {
+    width: max-content;
+}
+
+.form-item_readonly {
+    &.status {
+        .status__option {
+            &.status__preview {
+                .status-option__rect {
+                    &::after {
+                        display: none;
+                    }
+                }
+            }
+        }        
+    }
+}

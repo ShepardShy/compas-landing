@@ -1,0 +1,188 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.file {
+    .file-container {
+        &.file-container_empty {
+            &::after {
+                content: 'не заполнено';
+                color: variables.$color-grey;
+                margin-bottom: auto;
+            }
+
+            .file-list {
+                display: none;
+            }
+        }
+
+        &.file-container_one-file {
+            @include mixins.flexBlock($vertical: center, $gap: 5px);
+
+            .file-list {
+                align-items: center;
+
+                .file-list__item {
+                    &:not(:first-child) {
+                        display: none;
+                    }
+
+                    .fancybox-item__title {
+                        display: none;
+                    }
+                }
+            }
+        }
+
+        .file-container__circle {
+            display: grid;
+            opacity: 0.6;
+            background-color: variables.$color-blue-grey;
+            place-items: center;
+            padding: 3px;
+            color: variables.$color-white;
+            border-radius: 50%;
+            min-width: 21px;
+            font-size: variables.$font-size-label;
+            @include mixins.elemResolutionOptions(21px, 21px);
+        }
+    }
+
+    .file-list {
+        @include mixins.flexBlock($vertical: flex-start, $gap: 8px);
+        flex-wrap: wrap;
+
+        .file-list__item {
+            position: relative;
+            @include mixins.sortableGhost();
+
+            &.sortable-ghost {
+                border: none;
+                outline: 2px dashed variables.$color-blue-grey;
+            }
+
+            &.fancybox-item {
+                .fancybox-item__img {
+                    border-radius: 5px;
+                    background: variables.$color-white;
+                    overflow: hidden;
+                    @include mixins.borderOptions(1px, solid, variables.$color-grey, 5px);
+                    @include mixins.elemResolutionOptions(100px, 100px);
+
+                    img {
+                        object-fit: cover !important;
+                    }
+                }
+
+                .fancybox-item__title {
+                    margin-top: 5px;
+                    color: variables.$color-grey;
+                    @include mixins.elemResolutionOptions(100px, 100%);
+                    @include mixins.textVerticalHidden();
+                    display: none;
+                }
+
+                .fancybox-item__details {
+                    position: absolute;
+                    @include mixins.elemPositionOptions(35px, 35px);
+                    @include mixins.elemResolutionOptions(30px, 30px);
+                    display: none;
+                    z-index: 999;
+
+                    &[open] {
+                        display: grid !important;
+                    }
+
+                    summary {
+                        cursor: pointer;
+                        display: grid;
+                        place-items: center;
+                        grid-template-columns: 1fr;
+                        background-color: rgba(246, 245, 243, 0.6);
+                        @include mixins.borderOptions(1px, solid, variables.$color-darkest-grey, 50%);
+                        @include mixins.elemResolutionOptions(30px, 30px);
+                        @include mixins.elemPositionOptions(35px, 35px);
+
+                        svg {
+                            fill: variables.$color-darkest-grey;
+                        }
+                    }
+
+                    .popup__content {
+                        right: auto;
+                        @include mixins.elemPositionOptions(35px, 5px);
+                        bottom: auto;
+                    }
+                }
+
+                &:hover {
+                    .fancybox-item__details {
+                        display: block;
+                    }
+
+                    .fancybox-item__title {
+                        color: variables.$color-black;
+                    }
+                }
+            }
+
+            &.file-list__item_loading {
+                pointer-events: none;
+
+                .fancybox-item__details {
+                    display: none;
+                }
+
+                .fancybox-item__img {
+                    background: variables.$color-white;
+
+                    img {
+                        @include mixins.elemPositionOptions(200px, 150px);
+                        visibility: hidden;
+                    }
+                }
+
+                .fancybox-item__title {
+                    text-align: center;
+                }
+            }
+        }
+
+        &.file-list_show-title {
+            .file-list__item {
+                .fancybox-item__title {
+                    display: -webkit-box;
+                }
+            }
+        }
+    }
+}
+
+.table__item .file {
+    height: 100%;
+
+    .file-container {
+        height: 100%;
+    }
+
+    .file-list {
+        height: 100%;
+        aspect-ratio: 1;
+
+        .file-list__item {
+            display: block;
+
+            &.fancybox-item {
+                .fancybox-item__img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+    }
+
+    .fancybox-item {
+        height: 100%;
+        aspect-ratio: 1;
+    }
+
+}

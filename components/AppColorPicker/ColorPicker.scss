@@ -1,0 +1,124 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.colorpicker {
+    padding-bottom: 5px;
+
+    input[type=range] {
+        outline: none;
+
+        &::-webkit-slider-runnable-track {
+            border-radius: 10px/100%;
+            height: 7px;
+        }
+
+        &::-webkit-slider-thumb {
+            border-radius: 50%;
+            cursor: pointer;
+            width:15px;
+            height: 15px;
+            background: variables.$color-white;
+            -webkit-appearance: none;
+            margin-top: -7px;
+        }
+    }
+
+    .vacp-color-space {
+        height: 100px;
+    }
+
+    .vacp-color-picker {
+        padding: 0px;
+        display: flex;
+        flex-direction: column;
+
+        label {
+            &::after {
+                content: none;
+            }
+        }
+    }
+
+    .vacp-copy-button {
+        display: none;
+    }
+
+    .vacp-range-input-group {
+        padding: 0px 5px;
+
+        .vacp-range-input-label-text {
+            display: none;
+        }
+
+
+        .vacp-range-input-label-text--hue {
+            display: none;
+        }
+
+        .vacp-range-input--alpha {
+            background-image: none;
+            background-position: none;
+            background-size: none;
+        }
+
+        .vacp-range-input {
+            border: 0px;
+            padding: 0px;
+            height: 20px;
+            min-height: 20px;
+        }
+    }
+
+    .vacp-color-input-group {
+        .vacp-color-input-label {
+            font-size: variables.$font-size-default;
+            gap: 5px;
+            display: flex;
+            flex-direction: column-reverse;
+
+            .vacp-color-input-label-text {
+                display: none;
+            }
+        }
+    }
+
+    .vacp-color-inputs {
+        padding: 0px 5px;
+
+        .vacp-format-switch-button {
+            align-self: flex-end;
+        }
+    }
+
+    .colorpicker__button {
+        width: 95%;
+        margin: 10px 5px 0px;
+    }
+
+    .vacp-color-input {
+        &:focus {
+            outline: none;
+            color: variables.$color-black;
+            border: 1px solid variables.$color-blue;
+        }
+    }
+}
+
+.colorpicker_preview {
+    height: 50px;
+    position: relative;
+
+    &::before {
+        @include mixins.elemPositionOptions(0px, 0px);
+        @include mixins.elemResolutionOptions(100%, 100%);
+        content: url('/icons/empty_background.png');
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        background: var(--previewColor);
+        @include mixins.elemPositionOptions(0px, 0px);
+        @include mixins.elemResolutionOptions(100%, 100%);
+    }
+}

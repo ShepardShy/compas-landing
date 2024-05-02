@@ -1,0 +1,17 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.icon__loader-progress {
+    svg {
+        stroke-width: 4;
+        stroke: variables.$color-blue;
+        fill: none;
+        transform-origin: center;
+        transform: rotate(-90deg);
+        z-index: 999;
+
+        circle {
+            transition: 0.6s ease;
+        }
+    }
+}

@@ -1,0 +1,154 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.popup__option {
+    padding: 10px;
+    cursor: pointer;
+    @include mixins.userSelect($value: none);
+
+    &:hover {
+        background: variables.$color-hover;
+    }
+
+    &.popup__option_red {
+        color: variables.$color-red;
+    }
+
+    &.popup__option_active {
+        &::after {
+            content: url('/icons/success.svg');
+        }
+
+        .popup-option__text {
+            filter: opacity(0.5);
+        }
+    }
+
+    &.popup__option_disabled {
+        filter: opacity(0.8);
+        cursor: default;
+        
+        .popup-option__text {
+            filter: opacity(0.5);
+        }
+    }
+
+    &.popup-option__sublink {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        justify-content: space-between;
+
+        &.popup-option__sublink_back {
+            font-weight: 600;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+
+            .icon__arrow {
+                transform: rotate(180deg);
+            }
+        }
+    }
+
+    &.popup__option_unhover {
+        &:hover {
+            background: inherit;
+        }
+    }
+
+    &.popup__option_create {
+        color: variables.$color-blue-grey;
+
+        &:hover {
+            color: variables.$color-active;
+        }
+    }
+
+    &.popup-option__root {
+        gap: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    
+        .popup-option__substring {
+            white-space: nowrap;
+            color: variables.$color-grey;
+        }
+    
+        .popup-option__text {
+            white-space: nowrap;
+            overflow: hidden;
+            width: 100%;
+        }
+    }
+
+    &.sortable-ghost {
+        font-size: 0;
+
+        * {
+            opacity: 0;
+        }
+    }
+
+    &.popup__option_checkbox {
+        padding: 0px;
+
+        .form-item__checkbox {
+            padding: 10px;
+            width: 100%;
+        }
+    }
+
+    &.popup__option_empty {
+        color: variables.$color-blue-grey;
+
+        &:hover {
+            background: transparent;
+        }
+    }
+}
+
+.popup-option__draggable {
+    &.popup-option__draggable_dragging {
+        .popup-option {
+            &:hover {
+                background: transparent;
+
+                .icon__draggable {
+                    @include mixins.setSVGColor(variables.$color-blue-grey)
+                }
+            }
+        }
+    }
+
+    .popup__option {
+        padding: 10px;
+
+        .icon__draggable {
+            position: static;
+            @include mixins.setSVGColor(variables.$color-blue-grey);
+
+            &:hover {
+                @include mixins.setSVGColor(variables.$color-active);
+            }
+        }
+
+        &.popup-option__sublink {
+            justify-content: flex-start;
+        }
+        
+        &.sortable-ghost {
+            @include mixins.sortableGhost();
+        
+            font-size: 0;
+    
+            * {
+                opacity: 0;
+            }
+        }
+    }
+
+    &.clone-elem {
+        background: variables.$color-white;
+    }
+}

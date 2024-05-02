@@ -1,0 +1,27 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.icon__color {
+    min-width: 40px;
+    height: 40px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    @include mixins.gridCenter();
+
+    &::before {
+        position: absolute;
+        @include mixins.elemPositionOptions(0px, 0px);
+        @include mixins.elemResolutionOptions(100%, 100%);
+        content: url('/icons/empty_background.png');
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        background: var(--text-color);
+        @include mixins.elemPositionOptions(0px, 0px);
+        @include mixins.elemResolutionOptions(100%, 100%);
+        z-index: 1;
+    }
+}

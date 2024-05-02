@@ -1,0 +1,101 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.file-upload {
+    position: relative;
+    @include mixins.hoverElem();
+    @include mixins.borderOptions(2px, dashed, variables.$color-blue-grey, 6px);
+    @include mixins.elemResolutionOptions(100px, 100px);
+    @include mixins.flexBlock($vertical: center, $horizontal: center, $gap: 10px);
+    flex-direction: column;
+    background: variables.$color-white;
+    font-size: variables.$font-size-default;
+    z-index: 1;
+}
+
+.file-upload__input {
+    @include mixins.absoluteCenter();
+    @include mixins.elemResolutionOptions(100%, 100%);
+    opacity: 0;
+    transform: scale(1.1);
+    cursor: pointer;
+    font-size: 0;
+    z-index: 2;
+
+    &::-webkit-file-upload-button {
+        display: none;
+    }
+}
+
+.file-upload__image-wrapper {
+    display: flex;
+    height: 100%;
+
+    .file-upload__image {
+        @include mixins.elemResolutionOptions(100%, 100%);
+        z-index: 1;
+        object-fit: contain;
+    }
+
+    .icon__close {
+        position: absolute;
+        height: 1em;
+        width: 1em;
+        @include mixins.elemResolutionOptions(1em, 1em);
+        background: #fff;
+        border-radius: 50%;
+        display: block;
+        top: 2px;
+        right: 2px;
+        z-index: 20;
+        opacity: 75%;
+        color: #606266;
+        transition: 0.2s ease-in-out;
+
+        &:hover {
+            color: variables.$color-blue;
+            opacity: 1;
+        }
+    }
+}
+
+.file-upload__button {
+    @include mixins.flexBlock($vertical: center, $gap: 10px);
+    flex-direction: column;
+
+    svg {
+        @include mixins.elemResolutionOptions(35px, 27px);
+    }
+
+    & > span {
+        @include mixins.textVerticalHidden();
+    }
+
+    &.file-upload_hidden {
+        opacity: 0;
+        z-index: 0;
+    }
+
+    .file-upload__button-title {
+        text-align: center;
+        color: variables.$color-grey;
+        padding: 0 10px;
+        @include mixins.textVerticalHidden()
+    }
+}
+
+
+.file-upload:focus, .file-upload:hover, .file-upload_dragover {
+    background: transparent;
+    border: 2px dashed variables.$color-active;
+
+    .file-upload__button-title {
+        color: variables.$color-black;
+    }
+
+    svg {
+        * {
+            fill: variables.$color-active;
+        }
+    }
+}

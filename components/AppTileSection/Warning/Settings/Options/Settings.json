@@ -1,0 +1,133 @@
+{
+    "types": [
+        {
+            "value": "text",
+            "label": "Строка"
+        },
+        {
+            "value": "text_group",
+            "label": "Строка несколько значений"
+        },
+        {
+            "value": "number",
+            "label": "Число"
+        },
+        {
+            "value": "select_dropdown",
+            "label": "Список"
+        },
+        {
+            "value": "file",
+            "label":"Файл"
+        },
+        {
+            "value": "status",
+            "label": "Статус"
+        },
+        {
+            "value": "relation",
+            "label": "Программное"
+        },
+        {
+            "value": "date",
+            "label": "Дата"
+        },
+        {
+            "value": "address",
+            "label": "Программное"
+        }
+    ],
+    "roles": [
+        {
+            "id": 1,
+            "label": "Администратор",
+            "value": 1,
+            "is_admin": 1,
+            "is_permanent": 1
+        },
+        {
+            "id": 3,
+            "label": "Тест роль 25fgf2",
+            "value": 3,
+            "is_admin": 0,
+            "is_permanent": null
+        },
+        {
+            "id": 4,
+            "label": "Тест роль 335",
+            "value": 4,
+            "is_admin": 1,
+            "is_permanent": null
+        },
+        {
+            "id": 5,
+            "label": "Тест роль 423",
+            "value": 5,
+            "is_admin": 0,
+            "is_permanent": null
+        },
+        {
+            "id": 6,
+            "label": "Тест роль 5",
+            "value": 6,
+            "is_admin": 1,
+            "is_permanent": null
+        },
+        {
+            "id": 8,
+            "label": "Без названия 237",
+            "value": 8,
+            "is_admin": 0,
+            "is_permanent": null
+        },
+        {
+            "id": 18,
+            "label": "тест 33",
+            "value": 18,
+            "is_admin": 0,
+            "is_permanent": null
+        },
+        {
+            "id": 20,
+            "label": "Без названия35437",
+            "value": 20,
+            "is_admin": 0,
+            "is_permanent": null
+        },
+        {
+            "id": 22,
+            "label": "Без названия334",
+            "value": 22,
+            "is_admin": 0,
+            "is_permanent": null
+        },
+        {
+            "id": 35,
+            "label": "тест 238",
+            "value": 35,
+            "is_admin": 0,
+            "is_permanent": null
+        },
+        {
+            "id": 37,
+            "label": "тест 23",
+            "value": 37,
+            "is_admin": 0,
+            "is_permanent": null
+        },
+        {
+            "id": 38,
+            "label": "Тестовая ролль",
+            "value": 38,
+            "is_admin": 0,
+            "is_permanent": null
+        },
+        {
+            "id": 41,
+            "label": "Новая роль на тесте",
+            "value": 41,
+            "is_admin": 0,
+            "is_permanent": null
+        }
+    ]
+}

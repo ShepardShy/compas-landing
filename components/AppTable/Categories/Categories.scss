@@ -1,0 +1,89 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.table-categories__details {
+	&[open] {
+		& > .table-categories__header {
+			.icon__triangle {
+				transform: rotate(180deg);
+
+				svg {
+					* {
+						fill:variables.$color-active;
+					}
+				}
+			}
+		}
+	}
+
+	&.table-categories__details_active {
+		background-color: variables.$color-hover;
+	}
+}
+
+.table-categories__item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	cursor: pointer;
+
+	&:hover {
+		background-color: variables.$color-hover;
+	}
+
+	&.table-categories__item_active {
+		background-color: variables.$color-hover;
+	}
+}
+
+.table-categories__header {
+	cursor: pointer;
+	position: relative;
+	justify-content: space-between;
+	gap: 5px;
+    display: flex;
+    align-items: center;
+
+	.icon__triangle {
+		svg {
+			* {
+				fill:variables.$color-blue-grey;
+			}
+		}
+	}
+
+	&.table-categories__header_active {
+		background-color: variables.$color-hover;
+	}
+
+	&:hover {
+		background-color: variables.$color-hover;
+	}
+}
+
+.table-categories__title {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	width: 100%;
+	padding: 10px 15px 10px calc(15px * var(--itemIndex));
+
+	&.table-categories__title_admin {
+		&::after {
+			content: '[admin]';
+			color: variables.$color-red;
+		}
+	}
+}
+
+.table-categories__popup {
+	.popup__summary {
+		padding: 0px 15px;
+	}
+
+	&.popup_up {
+		.popup__content {
+			bottom: 20px;
+		}
+	}
+}

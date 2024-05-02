@@ -1,0 +1,161 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.relation {
+    .relation__item {
+        width: 100%;
+        padding: 15px;
+        border-radius: 10px;
+        background-color: variables.$color-pale-grey;
+        border: 1px solid variables.$color-light-grey;
+
+        &.relation__item_hidden {
+            display: none;
+        }
+
+        .popup {
+            * {
+                @include mixins.userSelect(auto);
+            }
+
+            .popup_prevent {
+                * {
+                    @include mixins.userSelect(none);
+                }
+            }
+        }
+
+        .form-item__value {
+            cursor: pointer;
+            text-decoration: underline;
+            color: variables.$color-blue-two;
+    
+            &:hover {
+                text-decoration: none;
+            }
+        }
+
+        .relation__icon {
+            border-radius: 50%; 
+            overflow: hidden;
+            min-width: 30px;
+            cursor: pointer;
+            @include mixins.elemResolutionOptions(30px, 30px);
+        
+            figcaption {
+                display: grid;
+                font-family: VAG;
+                place-items: center;
+                color: variables.$color-white;
+                background: var(--backgroundColor);
+                @include mixins.elemResolutionOptions(100%, 100%);
+            }
+        }
+    
+        .autocomplete__active-option {
+            left: 0px;
+            @include mixins.elemResolutionOptions(100%, 40px);
+        }
+
+        .relation__link {
+            width: 20px;
+            height: calc(100% - 2px);
+            position: absolute;
+            display: grid;
+            place-items: center;
+            right: 1px;
+            top: 1px;
+            z-index: 2;
+            background-color: #eeeff1;
+            cursor: pointer;
+            border-radius: 0px 5px 5px 0px;
+
+            &::after {
+                transform: rotate(270deg);
+                content: url('/public/icons/selectTriangle.svg');
+                display: flex;
+                justify-content: center;
+                position: relative;
+                left: -4px;
+            }
+        }
+
+        &.relation__item_empty {
+            .relation__link {
+                display: none;
+            }
+
+            .popup {
+                .popup__summary {
+                    .form-item__input {
+                        .form-item__substring {
+                            right: 15px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .popup {
+            &.popup_readonly {
+                .popup__summary {
+                    .relation__link {
+                        display: none;
+                    }
+                }
+
+                .popup__content {
+                    display: none;
+                }
+            }
+
+            .popup__summary {
+                .form-item__input {
+                    .form-item__substring {
+                        z-index: 2;
+                        right: 30px;
+                        white-space: nowrap;
+                        background: variables.$color-white;
+                        pointer-events: none;
+                        @include mixins.userSelect($value: none);
+
+                        &::after {
+                            pointer-events: fill;
+                        }
+                    }
+                }
+            }
+
+            .popup__content {
+                left: 40px;
+                width: calc(100% - 40px);
+            }  
+        }
+
+        &.relation__item_disabled {
+            .form-item__value {
+                color:variables.$color-black;
+                text-decoration: none;
+            }
+
+            .form-item__substring {
+                opacity: 0;
+            }
+
+            .popup__content {
+                left: 0px;
+                width: 100%;
+
+                .popup-option__substring {
+                    opacity: 0;
+                }
+            }
+        }
+    }
+
+    .popup__option_disabled {
+        &::after {
+            content: url('/icons/success.svg');
+        }
+    }
+}

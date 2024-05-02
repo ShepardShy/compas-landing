@@ -1,0 +1,41 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.table__item {
+    .popup_actions {
+        width: max-content;
+        
+        .popup__summary {
+            padding: 0px 10px;
+        }
+
+        .popup__content {
+            right: auto;
+            left: 0px;
+    
+            .popup-option {
+                &.popup-option__sublink {
+                    &.popup-option__sublink_back {
+                        flex-direction: row;
+                        justify-content: flex-start;
+                    }
+                }
+    
+                &.action_red {
+                    color: variables.$color-red;
+                }
+            }
+        }
+
+        &.popup_right {
+            .popup__content {
+                left: auto;
+                right: 0px;
+            }
+        }
+    }
+}
+
+.form__item .popup_actions .popup__content .popup__option.action_red {
+    color: variables.$color-red;
+}

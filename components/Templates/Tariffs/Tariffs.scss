@@ -1,0 +1,113 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.tariffs__programm {
+    margin-top: 55px;
+}
+
+.tarification {
+    margin-top: 85px;
+
+    h2 {
+        margin-bottom: 25px;
+    }
+}
+
+.tarification__desc {
+    gap: 10px;
+    display: flex;
+    line-height: 120%;
+    max-width: 860px;
+    flex-direction: column;
+    margin-bottom: 80px;
+}
+
+.tariffs-equal {
+    margin: 80px 0px 45px;
+
+    h2 {
+        text-align: center;
+        margin-bottom: 45px;
+    }
+
+    .tariffs-equal__table {
+        .table-template {
+            background: transparent;
+            box-shadow: none;
+            border: none;
+        }
+
+        .section__scroll-area {
+            @include mixins.scrollBar();
+        }
+
+        .table-template__header,
+        .table-template__footer {
+            display: none;
+        }
+
+        .table__item {
+            background: transparent;
+        }
+
+        .table-item__border {
+            display: none;
+        }
+
+        .table__header {
+            .table__item {
+                border: none;
+            }
+
+            .table__item_sticky {
+                border-right: 1px solid #bcbcbc;
+            }
+
+            .table-cell__title {
+                font-size: 20px;
+                font-weight: 600;
+                color: #1253a2;
+            }
+
+            .table-cell__subtitle {
+                font-size: 16px;
+                font-weight: 600;
+                color: #383838;
+            }
+
+            .table-cell__desc {
+                font-size: 12px;
+                font-weight: 400;
+                color: #383838;
+            }
+        }
+
+        .table__item_sticky {
+            background: variables.$color-pale-grey;
+            border-right: 1px solid #bcbcbc;
+        }
+
+        .table__body {
+            .table__item {
+                &:not(:first-child) {
+                    text-align: center;
+                }
+            }
+
+            .table__row {
+                &:nth-child(even) {
+                    .table__item, .table__item_sticky {
+                        background: #EEF3F8;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@media (max-width: 1010px) {
+    .tarification {
+        margin-top: 45px;
+    }
+}

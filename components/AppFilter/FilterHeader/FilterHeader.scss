@@ -1,0 +1,57 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.filter__header {
+    .form-item__input {
+        input {
+            padding-left: calc(15px + var(--inputPadding));
+
+            &[disabled] {
+                font-size: 0;
+            }
+        }
+    }
+}
+
+.filter__tabs {
+    z-index: 2;
+    position: absolute;
+    @include mixins.elemPositionOptions(2px, 2px);
+    @include mixins.flexBlock($vertical: center, $horizontal: flex-start, $gap: 5px);
+}
+
+.filter-tab {
+    height: 36px;
+    width: max-content;
+    border-radius: 5px;
+    padding: 8px 5px 8px 15px;
+    background: variables.$color-hover;
+    border: 1px solid variables.$color-active;
+    @include mixins.flexBlock($vertical: center, $horizontal: space-between, $gap: 5px);
+
+    .icon__delete {
+        width: 25px;
+        padding: 0px 5px;
+        
+        * {
+            fill: variables.$color-dark-grey;
+        }
+
+        &:hover {
+            * {
+                fill: variables.$color-active;
+            }   
+        }
+    }
+}
+
+.filter-tab__title {
+    white-space: nowrap;
+}
+
+.filter__clickable {
+    position: absolute;
+    @include mixins.elemPositionOptions(0, 0);
+    padding-left: calc(15px + var(--inputPadding));
+    @include mixins.elemResolutionOptions(100%, 100%);
+}
