@@ -102,19 +102,19 @@
 	onMounted(() => {
 		setTimeout(async () => {
 			await loadYmap(settings);
+			console.log(props.mkadPolygonCoords);
 
 			if (props.isShowMap) {
 				ymaps.ready(["Map", "Polygon"]).then(function () {
 					map = new ymaps.Map("map", {
 						center: value.value.coords,
 						zoom: 15,
-
-						controls: ["routeButtonControl"],
 					});
-					var control = myMap.controls.get("routeButtonControl");
 
-					// Откроем панель для построения маршрутов.
-					control.state.set("selected", true);
+					if (props.isCountDistance) {
+						const mkadPolygon = new ymaps.Polygon(props.mkadPolygonCoords);
+						ymaps.geoQuery(mkadPolygon).addToMap(map);
+					}
 
 					markers.value.push(value.value.coords);
 					setMarkers();
@@ -161,6 +161,18 @@
 		isShowMap: {
 			default: false,
 			type: Boolean,
+		},
+		isShowMap: {
+			default: false,
+			type: Boolean,
+		},
+		isCountDistance: {
+			default: false,
+			type: Boolean,
+		},
+		mkadPolygonCoords: {
+			default: false,
+			type: Array,
 		},
 	});
 
@@ -332,7 +344,6 @@
 	const searchOptions = async data => {
 		// Метод для вставки запроса на получение опций
 		const getOptions = async search => {
-			console.log(userStore, 11111111);
 			let request = await fetch(`https://opt6.compas.pro/api/map/geocode?address=${search}`, {
 				method: "GET",
 				headers: {

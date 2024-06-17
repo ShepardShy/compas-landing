@@ -54,6 +54,8 @@
 					:isShowMap="true"
 					:isCanSelect="false"
 					:isShowLabel="false"
+					:isCountDistance="true"
+					:mkadPolygonCoords="mkadCoords"
 					@changeValue="data => changeValue(field.id, data)"
 				/>
 			</div>
@@ -78,6 +80,7 @@
 	import AppMap from "@/components/AppInputs/Map/Field/Field.vue";
 	import commonScripts from "@/commonScripts/commonScripts";
 	import { useDistanceStore } from "~/stores/distanceStore";
+	import mkadCoords from "./composables/mkadCoords";
 
 	const textMap = {
 		mkad: "МКАД",

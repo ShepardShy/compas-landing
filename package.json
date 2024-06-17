@@ -28,7 +28,6 @@
 		"vue-accessible-color-picker": "^4.1.3",
 		"vue-router": "4",
 		"vue-the-mask": "^0.11.1",
-		"vue-yandex-maps": "beta",
 		"vue3-toastify": "^0.1.14",
 		"vuedraggable": "^4.1.0"
 	},
