@@ -5,9 +5,12 @@
     background: radial-gradient(circle at 30% 23%, #000, #1c2734 73%);;
 
     .container {
-        grid-gap: 130px;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        display: flex;
+        justify-content: space-between;
+        gap: 130px;
+        // grid-gap: 130px;
+        // display: grid;
+        // grid-template-columns: repeat(3, 1fr);
     }
 }
 .footer__column {

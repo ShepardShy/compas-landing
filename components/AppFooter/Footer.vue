@@ -36,7 +36,7 @@
                 </div>
             </div>
 
-            <div class="footer__column">
+            <!-- <div class="footer__column">
                 <div class="footer__title">
                     Возможности сервиса
                 </div>
@@ -48,7 +48,7 @@
                         Отслеживание штрафов
                     </NuxtLink>
                 </li>
-            </div>
+            </div> -->
 
             <div class="footer__column">
                 <div class="footer__title">
