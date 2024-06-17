@@ -102,22 +102,23 @@
 	onMounted(() => {
 		setTimeout(async () => {
 			await loadYmap(settings);
-			console.log(props.mkadPolygonCoords);
 
 			if (props.isShowMap) {
 				ymaps.ready(["Map", "Polygon"]).then(function () {
 					map = new ymaps.Map("map", {
 						center: value.value.coords,
 						zoom: 15,
+						height: props.isCountDistance ? "550px" : undefined,
 					});
 
 					if (props.isCountDistance) {
 						const mkadPolygon = new ymaps.Polygon(props.mkadPolygonCoords);
-						ymaps.geoQuery(mkadPolygon).addToMap(map);
+						map.geoObjects.add(mkadPolygon, {}, { fillColor: "#fff" });
+						console.log(map);
+					} else {
+						markers.value.push(value.value.coords);
+						setMarkers();
 					}
-
-					markers.value.push(value.value.coords);
-					setMarkers();
 				});
 			}
 		}, 100);
