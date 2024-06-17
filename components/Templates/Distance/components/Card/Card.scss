@@ -1,0 +1,22 @@
+.card {
+	border-radius: 20px;
+	padding: 45px 0 70px 64px;
+	overflow: hidden;
+	&__text {
+		max-width: 595px;
+		position: relative;
+		z-index: 1;
+		font-size: 21px;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+	&__img {
+		max-width: 660px;
+		width: 100%;
+		right: 0;
+		height: 100%;
+		left: unset;
+		object-fit: inherit;
+	}
+}
