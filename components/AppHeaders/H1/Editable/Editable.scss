@@ -6,6 +6,11 @@
         word-break: break-all; 
     }
 
+    pre {
+        display: inline;
+        margin-right: 10px;
+    }
+
     &.h-editable_h1 {
         textarea, .textarea__mirror {
             font-size: variables.$font-size-h1;          
@@ -15,5 +20,22 @@
         .textarea {
             margin-bottom: -6px;
         }
+    }
+
+    .h-editable__restore {
+        display: inline;
+        font-size: variables.$font-size-h2;          
+        text-decoration: underline;
+        cursor: pointer;
+        color: variables.$color-blue-two;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    .h-editable__loader {
+        display: inline;
+        margin-left: 10px;
     }
 }

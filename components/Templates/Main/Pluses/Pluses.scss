@@ -2,7 +2,11 @@
 @use '@/assets/mixins.scss' as mixins;
 
 .pluses {
-    margin-top: 100px;
+    margin-top: 85px;
+
+    h2 {
+        text-align: center;
+    }
 }
 
 .pluses__list {

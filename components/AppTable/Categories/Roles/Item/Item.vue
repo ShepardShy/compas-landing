@@ -1,6 +1,6 @@
 <template>
     <div class="table-categories__item" :class="props.item.id == props.activeCategory ? 'table-categories__item_active' : ''" :style="`--itemIndex: ${props.index}`">
-        <div class="table-categories__title" :class="props.item.is_admin ? 'table-categories__title_admin' : ''" @click="() => emit('callAction', {action: 'chooseRole', value: props.item.id})">
+        <div class="table-categories__title" @click="() => emit('callAction', {action: 'chooseRole', value: props.item.id})">
             {{ props.item.label }}
         </div>
 

@@ -54,6 +54,14 @@
             display: none;
         }
 
+        .table__item_sticky {
+            background: #fbfcfd !important;
+
+            &:nth-child(even) {
+                background: #EEF3F8 !important;
+            }
+        }
+
         .table__header {
             .table__item {
                 border: none;
@@ -97,7 +105,7 @@
             .table__row {
                 &:nth-child(even) {
                     .table__item, .table__item_sticky {
-                        background: #EEF3F8;
+                        background: #EEF3F8 !important;
                     }
                 }
             }

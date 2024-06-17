@@ -16,12 +16,11 @@
             <div 
                 class="tile-section__item" 
                 :style="`--textColor: ${field.set_color ? field.color : '#000'}`" 
-                :class="setClasses(field)" 
+                :class="setClasses(field), field.can_edit == 0 ? 'tile-section__item_permanent' : ''" 
                 @click="(event) => editField(event, field)"
                 @dragstart="(event) => copyField(event)"
             >
-                <IconDrag class="tile-section__drag" v-if="isEditableSettings"/>
-
+                <IconDrag class="tile-section__drag" v-if="isEditableSettings && is_admin"/>
                 <AppRelation 
                     v-if="field.type == 'relation'"
                     :item="{
@@ -35,10 +34,12 @@
                         options: ['status', 'relation'].includes(field.type) ? field.options : null,
                         lockedOptions: field.choosed,
                     }"
+                    :class="props.loaderState != null ? 'relation_disabled' : ''"
                     :isCanCreate="true"
                     :isMultiple="Boolean(field.is_plural)"
                     :isReadOnly="Boolean(!field.isEdit || !field.can_edit)"
                     :isHaveLink="field.key != 'role_id'"
+                    :isCanEdit="Boolean(field.can_edit)"
                     @changeValue="(data) => changeValue(field.id, data)"
                     @openLink="(data) => openLink({id: data.id, slug: field.related_table})"
                     @showAll="() => openLink({id: field.id, slug: props.slug, tab: field.key, key: field.related_table})"
@@ -128,13 +129,14 @@
                         title: field.title,
                         key: field.key,
                         required: Boolean(field.required),
-                        buttonName: null,
+                        buttonName: field.button_name,
                         value: field.value
                     }"
                     :isReadOnly="Boolean(!field.isEdit || !field.can_edit)"
                     :isShowFileName="Boolean(field.show_file_name)"
                     :isMultiple="true"
                     :isOneFile="false"
+                    :pageId="pageId"
                     @changeValue="(data) => changeValue(field.id, data)"
                 />
                 <AppDate 
@@ -153,7 +155,7 @@
                     @changeValue="(data) => changeValue(field.id, data)"
                 />
                 <AppInputGroup 
-                    v-if="field.type == 'text_group'"
+                    v-else-if="field.type == 'text_group'"
                     :item="{
                         id: field.id,
                         required: Boolean(field.required),
@@ -170,7 +172,7 @@
                     @changeValue="(data) => changeValue(field.id, data)"
                 />
                 <AppMap
-                    v-if="field.type == 'address'"
+                    v-else-if="field.type == 'address'"
                     :item="{
                         id: field.id,
                         title: field.title,
@@ -187,7 +189,27 @@
                     :isShowLabel="true"
                     @changeValue="(data) => changeValue(field.id, data)"
                 />
-                <AppPopup class="tile-section__settings" :isCanSelect="false" :closeByClick="true" v-if="isEditableSettings">
+
+                <AppAutocomplete 
+                    v-else-if="field.type == 'autocomplete'"
+                    :item="{
+                        id: 0,
+                        required: Boolean(field.required),
+                        title: field.title,
+                        placeholder: null,
+                        value: field.value,
+                        key: field.key,
+                        focus: field.focus,
+                        options: field.options,
+                        lockedOptions: []
+                    }"
+                    :isShowId="false"
+                    :isReadOnly="Boolean(!field.isEdit || !field.can_edit)"
+                    @changeValue="(data) => changeValue(field.id, data)"
+                    @searchOptions="(data) => emit('callAction', {action: 'searchOptions', value: data})"
+                />
+
+                <AppPopup class="tile-section__settings" :isCanSelect="false" :closeByClick="true" v-if="isEditableSettings && is_admin">
                     <template #summary>
                         <IconSettings />
                     </template>
@@ -267,7 +289,7 @@
 <script setup>
     import './Body.scss';
 
-    import { inject } from 'vue';
+    import { inject, ref } from 'vue';
 
     import draggable from 'vuedraggable'
     
@@ -286,14 +308,21 @@
     import AppTextarea from "@/components/AppInputs/Textarea/Textarea.vue"
     import AppRelation from "@/components/AppSelects/Relation/Relation.vue"
     import AppInputGroup from '@/components/AppInputs/InputGroup/InputGroup.vue';
+    import AppAutocomplete from '@/components/AppAutocomplete/Input.vue';
 
     const prefix = ref(0)
     const sectionBodyRef = ref(null)
     const section = inject('section')
+    const is_admin = inject('is_admin')
+    const pageId = inject('pageId')
     const isEditableSettings = inject('isEditableSettings')
 
     const props = defineProps({
         slug: {
+            default: null,
+            type: String
+        },
+        loaderState: {
             default: null,
             type: String
         }
@@ -382,13 +411,15 @@
     // Редактирование поля
     const editField = (event, field) => {
         let regexp = /<\/?[a-z][\s\S]*>/i
-        if (field.can_edit && !field.isEdit && !['svg'].includes(event.target.tagName) && regexp.test(event.target.innerHTML)) {
+
+        if (props.loaderState == null && field.can_edit && !field.isEdit && !['svg'].includes(event.target.tagName) && regexp.test(event.target.innerHTML)) {
             field.isEdit = true
             field.focus = true
 
             if (!section.value.state) {
                 section.value.state = true
             }
+
             emit('callAction', {
                 action: 'editField',
                 value: field
@@ -399,7 +430,8 @@
     // Изменение значения
     const changeValue = (id, data) => {
         let findedField = section.value.fields.find(field => field.id == id)
-        if (!findedField.isEdit) {
+
+        if (!findedField.isEdit && props.loaderState == null) {
             section.value.state = true
             findedField.isEdit = true
 
@@ -427,6 +459,16 @@
             }
         } else if (findedField.type == 'text_group') {
             findedField.subfields = data
+        } else if (data.newOption) {
+            findedField.value = data.value
+            findedField.options.push(data.option)
+            emit('callAction', {
+                action: 'addStatusOption',
+                value: {
+                    id: findedField.id,
+                    option: data.option
+                }
+            })
         } else {
             if (['text'].includes(findedField.type) && !findedField.is_plural) {
                 if (findedField.value == null || typeof findedField.value != 'object') {
@@ -440,6 +482,10 @@
             } else {
                 findedField.value = data.value
             }
+        }
+
+        if (findedField.type == 'relation') {
+            findedField.choosed = data.value.lockedOptions
         }
     }
 

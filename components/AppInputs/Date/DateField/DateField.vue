@@ -19,7 +19,7 @@
     > 
         <template #right-sidebar>
             <div class="datapicker__preset-days">
-                <div class="datapicker__preset-item" v-for="day in presetDates[props.isMultiple ? 'plural' : 'default']" @click="changeValue(day.day)">
+                <div class="datapicker__preset-item" v-for="day in presetDates[props.isMultiple ? 'plural' : 'default']" :class="setClasses(day)" @click="changeValue(day.day)">
                     {{ day.title }}
                 </div>
             </div>
@@ -75,8 +75,9 @@
 <script setup>
     import './DateField.scss';
     
-    import { ref, onMounted } from 'vue'
-
+    import { ref, onMounted, watch } from 'vue'
+    
+    import _ from 'lodash'
     import AppButton from '@/components/AppButton/AppButton.vue'
     import AppInput from '@/components/AppInputs/Input/Input.vue';
 
@@ -175,11 +176,6 @@
 
     // Изменение значения в календаре
     const changeValue = (value) => {
-        // Трансформирование значения
-        const transformValue = (value) => {
-            return value == null || value == '' ? null : new Date(value).toLocaleDateString("fr-CA", {year:"numeric", month: "2-digit", day:"2-digit"})
-        }
-
         // Изменение в множественном календаре
         const changeMultiple = (value) => {
             let request = []
@@ -196,6 +192,11 @@
                 request[1] = rangeEnd.value.split('.').reverse().join('-')
             }
 
+            datepicker.value.closeMenu()
+            setTimeout(() => {
+                datepicker.value.openMenu()
+            }, 1);
+
             emit('changeValue', {key: props.item.key, value: request})
         }
 
@@ -208,7 +209,6 @@
 
         if (props.isMultiple) {
             changeMultiple(value)
-            datepicker.value.closeMenu()
         } else {
             changeDefault(value)
         }
@@ -218,9 +218,27 @@
     const setValue = () => {
         if (props.isMultiple) {
             localDate.value = Array.isArray(props.item.value) ? JSON.parse(JSON.stringify(props.item.value)) : []
+
+            if (Array.isArray(props.item.value) && props.item.value.length > 0) {
+                rangeStart.value = transformValue(props.item.value[0]).split('-').reverse().join('.')
+                rangeEnd.value = transformValue(props.item.value[1]).split('-').reverse().join('.')
+            }
         } else {
             localDate.value = typeof props.item.value != 'string' || [null, undefined].includes(props.item.value) ? null : JSON.parse(JSON.stringify(new Date(props.item.value)))
         }
+    }
+
+    const setClasses = (day) => {
+        if (props.isMultiple) {
+            if (rangeStart.value != null && rangeEnd.value != null) {
+                return _.isEqual([transformValue(day.day[0]), transformValue(day.day[1])], [rangeStart.value.split('.').reverse().join('-'), rangeEnd.value.split('.').reverse().join('-')]) ? 'datapicker__preset-item_active' : '' 
+            }
+        }
+    }
+
+    // Трансформирование значения
+    const transformValue = (value) => {
+        return value == null || value == '' ? null : new Date(value).toLocaleDateString("fr-CA", {year:"numeric", month: "2-digit", day:"2-digit"})
     }
 
     // Действия с инпутами в множественном календаре
@@ -261,10 +279,6 @@
 
     onMounted(() => {
         setValue()
-
-        if (props.item.focus) {
-            datepicker.value.openMenu()
-        }
     })
 
     watch(() => props.item.value, () => {

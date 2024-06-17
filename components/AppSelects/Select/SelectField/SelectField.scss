@@ -19,6 +19,10 @@
         @include mixins.elemResolutionOptions(min-content, 34px);
         @include mixins.borderOptions(1px, solid, variables.$color-active, 5px);
         @include mixins.flexBlock($vertical: center, $horizontal: flex-start, $gap: 5px);
+
+        .icon__delete {
+            align-items: center;
+        }
     }
 
     .form-item__value_multiply {
@@ -35,6 +39,18 @@
 
 .select__popup {
     &[open] {
+        .popup__summary {
+            .form-item__input {
+                .form-item__substring {
+                    top: 9px;
+                }
+
+                input {
+                    pointer-events: auto;
+                }
+            }
+        }
+
         input[disabled] {
             opacity: 1;
             @include mixins.borderOptions(1px, solid, variables.$color-blue, 5px);
@@ -134,7 +150,7 @@
             min-width: 120px;
 
             .form-item__substring {
-                top: 9px;
+                top: 6px;
                 right: 10px;
                 color: variables.$color-grey;
                 @include mixins.flexBlock($vertical: center, $horizontal: flex-start, $gap: 10px);
@@ -147,6 +163,7 @@
             & > input {
                 height: 38px;
                 min-height: 38px;
+                pointer-events: none;
                 padding: 9px 30px 9px 15px;
             }
         }

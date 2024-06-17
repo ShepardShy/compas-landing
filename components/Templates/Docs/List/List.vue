@@ -1,5 +1,11 @@
 <template>
     <div class="docs">
+        <AppBreadcrambs 
+            :breadcrumbs="breadcrumbs"
+        />
+        <AppH1>
+            Документы
+        </AppH1>
         <div class="docs__list">
             <NuxtLink :to="`docs/${doc.url}`" class="docs__item" v-for="doc in docs">
                 <div class="docs__title">
@@ -25,8 +31,22 @@
     import './List.scss';
     
     import docs from '../docs.json'
+    import AppH1 from '@/components/AppHeaders/H1/H1.vue';
+    import AppBreadcrambs from '@/components/AppBreadcrambs/Breadcrambs.vue';
 
     const setDate = (date) => {
         return new Date(date).toLocaleDateString("ru-RU", {year:"numeric", month: "2-digit", day:"2-digit"})
     }
+
+    let breadcrumbs = ref([
+        {
+            title: 'Главная страница',
+            link: '/'
+        },
+        {
+            title: 'Документы',
+            link: `/docs`
+        }
+    ])
+
 </script>

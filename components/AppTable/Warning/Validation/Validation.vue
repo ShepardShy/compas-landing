@@ -35,6 +35,7 @@
                         :isUseEnter="false"
                         :enabledAutocomplete="false"
                         :isReadOnly="false"
+                        :isCanEdit="true"
                         :isMultiple="Boolean(item.is_plural)"
                         @changeValue="(data) => changeValue(activeRow.id, data)"
                     />
@@ -119,7 +120,7 @@
                             focus: false
                         }"
                         :isMultiple="Boolean(item.is_plural)"
-                        :isReadOnly="Boolean(item.read_only || !activeRow.isEdit)"
+                        :isReadOnly="false"
                         @changeValue="(data) => changeValue(activeRow.id, data)"
                     />
                     <AppInput

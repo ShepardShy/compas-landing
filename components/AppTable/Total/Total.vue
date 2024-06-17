@@ -9,6 +9,9 @@
                     {{ setCount }} шт.
                 </div>
             </div>
+        </div>
+
+        <div class="total__list">
             <div class="total__item">
                 <div class="total__title">
                     Общий вес:

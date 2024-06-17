@@ -7,6 +7,10 @@
         v-else-if="isShow.state && isShow.type == 'restore'"
     />
 
+    <WarningPayment 
+        v-else-if="isShow.state && isShow.type == 'payment'"
+    />
+
     <WarningValidation 
         v-else-if="isShow.state && isShow.type == 'validation'"
     />
@@ -34,6 +38,7 @@
     import { inject } from 'vue'
 
     import WarningDelete from './Delete/Delete.vue'
+    import WarningPayment from './Payment/Payment.vue'
     import WarningRestore from './Restore/Restore.vue'
     import WarningDeleteRole from './Role/Delete/Delete.vue'
     import WarningValidation from './Validation/Validation.vue'

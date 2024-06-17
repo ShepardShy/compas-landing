@@ -9,6 +9,9 @@
                 </g>
             </g>
         </svg>    
+        <figcaption>
+            <slot></slot>
+        </figcaption>
     </figure>
 </template>
 

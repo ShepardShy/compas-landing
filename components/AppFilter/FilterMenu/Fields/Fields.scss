@@ -7,6 +7,10 @@
     grid-row: 1/2;
     flex-direction: column;
     margin: 15px 0px;
+    @include mixins.scrollBar();
+    overflow: auto;
+    max-height: 100vh;
+
 
     &.filter__fields_empty {
         align-items: center;
@@ -16,7 +20,7 @@
     &.filter__fields_dragging {
         .icon__draggable, 
         .icon__settings {
-            opacity: 0;
+            opacity: 0 !important;
         }
     }
 

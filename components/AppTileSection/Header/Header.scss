@@ -61,9 +61,14 @@
                 }
             }
         }
+
+        .form-item__textarea {
+            margin-bottom: 6px;
+        }
     }
 
     .tile-section__header-actions {
+        margin-top: 2px;
         @include mixins.flexBlock($vertical: center, $horizontal: space-between, $gap: 10px);
 
         .button-text {

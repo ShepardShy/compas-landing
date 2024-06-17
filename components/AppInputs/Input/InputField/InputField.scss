@@ -1,2 +1,18 @@
 @use '@/assets/variables.scss' as variables;
 @use '@/assets/mixins.scss' as mixins;
+
+.input__group {
+    position: relative;
+
+    .icon__password-eye {
+        position: absolute;
+        top: 12px;
+        right: 10px;
+        @include mixins.elemResolutionOptions(25px, 20px);
+
+        svg {
+            position: absolute;
+            @include mixins.elemResolutionOptions(25px, 20px);
+        }
+    }
+}

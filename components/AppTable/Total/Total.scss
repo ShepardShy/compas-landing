@@ -2,33 +2,29 @@
 @use '@/assets/mixins.scss' as mixins;
 
 .total {
-    gap: 5px;
+    gap: 40px;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-end;
-    padding: 20px 20px 20px 0px;
-    position: sticky;
-    left: 0px;
-    width: var(--sectionWidth);
 }
 
 .total__list {
-    background-color: variables.$color-pale-grey;
-    border: 1px solid variables.$color-light-grey;
     border-radius: 5px;
-    min-width: 300px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 13px 15px 15px;
 }
 
 .total__item {
     display: flex;
-    justify-content: space-between;
+    gap: 15px;
 }
 
 .total__value {
     font-weight: 600;
+}
+
+@media (max-width: 1120px) {
+    .total {
+        flex-direction: column;
+        gap: 20px;
+    }
 }

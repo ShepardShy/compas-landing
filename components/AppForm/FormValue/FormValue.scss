@@ -13,6 +13,19 @@
     &.form-item__value_html {
         white-space: break-spaces;
         word-break: auto-phrase;
+
+        .table__cell-group {
+            display: flex;
+            flex-direction: column;
+            margin-left: -6px;
+
+            .table-cell__desc {
+                color: #383838;
+                font-size: 12px;
+                font-weight: 400;
+                margin-left: 6px;
+            }
+        }
     }
 
     &.form-item__value_link {

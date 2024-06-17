@@ -52,8 +52,7 @@
 
     import draggable from 'vuedraggable'
 
-    import {useUserStore} from "~/stores/userStore";
-    import commonScripts from "~/commonScripts/commonScripts";
+    import commonScripts from "@/commonScripts/commonScripts";
 
     import FansyBox from '@/components/AppFansyBox/FansyBox.vue';
     import FansyBoxImage from '@/components/AppFansyBox/FansyBoxImage/FansyBoxImage.vue';
@@ -98,6 +97,10 @@
         isDraggable: {
             default: true,
             type: Boolean
+        },
+        pageId: {
+            default: null,
+            type: Boolean
         }
     })
 
@@ -105,8 +108,6 @@
         'changeValue',
         'initEdit'
     ])
-
-    const userStore = useUserStore()
 
     // Получение значении
     const getValues = () => {
@@ -129,7 +130,7 @@
 
     // Вызов деиствий и изменение значений
     const callAction = (data) => {
-        const supportedExtensions = ['png', 'svg', 'jpeg', 'jpg', 'webp', 'pdf', 'gif', 'mp4', 'xlsx', 'xls', 'mp3', 'doc', 'docx', 'txt', 'pptx'];
+        const supportedExtensions = ['png', 'heic', 'svg', 'jpeg', 'jpg', 'webp', 'pdf', 'gif', 'mp4', 'xlsx', 'xls', 'mp3', 'doc', 'docx', 'txt', 'pptx'];
 
         // Скачивание файла
         const downloadFile = async () => {
@@ -222,9 +223,9 @@
                         }
                     };
 
-                    ajax.open('POST', 'https://opt6.compas.pro/api/files/store', true);
-
-                    ajax.setRequestHeader("Authorization", `Bearer ${userStore.userToken}`);
+                    ajax.open('POST', `https://opt6.compas.pro/api/files/store?field_id=${props.item.id}&page_id=${props.pageId}`, true);
+                    // ${userStore.userToken}
+                    ajax.setRequestHeader("Authorization", `Bearer `);
                     ajax.send(data);
                 }
 

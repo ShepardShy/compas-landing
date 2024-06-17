@@ -21,6 +21,8 @@
 
     import ButtonText from "@/components/AppButton/ButtonText/ButtonText.vue";
 
+    import {ref} from "vue";
+
     const props = defineProps({
         text: {
             default: '',

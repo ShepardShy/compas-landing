@@ -17,7 +17,7 @@
 <script setup>
     import './Filter.scss';
 
-    import { ref, onMounted, provide, onUnmounted } from 'vue'
+    import { ref, onMounted, provide, onUnmounted, watch } from 'vue'
     
     import _ from 'lodash'
     import FilterMenu from './FilterMenu/FilterMenu.vue';
@@ -31,6 +31,7 @@
     let showMenu = ref(false)
     let activeFields = ref([])
     let backupFields = ref([])
+    let activeFilter = ref(null)
     const filterRef = ref(null)
 
     const props = defineProps({
@@ -45,6 +46,14 @@
         tabs: {
             default: null,
             type: Object
+        },
+        loaderState: {
+            default: null,
+            type: String
+        },
+        is_admin: {
+            default: false,
+            type: Boolean
         }
     })
 
@@ -52,10 +61,10 @@
         'actionFilter'
     ])
 
-    onMounted(async () => {
+    const setFilter = async () => {
         saves.value = JSON.parse(JSON.stringify(props.saves))
         saves.value.sort((prev, next) => prev.sort - next.sort)
-        fields.value = await renderScripts('filter', JSON.parse(JSON.stringify(props.fields)))
+        fields.value = await renderScripts('filter', JSON.parse(JSON.stringify(props.fields.filter(p => p.type != 'file'))))
         document.addEventListener('mousedown', (event) => toggleMenu(event))
 
         if (saves.value.find(item => item.is_hidden) == undefined) {
@@ -70,14 +79,30 @@
 
         let hiddenFilter = saves.value.find(item => item.is_hidden)
 
-        for (let field of hiddenFilter.fields) {
+        for (let field of hiddenFilter.fields.filter(p => p.type != 'file')) {
             let findedField = fields.value.find(item => item.key == field.key)
-            findedField.enabled = true
-            findedField.value = null
+
+            if (findedField) {
+                findedField.enabled = true
+                findedField.value = null
+            }
         }
 
         setTabsFields()
-        activeFields.value = fields.value.filter(field => field.enabled)
+
+        let data = []
+
+        for (let field of hiddenFilter.fields) {
+            let findedActiveField = fields.value.find(item => (item.key == field.key && item.enabled))
+            if (findedActiveField) {
+                data.push(findedActiveField)
+            }
+        }
+        activeFields.value = data
+    }
+
+    onMounted(async () => {
+        setFilter()
     })
 
     const setTabsFields = () => {
@@ -138,7 +163,31 @@
                 }
             }
 
+            const checkActiveFilter = () => {
+                let findedFilter = saves.value.find(filter => filter.id == activeFilter.value)
+
+                if (findedFilter) {
+                    if (findedFilter.fields.length != activeFields.value.filter(field => ![null, undefined].includes(field.value) && field.value != '').length) {
+                        return true
+                    }
+
+                    for (let field of findedFilter.fields) {
+                        let findedField = activeFields.value.find(item => item.key == field.key)
+
+                        if (findedField.value != field.value) {
+                            return true
+                        }
+                    }
+                    return false
+                }
+
+            }
+
             tabs.value = []
+            
+            if (checkActiveFilter()) {
+                activeFilter.value = null
+            }
 
             if (![null, undefined].includes(search.value) && search.value != '') {
                 tabs.value.push({
@@ -289,10 +338,11 @@
         }
 
         // Смена активного фильтра
-        const changeActiveFilter = (status) => {
+        const changeActiveFilter = (item, status) => {
             let findedField = null
             let newFields = false
             let hiddenFilter = saves.value.find(filter => filter.is_hidden)
+            activeFilter.value = item.id
 
             for (let field of activeFields.value) {
                 field.value = null
@@ -380,6 +430,10 @@
             findedFilter.fields = changedFields
             clearActionsFilter()
 
+            if (findedFilter.title == '' || findedFilter.title == null) {
+                findedFilter.title = 'Без названия'
+            }
+
             if (findedFilter.is_new) {
                 emit('actionFilter', {action: 'create', value: findedFilter})
                 delete findedFilter.is_new
@@ -463,7 +517,7 @@
 
             // Смена активного фильтра
             case 'changeActiveFilter':
-                changeActiveFilter(true)
+                changeActiveFilter(data.value, true)
                 break;
 
             // Инициализация создания фильтра
@@ -480,6 +534,8 @@
     provide('search', search)
     provide('fields', fields)
     provide('activeFields', activeFields)
+    provide('activeFilter', activeFilter)
+    provide('is_admin', props.is_admin)
 
     onUnmounted(() => {
         saves.value = []
@@ -491,27 +547,9 @@
         setTabsFields()
     })
 
-    watch(() => props.saves, async () => {
-        saves.value = JSON.parse(JSON.stringify(props.saves))
-        saves.value.sort((prev, next) => prev.sort - next.sort)
-        fields.value = await renderScripts('filter', JSON.parse(JSON.stringify(props.fields)))
-        if (saves.value.find(item => item.is_hidden) == undefined) {
-            saves.value.push({
-                id: -1,
-                title: "Фильтр",
-                is_hidden: 1,
-                sort: 0,
-                fields: []
-            })
+    watch(() => props.loaderState, (next, prev) => {
+        if (prev == 'loading') {
+            setFilter()
         }
-
-        let hiddenFilter = saves.value.find(item => item.is_hidden)
-
-        for (let field of hiddenFilter.fields) {
-            let findedField = fields.value.find(item => item.key == field.key)
-            findedField.enabled = true
-            findedField.value = null
-        }
-        activeFields.value = fields.value.filter(field => field.enabled)    
-    }, {deep: true})
+    })
 </script>

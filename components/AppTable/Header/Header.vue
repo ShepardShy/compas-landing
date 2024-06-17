@@ -37,8 +37,6 @@
     const menu = inject('menu')
     const fields = inject('fields')
     const tableRef = inject('tableRef')
-    const isDinamyc = inject('isDinamyc')
-    const isPermanentEdit = inject('isPermanentEdit')
     
     let draggingItem = ref(null)
     let tableCopy = ref(null)
@@ -168,10 +166,7 @@
             copyTable()
             setDragImage(value.event)
             document.addEventListener("dragover", onMouseMove);
-
-            if (isDinamyc) {
-                tableRef.value.closest('.table-template__body_dinamyc').classList.add('table-template__body_drag')
-            }
+            tableRef.value.closest('.table-template__body').classList.add('table-template__body_drag')
         }
 
         // Конец перетаскивания
@@ -196,10 +191,7 @@
                 tableCopy.value.remove()
                 tableRef.value.classList.remove('table_hidden')
                 removeDragImage()
-
-                if (isDinamyc) {
-                    tableRef.value.closest('.table-template__body_dinamyc').classList.remove('table-template__body_drag')
-                }
+                tableRef.value.closest('.table-template__body').classList.remove('table-template__body_drag')
             }, 10);
         }
 
@@ -233,7 +225,7 @@
                     }
                 })
 
-                event.dataTransfer.setDragImage(table, event.offsetX, event.OffsetY);
+                event.dataTransfer.setDragImage(table, event.offsetX, event.offsetY);
             }
         }
 
@@ -271,6 +263,7 @@
         }
     }
 
+    // Скролл таблицы по горизонтали
     const scrollTable = _.throttle(async function () {
         resizeTable.setStickyClass(tableRef.value)
     }, 10)
@@ -279,7 +272,7 @@
         setTimeout(() => {
             resizeTable.resizableGrid(tableRef.value, fields.value)
         }, 100);     
-
+ 
         tableRef.value.parentNode.addEventListener('scroll', scrollTable)
         document.addEventListener('mouseup', updateTableHeader)
         document.addEventListener('mousedown', (e) => {
@@ -294,7 +287,6 @@
             }, 10);
             setTimeout(() => {
                 resizeTable.setStickyClass(tableRef.value)
-                resizeTable.resizableGrid(tableRef.value, fields.value)
             }, 100);
         }
     }, {deep: true})

@@ -47,8 +47,8 @@
 
 <script setup>
     import './StatusField.scss';
+    import {ref, onMounted, watch} from 'vue'
 
-    import api from "~/helpers/api";
     import AppPopup from '@/components/AppPopup/Popup.vue';
     import PopupScripts from '@/components/AppPopup/Scripts.js';
     import StatusOption from '../StatusOption/StatusOption.vue';
@@ -128,6 +128,7 @@
         // Смена отображения палитры
         const toggleColorPicker = (state) => {
             colorPicker.value.state = state
+            colorPicker.value.color = activeOption.value ? activeOption.value.color : '#b6b6b6'
 
             if (state) {
                 popupRef.value.popupRef.classList.add('status__popup_colorpicker')
@@ -163,15 +164,14 @@
                 
             // Отправка созданной скрытой опции на сервер
             const getHiddenOption = async () => {
-                let response = await api.callMethod("POST", `field/status`, {
-                    field_id: props.item.id,
-                    color: colorPicker.value.color,
-                })
-
-                options.value = options.value.filter(option => !option.is_new)
-                options.value.push(response)
-                activeOption.value = response.label
-                emit('changeValue', {key: props.item.key, value: response.value})
+                // let response = await api.callMethod("POST", `field/status`, {
+                //     field_id: props.item.id,
+                //     color: colorPicker.value.color,
+                // })
+                // options.value = options.value.filter(option => !option.is_new)
+                // options.value.push(response)
+                // activeOption.value = response.label
+                // emit('changeValue', {key: props.item.key, value: response.value, newOption: true, option: response})
             }
 
             createHiddenOption()

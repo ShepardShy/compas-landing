@@ -113,6 +113,15 @@ section {
             align-items: center;
             justify-items: flex-start;
             grid-template-columns: 1fr;
+
+            .button_add {
+                width: max-content;
+                min-width: auto;
+
+                span {
+                    display: none;
+                }
+            }
         }
     }
 }
@@ -120,10 +129,11 @@ section {
 @media (max-width: 650px) {
     section {
         &.section__header {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
+            display: grid;
+            grid-gap: 10px;
+            align-items: center;
+            justify-items: flex-start;
+            grid-template-columns: 1fr;
 
             .gamburger {
                 top: 0;

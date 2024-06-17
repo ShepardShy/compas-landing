@@ -7,7 +7,7 @@
             {{ userStore.authError.text }}
         </div>
 
-        <AppInput
+        <!-- <AppInput
             class="auth__input auth__input_substr"
             :item="{
                 id: 0,
@@ -22,7 +22,7 @@
             :disabled="false"
             :enabledAutocomplete="true"
             @changeValue="(data) => changeValue(data)"
-        />
+        /> -->
         <AppInput
             class="auth__input"
             :item="{
@@ -106,8 +106,8 @@
     import { useUserStore } from '@/stores/userStore.js'
     const userStore = useUserStore()
 
+    // portalName: '',
     let userData = ref({
-        portalName: '',
         email: '',
         password: '',
         repeatPassword: '',

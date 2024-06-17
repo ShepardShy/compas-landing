@@ -2,17 +2,56 @@
 @use '@/assets/mixins.scss' as mixins;
 
 .map {
-    gap: 10px;
+    gap: 5px;
     display: flex;
     flex-direction: column;
 
     .button-text {
         font-size: 15px;
+        margin-bottom: 5px;
+    }
+
+    .ymaps-2-1-79-map {
+        width: 100% !important;
+
+        &:not(:last-child) {
+            display: none !important;
+        }
+    }
+
+    .ymaps-2-1-79-controls__control {
+        inset: 153px auto auto 10px !important;
+    }
+
+    .ymaps-2-1-79-controls__bottom {
+        display: none;
+    }
+
+    .ymaps-2-1-79-copyrights-pane {
+        display: none !important;
+    }
+
+    .map__link {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 14px;
+        background: variables.$color-white;
+        width: max-content;
+        padding: 3px 8px;
+        border-radius: 3px;
+        box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .15), 0 2px 5px -3px rgba(0, 0, 0, .15);
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        
+        .map__icon {
+            @include mixins.elemResolutionOptions(15px, 15px);
+        }
     }
 }
 
 .map__container {
-    max-height: 350px;
     position: relative;
 
     .ymaps-2-1-79-copyrights-pane,

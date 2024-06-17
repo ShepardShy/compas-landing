@@ -3,7 +3,7 @@
 
 .slider {
     max-width: 90vw;
-    padding-left: 35px !important;
+    padding-left: 25px !important;
 
     .swiper-wrapper {
         margin-bottom: 30px;
@@ -11,7 +11,7 @@
 
     .swiper-slide {
         opacity: 0;
-        padding-right: 35px;
+        padding-right: 25px;
     
         &.swiper-slide-visible {
             opacity: 1;
@@ -25,12 +25,14 @@
     }
 
     .swiper-button-next {
+        right: var(--swiper-navigation-sides-offset,33px) !important;
         &::after {
             content: url('/icons/scrollButtonRight.svg');
         }
     }
 
     .swiper-button-prev {
+        left: var(--swiper-navigation-sides-offset,32px) !important;
         &::after {
             content: url('/icons/scrollButtonLeft.svg');
         }

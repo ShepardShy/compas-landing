@@ -19,6 +19,18 @@
         flex-direction: column;
         @include mixins.sortableGhost();
     
+        &.tile-section__item_permanent {
+            .form-item__title {
+                color: variables.$color-grey;
+            }
+
+            .popup__option  {
+                .form-item__title {
+                    color: variables.$color-black;
+                }
+            }
+        }
+
         .tile-section__settings {
             top: 0px;
             opacity: 0;

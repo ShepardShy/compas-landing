@@ -19,9 +19,9 @@
     top: -35px;
 
     iframe {
-        @include mixins.elemResolutionOptions(600px, 356px);
+        @include mixins.elemResolutionOptions(600px, 361px);
         overflow: hidden;
-        border-radius: 5px;
+        border-radius: 20px;
     }
 }
 

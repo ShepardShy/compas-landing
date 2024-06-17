@@ -8,16 +8,13 @@
         border-right: 1px solid variables.$color-light-grey;
         border-bottom: 1px solid variables.$color-light-grey;
 
-        .table-item__title, .form-item__checkbox {
-            overflow: hidden;
+        &.table__item_disabled {
+            pointer-events: none;
         }
 
-        .table-item__title_html {
-            gap: 0px;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            flex-direction: column;
+        .table-item__title, .form-item__checkbox {
+            overflow: hidden;
+            @include mixins.userSelect(none);
         }
 
         &.sortable-ghost {
@@ -50,21 +47,48 @@
             height: 500vh;
         }
     }
+
+    &.table__header_copy {
+        position: fixed;
+        top: 0px;
+        max-width: var(--sectionWidth);
+        overflow: hidden;
+        z-index: 100;
+        background: variables.$color-white;
+
+        .table-item__drag-area, 
+        .table-item__border {
+            pointer-events: none;
+        }
+    }
 }
 
 .table_resizing {
     .table__header {
         .table__item {
-            &:hover {
+            &:hover, &.table__item_resizing {
                 .table-item__border {
                     height: auto;
                 }
             }
+        }
+    }
 
-            &.table__item_resizing {
-                .table-item__border {
-                    height: 500vh;
-                }
+    .table-item__drag-area {
+        pointer-events: none;
+    }
+}
+
+.table-template__body_empty {
+    .table__header {
+        .table__item {
+            .table-item__border {
+                height: 100% !important;
+            }
+
+            &.sortable-ghost {
+                border-radius:  5px;
+                border: 2px dashed variables.$color-blue-grey;
             }
         }
     }

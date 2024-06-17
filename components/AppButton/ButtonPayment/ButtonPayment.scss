@@ -1,0 +1,24 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.button-payment {
+    cursor: pointer;
+    width: max-content;
+    overflow: hidden;
+    white-space: nowrap;
+    text-decoration: underline;
+    @include mixins.userSelect(none);
+    color: variables.$color-blue;
+    @include mixins.textOptions(15px, 400, normal);
+
+    &:hover {
+        text-decoration: none;
+    }
+
+    &.button-payment_disabled {
+        color: variables.$color-blue-grey;
+        cursor: text;
+        text-decoration: none;
+        pointer-events: none;
+    }
+}

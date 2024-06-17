@@ -56,6 +56,19 @@
     .dp__cell_inner,
     .dp__inner_nav {
         @include mixins.hoverElem();
+
+        &.dp__active_date, &.dp__range_end, &.dp__range_start {
+            &:hover {
+                background: var(--dp-primary-color);
+                filter: brightness(1.4);
+            }
+        }
+
+        &.dp__range_start {
+            &.dp__range_end {
+                border-radius: 5px;
+            } 
+        }
     }
 
     .dp__today {
@@ -67,6 +80,8 @@
             color: variables.$color-white;
         }
     }
+
+    
 
     .dp__calendar_row {
         margin: 0px;
@@ -149,7 +164,7 @@
     }
 
     .dp__menu_index {
-        z-index: 5;
+        z-index: 40;
         background: variables.$color-white;
         border-radius: 5px;
         overflow: hidden;

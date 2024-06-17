@@ -1,12 +1,12 @@
 <template>
 	<AppSection class="table__categories table-categories">
-		<SectionHeader :title="'Пользователи по ролям'">
+		<SectionHeader :title="'Роли'">
 			<ButtonText @click="() => emit('callAction', { action: 'initCreateRole', item: null })">
 				Создать
 			</ButtonText>
 		</SectionHeader>
 
-		<div class="table-categories__list">
+		<div class="table-categories__list table-categories__list_roles">
 			<CategoryItem 
 				v-for="item in categories"
 				:item="item"

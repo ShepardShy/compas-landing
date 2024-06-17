@@ -16,6 +16,7 @@ export const useUserStore = defineStore('userStore', {
             authData: {
                 email: '',
                 password: '',
+                portalName: '',
                 remember_me: false
             },
             authError: {
@@ -33,28 +34,20 @@ export const useUserStore = defineStore('userStore', {
 
     // actions
     actions: {
-        async getUserInfo() {
-            this.user =  await api.callMethod("GET", `profile`)
-            this.user.avatar = this.user.avatar != null ? JSON.parse(this.user.avatar)[0] : ''
-        },
-
-        async getRoles() {
-            this.roles = await api.callMethod("GET", `roles`)
-        },
-
         async logIn(data, authRef) {
             let response = null
             try {
                 this.authButtonLoad = true
-                response = await api.callMethod("POST", `auth`, data)
+                response = await api.callMethod("POST", `auth`, data, {Authorization: 'Bearer null'}, true, true, this.authData.portalName)
                 if (response.code == 401) {
                     this.authData = {
+                        portalName: '',
                         email: '',
                         password: ''
                     }
                     this.authError = {
                         status: true,
-                        text: response.message
+                        text: 'Данные введены неверно'
                     }
                     return
                 } else {
@@ -64,7 +57,7 @@ export const useUserStore = defineStore('userStore', {
                         status: false,
                         text: ''
                     }
-                    window.location.href = `http://compas.plusmario.beget.tech/${response.url}`;
+                    window.location.href = `http://${this.authData.portalName}/${response.url}`;
                 }
             } catch (error) {
                 console.log(error);

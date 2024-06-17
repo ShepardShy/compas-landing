@@ -2,14 +2,5 @@
 @use '@/assets/mixins.scss' as mixins;
 
 h2 {
-    font-weight: 600;
-    color: #383838;
-    font-family: MyriadPro;
     font-size: variables.$font-size-h2;
-}
-
-@media (max-width: 420px) {
-    h2 {
-        font-size: 31px;
-    }
 }

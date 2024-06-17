@@ -16,6 +16,8 @@
             :actionType="props.actionType"
             :isPermanentEdit="props.isPermanentEdit"
             @clickRow="() => clickRow(true)"
+            @dragRowStart="(event) => setDragImage(event)"
+            @dragRowEnd="(event) => dragRowEnd(event)"
             @callAction="(data) => emit('callAction', data)"
         />
     </tr>
@@ -68,6 +70,33 @@
             } else {
                 rowRef.value.classList.remove('table_row_clicked')
             }
+        }
+    }
+
+    // Создание колонки для дататрансфера
+    const setDragImage = (event) => {
+        if (document.getElementById('clone-elem') == null) {
+                let tbody = document.createElement("tbody")
+                tbody.classList.add('table__body')
+                let row = rowRef.value.cloneNode(true)
+                tbody.id = "clone-elem";
+                row.classList.add('table__row_clone')
+                row.classList.add('table__row')
+                row.style.width = `${ rowRef.value.offsetWidth}px`
+                let items = rowRef.value.querySelectorAll('.table__item')
+                row.querySelectorAll('.table__item').forEach((element, index) => {
+                    element.style.setProperty("--defaultWidth", `${items[index].offsetWidth.toFixed(2)}px`)
+                });
+                tbody.appendChild(row)
+                document.body.appendChild(tbody);
+                event.dataTransfer.setDragImage(tbody, event.offsetX, event.offsetY);
+        }
+    }
+
+    const dragRowEnd = (event) => {
+        let removingItem = document.getElementById('clone-elem')
+        if (removingItem != null) {
+            removingItem.remove()
         }
     }
 </script>

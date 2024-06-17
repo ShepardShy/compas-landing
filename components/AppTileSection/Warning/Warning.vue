@@ -4,8 +4,9 @@
     />
 
     <WarningSettings 
-        v-else-if="isShow.state && (isShow.type == 'settings' || isShow.type == 'create')"
+        v-else-if="props.loaderState == 'createField' || (isShow.state && (isShow.type == 'settings' || isShow.type == 'create'))"
         :loaderState="props.loaderState"
+        :sections="props.sections"
     />
 </template>
 
@@ -23,6 +24,10 @@
         loaderState: {
             default: null,
             type: String
+        },
+        sections: {
+            default: [],
+            type: Array
         }
     })
 

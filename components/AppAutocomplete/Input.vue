@@ -2,6 +2,7 @@
     <FormItem
         class="form-item__autocomplete autocomplete"
         :required="props.item.required"
+        :class="[null, undefined].includes(props.item.value) || props.item.value == '' ? 'autocomplete_empty' : ''"
     >
         <FormLabel
             v-show="props.item.title != null && props.item.title != ''"
@@ -47,6 +48,7 @@
                 </AppInput>
             </template>
             <template #content>
+                <AppLoader class="popup__loader" v-if="loaderStatus"/>
                 <PopupOption @click="() => callAction({action: 'changeValue', value: null})">
                     Не выбрано
                 </PopupOption>
@@ -75,7 +77,7 @@
 <script setup>
     import './Input.scss';
 
-    import { ref, onMounted, watch } from 'vue'
+    import { ref, onMounted, watch, inject } from 'vue'
 
     import _ from 'lodash'
     import AppPopup from '@/components/AppPopup/Popup.vue';
@@ -84,6 +86,7 @@
     import FormLabel from '@/components/AppForm/FormLabel/FormLabel.vue';
     import PopupOption from '@/components/AppPopup/PopupOption/PopupOption.vue';
     import PopupScripts from '@/components/AppPopup/Scripts.js';
+    import AppLoader from '@/components/AppLoader/AppLoader.vue';
 
     const popupRef = ref(null)
     const nullOption = {
@@ -95,6 +98,8 @@
     let search = ref(null)
     let options = ref([])
     let backupOptions = ref([])
+
+    const actionState = inject('actionState')
 
     const props = defineProps({
         item: {
@@ -130,6 +135,10 @@
         anotherTitle: {
             default: null,
             type: String
+        },
+        loaderStatus: {
+            default: false,
+            type: Boolean
         }
     })
 
@@ -151,11 +160,16 @@
                 popupRef.value.popupRef.setAttribute('open', true)
             } else {
                 event.preventDefault()
-                if (popupRef.value.popupRef.hasAttribute('open')) {
-                    popupRef.value.popupRef.removeAttribute('open')
-                }  else {
-                    popupRef.value.popupRef.setAttribute('open', true)
-                }
+                setTimeout(() => {
+                    if (popupRef.value.popupRef.hasAttribute('open')) {
+                        popupRef.value.popupRef.removeAttribute('open')
+                        popupRef.value.popupRef.classList.remove('popup_up')
+                        popupRef.value.popupRef.classList.remove('popup_visible')
+                        popupRef.value.popupRef.classList.remove('popup_right')
+                    }  else {
+                        popupRef.value.popupRef.setAttribute('open', true)
+                    }
+                }, 5);
             }
         } 
     }
@@ -190,7 +204,8 @@
         // Установка выбранной опции
         const setActiveOption = (value) => {
             search.value = ''
-            let findedOption = options.value == null ? null : options.value.find(option => _.isEqual(option.value, value))
+            let findedOption = options.value == null ? null : options.value.find(option => _.isEqual(String(option.value), String(value)))
+
             if ([null, undefined].includes(findedOption)) {
                 activeOption.value = nullOption
             } else {
@@ -202,6 +217,9 @@
         // Поиск опций
         const searchOptions = (value) => {
             search.value = value
+            if (!popupRef.value.popupRef.hasAttribute('open')) {
+                popupRef.value.popupRef.setAttribute('open', true)
+            }
             emit('searchOptions', {key: props.item.key, value: search.value})
         }
 
@@ -211,13 +229,12 @@
                 search.value = null
                 options.value = backupOptions.value
                 setActiveOption(value)
-                emit('changeValue', {
-                    key: props.item.key,
-                    value: value
-                })
-
                 setTimeout(() => {
                     PopupScripts.hideDetails(popupRef.value.popupRef)
+                    emit('changeValue', {
+                        key: props.item.key,
+                        value: value
+                    })
                 }, 10);
             }
         }
@@ -268,6 +285,12 @@
         } else {
             search.value = activeOption.value.id == null ? null : activeOption.value.text
         }
+
+        if (actionState) {
+            watch(() => actionState.value, () => {
+                search.value = props.anotherTitle == null ? null : props.anotherTitle
+            })
+        }
     })
 
     watch(() => props.item.options, () => {
@@ -287,6 +310,7 @@
             value: props.item.value
         })
     })
+
 
     defineExpose({
         popupRef

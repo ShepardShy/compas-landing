@@ -17,7 +17,7 @@
                 Изменить имя
             </PopupOption>
 
-            <PopupOption>
+            <!-- <PopupOption>
                 <AppCheckbox 
                     :item="{
                         id: props.item.id,
@@ -33,7 +33,7 @@
                         }
                     })"
                 />
-            </PopupOption>
+            </PopupOption> -->
 
             <PopupOption 
                 class="popup__option_red" 

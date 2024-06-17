@@ -4,6 +4,7 @@
             type="text"
             ref="textareaRef"
             autocomplete="off"
+            autocorrect="off"
             :disabled="props.disabled"
             :value="mirrorText"
             :placeholder="props.item.placeholder"
@@ -152,9 +153,12 @@
         }
         new ResizeObserver(resize).observe(textareaRef.value)
 
-        if (props.item.focus) {
-            textareaRef.value.focus()
-        }
+
+        setTimeout(() => {
+            if (props.item.focus) {
+                textareaRef.value.focus()
+            }
+        }, 10);
     })
 
     const resize = () => {

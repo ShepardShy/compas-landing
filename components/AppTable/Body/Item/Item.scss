@@ -53,10 +53,20 @@
 
     &.table__item_sticky {
         z-index: 20;
-        background: #f9f9fa;
+        background: #f9f9fa !important;
 
         &.table__item_clicked {
             z-index: 30;
+        }
+
+        .table-item__drag-area {
+            pointer-events: none;
+        }
+    }
+
+    .table-item__content_read-only {
+        &.form-item__textarea {
+            display: flex;
         }
     }
 
@@ -64,7 +74,28 @@
         color: var(--colorItem);
         padding: 10px;
         -webkit-tap-highlight-color: transparent;
-        @include mixins.flexBlock($vertical: center, $horizontal: space-between, $gap: 5px);
+        @include mixins.flexBlock($vertical: center, $horizontal: center, $gap: 5px);
+
+        &.table-item__content_text {
+            .form__item  {
+                justify-content: center;
+            }
+        }
+
+        &.table-item__content_address {
+            .form-item__substring {
+                z-index: 2;
+                right: 10px;
+                white-space: nowrap;
+                background: #fff;
+                pointer-events: none;
+
+                &::before {
+                    border-radius: 0px 5px 5px 0px;
+                    border-right: 1px solid variables.$color-grey;
+                }
+            }
+        }
     }
 
     .table-item__icon {
@@ -82,8 +113,8 @@
     .table-item__drag-area {
         height: 100%;
         position: absolute;
-        width: calc(100% - 40px);
-        @include mixins.elemPositionOptions(0px, 20px);
+        width: calc(100% - 10px);
+        @include mixins.elemPositionOptions(0px, 5px);
         z-index: 3;
     }
 
@@ -116,6 +147,10 @@
                 border-radius: 0px;
                 border-top: none;
                 border-bottom: none;
+                
+                .table-item__content {
+                    padding: 10px 8px;
+                }
             }
 
             .table-item__content {
@@ -124,25 +159,25 @@
                 }
 
                 .icon__delete {
+                    @include mixins.elemResolutionOptions(20px, 20px);
+
                     svg {
-                        @include mixins.elemResolutionOptions(20px, 20px);
+                        * {
+                            fill: variables.$color-grey;
+                        }
                     }
 
-                    &.icon__delete_grey {
+                    &:hover {
                         svg {
                             * {
-                                fill: variables.$color-grey;
-                            }
-                        }
-    
-                        &:hover {
-                            svg {
-                                * {
-                                    fill: variables.$color-active;
-                                }
+                                fill: variables.$color-active;
                             }
                         }
                     }
+                }
+
+                &.table-item__content_text {
+                    overflow: hidden;
                 }
 
                 &.table-item__content_file {
@@ -219,11 +254,29 @@
 
                 .select__popup {
                     .popup__summary {
+                        overflow: hidden;
+
                         .form-item__input {
                             .form-item__substring {
                                 top: 6px;
                             }
                         }
+                    }
+
+                    &[open] {
+                        .popup__summary {
+                            .form-item__input {
+                                .form-item__substring {
+                                    top: 9px;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .autocomplete__popup {
+                    .popup__summary {
+                        overflow: hidden;
                     }
                 }
             }

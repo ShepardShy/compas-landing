@@ -125,7 +125,7 @@
         padding: 10px;
 
         .icon__draggable {
-            position: static;
+            position: relative;
             @include mixins.setSVGColor(variables.$color-blue-grey);
 
             &:hover {

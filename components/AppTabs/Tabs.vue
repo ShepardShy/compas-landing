@@ -7,7 +7,7 @@
                     class="popup__tabs" 
                     :closeByClick="true" 
                     :isCanSelect="false"
-                    :class="tab.childs.find(p => p.alias == activeTab.tab) != undefined ? 'tabs__item_active' : ''" 
+                    :class="tab.childs.find(p => p.alias == activeTab.tab) != undefined ? 'tabs__item_active' : '', props.isCanChange == false ? 'tabs__item_disabled' : ''" 
                 >
                     <template #summary>
                         <div class="tabs__item">
@@ -28,13 +28,13 @@
                 <div 
                     v-else 
                     class="tabs__item" 
-                    :class="activeTab.tab == tab.tab ? 'tabs__item_active' : ''"
+                    :class="activeTab.tab == tab.tab ? 'tabs__item_active' : '', !props.isCanChange ? 'tabs__item_disabled' : ''"
                 >
                     <span class="tabs__item-text" @click="() => callAction({action: 'changeTab', value: tab.tab})">
                         {{ tab.title }}
                     </span>
 
-                    <AppPopup class="popup__actions" :isCanSelect="false" :closeByClick="true" v-if="props.haveSettings">
+                    <AppPopup class="popup__actions" :isCanSelect="false" :closeByClick="true" v-if="props.haveSettings && Boolean(props.is_admin)">
                         <template #summary>
                             <IconSettings />
                         </template>
@@ -129,7 +129,7 @@
 <script setup>
     import './Tabs.scss';
     
-    import { onMounted, ref, inject } from 'vue'
+    import { onMounted, ref, inject, provide, watch } from 'vue'
     import draggable from 'vuedraggable'
 
     import IconDrag from '@/components/AppIcons/Drag/Drag.vue'
@@ -148,7 +148,19 @@
             default: [],
             type: Object
         },
+        is_admin: {
+            default: false,
+            type: Boolean
+        },
         haveSettings: {
+            default: true,
+            type: Boolean
+        },
+        userRole: {
+            default: null,
+            type: Number
+        }, 
+        isCanChange: {
             default: true,
             type: Boolean
         }
@@ -158,7 +170,14 @@
         'callAction'
     ])
 
-    let activeTab = inject('activeTab')
+    let activeTab = ref(
+        {
+            id: 0,
+            title: 'Общие',
+            tab: 'order',
+            enabled: true
+        }
+    )
     let settingsTab = ref(null)
     let isShow = ref({
         state: false,
@@ -219,7 +238,7 @@
                     role: data
                 }
             })
-            settingsTabs.value.saves.isShow = false
+            isShow.value.state = false
         }
 
         // Изменение значений опций
@@ -231,7 +250,7 @@
         // Скрытие вкладки
         const hideTab = (tab) => {
             tabs.value.find(p => p.id == tab.id).enabled = false
-            saveSettings('myself')
+            settingsTabs.value.saves.isShow = true
         }
 
         // Смена вкладки
@@ -298,14 +317,17 @@
         settingsTab.value = tab
     }
 
-    onMounted(() => {
+    const setTabs = () => {
         tabs.value = props.tabs
         activeTab.value.tab = Array.isArray(tabs.value) ? tabs.value.length > 0 ? tabs.value[0].tab : null : null
+    }
+
+    onMounted(() => { 
+        setTabs()
     })
 
     watch(() => props.tabs, () => {
-        tabs.value = props.tabs
-        activeTab.value.tab = Array.isArray(tabs.value) ? tabs.value.length > 0 ? tabs.value[0].tab : null : null
+        setTabs()
     }, {
         deep: true
     })

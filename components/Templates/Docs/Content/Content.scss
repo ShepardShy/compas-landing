@@ -48,34 +48,23 @@
     &.docs-nav_fixed {
         position: fixed;
         top: 20px;
-        right: 375px;
+        left: var(--contentPos);
         width: 270px;
     }
 }
 
 .docs-nav__header {
+    font-weight: 600;
     padding: 10px 20px;
     border-bottom: 1px solid #e2e5e9;
 }
 .docs-nav__list {
     display: flex;
     flex-direction: column;
-    position: relative;
-
-    &::before {
-        content: '';
-        height: var(--scrollPercent);
-        background: variables.$color-blue;
-        width: 2px;
-        border-radius: 5px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 2;
-    }
 }
 .docs-nav__item {
     padding: 10px 15px;
+    position: relative;
 
     &.docs-nav__item_H2 {
         padding-left: 40px;
@@ -90,6 +79,19 @@
     
     &.docs-nav__item_active {
         background: variables.$color-hover;
+    }
+
+    &.docs-nav__item_scrolled {
+        &::before {
+            content: '';
+            height: 100%;
+            background: variables.$color-blue;
+            width: 2px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+        }
     }
 
     &:hover {

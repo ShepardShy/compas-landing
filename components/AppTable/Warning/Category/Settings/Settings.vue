@@ -96,17 +96,21 @@
 
     // Получение списка категорий
     const getCategories = (categories) => {
+        let data = []
+
         for (let category of categories) {
-            localCategories.value.push({
+            if (category.children.length > 0) {
+                data = data.concat(getCategories(category.children))
+            }
+
+            data.push({
                 label: category.name,
                 children: category.children,
                 value: category.id
             })
-
-            if (category.children.length > 0) {
-                getCategories(category.children)
-            }
         }
+
+        return data
     }
     
     // Сохранение настроек
@@ -130,8 +134,7 @@
     }
 
     onMounted(() => {
-        getCategories(categories.value)
-
+        localCategories.value = getCategories(categories.value).reverse()
         if (isShow.value.type == 'updateCategory' || isShow.value.type == 'createSubCategory') {
             let findedParentCategory = localCategories.value.find(p => p.value == updatedCategory.value.parent_id)
             let findedCategory = localCategories.value.find(p => p.value == updatedCategory.value.id)

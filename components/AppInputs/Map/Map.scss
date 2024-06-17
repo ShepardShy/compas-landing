@@ -4,9 +4,6 @@
 .yandex-container {
     border-radius: 5px;
     overflow: hidden;
-
-    .ymaps-2-1-79-map {
-        height: 350px !important;
-        width: 100% !important;
-    }
+    height: 350px;
+    width: 100%;
 }

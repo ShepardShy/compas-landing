@@ -40,6 +40,7 @@
 
     const changeActiveTab = (tab) => {
         activeTab.value = tab
+        router.query.tab = tab
         commonScripts.setURLParams({tab: tab})
     }
 
@@ -61,5 +62,7 @@
             activeTab.value = 'entry'
             commonScripts.setURLParams({tab: activeTab.value})
         }
+    }, {
+        deep: true
     })
 </script>

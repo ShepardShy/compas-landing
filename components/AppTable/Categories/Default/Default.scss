@@ -1,6 +1,15 @@
 @use '@/assets/variables.scss' as variables;
 @use '@/assets/mixins.scss' as mixins;
 
+.table-categories__list {
+	display: flex;
+	flex-direction: column-reverse;
+
+	&.table-categories__list_roles {
+		flex-direction: column;
+	}
+}
+
 .table-categories__details {
 	&[open] {
 		& > .table-categories__header {
@@ -55,6 +64,15 @@
 	gap: 5px;
 	width: 100%;
 	padding: 10px 15px 10px calc(15px * var(--itemIndex));
+
+	&.table-categories__title_summary {
+		padding: 0px 0px 0px calc(15px * var(--itemIndex));
+
+		.table-categories__title-text {
+			padding: 10px 15px 10px 0px;
+			width: 100%;
+		}
+	}
 }
 
 .table-categories__popup {

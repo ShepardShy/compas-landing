@@ -1,5 +1,5 @@
 <template>
-    <AppPopup :closeByClick="true" :isCanSelect="false" class="table-categories__popup">
+    <AppPopup ref="popupRef" :closeByClick="true" :isCanSelect="false" class="table-categories__popup" @openPopup="() => openPopup()">
         <template #summary>
             <IconDots />
         </template>
@@ -15,7 +15,7 @@
                         }
                     })
                 }">
-                Создать группу
+                Создать подгруппу
             </PopupOption>
             <PopupOption 
                 @click="(event) => {
@@ -28,7 +28,7 @@
                         }
                     })
                 }">
-                Изменить категорию
+                Редактировать
             </PopupOption>
             <PopupOption 
                 class="popup__option_red" 
@@ -56,6 +56,8 @@
     import AppPopup from '@/components/AppPopup/Popup.vue';
     import PopupOption from '@/components/AppPopup/PopupOption/PopupOption.vue';
 
+    const popupRef = ref(null)
+
     const emit = defineEmits([
         'callAction'
     ])
@@ -73,4 +75,19 @@
             type: Number
         }
     })
+
+    const openPopup = () => {
+        if (popupRef.value.popupRef.closest('summary details')) {
+            let parentDelails = popupRef.value.popupRef.closest('.table-categories__details')
+            if (parentDelails.hasAttribute('open')) {
+                setTimeout(() => {
+                    if (popupRef.value.popupRef.hasAttribute('open')) {
+                        popupRef.value.popupRef.removeAttribute('open')
+                    } else {
+                        popupRef.value.popupRef.setAttribute('open', true)
+                    }
+                }, 10);
+            }
+        }
+    }
 </script>

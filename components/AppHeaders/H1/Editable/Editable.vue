@@ -25,8 +25,13 @@
         />
 
         <AppH1 v-else>
-            {{ localTitle }}
-            <IconEdit @click="changeState(true)"/>
+            <pre v-html="localTitle"></pre>
+            <IconEdit v-if="props.loaderState != 'restorePage' && !props.isCreate && props.isCanEdit" @click="changeState(true)"/>
+            <AppLoader class="h-editable__loader" v-if="props.loaderState == 'restorePage'"/>
+            <ButtonText class="h-editable__restore" v-if="props.loaderState != 'restorePage' && props.isRestore" @click="() => emit('callAction', {
+                action: 'restorePage',
+                value: true
+            })">Восстановить</ButtonText>
         </AppH1>
     </div>
 </template>
@@ -39,6 +44,8 @@
     import AppH1 from '../H1.vue'
     import IconEdit from '@/components/AppIcons/Edit/Edit.vue';
     import AppTextarea from '@/components/AppInputs/Textarea/Textarea.vue';
+    import ButtonText from '@/components/AppButton/ButtonText/ButtonText.vue';
+    import AppLoader from '@/components/AppLoader/AppLoader.vue';
 
     let localTitle = ref(null)
     let isEdit = ref(false)
@@ -50,6 +57,22 @@
                 value: null
             },
             type: Object
+        },
+        isCanEdit: {
+            default: false,
+            type: Boolean
+        },
+        isRestore: {
+            default: false,
+            type: Boolean
+        },
+        isCreate: {
+            default: false,
+            type: Boolean
+        },
+        loaderState: {
+            default: null,
+            type: String
         }
     })
 

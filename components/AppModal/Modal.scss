@@ -78,6 +78,10 @@
     overflow: auto;
     animation: showModal 0.3s ease-out 0s forwards;
     @include mixins.elemResolutionOptions(calc(100% - (230px + var(--modalOrder))), 100%);
+
+    &.modal__content_unset {
+        overflow: unset;
+    }
 }
 .modal__close-text {
     color: variables.$color-white;

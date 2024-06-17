@@ -9,6 +9,7 @@
     import '@fancyapps/ui/dist/fancybox/fancybox.css';
 
     import {Fancybox} from "@fancyapps/ui";
+    import {onMounted, ref} from "vue";
 
     const options = {
         Carousel: {

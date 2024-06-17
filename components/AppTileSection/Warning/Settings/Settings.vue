@@ -5,10 +5,12 @@
         </template>
 
         <template #body>
-            <OptionsComponent />
+            <OptionsComponent 
+                :sections="props.sections"
+            />
 
             <div class="warning__actions">
-                <AppButton class="button_blue" :disabledOption="props.loaderState == 'updateField'" :class="props.loaderState == 'updateField' ? 'button_loading' : ''" @click="() => saveSettings()">
+                <AppButton class="button_blue" :disabledOption="props.loaderState == 'updateField' || props.loaderState == 'createField'" :class="props.loaderState == 'updateField' || props.loaderState == 'createField'  ? 'button_loading' : ''" @click="() => saveSettings()">
                     Сохранить
                 </AppButton>
                 <AppButton @click="() => showWarning(false)">
@@ -66,6 +68,10 @@
         loaderState: {
             default: null,
             type: String
+        },
+        sections: {
+            default: [],
+            type: Array
         }
     })
 </script>

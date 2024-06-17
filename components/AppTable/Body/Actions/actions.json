@@ -29,6 +29,43 @@
             "children": []
         }
     ],
+    "viewUsers": [
+        {
+            "id": 0,
+            "title": "Открыть",
+            "class": "",
+            "action": "showModal",
+            "children": []
+        },
+        {
+            "id": 1,
+            "title": "Редактировать",
+            "class": "",
+            "action": "edit",
+            "children": []
+        },
+        {
+            "id": 3,
+            "title": "Скопировать",
+            "class": "",
+            "action": "copyRow",
+            "children": []
+        },
+        {
+            "id": 3,
+            "title": "Зайти под пользователем",
+            "class": "",
+            "action": "authUser",
+            "children": []
+        },
+        {
+            "id": 2,
+            "title": "Удалить",
+            "class": "action_red",
+            "action": "initDelete",
+            "children": []
+        }
+    ],
     "module": [
         {
             "id": 0,

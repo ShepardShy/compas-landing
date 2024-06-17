@@ -20,6 +20,10 @@
         }
     }
 
+    &.filter-save_active {
+        background: variables.$color-hover;
+    }
+
     &.filter-save_edit {
         .filter-save__actions {
             display: none;

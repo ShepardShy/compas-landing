@@ -2,7 +2,6 @@
     <div class="filter__menu">
         <Fields 
             @actionFilter="(data) => emit('actionFilter', data)"
-
         />
         <Saves 
             @actionSaves="(data) => emit('actionSaves', data)"

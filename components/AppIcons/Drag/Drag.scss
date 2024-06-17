@@ -6,3 +6,15 @@
     position: absolute;
     left: 0px;
 }
+@media (max-width: 900px) {
+    .icon__draggable {
+        &::after {
+            content: '';
+            top: 0px;
+            left: 0px;
+            width: 150%;
+            height: 100%;
+            position: absolute;
+        }
+    }
+}

@@ -32,8 +32,16 @@
     color: variables.$color-active;
     @include mixins.flexBlock($vertical: center, $horizontal: flex-start, $gap: 5px);
 
+    &.tabs__item_disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
     &.tabs__item_active {
+        opacity: 1;
         cursor: text;
+        pointer-events: auto;
         color: variables.$color-black;
     }
 
@@ -83,6 +91,12 @@
                 }
             }
         }
+    }
+
+    &.tabs__item_disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+        pointer-events: none;
     }
 
     .popup__option_active {

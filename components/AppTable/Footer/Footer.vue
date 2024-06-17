@@ -16,7 +16,7 @@
                 :item="{
                     id: 0,
                     key: 'visibleElems',
-                    value: 25,
+                    value: footerData.count,
                     focus: false,
                     required: false,
                     title: 'На странице:',
@@ -66,6 +66,7 @@
             footerData.value.activePage = 1
             footerData.value.count = value
             emit('callAction', {action: 'getTableData', value: null})
+            emit('callAction', {action: 'setVisibleElems', value: value})
         }
 
         // Изменение активной страницы

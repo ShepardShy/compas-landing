@@ -3,10 +3,9 @@
         <div 
             class="tile-section__title" 
         >
-            <IconDragSection v-if="isEditableSettings"/>
-
+            <IconDragSection v-if="isEditableSettings && is_admin"/>
             <AppH3Editable 
-                v-if="isEditableSettings"
+                v-if="isEditableSettings && is_admin"
                 :item="{
                     value: section.name,
                     key: 'tileHeader',
@@ -24,12 +23,11 @@
             </AppH3>
         </div>
         <div class="tile-section__header-actions">
-            <ButtonText @click="() => emit('callAction', { action: 'changeState', value: null })">
+            <ButtonText v-if="is_admin || props.permissions.update_p == 'A' || props.permissions.update_p == 'Y'" @click="() => emit('callAction', { action: 'changeState', value: null })">
                 {{ section.state ? 'Отмена' : 'Изменить' }}
-
             </ButtonText>
 
-            <AppPopup :isCanSelect="false" :closeByClick="true" v-if="isEditableSettings">
+            <AppPopup :isCanSelect="false" :closeByClick="true" v-if="props.isCanRemove && (is_admin || isEditableSettings)">
                 <template #summary>
                     <IconSettings />
                 </template>
@@ -61,5 +59,17 @@
     ])
 
     const section = inject('section')
+    const is_admin = inject('is_admin')
     const isEditableSettings = inject('isEditableSettings')
+
+    const props = defineProps({
+        permissions: {
+            default: {},
+            type: Object
+        },
+        isCanRemove: {
+            default: true,
+            type: Boolean
+        }
+    })
 </script>

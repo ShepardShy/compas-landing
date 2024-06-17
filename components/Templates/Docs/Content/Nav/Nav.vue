@@ -1,10 +1,10 @@
 <template>
-    <nav class="personal-docs__nav docs-nav" ref="docsNavRef" :style="`--scrollPercent: ${scrollPercent}%;`">
+    <nav class="personal-docs__nav docs-nav" ref="docsNavRef" :style="`--contentPos: ${contentPos}px`">
         <div class="docs-nav__header">
             Содержание
         </div>
         <div class="docs-nav__list">
-            <a :href="item.link" class="docs-nav__item" :class="`docs-nav__item_${item.nodeName}`, item.isActive ? 'docs-nav__item_active' : ''" v-for="item in docsNav">
+            <a :href="item.link" class="docs-nav__item" :class="`docs-nav__item_${item.nodeName}`, item.isScrolled ? 'docs-nav__item_scrolled' : '', item.isActive ? 'docs-nav__item_active' : ''" v-for="item in docsNav">
                 {{ item.text }}
             </a>
         </div>
@@ -19,8 +19,8 @@
     let docsNav = ref([])
     const docsNavRef = ref(null)
     const headers = ref([])
+    const contentPos = ref(0)
 
-    let scrollPercent = ref(0)
 
     onMounted(() => {
         setTimeout(() => {
@@ -37,30 +37,33 @@
                     })
                 } 
             }
-
+            setNavPos()
             headers.value = personalDocRef.value.querySelectorAll('.header-link')
         }, 100);
 
+        window.addEventListener('resize', setNavPos);
         window.addEventListener('scroll', throt_funScroll)
     })
 
     onUnmounted(() => {
         window.removeEventListener('scroll', throt_funScroll)
+        window.removeEventListener('resize', setNavPos);
     })
+
+    const setNavPos = () => {
+        let docRect = document.querySelector('.personal-docs__content').getBoundingClientRect()
+        contentPos.value = Number((docRect.left + docRect.width).toFixed(0)) + 25
+    }
 
     // Троттлинг скролла по вертикали
     const throt_funScroll = () => {
         let data = []
-
-        
-        scrollPercent.value = (window.pageYOffset * 100 / (document.querySelector('main').clientHeight - (document.querySelector('footer').offsetHeight + document.querySelector('header').offsetHeight))).toFixed(2)
-        if (scrollPercent.value >= 100) {
-            scrollPercent.value = 100
-        }
-
         for (let i = 0; i < headers.value.length; i++) {
-            if (headers.value[i].getBoundingClientRect().top < 100) {
+            if (headers.value[i].getBoundingClientRect().top < 300) {
                 data.push(headers.value[i])
+                docsNav.value.find(element => element.id == headers.value[i].id).isScrolled = true
+            } else {
+                docsNav.value.find(element => element.id == headers.value[i].id).isScrolled = false
             }
         }
 

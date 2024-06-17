@@ -22,7 +22,7 @@
                 <template v-if="menu.activeTab == null">
                     <PopupOption 
                         class="popup-option__sublink" 
-                        v-for="tab in actions[props.item.slug]" 
+                        v-for="tab in setOptions" 
                         :class="tab.class"
                         @click="() => tab.children.length > 0 ? 
                             callAction({action: 'changeTab', value: tab}) : 
@@ -60,7 +60,7 @@
 <script setup>
     import './Actions.scss';
 
-    import { ref } from 'vue';
+    import { ref, computed } from 'vue';
 
     import IconDots from '@/components/AppIcons/Dots/Dots.vue'
     import IconArrow from '@/components/AppIcons/Arrow/Arrow.vue'
@@ -89,6 +89,22 @@
         disabled: {
             default: false,
             type: Boolean
+        },
+        permissions: {
+            default: null,
+            type: String
+        },
+        userID: {
+            default: null,
+            type: Number
+        },
+        is_admin: {
+            default: null,
+            type: Boolean
+        },
+        relationID: {
+            default: null,
+            type: Number
         }
     })
 
@@ -111,6 +127,43 @@
             })
         }
     }
+
+    const setOptions = computed(() => {
+        let localOptions = actions[props.item.slug]
+
+        if (props.is_admin) {
+            return localOptions
+        } else {
+            // Создание
+            if (props.permissions.create_p == 'Y') {
+                localOptions = props.relationID == props.userID ? localOptions : localOptions.filter(p => p.action != 'copyRow')
+            } else if (props.permissions.create_p == 'N') {
+                localOptions = localOptions.filter(p => p.action != 'copyRow')
+            }
+
+            // Чтение
+            if (props.permissions.read_p == 'Y') {
+                localOptions = props.relationID == props.userID ? localOptions : localOptions.filter(p => p.action != 'showModal')
+            } else if (props.permissions.read_p == 'N') {
+                localOptions = localOptions.filter(p => p.action != 'showModal')
+            }
+
+            // Изменение
+            if (props.permissions.update_p == 'Y') {
+                localOptions = props.relationID == props.userID ? localOptions : localOptions.filter(p => p.action != 'edit')
+            } else if (props.permissions.update_p == 'N') {
+                localOptions = localOptions.filter(p => p.action != 'edit')
+            }
+
+            // Удаление
+            if (props.permissions.delete_p == 'Y') {
+                localOptions = props.relationID == props.userID ? localOptions : localOptions.filter(p => p.action != 'initDelete')
+            } else if (props.permissions.delete_p == 'N') {
+                localOptions = localOptions.filter(p => p.action != 'initDelete')
+            }
+            return localOptions
+        }
+    })
 
     // Открыть попап
     const openPopup = (state) => {

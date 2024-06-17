@@ -143,6 +143,18 @@
 
 .history-item__title {
     font-weight: 600;
+    color: var(--TitleColor);
+
+    span {
+        cursor: pointer;
+        color: variables.$color-blue-two;
+        font-weight: 400;
+        text-decoration: underline;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
 }
 
 .history-item__date {
@@ -189,6 +201,16 @@
             &::after {
                 content: 'не заполнено';
                 color:variables.$color-grey;
+            }
+        }
+
+        a {
+            color: variables.$color-blue-two;
+            font-weight: 400;
+            text-decoration: underline;
+    
+            &:hover {
+                text-decoration: none;
             }
         }
     }

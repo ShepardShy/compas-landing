@@ -68,7 +68,7 @@
             z-index: 2;
             background-color: #eeeff1;
             cursor: pointer;
-            border-radius: 0px 5px 5px 0px;
+            border-radius: 0px 4px 4px 0px;
 
             &::after {
                 transform: rotate(270deg);
@@ -83,6 +83,12 @@
         &.relation__item_empty {
             .relation__link {
                 display: none;
+            }
+
+            .form-item__value {
+                cursor: default;
+                color: variables.$color-grey;
+                text-decoration: none;
             }
 
             .popup {

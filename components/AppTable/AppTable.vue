@@ -7,20 +7,25 @@
             @callAction="(data) => callAction(data)"
         />
 
-        <AppSection class="table-details__product-actions" v-if="props.isDinamyc">
+        <AppSection class="table__product-actions" v-if="props.isDinamyc">
             <AppButton class="button_add button_blue" @click="() => callAction({
                 action: 'addRow',
                 value: null
             })">
                 Добавить строку
             </AppButton>
+
+            <TableTotal v-if="props.isDinamyc"/>
         </AppSection>
 
         <AppSection 
             ref="sectionRef" 
             class="section__table table-template" 
             :style="`--stickyTop: ${scrollPosition}px; --sectionWidth: ${sectionWidth}px`" 
-            :class="props.table.loaderState == 'loading' ? 'table-template_loading' : props.table.loaderState == 'filtering' ? 'table-template_filtering' : ''"
+            :class="
+                socketRows.header.length > 0 || socketRows.body.length > 0 ? 'table-template_updating' : '', 
+                props.table.loaderState == 'loading' ? 'table-template_loading' : props.table.loaderState == 'filtering' ? 'table-template_filtering' : ''
+            "
         >
             <TableTop 
                 :tableTitle="props.table.title"
@@ -37,12 +42,13 @@
                 v-if="isMobile"
                 :slug="props.slug"
                 :isTrash="props.isTrash"
+                :actionType="props.actionType"
                 :loaderState="props.table.loaderState"
                 :isPermanentEdit="props.isPermanentEdit"
                 @callAction="(data) => callAction(data)"
             />
             
-            <div v-else class="table-template__body section__scroll-area" :class="[fields.length == 0 || bodyData.length == 0 ? 'table-template__body_empty' : '', props.isDinamyc ? 'table-template__body_dinamyc' : '']">
+            <div ref="scrollAreaRef" v-else class="table-template__body section__scroll-area" :class="[fields.length == 0 || bodyData.length == 0 ? 'table-template__body_empty' : '']">
                 <table class="table" ref="tableRef" :class="[props.isPermanentEdit ? 'table_permanent-edit' : '']">
                     <TableHeader
                         v-if="props.table.loaderState != 'loading'"
@@ -57,9 +63,11 @@
                         @callAction="(data) => callAction(data)"
                     />
                 </table>
-                <ScrollButtons v-show="props.table.loaderState != 'loading'"/>
-
-                <TableTotal v-if="props.isDinamyc"/>
+                <ScrollButtons 
+                    v-if="tableRef != null"
+                    :tableRef="tableRef" 
+                    @callAction="(data) => callAction(data)"
+                />
             </div>
 
             <TableFooter 
@@ -67,6 +75,11 @@
             />
 
             <SectionActions 
+                :is_admin="props.is_admin"
+                :permissions="{
+                    update_p: checkEdittingRows,
+                    delete_p: checkDelittingRows
+                }"
                 :actionState="actionState"
                 :loaderState="props.table.loaderState"
                 @callAction="(data) => callAction(data)"
@@ -82,7 +95,7 @@
 <script setup>
     import './AppTable.scss';
     
-    import { ref, onMounted, provide, watch, toRaw } from 'vue'
+    import { ref, onMounted, provide, watch, toRaw, computed } from 'vue'
 
     import _ from 'lodash'
     import TableTop from './Top/Top.vue'
@@ -113,6 +126,11 @@
 
     const tableRef = ref(null)
     const sectionRef = ref(null)
+    const scrollAreaRef = ref(null)
+    const activePayment = ref({
+        value: 0,
+        state: false
+    })
 
     let isMobile = ref(false)
     let updatedRows = ref([])
@@ -189,6 +207,10 @@
             },
             type: Object
         },
+        permissions: {
+            default: {},
+            type: Object
+        },
         isTrash: {
             default: false,
             type: Boolean
@@ -228,6 +250,22 @@
         activeCategory: {
             default: null,
             type: String
+        },
+        userID: {
+            default: -1,
+            type: Number
+        },
+        isCanUseHeader: {
+            default: true,
+            type: Boolean
+        },
+        isCanSort : {
+            default: true,
+            type: Boolean
+        },
+        is_admin: {
+            default: true,
+            type: Boolean
         }
     })
 
@@ -256,17 +294,22 @@
     provide('scrollPosition', scrollPosition)
     provide('updatedCategory', updatedCategory)
     provide('isPermanentEdit', props.isPermanentEdit)
+    provide('permissions', props.permissions)
+    provide('isCanUseHeader', props.isCanUseHeader)
+    provide('isCanSort', props.isCanSort)
+    provide('is_admin', props.is_admin)
+    provide('userID', props.userID)
+    provide('isMobile', isMobile)
+    provide('activePayment', activePayment)
     
     onMounted(async () => {
         isMobile.value = window.innerWidth <= 660
-        window.addEventListener('resize', checkingWindowWidth);
         sortItem.value = JSON.parse(JSON.stringify(props.table.sortItem))
         footerData.value = JSON.parse(JSON.stringify(props.table.tableFooter))
         fields.value = callAction({action: 'setPropsValues', value: props.table.tableKeys})
         bodyData.value = callAction({action: 'setPropsValues', value: props.table.tableData})
         socketRows.value = JSON.parse(JSON.stringify(props.table.socketRows))
         categories.value = JSON.parse(JSON.stringify(props.categories))
-        sectionWidth.value = sectionRef.value.offsetWidth
         if (props.isPermanentEdit) {
             bodyData.value.forEach(row => {
                 backupValues.value.push(JSON.parse(JSON.stringify(row)))
@@ -274,13 +317,16 @@
                 row.isChoose = true
             });
         }
+
+        if (sectionRef.value) {
+            new ResizeObserver(changeWidth).observe(sectionRef.value.sectionRef)
+        }
     })
 
-    // Проверка был ли уменьшен размер окна
-    const checkingWindowWidth = _.throttle(() => {
+    const changeWidth = () => {
         isMobile.value = window.innerWidth <= 660
-        sectionWidth.value = sectionRef.value ? sectionRef.value.sectionRef.offsetWidth : 0
-    }, 100)
+        sectionWidth.value = scrollAreaRef.value ? scrollAreaRef.value.offsetWidth : 0
+    }
 
     // Вызов действия в таблице
     const callAction = (data) => {
@@ -298,11 +344,20 @@
             actionState.value = 'saving'
 
             bodyData.value.forEach(row => {
-                if (row.isChoose) {
-                    backupValues.value.push(JSON.parse(JSON.stringify(row)))
-                    row.isEdit = true
-                }
+                if (props.is_admin || props.permissions.update_p == 'A') {
+                    if (row.isChoose) {
+                        backupValues.value.push(JSON.parse(JSON.stringify(row)))
+                        row.isEdit = true
+                    }
+                } else if (props.permissions.update_p == 'Y') {
+                    if (row.isChoose && row.user_id.value != null && row.user_id.value.includes(props.userID)) {
+                        backupValues.value.push(JSON.parse(JSON.stringify(row)))
+                        row.isEdit = true
+                    }
+                } 
             });
+
+            changeStateTab(false)
         }
 
         // Отмена редактирования полей
@@ -328,6 +383,7 @@
             invalidRows.value = []
             actionState.value = null
             selectAll.value = false
+            changeStateTab(true)
         }
 
         // Сохранение редактируемых полей
@@ -341,12 +397,24 @@
 
                 for (let key in row) {
                     let findedField = fields.value.find(p => p.key == key)
-                    if (findedField && findedField.type == 'status' && !_.isEqual(String(row[key]), String(backupRow[key]))) {
-                        flag = true
-                        updatedRow[key] = row[key]
-                    } else if (findedField && !['isEdit', 'isChoose'].includes(key) && findedField.type != 'status' && !_.isEqual(row[key], backupRow[key])) {
-                        flag = true
-                        updatedRow[key] = row[key]
+
+                    if (findedField && !['isEdit', 'isChoose'].includes(key)) {
+                        switch (findedField.type) {
+                            case 'status':
+                                if (!_.isEqual(String(row[key]), String(backupRow[key]))) {
+                                    flag = true
+                                    updatedRow[key] = row[key]
+                                }
+                                break;
+                        
+                            default:
+                                if (!_.isEqual(row[key], backupRow[key])) {
+                                    flag = true
+                                    updatedRow[key] = row[key]
+                                }
+                                break;
+                        }
+
                     }
                 }
 
@@ -407,7 +475,8 @@
                     let error = validateFields(bodyData.value[findedIndex])
 
                     if (!error) {
-                        updatedRows.value.push(getUpdatedFields(bodyData.value[findedIndex], backupRow))
+                        let updatedRow = JSON.parse(JSON.stringify(getUpdatedFields(bodyData.value[findedIndex], backupRow)))
+                        updatedRows.value.push(updatedRow)
                     } else {
                         invalidFlag = true
                         invalidRows.value.push(error)
@@ -464,6 +533,7 @@
                     if (updatedRows.value.length == 0) {
                         return
                     } else {
+                        console.log(updatedRows.value);
                         emit('callAction', {
                             action: 'save',
                             value: updatedRows.value
@@ -491,7 +561,6 @@
                         if (item.product_sum == null) {
                             item.product_sum = 0
                         }
-                        console.log(item);
                     }
                 }
                 updatedRows.value = JSON.parse(JSON.stringify(bodyData.value))
@@ -519,9 +588,18 @@
             let data = []
 
             for (let row of bodyData.value) {
-                if (row.isChoose) {
-                    data.push(row.id)
-                    bodyData.value = bodyData.value.filter(p => p.id != row.id)
+                if (props.is_admin || props.permissions.delete_p == 'A') {
+                    if (row.isChoose) {
+                        data.push(row.id)
+                        bodyData.value = bodyData.value.filter(p => p.id != row.id)
+                    }
+                } else if (props.permissions.delete_p == 'Y') {
+                    if (row.isChoose && row.user_id.value != null && row.user_id.value.includes(props.userID)) {
+                        data.push(row.id)
+                        bodyData.value = bodyData.value.filter(p => p.id != row.id)
+                    }
+                } else {
+                    row.isChoose = false
                 }
             }
 
@@ -578,6 +656,11 @@
                         bodyData.value = bodyData.value.filter(row => row.id != socketRow.id)
                     } else {
                         let findedIndex = bodyData.value.findIndex(row => row.id == socketRow.id)
+
+                        if (props.permissions.read_p == 'Y') {
+                            bodyData.value = bodyData.value.filter(row => row.user_id.value.includes(props.userID))
+                        }
+
                         updateFieldValue(bodyData.value[findedIndex], socketRow)
                         setUpdatedStatus(socketRow.id)
                     }
@@ -737,7 +820,7 @@
 
         // Добавление строки в динамическую таблицу
         const addRow = () => {
-            if (actionState.value != 'saving') {
+            if (actionState.value == null) {
                 backupRows.value =  JSON.parse(JSON.stringify(bodyData.value))
                 actionState.value = 'saving'
             }
@@ -745,6 +828,8 @@
             let newRow = {
                 isEdit: true
             }
+            skipChecking.value = true
+            changeStateTab(false)
 
             for (let column of fields.value) {
                 switch (column.type) {
@@ -766,6 +851,31 @@
             }
 
             bodyData.value.push(newRow)
+        }
+
+        // Показать действия
+        const changeStateTab = (data) => {
+            emit('callAction', {
+                action: 'changeStateTab',
+                value: data
+            })
+        }
+
+        const initPayment = (data) => {
+            isShow.value = {
+                state: true,
+                type: 'payment'
+            }
+            activePayment.value = data
+        }
+
+        const paymentFine = () => {
+            console.log(activePayment.value);
+            isShow.value = {
+                state: false,
+                type: null
+            }
+            emit('callAction', {action: 'paymentFine', value: data})
         }
 
         switch (data.action) {
@@ -883,11 +993,45 @@
                 addRow()
                 break;
 
+            // Показать действия
+            case 'changeStateTab':
+                changeStateTab(data.value)
+                break;
+
+            // Инициализация оплаты
+            case 'initPayment':
+                initPayment(data.value)
+                break;
+
+            case 'payment': 
+                paymentFine()
+                break;
+
             default:
                 emit('callAction', data)
                 break;
         }
     }
+
+    const checkEdittingRows = computed(() => {
+        if (props.is_admin || props.permissions.update_p == 'A') {
+            return 'A'
+        } else if (props.permissions.update_p == 'Y') {
+            return bodyData.value.filter(row => row.isChoose && row.user_id.value != null && row.user_id.value.includes(props.userID)).length > 0 ? 'A' : 'N'
+        } else {
+            return 'N'
+        }
+    })
+
+    const checkDelittingRows = computed(() => {
+        if (props.is_admin || props.permissions.delete_p == 'A') {
+            return 'A'
+        } else if (props.permissions.delete_p == 'Y') {
+            return bodyData.value.filter(row => row.isChoose && row.user_id.value != null && row.user_id.value.includes(props.userID)).length > 0 ? 'A' : 'N'
+        } else {
+            return 'N'
+        }
+    })
 
     watch(() => props.table.tableData, () => {
         footerData.value = JSON.parse(JSON.stringify(props.table.tableFooter))
@@ -924,5 +1068,13 @@
 
     watch(() => props.table.sortItem, () => {
         sortItem.value = JSON.parse(JSON.stringify(props.table.sortItem))
+    })
+
+    watch(() => isMobile.value, () => {
+        setTimeout(() => {
+            changeWidth()
+        }, 200);
+    }, {
+        deep: true
     })
 </script>

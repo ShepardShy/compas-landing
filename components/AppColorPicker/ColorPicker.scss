@@ -2,7 +2,7 @@
 @use '@/assets/mixins.scss' as mixins;
 
 .colorpicker {
-    padding-bottom: 5px;
+    padding: 5px 5px 0px;
 
     input[type=range] {
         outline: none;
@@ -44,7 +44,7 @@
     }
 
     .vacp-range-input-group {
-        padding: 0px 5px;
+        // padding: 0px 5px;
 
         .vacp-range-input-label-text {
             display: none;
@@ -83,7 +83,7 @@
     }
 
     .vacp-color-inputs {
-        padding: 0px 5px;
+        // padding: 0px 5px;
 
         .vacp-format-switch-button {
             align-self: flex-end;

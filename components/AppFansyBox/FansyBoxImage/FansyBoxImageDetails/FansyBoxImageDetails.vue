@@ -20,6 +20,8 @@
 <script setup>
     import './FansyBoxImageDetails.scss';
 
+    import {computed} from "vue";
+    
     import IconDots from '@/components/AppIcons/Dots/Dots.vue'
     import PopupOption from "@/components/AppPopup/PopupOption/PopupOption.vue";
     import AppPopup from "@/components/AppPopup/Popup.vue";
@@ -45,6 +47,6 @@
     })
 
     const checkExtension = computed(() => {
-        return ['png', 'svg', 'jpeg', 'jpg', 'webp', 'pdf', 'gif', 'mp4', 'mp3'].includes(props.image.extension)
+        return ['png', 'svg', 'heic', 'jpeg', 'jpg', 'webp', 'pdf', 'gif', 'mp4', 'mp3'].includes(props.image.extension)
     })
 </script>

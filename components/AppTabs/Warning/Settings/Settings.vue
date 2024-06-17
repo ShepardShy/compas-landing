@@ -32,7 +32,7 @@
                             value: settingsTab.has_roles_read,
                             isHTML: false,
                             required: false,
-                            title: 'Ограничить редактирование поля',
+                            title: 'Ограничить видимость раздела',
                             key: 'has_roles_read'
                         }"
                         :disabled="false"
@@ -49,7 +49,7 @@
                             required: false,
                             title: 'Роли',
                             lockedOptions: [],
-                            options: userStore.roles
+                            options: []
                         }"
                         :isReadOnly="false"
                         :isHaveNullOption="false"
@@ -82,9 +82,6 @@
     import AppWarning from '@/components/AppWarning/AppWarning.vue';
     import AppSelect from '@/components/AppSelects/Select/Select.vue';
     import AppCheckbox from '@/components/AppInputs/Checkbox/Checkbox.vue';
-
-    import { useUserStore } from '@/stores/userStore.js'
-    const userStore = useUserStore()
 
     const isShow = inject('isShow')
     const settingsTab = inject('settingsTab')

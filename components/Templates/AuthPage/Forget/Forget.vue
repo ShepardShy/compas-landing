@@ -3,6 +3,22 @@
         Восстановление пароля
     </AppH1>
     <AppSection class="auth__form">
+        <AppInput
+            class="auth__input auth__input_substr"
+            :item="{
+                id: 0,
+                title: 'Название портала',
+                value: userData.portalName,
+                placeholder: 'Название портала',
+                type: 'text',
+                key: 'portalName',
+                substring: '.compas.pro'
+            }"
+            :mask="null"
+            :disabled="false"
+            :enabledAutocomplete="true"
+            @changeValue="(data) => changeValue(data)"
+        />
         <AppInput 
             class="auth__input"
             :item="{
@@ -43,7 +59,8 @@
     const userStore = useUserStore()
 
     let userData = ref({
-        email: ''
+        email: '',
+        portalName: ''
     })
 
     const changeValue = (data) => {

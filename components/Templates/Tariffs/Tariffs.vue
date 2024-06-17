@@ -101,13 +101,13 @@
                 "alternativeTitle": `
                     <div class="table-cell__title">
                         Бесплатный
-                    </div>
+                    </div> <!--  
                     <div class="table-cell__subtitle">
                         6 инструментов
                     </div>
                     <div class="table-cell__desc">
                         Минимальный набор инструментов для старта сквозной аналитики
-                    </div>
+                    </div> -->
                 `,
                 "title": "Бесплатный",
                 "key": "free",
@@ -138,13 +138,13 @@
                 "alternativeTitle": `
                     <div class="table-cell__title">
                         Базовый тариф
-                    </div>
+                    </div> <!--
                     <div class="table-cell__subtitle">
                         7 инструментов
                     </div>
                     <div class="table-cell__desc">
                         Оптимальный набор инструментов для сквозной аналитики, роста трафика, заявок и продаж
-                    </div>
+                    </div> -->
                 `,
                 "title": "Базовый тариф",
                 "key": "base",
@@ -175,13 +175,15 @@
                 "alternativeTitle": `
                     <div class="table-cell__title">
                         Бизнес
-                    </div>
+                    </div> 
+                    <!--
                     <div class="table-cell__subtitle">
                         11 инструментов
                     </div>
                     <div class="table-cell__desc">
                         Максимальный набор инструментов для сквозной аналитики, роста трафика, заявок и продаж
                     </div>
+                    -->
                 `,
                 "title": "Бизнес",
                 "key": "business",
@@ -212,13 +214,13 @@
                 "alternativeTitle": `
                     <div class="table-cell__title">
                         Профессиональный
-                    </div>
+                    </div> <!--
                     <div class="table-cell__subtitle">
                         14 инструментов
                     </div>
                     <div class="table-cell__desc">
                         Максимальный набор инструментов для сквозной аналитики, роста трафика, заявок и продаж
-                    </div>
+                    </div> -->
                 `,
                 "title": "Профессиональный",
                 "key": "prof",
@@ -247,48 +249,34 @@
         tableData: [
             {
                 module: 'Бесплатное кол-во пользователей',
-                free: '10',
-                base: '30',
-                business: '50',
-                prof: 'Не ограничено'
+                free: '5',
+                base: '10',
+                business: '40',
+                prof: '100'
             },
             {
                 module: 'Магазин модулей',
                 free: '0%',
                 base: '-10%',
                 business: '-20%',
-                prof: '-30%'
+                prof: '-40%'
             },
             {
                 module: 'Обьем хранилища',
-                free: '5 гб.',
-                base: '50 гб.',
-                business: '100 гб.',
+                free: '2.5 гб.',
+                base: '5 гб.',
+                business: '50 гб.',
                 prof: '100 гб.'
             },
             {
-                module: 'Мягкое удаление',
-                free: true,
-                base: true,
-                business: true,
-                prof: true
+                module: '<div class="table__cell-group"> Штрафы ГИБДД <span class="table-cell__desc">Комиссия за оплату</span> </div>',
+                free:'3%',
+                base: '2.7%',
+                business: '2.4%',
+                prof: '1.8%'
             },
             {
                 module: 'Автопарк',
-                free: true,
-                base: true,
-                business: true,
-                prof: true
-            },
-            {
-                module: 'Товары',
-                free: true,
-                base: true,
-                business: true,
-                prof: true
-            },
-            {
-                module: 'Мобильное приложение',
                 free: true,
                 base: true,
                 business: true,
@@ -308,76 +296,97 @@
                 business: true,
                 prof: true
             },
-            {
-                module: 'Задачи',
-                free: true,
-                base: true,
-                business: true,
-                prof: true
-            },
-            {
-                module: 'Маршруты',
-                free: true,
-                base: true,
-                business: true,
-                prof: true
-            },
-            {
-                module: 'Пробег',
-                free: true,
-                base: true,
-                business: true,
-                prof: true
-            },
-            {
-                module: 'Должностные инструкции',
-                free: true,
-                base: true,
-                business: true,
-                prof: true
-            },
-            {
-                module: 'Аналитика',
-                free: false,
-                base: true,
-                business: true,
-                prof: true
-            },
-            {
-                module: 'Зарплаты',
-                free: false,
-                base: true,
-                business: true,
-                prof: true
-            },
-            {
-                module: 'Аварийный фонд',
-                free: false,
-                base: true,
-                business: true,
-                prof: true
-            },
-            {
-                module: 'Склады',
-                free: false,
-                base: false,
-                business: true,
-                prof: true
-            },
-            {
-                module: 'Ремонт и тех. обслуживания',
-                free: false,
-                base: false,
-                business: true,
-                prof: true
-            },
-            {
-                module: 'Путевые листы',
-                free: false,
-                base: false,
-                business: true,
-                prof: true
-            }
+            // {
+            //     module: 'Мягкое удаление',
+            //     free: true,
+            //     base: true,
+            //     business: true,
+            //     prof: true
+            // },
+            // {
+            //     module: 'Товары',
+            //     free: true,
+            //     base: true,
+            //     business: true,
+            //     prof: true
+            // },
+            // {
+            //     module: 'Мобильное приложение',
+            //     free: true,
+            //     base: true,
+            //     business: true,
+            //     prof: true
+            // },
+            // {
+            //     module: 'Задачи',
+            //     free: true,
+            //     base: true,
+            //     business: true,
+            //     prof: true
+            // },
+            // {
+            //     module: 'Маршруты',
+            //     free: true,
+            //     base: true,
+            //     business: true,
+            //     prof: true
+            // },
+            // {
+            //     module: 'Пробег',
+            //     free: true,
+            //     base: true,
+            //     business: true,
+            //     prof: true
+            // },
+            // {
+            //     module: 'Должностные инструкции',
+            //     free: true,
+            //     base: true,
+            //     business: true,
+            //     prof: true
+            // },
+            // {
+            //     module: 'Аналитика',
+            //     free: false,
+            //     base: true,
+            //     business: true,
+            //     prof: true
+            // },
+            // {
+            //     module: 'Зарплаты',
+            //     free: false,
+            //     base: true,
+            //     business: true,
+            //     prof: true
+            // },
+            // {
+            //     module: 'Аварийный фонд',
+            //     free: false,
+            //     base: true,
+            //     business: true,
+            //     prof: true
+            // },
+            // {
+            //     module: 'Склады',
+            //     free: false,
+            //     base: false,
+            //     business: true,
+            //     prof: true
+            // },
+            // {
+            //     module: 'Ремонт и тех. обслуживания',
+            //     free: false,
+            //     base: false,
+            //     business: true,
+            //     prof: true
+            // },
+            // {
+            //     module: 'Путевые листы',
+            //     free: false,
+            //     base: false,
+            //     business: true,
+            //     prof: true
+            // }
         ],
         socketRows: {
             header: [],

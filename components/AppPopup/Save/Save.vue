@@ -27,16 +27,13 @@
 <script setup>
     import './Save.scss';
 
-    import { ref } from 'vue'
+    import { ref, onMounted, watch } from 'vue'
 
     import IconSave from '@/components/AppIcons/Save/Save.vue'
     import IconArrow from '@/components/AppIcons/Arrow/Arrow.vue'
 
     import AppPopup from '@/components/AppPopup/Popup.vue';
     import PopupOption from '@/components/AppPopup/PopupOption/PopupOption.vue';
-
-    import { useUserStore } from '@/stores/userStore.js'
-    const userStore = useUserStore()
 
     const popupSavesRef = ref(null)
 
@@ -66,6 +63,17 @@
         activeTab: null
     })
 
+    const props = defineProps({
+        is_admin: {
+            default: true,
+            type: Boolean
+        },
+        roles: {
+            default: [],
+            type: Array
+        }
+    })
+
     const emit = defineEmits([
         'saveSettings'
     ])
@@ -83,11 +91,31 @@
     }
 
     onMounted(() => {
-        menu.value.saves.options = userStore.roles
+        if (!props.is_admin) {
+            menu.value.saves.tabs = [
+                {
+                    tab: 'myself',
+                    key: 'myself',
+                    title: 'Применить для себя',
+                }
+            ]
+        }
+
+        menu.value.saves.options = props.roles
     })
 
-    watch(() => userStore.roles, () => {
-        menu.value.saves.options = userStore.roles
+    watch(() => props.roles, () => {
+        if (!props.is_admin) {
+            menu.value.saves.tabs = [
+                {
+                    tab: 'myself',
+                    key: 'myself',
+                    title: 'Применить для себя',
+                }
+            ]
+        }
+
+        menu.value.saves.options = props.roles
     }, {
         deep: true
     })

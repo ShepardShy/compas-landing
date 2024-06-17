@@ -2,7 +2,7 @@
     <div class="history">
         <div class="history__header">
             <div class="history__title">
-                История изменений
+                {{ props.title }}
             </div>
         </div>
         <div class="history__body">
@@ -19,10 +19,43 @@
                             class='history-section__icon'
                         />
 
-                        <div class="history-item">
+                        <div class="history-item"  v-if="field.show_title">
                             <div class="history-item__header">
                                 <div class="history-item__group">
-                                    <div class="history-item__title">
+                                    <div class="history-item__date"> 
+                                        {{ field.created_at }}
+                                    </div>
+                                </div>
+                                <figure 
+                                    :title="field.user.name"
+                                    class='ibg history-item__user' 
+                                    :style="`--backgroundColor: ${field.user.color};`"
+                                    @click="() => emit('callAction', { action: 'showModal', value: {
+                                            id: field.user.id,
+                                            slug: 'users',
+                                            tab: null
+                                        }
+                                    })"
+                                >
+                                    <img 
+                                        v-if="![null, undefined].includes(field.user.icon) && field.user.icon != ''"
+                                        :src="field.user.icon" 
+                                        :alt="field.user.name" 
+                                    />
+                                    <figcaption v-else>
+                                        {{ field.user.ab }}
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <div class="history-item__body">
+                                <div class="history-item__title" @click="(event) => openModal(event)" :style="`--TitleColor: ${field.color}`" v-html="field.field.title"> </div>
+                            </div>
+                        </div>
+
+                        <div class="history-item" v-else>
+                            <div class="history-item__header">
+                                <div class="history-item__group">
+                                    <div class="history-item__title" :style="`--TitleColor: ${field.color}`">
                                         Изменение поля:
                                     </div>
                                     <div class="history-item__date"> 
@@ -104,6 +137,14 @@
         loaderState: {
             default: null,
             type: String
+        },
+        isSlug: {
+            default: false,
+            type: Boolean
+        },
+        title: {
+            default: null,
+            type: String
         }
     })
 
@@ -151,6 +192,20 @@
     const setClasses = (value) => {
         if ([null, undefined].includes(value) || value.trim() == '') {
             return 'history-item__text_empty'
+        }
+    }
+
+    // Открыть модальное окно
+    const openModal = (event) => {
+        let targetLink = event.target.closest('span')
+
+        if (targetLink) {
+            emit('callAction', { action: 'showModal', value: {
+                    id: targetLink.getAttribute('data-id'),
+                    slug: targetLink.getAttribute('data-slug'),
+                    tab: null
+                }
+            })
         }
     }
 

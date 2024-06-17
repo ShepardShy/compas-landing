@@ -7,9 +7,9 @@
                         <div class="tariffs-slider__title">
                             {{ slide.title }}
                         </div>
-                        <div class="tariffs-slider__subtitle">
+                        <!-- <div class="tariffs-slider__subtitle">
                             {{ slide.subtitle }}
-                        </div>
+                        </div> -->
                         <ul class="tariffs-slider__advantages">
                             <li class="tariffs-slider__advantage" v-for="advantage in slide.advantages">
                                 {{ advantage.text }}
@@ -24,18 +24,8 @@
                                     {{ setDayPrice(slide).old }} руб
                                 </div>
                             </div>
-                        </div>
-                        <div class="tariffs-slider__price tariffs-slider__price_month" v-show="slide.isShowMonthPay">
-                            <div class="tariffs-slider__values">
-                                <div class="tariffs-slider__value tariffs-slider__value_new" :class="[null, 0].includes(setPrice(slide).new) ? 'tariffs-slider__value_free' : ''">
-                                    {{ setPrice(slide).new }} руб
-                                </div>
-                                <div class="tariffs-slider__value tariffs-slider__value_old" v-show="setPrice(slide).old && setPrice(slide).old != 0">
-                                    {{ setPrice(slide).old }} руб
-                                </div>
-                            </div>
                             <div class="tariffs-slider__discount" :class="!slide.discount_text ? 'tariffs-slider__discount_none' : ''">
-                                {{ slide.discount_text }}
+                                Цена за месяц {{ setDayPrice(slide).new * 30 }} руб
                             </div>
                         </div>
                         <NuxtLink to="/auth?tab=registration">

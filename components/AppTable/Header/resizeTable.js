@@ -101,26 +101,29 @@ export default {
             div.setAttribute('setListener', 'true')
         }
     
-        let tableHeader = table.querySelector('.table__header')
-        let sectionBody = table.parentNode
+        let tableHeaders = table ? table.querySelectorAll('.table__header') : null
+        let sectionBody = table ? table.parentNode : null
+        let tableHeader = table ? table.querySelector('.table__header') : null
 
-        if ([null, undefined].includes(tableHeader)) return
-
-        let row = tableHeader.querySelector('tr');
-        let cols = row ? row.children : undefined;
-        if (!cols) return;
+        if ([null, undefined].includes(tableHeaders)) return
+        for (let localTableHeader of tableHeaders) {
     
-        setFixedCellsWidth(table)
-        this.setDefaultWidth(cols, fields)
-        this.setCellsWidth(table)
+            let row = localTableHeader.querySelector('tr');
+            let cols = row ? row.children : undefined;
+            if (!cols) return;
+        
+            setFixedCellsWidth(table)
+            this.setDefaultWidth(cols, fields)
+            this.setCellsWidth(table)
+        
+            if (localTableHeader.offsetWidth + 10 <= sectionBody.offsetWidth) {
+                setCellsWidthDefference(localTableHeader, sectionBody)    
+            }
     
-        // if (tableHeader.offsetWidth + 10 <= sectionBody.offsetWidth) {
-        //     setCellsWidthDefference(tableHeader, sectionBody)    
-        // }
-
-        for (let i = 0; i < cols.length; i++) {
-            let div = cols[i].querySelector('.table-item__border');
-            setListeners(div);
+            for (let i = 0; i < cols.length; i++) {
+                let div = cols[i].querySelector('.table-item__border');
+                setListeners(div);
+            }
         }
     },
 
@@ -139,13 +142,16 @@ export default {
         if (rows.length == 0) return
 
         let scrolledArea = table.parentNode.scrollLeft
-        fixedFields = rows[0].querySelectorAll('.table__item_fixed:not(.table__item_hidden)')
+        // fixedFields = rows[0].querySelectorAll('.table__item_fixed:not(.table__item_hidden)')
 
         for (let row of rows) {
             fixedFields = row.querySelectorAll('.table__item_fixed:not(.table__item_hidden)')
 
             for (let cell of fixedFields) {
                 fieldPos = cell.getBoundingClientRect().left - table.parentNode.getBoundingClientRect().left
+                if ([null, undefined].includes(cell.style.getPropertyValue("--fixTarget")) || cell.style.getPropertyValue("--fixTarget") == '') {
+                    setFixedCellsWidth(table);
+                }
 
                 if (scrolledArea != 0 && fieldPos == cell.style.getPropertyValue("--fixTarget").replace('px', '')) {
                     cell.classList.add('table__item_sticky')

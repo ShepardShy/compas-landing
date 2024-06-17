@@ -19,7 +19,7 @@
 <script setup>
     import './Popup.scss';
 
-    import { ref } from 'vue'
+    import { ref, onMounted } from 'vue'
     import { clickOutSide as vClickOutSide } from '@mahdikhashan/vue3-click-outside'
     import PopupScripts from './Scripts.js'
 
@@ -63,6 +63,7 @@
     // Показать выплывающее меню
     const showDetail = () => {
         PopupScripts.setDropdownPosition(popupRef.value)
+        emit('openPopup', popupRef.value)
     }
 
     const setHeight = () => {

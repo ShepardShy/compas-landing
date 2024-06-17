@@ -13,6 +13,9 @@
             v-if="props.isReadOnly"
             :value="props.item.value"
             :isHTML="true"
+            :isLink="props.isLink"
+            :link="props.item.external_link"
+            :substring="props.item.substring"
         />
 
         <TextareaField
@@ -76,6 +79,10 @@
             type: Boolean
         },
         isReadOnly: {
+            default: false,
+            type: Boolean
+        },
+        isLink: {
             default: false,
             type: Boolean
         },

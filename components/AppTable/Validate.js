@@ -43,6 +43,13 @@ export default function(field, value) {
                     return createError(error, 'Поле обязательно к заполнению')
                 }
                 break;
+
+            // Проверка автокомплита
+            case 'autocomplete':
+                if (checkSelectValue(value)) {
+                    return createError(error, 'Поле обязательно к заполнению')
+                }
+                break;
             // Проверка группированного текстового поля
             case 'text_group':
                 if (checkSubfieldsValue(field)) {

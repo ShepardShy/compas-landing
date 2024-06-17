@@ -6,7 +6,22 @@
         <div class="auth__error" v-show="userStore.authError.status">
             {{ userStore.authError.text }}
         </div>
-
+        <AppInput
+            class="auth__input auth__input_substr"
+            :item="{
+                id: 0,
+                title: 'Название портала',
+                value: userStore.authData.portalName,
+                placeholder: 'Название портала',
+                type: 'text',
+                key: 'portalName',
+                substring: '.compas.pro'
+            }"
+            :mask="null"
+            :disabled="false"
+            :enabledAutocomplete="true"
+            @changeValue="(data) => changeValue(data)"
+        />
         <AppInput
             class="auth__input"
             :item="{
@@ -91,8 +106,4 @@
             userStore.logIn(userStore.authData, props.authRef)
         }
     }
-
-    const getPortalName = computed(() => {
-        return document.location.host.replace('compas.pro', '')
-    })
 </script>

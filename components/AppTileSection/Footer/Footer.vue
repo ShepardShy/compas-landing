@@ -1,5 +1,5 @@
 <template>
-    <div class="tile-section__footer" v-if="isEditableSettings">
+    <div class="tile-section__footer" v-if="isEditableSettings && is_admin">
         <AppPopup :closeByClick="true" :isCanSelect="false">
             <template #summary>
                 <ButtonText>
@@ -44,6 +44,7 @@
         'callAction'
     ])
 
+    const is_admin = inject('is_admin')
     const hiddenFields = inject('hiddenFields')
     const isEditableSettings = inject('isEditableSettings')
 </script>

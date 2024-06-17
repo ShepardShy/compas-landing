@@ -8,7 +8,7 @@
             <div 
                 class="filter__save filter-save" 
                 v-for="(item, index) of saves.filter(p => !p.is_hidden)" 
-                :class="item.edit ? 'filter-save_edit' : ''"
+                :class="[item.edit ? 'filter-save_edit' : '', activeFilter == item.id ? 'filter-save_active' : '']"
             >
                 <div 
                     class="filter-save__title" 
@@ -46,7 +46,7 @@
             </div>
         </div>
 
-        <ButtonText class="filter__button-save" @click="() => $emit('actionSaves', {action: 'initCreate', value: null})">
+        <ButtonText v-if="is_admin" class="filter__button-save" @click="() => $emit('actionSaves', {action: 'initCreate', value: null})">
             + Добавить фильтр
         </ButtonText>
     </div>
@@ -55,6 +55,8 @@
 <script setup>
     import './Saves.scss';
 
+    import { inject } from 'vue'
+
     import ButtonText from '@/components/AppButton/ButtonText/ButtonText.vue';
     import IconDots from '@/components/AppIcons/Dots/Dots.vue';
     import AppInput from '@/components/AppInputs/Input/Input.vue';
@@ -62,6 +64,8 @@
     import PopupOption from '@/components/AppPopup/PopupOption/PopupOption.vue';
 
     const saves = inject('saves')
+    const activeFilter = inject('activeFilter')
+    const is_admin = inject('is_admin')
 
     const emit = defineEmits([
         'actionSaves'

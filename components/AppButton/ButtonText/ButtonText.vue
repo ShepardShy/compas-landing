@@ -7,6 +7,8 @@
 <script setup>
     import './ButtonText.scss';
 
+    import { ref } from 'vue'
+
     const buttonTextRef = ref(null)
 
     defineExpose({

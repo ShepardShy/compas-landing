@@ -113,10 +113,13 @@
 
         emit('actionFilter', {action: 'changeOrder', value: {fields: event.to.__draggable_component__.modelValue, requestFields: data}})
 
-        event.from.classList.remove('tile-section__body_dragging')
         document.querySelectorAll('#clone-elem').forEach(element => {
             element.remove()
         });
+
+        setTimeout(() => {
+            event.from.classList.remove('filter__fields_dragging')
+        }, 100);
     }
 
     // Клонирование перетаскиваемого элемента c созданием родителя

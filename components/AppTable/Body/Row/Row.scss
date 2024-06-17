@@ -12,6 +12,14 @@
             }
         }
 
+        &:nth-child(even) {
+            background: variables.$color-light-blue;
+            
+            .table__item {
+                background: variables.$color-light-blue;
+            }
+        }
+
         &.table__row_updated {
             background: #fffbe2;
             
@@ -72,6 +80,25 @@
             }
         }
     }
+
+}
+
+tbody {
+    &#clone-elem {
+            position: absolute;
+            top: -10000px;
+            left: -10000px;
+        
+            .table__row_clone {
+                background: variables.$color-white;
+        
+                .table__item {
+                    width: var(--defaultWidth);
+                    min-width: var(--defaultWidth);
+                    background: variables.$color-white !important; 
+                }
+            }
+    }
 }
 
 
@@ -84,6 +111,10 @@
 
 					.table__item {
 						background: transparent;
+
+                        &.table__item_sticky {
+                            background: #f9f9fa;
+                        }
 					}
 				}
 			}

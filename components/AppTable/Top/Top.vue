@@ -6,6 +6,7 @@
 
         <div class="table-top__actions">
             <AppSelect 
+                v-if="isMobile"
                 class="table-top__item table-top__select"
                 :class="sortItem.order == 'asc' ? 'table-top__select_up' : ''"
                 :item="{
@@ -29,7 +30,7 @@
                 v-show="menu.saves.isShow"
                 @saveSettings="(role) => callAction({action: 'saveSettings', value: role})"
             />
-            <AppPopup :isCanSelect="false" class="table-top__item table-top__item_excel" :closeByClick="true">
+            <AppPopup :isCanSelect="false" class="table-top__item table-top__item_excel" v-if="is_admin || permissions.export_p != 'N'" :closeByClick="true">
                 <template #summary>
                     <IconDots />
                 </template>
@@ -103,7 +104,7 @@
 <script setup>
     import './Top.scss';
 
-    import { ref, inject, onMounted } from 'vue'
+    import { ref, inject, onMounted, watch } from 'vue'
 
     import IconDots from '@/components/AppIcons/Dots/Dots.vue'
     import IconDrag from '@/components/AppIcons/Drag/Drag.vue'
@@ -126,6 +127,9 @@
     const fields = inject('fields')
     const sortItem = inject('sortItem')
     const tableRef = inject('tableRef')
+    const permissions = inject('permissions')
+    const is_admin = inject('is_admin')
+    const isMobile = inject('isMobile')
     
     const emit = defineEmits([
         'callAction'
@@ -156,12 +160,15 @@
             let findedOption = fields.value.find(option => option.key == data.key)
             findedOption[menu.value.activeTab.tab] = data.value
             showSaves(true)
-
-            if (menu.value.activeTab.tab == 'enabled') {
-                setTimeout(() => {
-                    resizeTable.resizableGrid(tableRef.value, fields.value)
-                }, 100);
-            }
+            
+            setTimeout(() => {
+                let findedCell = tableRef.value.querySelector(`th[data-key="${data.key}"]`)
+                if (findedCell.offsetWidth <= 50) {
+                    findedCell.querySelector('span').style.display = 'none'
+                } else {
+                    findedCell.querySelector('span').style.display = 'flex'
+                }
+            }, 10);
         }
 
         // Начало перетаскивания опции
@@ -188,6 +195,7 @@
             emit('callAction', {
                 action: 'saveFields', 
                 value: {
+                    sortItem: sortItem.value,
                     role: role, 
                     fields: fields.value
                 }
@@ -301,4 +309,7 @@
         options.value = localOptions.filter(p => !['isChoose', 'actions', 'iconDelete', 'iconDrag'].includes(p.value))
     }
 
+    watch(() => fields.value, () => {
+        setOptions()
+    })
 </script>

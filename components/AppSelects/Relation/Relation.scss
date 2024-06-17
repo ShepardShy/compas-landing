@@ -11,6 +11,12 @@
     .button-text {
         margin-top: 10px;
     }
+
+    &.relation_disabled {
+        .relation__actions {
+            pointer-events: none;
+        }
+    }
 }
 
 .relation__actions {

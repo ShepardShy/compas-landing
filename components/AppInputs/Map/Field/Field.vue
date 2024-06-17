@@ -29,13 +29,13 @@
             :isCanCreate="false"
             :isLink="false"
             :isShowId="false"
-            :anotherTitle="false"
+            :anotherTitle="null"
             @changeValue="(data) => changeValue(data)"
             @searchOptions="(data) => searchOptions(data)"
         />
 
         <AppCopy
-            v-if="value.text"
+            v-if="value && value.text"
             :text="value.text"
             :buttonTitle="'Скопировать адрес'"
         />
@@ -43,6 +43,9 @@
         <div class="map__container" v-if="props.isShowMap">
             <div id="map" class="yandex-container"> </div>
             <canvas id="draw-canvas" style="position: absolute; left: 0; top: 0; display: none;"></canvas>
+            <a class="map__link" target="_blank" :href="`https://maps.yandex.ru/?text=${value.coords.join('+')}`"> 
+                Открыть в Яндекс картах 
+            </a>
         </div>
     </div>
 </template>
@@ -77,29 +80,31 @@
         coords: [55.755864, 37.617698]
     })
 
-    onMounted(async () => {
-        await loadYmap(settings);
+    onMounted(() => {
+        setTimeout(async () => {
+            await loadYmap(settings);
+
+            if (props.isShowMap) {
+                ymaps.ready(['Map', 'Polygon']).then(function () {
+                    map = new ymaps.Map('map', {
+                        center: value.value.coords,
+                        zoom: 15
+                    });
+        
+                    markers.value.push(value.value.coords)
+                    setMarkers()
+                });
+            }
+        }, 100);
 
         if (![null, undefined].includes(props.item.value) && props.item.value != '') {
             value.value = JSON.parse(JSON.stringify(props.item.value))
             localOptions.value.push({
                 label: {
-                    text: props.item.value.text
+                    text: props.item.value ? props.item.value.text : null
                 },
                 value: props.item.value
             })
-        }
-
-        if (props.isShowMap) {
-            ymaps.ready(['Map', 'Polygon']).then(function () {
-                map = new ymaps.Map('map', {
-                    center: value.value.coords,
-                    zoom: 15
-                });
-    
-                markers.value.push(value.value.coords)
-                setMarkers()
-            });
         }
     })
 
@@ -233,8 +238,6 @@
                     data.push(marker)
                 }
             }
-
-            console.log(data);
         }
 
         copyMap.geoObjects.remove(copyPolygon);
@@ -307,10 +310,11 @@
     const searchOptions = async (data) => {
         // Метод для вставки запроса на получение опций
         const getOptions = async (search) => {
+            // ${userStore.userToken}
             let request = await fetch(`https://opt6.compas.pro/api/map/geocode?address=${search}`, {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer 7nBfp7NLHdDnC4MAeIg6CG1DS5nyPkKOni2VWpz1Tp1WBR6BsZuE8hL5grMr`,
+                    'Authorization': `Bearer `,
                 }
             })
             return await request.json()
@@ -324,7 +328,7 @@
                 },
                 value: {
                     text: option.text,
-                    coords: option.coords.reverse()
+                    coords: option.coords
                 }
             })
         }
@@ -334,12 +338,18 @@
     }
 
     watch(() => props.item.value, () => {
-        value.value = JSON.parse(JSON.stringify(props.item.value))
+        value.value = props.item.value ? JSON.parse(JSON.stringify(props.item.value)) : {
+            text: null,
+            coords: [55.755864, 37.617698]
+        }
         localOptions.value.push({
             label: {
-                text: props.item.value.text
+                text: props.item.value ? props.item.value.text : null
             },
-            value: props.item.value
+            value: props.item.value ? props.item.value : {
+                text: null,
+                coords: [55.755864, 37.617698]
+            }
         })
     })
 </script>

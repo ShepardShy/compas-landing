@@ -3,6 +3,12 @@
 
 .contacts__map {
     margin: 60px 0px 125px;
+
+    .section__image {
+        height: 361px;
+        border-radius: 20px;
+        box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.07);
+    }
 }
 
 .contacts-map__list {

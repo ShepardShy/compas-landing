@@ -85,6 +85,10 @@
             modalRef.value.classList.add('modal_warning')
         }
         document.body.parentNode.classList.add('body_uncscroll')
+
+        document.querySelectorAll('.modal__content').forEach(elem => {
+            elem.classList.add('modal__content_unset')
+        })
     })
 
     onUnmounted(() => {
@@ -95,6 +99,10 @@
         if (modalRef.value) {
             modalRef.value.classList.remove('modal_warning')
         }
+
+        document.querySelectorAll('.modal__content').forEach(elem => {
+            elem.classList.remove('modal__content_unset')
+        })
     })
 
     defineExpose({

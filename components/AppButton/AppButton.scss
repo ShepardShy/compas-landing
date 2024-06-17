@@ -43,6 +43,10 @@ button {
         background: variables.$color-white;
         border: 1px solid variables.$color-light-grey;
         box-shadow: 0 5px 20px variables.$color-light-grey;
+
+        &:hover {
+            box-shadow: none;
+        }
     }
 
     &.button_non-background {
@@ -51,6 +55,7 @@ button {
     }
 
     &.button_add {
+        height: 100%;
         padding: 9px 14px 9px 14px;
         @include mixins.flexBlock($vertical: center, $gap: 7px);
 

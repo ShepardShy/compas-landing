@@ -2,10 +2,12 @@
 @use '@/assets/mixins.scss' as mixins;
 
 .icon__delete {
-    @include mixins.elemResolutionOptions(15px, 15px);
     cursor: pointer;
+    display: flex;
 
     svg {
+        @include mixins.elemResolutionOptions(15px, 15px);
+
         * {
             fill: variables.$color-red
         }
