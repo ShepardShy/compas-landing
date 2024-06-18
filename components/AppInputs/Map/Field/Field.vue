@@ -22,7 +22,7 @@
 				title: props.item.title,
 				value: value,
 				type: 'address',
-				placeholder: null,
+				placeholder: props.placeholder,
 				focus: props.item.focus,
 				key: props.item.key,
 				options: localOptions,
@@ -33,6 +33,9 @@
 			:isLink="false"
 			:isShowId="false"
 			:anotherTitle="null"
+			:is-show-label="showInputLabel"
+			:placeholder="props.placeholder"
+			:isShowSubstring="props.isShowSubstring"
 			@changeValue="data => changeValue(data)"
 			@searchOptions="data => searchOptions(data)"
 		/>
@@ -104,8 +107,6 @@
 		coords: [55.755864, 37.617698],
 	});
 
-	const lastPointIndex = ref(0);
-
 	onMounted(() => {
 		setTimeout(async () => {
 			await loadYmap(settings);
@@ -131,6 +132,7 @@
 
 		if (![null, undefined].includes(props.item.value) && props.item.value != "") {
 			value.value = JSON.parse(JSON.stringify(props.item.value));
+			if (props.isCountDistance) return;
 			localOptions.value.push({
 				label: {
 					text: props.item.value ? props.item.value.text : null,
@@ -189,6 +191,18 @@
 			default: {},
 			type: Object,
 		},
+		showInputLabel: {
+			default: false,
+			type: Boolean,
+		},
+		placeholder: {
+			default: null,
+			type: String,
+		},
+		isShowSubstring: {
+			default: true,
+			type: Boolean,
+		},
 	});
 
 	const emit = defineEmits(["changeValue"]);
@@ -202,9 +216,9 @@
 
 			renderRoute();
 
-			const placemark = new ymaps.Placemark(positionClick.value);
-			placemark.properties.set("id", `${++lastPointIndex.value}`);
-			map.geoObjects.add(placemark);
+			// const placemark = new ymaps.Placemark(positionClick.value);
+			// placemark.properties.set("id", `${++lastPointIndex.value}`);
+			// map.geoObjects.add(placemark);
 		});
 	};
 
@@ -212,27 +226,23 @@
 	const renderRoute = positionRoute => {
 		if (positionRoute) {
 			positionClick.value = positionRoute;
+		} else if (positionRoute === null) {
+			lastRoute.value && map.geoObjects?.remove(lastRoute.value);
+			emit("changeValue", "0");
+			return;
 		}
 
-		const closestPoint = arrPlacemarksRez.value.getClosestTo(positionClick.value);
+		const closestPoint = arrPlacemarksRez.value?.getClosestTo(positionClick.value);
 
-		ymaps
-			.route([closestPoint.geometry.getCoordinates(), positionClick.value], {
-				hasBalloon: false,
-			})
-			.then(function (route) {
-				route.getPaths().options.set({ strokeWidth: 5, opacity: 0.9 });
-				lastRoute.value && map.geoObjects.remove(lastRoute.value);
-				lastRoute.value = route.getPaths();
-				routeLength.value = route.getHumanLength();
-				console.log(routeLength.value);
+		ymaps.route([closestPoint?.geometry?.getCoordinates(), positionClick.value], {}).then(function (route) {
+			route.getPaths()?.options?.set({ strokeWidth: 5, opacity: 0.9 });
+			lastRoute.value && map?.geoObjects?.remove(lastRoute.value);
+			lastRoute.value = route?.getPaths();
+			routeLength.value = route?.getHumanLength();
 
-				// пищем дистанцию на метке
-				const distance = Math.round(route.getLength() / 1000);
-				route.properties.set({ iconContent: distance });
-				map.geoObjects.add(route.getPaths());
-				emit("changeValue", routeLength.value);
-			});
+			map?.geoObjects.add(route?.getPaths());
+			emit("changeValue", routeLength.value);
+		});
 	};
 
 	// Создание полигона
@@ -395,37 +405,34 @@
 
 	// Изменение значения
 	const changeValue = data => {
-		if (data.value) {
+		if (props.isCountDistance) {
+			renderRoute(data?.value?.coords ? data?.value?.coords : null);
+		}
+		if (data.value && !props.isCountDistance) {
 			markers.value.splice(
 				markers.value.findIndex(p => _.isEqual(p, value.value.coords)),
 				1,
 				data.value.coords
 			);
 			value.value = data.value;
-
-			if (props.isShowMap) {
-				map.panTo([data.value.coords], {
-					flying: false,
-				});
-				if (props.isCountDistance) {
-					renderRoute(data.value.coords);
-				} else {
-					setMarkers();
-				}
-			}
 		} else {
 			markers.value = [];
 			value.value = {
 				text: null,
 				coords: [],
 			};
+		}
 
-			if (props.isShowMap) {
-				map.panTo([55.755864, 37.617698], {
-					flying: false,
-				});
-				setMarkers();
-			}
+		if (props.isShowMap && data?.value?.coords) {
+			map?.panTo([data?.value?.coords], {
+				flying: false,
+			});
+			!props.isCountDistance && setMarkers();
+		} else {
+			map?.panTo([55.755864, 37.617698], {
+				flying: false,
+			});
+			!props.isCountDistance && setMarkers();
 		}
 
 		if (!props.isCountDistance) {

@@ -36,31 +36,33 @@
 					focus: false,
 				}"
 			/> -->
-			<div class="distance__map">
-				<AppMap
-					:item="{
-						id: 0,
-						title: 'Адрес',
-						key: 'address',
-						required: false,
-						focus: false,
-						value: {
-							text: null,
-							coords: [55.755864, 37.617698],
-						},
-						options: [],
-						lockedOptions: [],
-					}"
-					:isShowMap="true"
-					:isCanSelect="false"
-					:isShowLabel="false"
-					:isCountDistance="true"
-					:mapZoom="10"
-					:mkadPolygonCoords="mkadCoords"
-					:mapStyles="{ height: '550px' }"
-					@changeValue="length => changeValue(length)"
-				/>
-			</div>
+			<AppMap
+				class="distance__map"
+				:item="{
+					id: 0,
+					title: 'Адрес',
+					key: 'address',
+					required: false,
+					focus: false,
+					value: {
+						text: null,
+						coords: [55.755864, 37.617698],
+					},
+					options: [],
+					lockedOptions: [],
+				}"
+				:isShowMap="true"
+				:isCanSelect="false"
+				:isShowLabel="false"
+				:isCountDistance="true"
+				:mapZoom="10"
+				:mkadPolygonCoords="mkadCoords"
+				:mapStyles="{ height: '550px' }"
+				:showInputLabel="false"
+				:placeholder="'Адрес'"
+				:isShowSubstring="false"
+				@changeValue="length => changeValue(length)"
+			/>
 			<DistanceCounter
 				:title="`За ${textMap[activeTab]}`"
 				:count="distanceStore.textLength"
@@ -72,7 +74,6 @@
 </template>
 
 <script setup>
-	import "./Distance.scss";
 	import AppSection from "~/components/AppSection/AppSection.vue";
 	import AppH2 from "@/components/AppHeaders/H2/H2.vue";
 	import DistanceCard from "./components/Card/Card.vue";
@@ -101,7 +102,6 @@
 	};
 
 	const changeValue = length => {
-		console.log(length);
 		distanceStore.textLength = length;
 	};
 
@@ -131,3 +131,7 @@
 		}
 	);
 </script>
+
+<style scoped>
+	@import url(./Distance.scss);
+</style>
