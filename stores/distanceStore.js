@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 export const useDistanceStore = defineStore("distanceStore", {
 	state: () => {
 		return {
-			text: "",
+			textLength: "0",
 			coords: "",
 		};
 	},

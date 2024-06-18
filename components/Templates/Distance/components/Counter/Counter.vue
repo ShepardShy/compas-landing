@@ -1,7 +1,10 @@
 <template>
 	<AppSection class="counter">
 		<p class="counter__title">{{ title }}</p>
-		<p class="counter__count">{{ count }}</p>
+		<p
+			v-html="count"
+			class="counter__count"
+		></p>
 		<AppButton
 			@click="$emit('reset')"
 			class="counter__btn button_blue"

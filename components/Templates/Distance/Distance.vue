@@ -55,13 +55,15 @@
 					:isCanSelect="false"
 					:isShowLabel="false"
 					:isCountDistance="true"
+					:mapZoom="10"
 					:mkadPolygonCoords="mkadCoords"
-					@changeValue="data => changeValue(field.id, data)"
+					:mapStyles="{ height: '550px' }"
+					@changeValue="length => changeValue(length)"
 				/>
 			</div>
 			<DistanceCounter
 				:title="`За ${textMap[activeTab]}`"
-				:count="'0'"
+				:count="distanceStore.textLength"
 			/>
 		</div>
 
@@ -96,6 +98,11 @@
 		activeTab.value = tab;
 		router.query.tab = tab;
 		commonScripts.setURLParams({ tab: tab });
+	};
+
+	const changeValue = length => {
+		console.log(length);
+		distanceStore.textLength = length;
 	};
 
 	onMounted(() => {

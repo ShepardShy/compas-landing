@@ -50,6 +50,7 @@
 			<div
 				id="map"
 				class="yandex-container"
+				:style="mapStyles"
 			></div>
 			<canvas
 				id="draw-canvas"
@@ -68,7 +69,7 @@
 
 <script setup>
 	import "./Field.scss";
-	import { loadYmap } from "vue-yandex-maps";
+	import { YandexObjectManager, loadYmap } from "vue-yandex-maps";
 
 	import _ from "lodash";
 	import IconLasso from "@/components/AppIcons/Lasso/Lasso.vue";
@@ -90,7 +91,11 @@
 	};
 
 	let map = null;
+	const arrPlacemarksRez = ref(null);
 	let polygon = ref(null);
+	let positionClick = shallowRef(null);
+	let lastRoute = shallowRef(null);
+	let routeLength = ref(null);
 	let markers = ref([]);
 	let isSelectActive = ref(false);
 	let localOptions = ref([]);
@@ -98,6 +103,8 @@
 		text: null,
 		coords: [55.755864, 37.617698],
 	});
+
+	const lastPointIndex = ref(0);
 
 	onMounted(() => {
 		setTimeout(async () => {
@@ -107,21 +114,20 @@
 				ymaps.ready(["Map", "Polygon"]).then(function () {
 					map = new ymaps.Map("map", {
 						center: value.value.coords,
-						zoom: 15,
+						zoom: props.mapZoom,
 						height: props.isCountDistance ? "550px" : undefined,
 					});
 
 					if (props.isCountDistance) {
-						const mkadPolygon = new ymaps.Polygon(props.mkadPolygonCoords);
-						map.geoObjects.add(mkadPolygon, {}, { fillColor: "#fff" });
-						console.log(map);
+						clickMap();
+						createPolygon();
 					} else {
 						markers.value.push(value.value.coords);
 						setMarkers();
 					}
 				});
 			}
-		}, 100);
+		}, 5000);
 
 		if (![null, undefined].includes(props.item.value) && props.item.value != "") {
 			value.value = JSON.parse(JSON.stringify(props.item.value));
@@ -175,9 +181,89 @@
 			default: false,
 			type: Array,
 		},
+		mapZoom: {
+			default: 15,
+			type: Number,
+		},
+		mapStyles: {
+			default: {},
+			type: Object,
+		},
 	});
 
 	const emit = defineEmits(["changeValue"]);
+
+	// Клик по карте
+	const clickMap = e => {
+		map.events.add("click", function (e) {
+			positionClick.value = e.get("coords");
+
+			removeMarkers();
+
+			renderRoute();
+
+			const placemark = new ymaps.Placemark(positionClick.value);
+			placemark.properties.set("id", `${++lastPointIndex.value}`);
+			map.geoObjects.add(placemark);
+		});
+	};
+
+	// Прокладка маршрута
+	const renderRoute = positionRoute => {
+		if (positionRoute) {
+			positionClick.value = positionRoute;
+		}
+
+		const closestPoint = arrPlacemarksRez.value.getClosestTo(positionClick.value);
+
+		ymaps
+			.route([closestPoint.geometry.getCoordinates(), positionClick.value], {
+				hasBalloon: false,
+			})
+			.then(function (route) {
+				route.getPaths().options.set({ strokeWidth: 5, opacity: 0.9 });
+				lastRoute.value && map.geoObjects.remove(lastRoute.value);
+				lastRoute.value = route.getPaths();
+				routeLength.value = route.getHumanLength();
+				console.log(routeLength.value);
+
+				// пищем дистанцию на метке
+				const distance = Math.round(route.getLength() / 1000);
+				route.properties.set({ iconContent: distance });
+				map.geoObjects.add(route.getPaths());
+				emit("changeValue", routeLength.value);
+			});
+	};
+
+	// Создание полигона
+	const createPolygon = () => {
+		const mkadPolygon = new ymaps.Polygon(props.mkadPolygonCoords);
+		map.geoObjects.add(mkadPolygon, {}, { fillColor: "#fff" });
+
+		const arrPlacemarks = [];
+		for (let i = 0; i < props.mkadPolygonCoords[0].length; i++) {
+			const placemark = new ymaps.Placemark(props.mkadPolygonCoords[0][i]);
+			placemark.options.set("visible", false);
+			arrPlacemarks[i] = placemark;
+		}
+		arrPlacemarksRez.value = ymaps.geoQuery(arrPlacemarks).addToMap(map);
+	};
+
+	// Клик по полигону
+
+	// Удаление меток
+	const removeMarkers = () => {
+		map.geoObjects.each(function (item) {
+			if (typeof item.properties != "undefined") {
+				if (typeof item.properties.get("id") != "undefined") {
+					if (item.properties.get("id")) {
+						map.geoObjects.remove(item);
+					}
+				}
+			}
+		});
+	};
+	// Создание полигона
 
 	// Создание меток
 	const setMarkers = () => {
@@ -321,7 +407,11 @@
 				map.panTo([data.value.coords], {
 					flying: false,
 				});
-				setMarkers();
+				if (props.isCountDistance) {
+					renderRoute(data.value.coords);
+				} else {
+					setMarkers();
+				}
 			}
 		} else {
 			markers.value = [];
@@ -338,7 +428,9 @@
 			}
 		}
 
-		emit("changeValue", data);
+		if (!props.isCountDistance) {
+			emit("changeValue", data);
+		}
 	};
 
 	// Поиск опций
