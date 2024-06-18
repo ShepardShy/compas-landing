@@ -71,17 +71,17 @@
 </template>
 
 <script setup>
+	import { loadYmap } from "vue-yandex-maps";
 	import "./Field.scss";
-	import { YandexObjectManager, loadYmap } from "vue-yandex-maps";
 
-	import _ from "lodash";
-	import IconLasso from "@/components/AppIcons/Lasso/Lasso.vue";
 	import AppAutocomplete from "@/components/AppAutocomplete/Input.vue";
-	import IconLassoRemove from "@/components/AppIcons/Lasso/LassoRemove/LassoRemove.vue";
 	import AppCopy from "@/components/AppCopy/AppCopy.vue";
+	import IconLasso from "@/components/AppIcons/Lasso/Lasso.vue";
+	import IconLassoRemove from "@/components/AppIcons/Lasso/LassoRemove/LassoRemove.vue";
+	import _ from "lodash";
 
-	import { ref, onMounted, toRaw, watch } from "vue";
 	import { useUserStore } from "@/stores/userStore.js";
+	import { onMounted, ref, toRaw, watch } from "vue";
 
 	const userStore = useUserStore();
 
@@ -102,7 +102,7 @@
 	let markers = ref([]);
 	let isSelectActive = ref(false);
 	let localOptions = ref([]);
-	let value = ref({
+	let value = shallowRef({
 		text: null,
 		coords: [55.755864, 37.617698],
 	});
@@ -179,7 +179,7 @@
 			default: false,
 			type: Boolean,
 		},
-		mkadPolygonCoords: {
+		polygonCoords: {
 			default: false,
 			type: Array,
 		},
@@ -234,25 +234,54 @@
 
 		const closestPoint = arrPlacemarksRez.value?.getClosestTo(positionClick.value);
 
-		ymaps.route([closestPoint?.geometry?.getCoordinates(), positionClick.value], {}).then(function (route) {
-			route.getPaths()?.options?.set({ strokeWidth: 5, opacity: 0.9 });
-			lastRoute.value && map?.geoObjects?.remove(lastRoute.value);
-			lastRoute.value = route?.getPaths();
-			routeLength.value = route?.getHumanLength();
+		const multiRoute = new ymaps.multiRouter.MultiRoute(
+			{
+				referencePoints: [closestPoint?.geometry?.getCoordinates(), positionClick.value],
+				params: {
+					routingMode: "auto",
+					results: 1,
+				},
+			},
+			{ wayPointVisible: false, viaPointVisible: false, routeActiveMarkerVisible: false, routeOpenBalloonOnClick: false }
+		);
+		// route.getPaths()?.options?.set({ strokeWidth: 5, opacity: 0.9 });
+		lastRoute.value && map?.geoObjects?.remove(lastRoute.value);
+		lastRoute.value = multiRoute;
+		map.balloon.open(positionClick.value, "Содержимое балуна", {
+			// Опция: не показываем кнопку закрытия.
+			closeButton: false,
+		});
+		multiRoute.model.events.add("requestsuccess", function (route) {
+			const between = spaceBetween(multiRoute.getWayPoints().get(0).geometry.getCoordinates(), multiRoute.getWayPoints().get(1).geometry.getCoordinates());
+		});
+		// routeLength.value = multiRoute?.getHumanLength();
+		map?.geoObjects.add(multiRoute);
+	};
 
-			map?.geoObjects.add(route?.getPaths());
-			emit("changeValue", routeLength.value);
+	// Расчёт расстояния
+	const spaceBetween = (point1, point2) => {
+		ymaps.geocode(point1).then(function (res) {
+			const point1Coords = res.geoObjects.get(0).geometry.getCoordinates();
+			ymaps.geocode(point2).then(function (res) {
+				const point2Coords = res.geoObjects.get(0).geometry.getCoordinates();
+				// Расстояние
+
+				const between = ymaps.formatter.distance(ymaps.coordSystem.geo.getDistance(point1Coords, point2Coords));
+				routeLength.value = between;
+				emit("changeValue", routeLength.value);
+				return ymaps.formatter.distance(ymaps.coordSystem.geo.getDistance(point1Coords, point2Coords));
+			});
 		});
 	};
 
 	// Создание полигона
 	const createPolygon = () => {
-		const mkadPolygon = new ymaps.Polygon(props.mkadPolygonCoords);
+		const mkadPolygon = new ymaps.Polygon(props.polygonCoords);
 		map.geoObjects.add(mkadPolygon, {}, { fillColor: "#fff" });
 
 		const arrPlacemarks = [];
-		for (let i = 0; i < props.mkadPolygonCoords[0].length; i++) {
-			const placemark = new ymaps.Placemark(props.mkadPolygonCoords[0][i]);
+		for (let i = 0; i < props.polygonCoords[0].length; i++) {
+			const placemark = new ymaps.Placemark(props.polygonCoords[0][i]);
 			placemark.options.set("visible", false);
 			arrPlacemarks[i] = placemark;
 		}

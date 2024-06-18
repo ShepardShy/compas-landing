@@ -56,7 +56,7 @@
 				:isShowLabel="false"
 				:isCountDistance="true"
 				:mapZoom="10"
-				:mkadPolygonCoords="mkadCoords"
+				:polygonCoords="mkadCoords"
 				:mapStyles="{ height: '550px' }"
 				:showInputLabel="false"
 				:placeholder="'Адрес'"
@@ -68,6 +68,8 @@
 				:count="distanceStore.textLength"
 			/>
 		</div>
+
+		<
 
 		<TemplateSocial />
 	</AppSection>
