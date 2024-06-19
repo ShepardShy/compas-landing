@@ -16,6 +16,7 @@
 
 		<AppAutocomplete
 			class="map__autocompete"
+			ref="autocompleteComponent"
 			:item="{
 				id: 0,
 				required: props.item.required,
@@ -96,6 +97,7 @@
 	};
 
 	let map = null;
+	const autocompleteComponent = ref(null);
 	const arrPlacemarksRez = ref(null);
 	let polygon = ref(null);
 	let multiRoute = shallowRef(null);
@@ -233,6 +235,7 @@
 
 	// Прокладка маршрута
 	const renderRoute = positionRoute => {
+		console.log(positionRoute);
 		if (positionRoute) {
 			positionClick.value = positionRoute;
 		} else if (positionRoute === null) {
@@ -426,12 +429,30 @@
 		}
 	};
 
+	//Сброс маршрута
+	const resetRoute = () => {
+		changeValue(null);
+		autocompleteComponent.value.reset();
+		address.value = "";
+	};
+
+	defineExpose({
+		resetRoute,
+	});
+
 	// Изменение значения
 	const changeValue = data => {
 		if (props.isCountDistance) {
-			renderRoute(data?.value?.coords ? data?.value?.coords : null);
+			let position = data?.value?.coords ? data?.value?.coords : null;
+
+			let search = data?.search;
+			let coords = search?.split(",");
+			if (coords?.length > 0 && !isNaN(+coords?.[0]) && !isNaN(+coords?.[1])) {
+				position = [+coords[0], +coords[1]];
+			}
+			renderRoute(position);
 		}
-		if (data.value && !props.isCountDistance) {
+		if (data?.value && !props.isCountDistance) {
 			markers.value.splice(
 				markers.value.findIndex(p => _.isEqual(p, value.value.coords)),
 				1,

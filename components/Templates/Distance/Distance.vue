@@ -37,6 +37,7 @@
 				}"
 			/> -->
 			<AppMap
+				ref="mapComponent"
 				class="distance__map"
 				:item="{
 					id: 0,
@@ -67,6 +68,7 @@
 			<DistanceCounter
 				:title="`За ${textMap[activeTab]}`"
 				:count="distanceStore.textLength"
+				@reset="mapComponent.resetRoute()"
 			/>
 		</div>
 
@@ -87,6 +89,8 @@
 	import commonScripts from "@/commonScripts/commonScripts";
 	import { useDistanceStore } from "~/stores/distanceStore";
 	import mkadCoords from "./composables/mkadCoords";
+
+	const mapComponent = ref(null);
 
 	const textMap = {
 		mkad: "МКАД",

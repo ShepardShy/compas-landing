@@ -61,6 +61,7 @@
 						emit('changeValue', {
 							key: props.item.key,
 							value: activeOption,
+							search: search,
 						})
 					"
 					class="autocomplete__button button_blue"
@@ -196,7 +197,6 @@
 
 	// Превент клика при нажатии на блок
 	const preventClick = () => {
-		console.log(popupRef.value);
 		if (props.isReadOnly || popupRef.value.popupRef.closest(".popup_prevent") != null) {
 			popupRef.value.popupRef.removeAttribute("open");
 		} else {
@@ -215,6 +215,12 @@
 				}, 5);
 			}
 		}
+	};
+
+	const reset = () => {
+		activeOption.value = nullOption;
+		search.value = "";
+		options.value = backupOptions.value;
 	};
 
 	// Действия с автокомплитом
@@ -247,8 +253,9 @@
 		// Установка выбранной опции
 		const setActiveOption = value => {
 			search.value = "";
-			if (typeof value == "string") {
-				activeOption.value = { ...nullOption, text: value };
+			if (Array.isArray(value)) {
+				search.value = value.join();
+				activeOption.value = { ...nullOption, text: value.join() };
 			} else if (value === null || !value?.text) {
 				activeOption.value = nullOption;
 			} else {
@@ -370,15 +377,16 @@
 				action: "getOptions",
 				value: null,
 			});
-			callAction({ action: "searchOptions", value: props.item.value });
-			// callAction({
-			// 	action: "setActiveOption",
-			// 	value: props.item.value,
-			// });
+			// callAction({ action: "searchOptions", value: props.item.value });
+			callAction({
+				action: "setActiveOption",
+				value: props.item.value,
+			});
 		}
 	);
 
 	defineExpose({
 		popupRef,
+		reset,
 	});
 </script>
