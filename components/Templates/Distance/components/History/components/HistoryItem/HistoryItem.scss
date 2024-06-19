@@ -1,0 +1,25 @@
+.item {
+	padding: 22px 25px;
+	border-radius: 5px;
+	border: solid 1px #eeeff1;
+	background-color: #fbfcfd;
+	display: flex;
+	justify-content: space-between;
+	&__text {
+		font-size: 21px;
+		&_bold {
+			font-weight: 600;
+		}
+		&_gray {
+			color: #4e4e4e;
+		}
+	}
+	&__distance {
+		display: flex;
+		gap: 5px;
+	}
+	&__time {
+		display: flex;
+		gap: 10px;
+	}
+}

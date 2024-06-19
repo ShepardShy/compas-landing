@@ -2,7 +2,7 @@
 	<FormItem
 		class="form-item__autocomplete autocomplete"
 		:required="props.item.required"
-		:class="[null, undefined].includes(props.item.value) || props.item.value == '' ? 'autocomplete_empty' : ''"
+		:class="[[null, undefined].includes(props.item.value) || props.item.value == '' ? 'autocomplete_empty' : '', props.isCountDistance ? 'distance__autocomplete' : '']"
 	>
 		<FormLabel
 			v-if="isShowLabel"

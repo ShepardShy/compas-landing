@@ -22,20 +22,6 @@
 			<DistanceCard />
 		</div>
 		<div class="distance__wrapper">
-			<!-- <AppInput
-				class="distance__input"
-				:item="{
-					id: 0,
-					required: false,
-					substring: null,
-					type: 'text',
-					title: 'Название категории',
-					placeholder: 'Адрес',
-					value: distanceStore.value,
-					key: 'destionation',
-					focus: false,
-				}"
-			/> -->
 			<AppMap
 				ref="mapComponent"
 				class="distance__map"
@@ -66,13 +52,13 @@
 				@changeValue="length => changeValue(length)"
 			/>
 			<DistanceCounter
+				class="distance__counter"
 				:title="`За ${textMap[activeTab]}`"
 				:count="distanceStore.textLength"
 				@reset="mapComponent.resetRoute()"
 			/>
 		</div>
-
-		<
+		<DistanceHistory />
 
 		<TemplateSocial />
 	</AppSection>
@@ -83,6 +69,7 @@
 	import AppH2 from "@/components/AppHeaders/H2/H2.vue";
 	import DistanceCard from "./components/Card/Card.vue";
 	import DistanceCounter from "./components/Counter/Counter.vue";
+	import DistanceHistory from "./components/History/History.vue";
 	import AppInput from "~/components/AppInputs/Input/InputField/InputField.vue";
 	import TemplateSocial from "@/components/Templates/Common/Social/Social.vue";
 	import AppMap from "@/components/AppInputs/Map/Field/Field.vue";

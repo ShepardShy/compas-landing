@@ -21,6 +21,13 @@
 	}
 }
 
+.distance__autocomplete {
+	grid-column: span 2;
+	@media (max-width: 1024px) {
+		grid-column: 1;
+	}
+}
+
 .autocomplete__popup {
 	&[open] {
 		.autocomplete__active-option {
@@ -86,6 +93,13 @@
 	}
 	&_countDistance .popup__content {
 		top: 50px;
+	}
+	&_countDistance {
+		width: calc(100% - 297px);
+		@media (max-width: 1024px) {
+			width: 100%;
+			order: 1;
+		}
 	}
 
 	&.popup_readonly {

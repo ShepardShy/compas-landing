@@ -30,8 +30,20 @@
 		grid-template-columns: 1fr 263px;
 		column-gap: 34px;
 		row-gap: 20px;
+		@media (max-width: 1024px) {
+			display: grid;
+			grid-template-columns: 1fr;
+			gap: 20px;
+		}
+	}
+	&__counter {
+		@media (max-width: 1024px) {
+			width: 100%;
+			grid-row: 2;
+			align-self: end;
+		}
 	}
 	&__map {
-		gap: 20px;
+		display: contents;
 	}
 }

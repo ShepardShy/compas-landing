@@ -5,6 +5,7 @@ export const useDistanceStore = defineStore("distanceStore", {
 		return {
 			textLength: "0",
 			coords: "",
+			history: [],
 		};
 	},
 
