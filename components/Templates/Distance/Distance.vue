@@ -61,6 +61,7 @@
 				:showInputLabel="false"
 				:placeholder="'Адрес'"
 				:isShowSubstring="false"
+				:isShowInputButton="true"
 				@changeValue="length => changeValue(length)"
 			/>
 			<DistanceCounter

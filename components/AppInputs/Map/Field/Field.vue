@@ -20,7 +20,7 @@
 				id: 0,
 				required: props.item.required,
 				title: props.item.title,
-				value: value,
+				value: props.isCountDistance ? address : value,
 				type: 'address',
 				placeholder: props.placeholder,
 				focus: props.item.focus,
@@ -36,6 +36,8 @@
 			:is-show-label="showInputLabel"
 			:placeholder="props.placeholder"
 			:isShowSubstring="props.isShowSubstring"
+			:isShowButton="props.isShowInputButton"
+			:isCountDistance="props.isCountDistance"
 			@changeValue="data => changeValue(data)"
 			@searchOptions="data => searchOptions(data)"
 		/>
@@ -96,11 +98,13 @@
 	let map = null;
 	const arrPlacemarksRez = ref(null);
 	let polygon = ref(null);
+	let multiRoute = shallowRef(null);
 	let positionClick = shallowRef(null);
 	let lastRoute = shallowRef(null);
 	let routeLength = ref(null);
 	let markers = ref([]);
 	let isSelectActive = ref(false);
+	let address = ref(null);
 	let localOptions = ref([]);
 	let value = shallowRef({
 		text: null,
@@ -203,6 +207,10 @@
 			default: true,
 			type: Boolean,
 		},
+		isShowInputButton: {
+			default: false,
+			type: Boolean,
+		},
 	});
 
 	const emit = defineEmits(["changeValue"]);
@@ -212,13 +220,14 @@
 		map.events.add("click", function (e) {
 			positionClick.value = e.get("coords");
 
-			removeMarkers();
-
 			renderRoute();
 
-			// const placemark = new ymaps.Placemark(positionClick.value);
-			// placemark.properties.set("id", `${++lastPointIndex.value}`);
-			// map.geoObjects.add(placemark);
+			multiRoute.value.model.events.add("requestsuccess", function (route) {
+				address.value = multiRoute.value.getWayPoints().get(1).geometry.getCoordinates();
+				map.balloon.open(positionClick.value, multiRoute.value.getWayPoints().get(1).properties.get("address"), {
+					closeButton: false,
+				});
+			});
 		});
 	};
 
@@ -228,34 +237,33 @@
 			positionClick.value = positionRoute;
 		} else if (positionRoute === null) {
 			lastRoute.value && map.geoObjects?.remove(lastRoute.value);
+			map.balloon.close();
 			emit("changeValue", "0");
 			return;
 		}
 
 		const closestPoint = arrPlacemarksRez.value?.getClosestTo(positionClick.value);
 
-		const multiRoute = new ymaps.multiRouter.MultiRoute(
+		multiRoute.value = new ymaps.multiRouter.MultiRoute(
 			{
 				referencePoints: [closestPoint?.geometry?.getCoordinates(), positionClick.value],
 				params: {
 					routingMode: "auto",
 					results: 1,
+					reverseGeocoding: true,
 				},
 			},
 			{ wayPointVisible: false, viaPointVisible: false, routeActiveMarkerVisible: false, routeOpenBalloonOnClick: false }
 		);
-		// route.getPaths()?.options?.set({ strokeWidth: 5, opacity: 0.9 });
 		lastRoute.value && map?.geoObjects?.remove(lastRoute.value);
-		lastRoute.value = multiRoute;
-		map.balloon.open(positionClick.value, "Содержимое балуна", {
-			// Опция: не показываем кнопку закрытия.
-			closeButton: false,
+		lastRoute.value = multiRoute.value;
+		multiRoute.value.model.events.add("requestsuccess", function (route) {
+			spaceBetween(multiRoute.value.getWayPoints().get(0).geometry.getCoordinates(), multiRoute.value.getWayPoints().get(1).geometry.getCoordinates());
+			map.balloon.open(positionClick.value, multiRoute.value.getWayPoints().get(1).properties.get("address"), {
+				closeButton: false,
+			});
 		});
-		multiRoute.model.events.add("requestsuccess", function (route) {
-			const between = spaceBetween(multiRoute.getWayPoints().get(0).geometry.getCoordinates(), multiRoute.getWayPoints().get(1).geometry.getCoordinates());
-		});
-		// routeLength.value = multiRoute?.getHumanLength();
-		map?.geoObjects.add(multiRoute);
+		map?.geoObjects.add(multiRoute.value);
 	};
 
 	// Расчёт расстояния
@@ -276,8 +284,8 @@
 
 	// Создание полигона
 	const createPolygon = () => {
-		const mkadPolygon = new ymaps.Polygon(props.polygonCoords);
-		map.geoObjects.add(mkadPolygon, {}, { fillColor: "#fff" });
+		const polygon = new ymaps.Polygon(props.polygonCoords, {}, { fillColor: "#689c46", opacity: 0.1 });
+		map.geoObjects.add(polygon);
 
 		const arrPlacemarks = [];
 		for (let i = 0; i < props.polygonCoords[0].length; i++) {
@@ -289,20 +297,6 @@
 	};
 
 	// Клик по полигону
-
-	// Удаление меток
-	const removeMarkers = () => {
-		map.geoObjects.each(function (item) {
-			if (typeof item.properties != "undefined") {
-				if (typeof item.properties.get("id") != "undefined") {
-					if (item.properties.get("id")) {
-						map.geoObjects.remove(item);
-					}
-				}
-			}
-		});
-	};
-	// Создание полигона
 
 	// Создание меток
 	const setMarkers = () => {

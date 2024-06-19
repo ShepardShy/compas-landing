@@ -1,95 +1,119 @@
-@use '@/assets/variables.scss' as variables;
-@use '@/assets/mixins.scss' as mixins;
+@use "@/assets/variables.scss" as variables;
+@use "@/assets/mixins.scss" as mixins;
 
+.autocomplete__button {
+	border-radius: 5px;
+	border-start-start-radius: 0;
+	border-end-start-radius: 0;
+	max-width: 147px;
+	width: 100%;
+}
+
+.autocomplete__input input {
+	height: 45px;
+}
 
 .autocomplete {
-    &.autocomplete_empty {
-        .form-item__value {
-            color:variables.$color-grey;
-        }
-    }
+	&.autocomplete_empty {
+		.form-item__value {
+			color: variables.$color-grey;
+		}
+	}
 }
 
 .autocomplete__popup {
-    &[open] {
-        .autocomplete__active-option {
-            filter: opacity(0.5);
-        }
+	&[open] {
+		.autocomplete__active-option {
+			filter: opacity(0.5);
+		}
 
-        .form-item__substring {
-            &::after {
-                transform: rotate(180deg);
-                top: 2px;
-                position: relative;
-            }
-        }
-    }
+		.form-item__substring {
+			&::after {
+				transform: rotate(180deg);
+				top: 2px;
+				position: relative;
+			}
+		}
+	}
 
-    .popup__loader {
-        z-index: 10;
-        position: absolute;
-        background: #ffffff90;
-        @include mixins.elemResolutionOptions(100%, 100%);
-    }
+	.popup__loader {
+		z-index: 10;
+		position: absolute;
+		background: #ffffff90;
+		@include mixins.elemResolutionOptions(100%, 100%);
+	}
 
-    .popup__summary {
-        width: 100%;
-        @include mixins.flexBlock($vertical: center, $horizontal: flex-start, $gap: 10px);
+	.popup__summary {
+		width: 100%;
+		@include mixins.flexBlock($vertical: center, $horizontal: flex-start, $gap: 10px);
 
-        .form-item__input {
-            width: 100%;
-            overflow: hidden;
-            min-width: 140px;
-            
-            input {
-                padding: 10px 20px 10px 15px;
-            }
+		.form-item__input {
+			width: 100%;
+			overflow: hidden;
+			min-width: 140px;
 
-            .form-item__substring {
-                @include mixins.flexBlock($vertical: center, $horizontal: flex-start, $gap: 10px);
-                right: 10px;
-                top: 8px;
-                color: variables.$color-grey;
+			input {
+				padding: 10px 20px 10px 15px;
+			}
 
-                &::after {
-                    content: url('/icons/arrow.svg');
-                }
+			.form-item__substring {
+				@include mixins.flexBlock($vertical: center, $horizontal: flex-start, $gap: 10px);
+				right: 10px;
+				top: 8px;
+				color: variables.$color-grey;
 
-                &::before {
-                    content: "";
-                    background: variables.$color-white;
-                    position: absolute;
-                    width: 130%;
-                    height: 38px;
-                    top: -7px;
-                    right: -10px;
-                    z-index: -1;
-                }
-            }
-        }
-    }
+				&::after {
+					content: url("/icons/arrow.svg");
+				}
 
-    .popup__content {
-        top: 45px;
-        width: 100%;
-    }
+				&::before {
+					content: "";
+					background: variables.$color-white;
+					position: absolute;
+					width: 130%;
+					height: 38px;
+					top: -7px;
+					right: -10px;
+					z-index: -1;
+				}
+			}
+		}
+	}
 
-    &.popup_readonly  {
-        .popup__summary {
-            .form-item__input {
-                min-width: auto;
-            }
-        }
-    }
+	.popup__content {
+		top: 45px;
+		width: 100%;
+	}
+	&_countDistance .popup__content {
+		top: 50px;
+	}
+
+	&.popup_readonly {
+		.popup__summary {
+			.form-item__input {
+				min-width: auto;
+			}
+		}
+	}
 }
 
 .autocomplete__active-option {
-    top: 0px;
-    overflow: hidden;
-    position: absolute;
-    padding: 10px 15px;
-    white-space: nowrap;
-    pointer-events: none;
-    @include mixins.elemResolutionOptions(100%, 40px);
-    @include mixins.flexBlock($vertical: center, $horizontal: flex-start);
+	top: 0px;
+	overflow: hidden;
+	position: absolute;
+	padding: 10px 15px;
+	white-space: nowrap;
+	pointer-events: none;
+	@include mixins.elemResolutionOptions(100%, 40px);
+	@include mixins.flexBlock($vertical: center, $horizontal: flex-start);
+}
+
+.autocomplete__popup:has(.autocomplete__button) {
+	& .popup__summary {
+		gap: 0;
+	}
+	& .autocomplete__input input {
+		border-start-end-radius: 0;
+		border-end-end-radius: 0;
+	}
 }

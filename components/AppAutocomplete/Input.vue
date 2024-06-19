@@ -13,16 +13,20 @@
 		<AppPopup
 			ref="popupRef"
 			class="autocomplete__popup"
+			:class="{ autocomplete__popup_countDistance: props.isCountDistance }"
 			:isHaveParent="true"
 			:closeByClick="false"
 			:isReadOnly="props.isReadOnly"
 			:isCanSelect="true"
 			@clickOutside="() => emit('clickOutside', true)"
-			@click="event => preventClick(event)"
+			@click.prevent="() => !props.isCountDistance && preventClick()"
 		>
 			<template #summary>
 				<slot name="icon"></slot>
 				<AppInput
+					class="autocomplete__input"
+					@click.prevent="() => props.isCountDistance && preventClick()"
+					:class="{ autocomplete__input: props.isCountDistance }"
 					:item="{
 						id: props.item.id,
 						title: null,
@@ -51,6 +55,18 @@
 						{{ activeOption.text }}
 					</div>
 				</AppInput>
+				<AppButton
+					v-if="props.isShowButton"
+					@click.stop="
+						emit('changeValue', {
+							key: props.item.key,
+							value: activeOption,
+						})
+					"
+					class="autocomplete__button button_blue"
+					:style="props.isCountDistance ? { height: '45px' } : ''"
+					>Расчитать</AppButton
+				>
 			</template>
 			<template #content>
 				<AppLoader
@@ -78,7 +94,7 @@
 				<PopupOption
 					v-if="isCanCreate"
 					class="popup__option_create"
-					@click="() => callAction({ action: 'createOption', value: true })"
+					@click.prevent="() => callAction({ action: 'createOption', value: true })"
 				>
 					Создать
 				</PopupOption>
@@ -100,6 +116,7 @@
 	import PopupOption from "@/components/AppPopup/PopupOption/PopupOption.vue";
 	import PopupScripts from "@/components/AppPopup/Scripts.js";
 	import AppLoader from "@/components/AppLoader/AppLoader.vue";
+	import AppButton from "@/components/AppButton/AppButton.vue";
 
 	const props = defineProps({
 		item: {
@@ -152,6 +169,14 @@
 			default: true,
 			type: Boolean,
 		},
+		isShowButton: {
+			default: false,
+			type: Boolean,
+		},
+		isCountDistance: {
+			default: false,
+			type: Boolean,
+		},
 	});
 
 	const popupRef = ref(null);
@@ -170,15 +195,14 @@
 	const emit = defineEmits(["openLink", "changeValue", "createOption", "clickOutside", "searchOptions"]);
 
 	// Превент клика при нажатии на блок
-	const preventClick = event => {
-		if (props.isReadOnly || event.target.closest(".popup_prevent") != null) {
-			event.preventDefault();
+	const preventClick = () => {
+		console.log(popupRef.value);
+		if (props.isReadOnly || popupRef.value.popupRef.closest(".popup_prevent") != null) {
 			popupRef.value.popupRef.removeAttribute("open");
 		} else {
-			if (event.target.closest(".form-item__substring") == null) {
+			if (popupRef.value.popupRef.closest(".form-item__substring") == null) {
 				popupRef.value.popupRef.setAttribute("open", true);
 			} else {
-				event.preventDefault();
 				setTimeout(() => {
 					if (popupRef.value.popupRef.hasAttribute("open")) {
 						popupRef.value.popupRef.removeAttribute("open");
@@ -223,7 +247,9 @@
 		// Установка выбранной опции
 		const setActiveOption = value => {
 			search.value = "";
-			if (value === null || !value?.text) {
+			if (typeof value == "string") {
+				activeOption.value = { ...nullOption, text: value };
+			} else if (value === null || !value?.text) {
 				activeOption.value = nullOption;
 			} else {
 				activeOption.value = value;
@@ -257,10 +283,13 @@
 				setActiveOption(value);
 				setTimeout(() => {
 					PopupScripts.hideDetails(popupRef.value.popupRef);
-					emit("changeValue", {
-						key: props.item.key,
-						value: value,
-					});
+					if (!props.isShowButton) {
+						emit("changeValue", {
+							key: props.item.key,
+							value: value,
+						});
+					}
+					value?.text && callAction({ action: "searchOptions", value: value.text });
 				}, 10);
 			} else if (value == null) {
 				emit("changeValue", null);
@@ -341,6 +370,7 @@
 				action: "getOptions",
 				value: null,
 			});
+			callAction({ action: "searchOptions", value: props.item.value });
 			// callAction({
 			// 	action: "setActiveOption",
 			// 	value: props.item.value,
