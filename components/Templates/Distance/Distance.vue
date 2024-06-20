@@ -61,7 +61,7 @@
 		</div>
 		<DistanceHistory />
 		<DistanceTarif />
-		<TemplateSocial />
+		<TemplateSocial class="distance__social" />
 	</AppSection>
 </template>
 
@@ -88,6 +88,7 @@
 	};
 
 	const distanceStore = useDistanceStore();
+	distanceStore.textLength = "0";
 
 	let activeTab = ref("mkad");
 	const router = useRoute();
@@ -106,7 +107,6 @@
 			activeTab.value = router.query.tab;
 			router.query.tab == "mkad" ? (coords.value = mkadCoords) : 0;
 			router.query.tab == "kad" ? (coords.value = kadCoords) : 0;
-			console.log(coords.value);
 		} else {
 			activeTab.value = "mkad";
 			coords.value = mkadCoords;

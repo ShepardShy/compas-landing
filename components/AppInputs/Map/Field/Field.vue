@@ -252,6 +252,7 @@
 
 	// Прокладка маршрута
 	const renderRoute = async (positionRoute, data) => {
+		// Данные из инпута
 		if (positionRoute) {
 			positionClick.value = positionRoute;
 		} else if (positionRoute === null) {
@@ -261,6 +262,7 @@
 			return;
 		}
 
+		// Ближайшая точка
 		const closestPoint = arrPlacemarksRez.value?.getClosestTo(positionClick.value);
 
 		multiRoute.value = new ymaps.multiRouter.MultiRoute(
@@ -274,6 +276,8 @@
 			},
 			{ wayPointVisible: false, viaPointVisible: false, routeActiveMarkerVisible: false, routeOpenBalloonOnClick: false }
 		);
+
+		// Проверка внутри полигона
 		const myObjects = ymaps.geoQuery({
 			type: "Point",
 			coordinates: positionClick.value,
@@ -287,8 +291,10 @@
 		// var newResult = myGeoQueryResult.add(ymaps.geocode(positionClick.value));
 		// console.log(newResult.searchInside(polygon.value));
 
+		// Удаление предыдущего пути
 		lastRoute.value && map?.geoObjects?.remove(lastRoute.value);
 		lastRoute.value = multiRoute.value;
+
 		multiRoute.value.model.events.add("requestsuccess", async function (route) {
 			let between = spaceBetween(multiRoute.value.getWayPoints().get(0).geometry.getCoordinates(), multiRoute.value.getWayPoints().get(1)?.geometry?.getCoordinates());
 			between = (await Promise.all([between]))[0];
@@ -296,6 +302,7 @@
 				closeButton: false,
 			});
 
+			// Форимирование ответа с данными
 			let address = null;
 			if (data?.search) {
 				address = data.search;
@@ -344,7 +351,6 @@
 		for (let i = 0; i < props.polygonCoords[0].length; i++) {
 			const placemark = new ymaps.Placemark(props.polygonCoords[0][i]);
 			placemark.options.set("visible", false);
-			placemark.options.set("draggable", true);
 
 			arrPlacemarks[i] = placemark;
 		}

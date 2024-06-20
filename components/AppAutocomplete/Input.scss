@@ -9,10 +9,6 @@
 	width: 100%;
 }
 
-.autocomplete__input input {
-	height: 45px;
-}
-
 .autocomplete {
 	&.autocomplete_empty {
 		.form-item__value {
@@ -94,6 +90,14 @@
 	&_countDistance .popup__content {
 		top: 50px;
 	}
+
+	&_countDistance .autocomplete__input input {
+		height: 45px;
+		&::placeholder {
+			font-size: 10px;
+		}
+	}
+
 	&_countDistance {
 		width: calc(100% - 297px);
 		@media (max-width: 1024px) {

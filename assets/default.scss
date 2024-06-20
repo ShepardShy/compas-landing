@@ -1,524 +1,535 @@
-@use '@/assets/variables.scss' as variables;
-@use '@/assets/mixins.scss' as mixins;
+@use "@/assets/variables.scss" as variables;
+@use "@/assets/mixins.scss" as mixins;
 
 /*Обнуление*/
 *,
 b::before,
 *::after {
-    padding: 0;
-    margin: 0;
-    border: 0;
-    box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	box-sizing: border-box;
 }
 
 a {
-    text-decoration: none;
-    color: variables.$color-black;
+	text-decoration: none;
+	color: variables.$color-black;
 }
 
 ul,
 ol,
 li {
-    list-style: none;
+	list-style: none;
 }
 
 img {
-    vertical-align: top;
+	vertical-align: top;
 }
 
 button {
-    cursor: pointer;
+	cursor: pointer;
 }
 
 html,
 body {
-    line-height: normal;
-    font-size: variables.$font-size-default;
-    color: variables.$color-black;
-    font-family: PT Sans;
-    overflow-x: hidden;
+	line-height: normal;
+	font-size: variables.$font-size-default;
+	color: variables.$color-black;
+	font-family: PT Sans;
+	overflow-x: hidden;
 
-    &.body_uncscroll {
-        overflow: hidden;
-        max-height: 100vh;    
-    }
+	&.body_uncscroll {
+		overflow: hidden;
+		max-height: 100vh;
+	}
 
-    &.body__unselected {
-        * {
-            @include mixins.userSelect($value: none);
-        }
-    }
+	&.body__unselected {
+		* {
+			@include mixins.userSelect($value: none);
+		}
+	}
 
-    .fancybox__backdrop {
-        background: variables.$color-warning-background;
-    }
+	.fancybox__backdrop {
+		background: variables.$color-warning-background;
+	}
 
-    * {
-        -webkit-tap-highlight-color: transparent !important;
-    }
+	* {
+		-webkit-tap-highlight-color: transparent !important;
+	}
 }
 
 html {
-    body {
-        background: radial-gradient(circle at 30% 23%, #000, #1c2734 73%) !important;
-    }
+	body {
+		background: radial-gradient(circle at 30% 23%, #000, #1c2734 73%) !important;
+	}
 }
 
 body.body__cursor-style {
-    *, input, div, span, td, th, tr, thead, tbody, button, select {
-        cursor: var(--cursorStyle) !important;
-        @include mixins.userSelect($value: none);
+	*,
+	input,
+	div,
+	span,
+	td,
+	th,
+	tr,
+	thead,
+	tbody,
+	button,
+	select {
+		cursor: var(--cursorStyle) !important;
+		@include mixins.userSelect($value: none);
 
-        &:hover {
-            cursor: var(--cursorStyle) !important;
-        }
-    }
+		&:hover {
+			cursor: var(--cursorStyle) !important;
+		}
+	}
 }
 
 #__nuxt {
-    height: 100%;
+	height: 100%;
 }
 
 .grabbing * {
-    cursor: grabbing !important;
+	cursor: grabbing !important;
 }
 
 /* ------------------------------------------------------------------------------------ */
 
 /*Класс для того, чтобы не было скролла по иксу */
 .wrapper {
-    height: 100%;
-    min-height: 100%;
+	height: 100%;
+	min-height: 100%;
 }
 
 .v-binder-follower-container {
-    .v-binder-follower-content {
-        min-width: 200px !important;
+	.v-binder-follower-content {
+		min-width: 200px !important;
 
-        &.v-binder-follower-content_up {
-            bottom: 40px;
-        }
+		&.v-binder-follower-content_up {
+			bottom: 40px;
+		}
 
-        * {
-            transition: none;
-        }
-    }
+		* {
+			transition: none;
+		}
+	}
 }
 
 .content_draggable {
-    * {
-        background: transparent !important;
-    }
+	* {
+		background: transparent !important;
+	}
 }
 
 .item_required {
-    .table__item-content_title,
-    .table__item-content .form-item__title {
-        position: relative;
+	.table__item-content_title,
+	.table__item-content .form-item__title {
+		position: relative;
 
-        &::after {
-            content: url('/icons/new/require.svg');
-            bottom: 5px;
-            position: absolute;
-            color: variables.$color-red;
-        }
-    }
+		&::after {
+			content: url("/icons/new/require.svg");
+			bottom: 5px;
+			position: absolute;
+			color: variables.$color-red;
+		}
+	}
 }
 
 .clone-elem {
-    position: absolute !important;
-    top: -10000px !important;
-    left: -10000px !important;
+	position: absolute !important;
+	top: -10000px !important;
+	left: -10000px !important;
 
-    &.table {
-        background: variables.$color-white;
-    }
+	&.table {
+		background: variables.$color-white;
+	}
 
-    .icon__draggable {
-        display: block !important;
-    }
+	.icon__draggable {
+		display: block !important;
+	}
 }
 
 .container {
-    /*Пишется max-width*/
-    max-width: 1155px;
-    margin: 0 auto;
-    /*Избегание прилипания к краю*/
-    padding: 20px;
-    box-sizing: content-box;
+	/*Пишется max-width*/
+	max-width: 1155px;
+	margin: 0 auto;
+	/*Избегание прилипания к краю*/
+	padding: 20px;
+	// box-sizing: content-box;
+	min-width: 320px;
 }
 
 /*фоновое изображение*/
 .ibg {
-    position: relative;
+	position: relative;
 }
 
 .ibg img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    @include mixins.elemResolutionOptions(100%, 100%);
-    object-fit: cover;
+	position: absolute;
+	top: 0;
+	left: 0;
+	@include mixins.elemResolutionOptions(100%, 100%);
+	object-fit: cover;
 }
 
 .svg__matrix {
-    display: none;
+	display: none;
 }
 
 main {
-    height: 100%;
+	height: 100%;
 }
 
 .page {
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    height: 100%;
-    min-height: 100vh;
-    background-color: variables.$color-pale-grey;
+	display: grid;
+	grid-template-rows: auto 1fr auto;
+	height: 100%;
+	min-height: 100vh;
+	background-color: variables.$color-pale-grey;
 }
 
 .stickyBlock {
-    position: relative;
-    z-index: 1000;
+	position: relative;
+	z-index: 1000;
 }
 
-input, textarea {
-    width: 100%;
-    resize: none;
-    outline: none;
-    min-height: 40px;
-    padding: 10px 15px;
-    font-family: inherit;
-    box-shadow: none !important;
-    font-size: variables.$font-size-default;
-    background-color: variables.$color-white;
-    caret-color: variables.$color-black !important;
-    @include mixins.elemResolutionOptions(100%, 40px);
-    @include mixins.borderOptions(1px, solid,  variables.$color-grey, 5px);
+input,
+textarea {
+	width: 100%;
+	resize: none;
+	outline: none;
+	min-height: 40px;
+	padding: 10px 15px;
+	font-family: inherit;
+	box-shadow: none !important;
+	font-size: variables.$font-size-default;
+	background-color: variables.$color-white;
+	caret-color: variables.$color-black !important;
+	@include mixins.elemResolutionOptions(100%, 40px);
+	@include mixins.borderOptions(1px, solid, variables.$color-grey, 5px);
 
-    &:focus {
-        border: 1px solid variables.$color-blue
-    }
+	&:focus {
+		border: 1px solid variables.$color-blue;
+	}
 
-    &::-webkit-credentials-destruction-view-button {
-        display: none !important;
-    }
+	&::-webkit-credentials-destruction-view-button {
+		display: none !important;
+	}
 
-    &[disabled] {
-        opacity: 0.6;
-    }
+	&[disabled] {
+		opacity: 0.6;
+	}
 
-    &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
+	&::-webkit-outer-spin-button,
+	&::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
 }
 
 details {
-    summary {
-        outline: none;
-        list-style: none;
-        @include mixins.flexBlock($vertical: center, $horizontal: space-between);
+	summary {
+		outline: none;
+		list-style: none;
+		@include mixins.flexBlock($vertical: center, $horizontal: space-between);
 
-        &::-webkit-details-marker {
-            display: none;
-        }
+		&::-webkit-details-marker {
+			display: none;
+		}
 
-        &::after {
-            content:  none;
-        }
-    }
+		&::after {
+			content: none;
+		}
+	}
 
-    &[open] {
-        summary::after {
-            content: none;
-        }
-    }
+	&[open] {
+		summary::after {
+			content: none;
+		}
+	}
 }
 
-
 .page__header {
-    margin-bottom: 25px;
-    @include mixins.flexBlock($vertical: center, $gap: 25px);
+	margin-bottom: 25px;
+	@include mixins.flexBlock($vertical: center, $gap: 25px);
 }
 
 .page__content {
-    display: grid;
+	display: grid;
 }
 
 .form__item_select-details {
-    user-select: none;
+	user-select: none;
 
-    &[open] {
-        summary {
-            border-color: variables.$color-blue;
+	&[open] {
+		summary {
+			border-color: variables.$color-blue;
 
-            svg {
-                transform: rotate(180deg);
+			svg {
+				transform: rotate(180deg);
 
-                path {
-                    stroke: variables.$color-active;
-                }
-            }
-        }
-    }
+				path {
+					stroke: variables.$color-active;
+				}
+			}
+		}
+	}
 
-    summary {
-        resize: none;
-        padding: 10px;
-        outline: none;
-        cursor: pointer;
-        font-size: variables.$font-size-default;
-        overflow: hidden;
-        min-height: 40px;
-        transition: 0.2s all;
-        background-color: variables.$color-white;
-        @include mixins.elemResolutionOptions(100%, 39px);
-        @include mixins.borderOptions(1px, solid, variables.$color-grey, 5px);
-        @include mixins.flexBlock($horizontal: space-between, $gap: 5px);
+	summary {
+		resize: none;
+		padding: 10px;
+		outline: none;
+		cursor: pointer;
+		font-size: variables.$font-size-default;
+		overflow: hidden;
+		min-height: 40px;
+		transition: 0.2s all;
+		background-color: variables.$color-white;
+		@include mixins.elemResolutionOptions(100%, 39px);
+		@include mixins.borderOptions(1px, solid, variables.$color-grey, 5px);
+		@include mixins.flexBlock($horizontal: space-between, $gap: 5px);
 
-        .select__value {
-            @include mixins.textHidden()
-        }
+		.select__value {
+			@include mixins.textHidden();
+		}
 
-        svg {
-            min-width: 14px;
-            min-height: 8px;
-        }
-    }
+		svg {
+			min-width: 14px;
+			min-height: 8px;
+		}
+	}
 
-    .select__options {
-        top: 67px;
-        z-index: 2;
-        min-width: 200px;
-        position: absolute;
-        border-radius: 5px;
-        max-height: 590px;
-        overflow-x: hidden;
-        overflow-y: auto;
-        width: calc(100% - 30px);
-        background-color: variables.$color-white;
-        @include mixins.userSelect($value: none);
-        box-shadow: 0 0 3px variables.$color-black, inset 0 1px 2px rgba(255,255,255,.5);
-    }
+	.select__options {
+		top: 67px;
+		z-index: 2;
+		min-width: 200px;
+		position: absolute;
+		border-radius: 5px;
+		max-height: 590px;
+		overflow-x: hidden;
+		overflow-y: auto;
+		width: calc(100% - 30px);
+		background-color: variables.$color-white;
+		@include mixins.userSelect($value: none);
+		box-shadow: 0 0 3px variables.$color-black, inset 0 1px 2px rgba(255, 255, 255, 0.5);
+	}
 
-    .select__option {
-        cursor: pointer;
-        padding: 8px 20px 8px 10px;
-        @include mixins.flexBlock($gap: 5px);
+	.select__option {
+		cursor: pointer;
+		padding: 8px 20px 8px 10px;
+		@include mixins.flexBlock($gap: 5px);
 
-        &:hover {
-            background: variables.$color-hover;
-        }
-    }
+		&:hover {
+			background: variables.$color-hover;
+		}
+	}
 }
 
 .table-mobile__section {
-    .form__item_select-details {
-        position: relative;
+	.form__item_select-details {
+		position: relative;
 
-        .select__options {
-            top: 45px;
-            width: 100%;
-        }
-    }
+		.select__options {
+			top: 45px;
+			width: 100%;
+		}
+	}
 
-    .table__item_details {
-        position: relative;
+	.table__item_details {
+		position: relative;
 
-        .select__options {
-            top: 35px;
-            width: 100%;
-        }
-    }
+		.select__options {
+			top: 35px;
+			width: 100%;
+		}
+	}
 }
 
 .sortable-ghost {
-    cursor: grabbing !important;
+	cursor: grabbing !important;
 }
 
 .sortable-drag {
-    cursor: grabbing !important;
+	cursor: grabbing !important;
 }
 
 .fancybox__footer {
-    z-index: 1000;
+	z-index: 1000;
 
-    .f-thumbs__track {
-        margin: 0 auto;
-        transform: none !important;
-        gap: 10px;
-    }
+	.f-thumbs__track {
+		margin: 0 auto;
+		transform: none !important;
+		gap: 10px;
+	}
 
-    .f-thumbs.is-horizontal {
-        .f-thumbs__slide {
-            clip-path: none;
-            min-width: 48px;
-            transform: none;
-            @include mixins.elemResolutionOptions(48px, 48px);
-        }
-    }
+	.f-thumbs.is-horizontal {
+		.f-thumbs__slide {
+			clip-path: none;
+			min-width: 48px;
+			transform: none;
+			@include mixins.elemResolutionOptions(48px, 48px);
+		}
+	}
 
-    .is-modern {
-        .f-thumbs__slide {
-            & > * {
-                clip-path: none;
-            }
+	.is-modern {
+		.f-thumbs__slide {
+			& > * {
+				clip-path: none;
+			}
 
-            .f-thumbs__slide__button {
-                width: 100%;
-                border-radius: 5px;
-                background: variables.$color-white;
-                border: 1px solid variables.$color-grey;
+			.f-thumbs__slide__button {
+				width: 100%;
+				border-radius: 5px;
+				background: variables.$color-white;
+				border: 1px solid variables.$color-grey;
 
-                img {
-                    object-fit: cover;
-                }
-            }
-        }
-    }
+				img {
+					object-fit: cover;
+				}
+			}
+		}
+	}
 }
 
 .v-binder-follower-content {
-    border-radius: 5px;
+	border-radius: 5px;
 }
 
 .v-vl-items {
-    padding: 0px !important;
+	padding: 0px !important;
 }
 
 .table__item-img {
-    min-width: 25px;
-    border-radius: 5px;
-    background: var(--table__item-rect);
-    @include mixins.elemResolutionOptions(25px, 25px);
+	min-width: 25px;
+	border-radius: 5px;
+	background: var(--table__item-rect);
+	@include mixins.elemResolutionOptions(25px, 25px);
 
-    img {
-        object-fit: contain;
-        border-radius: 5px;
-    }
+	img {
+		object-fit: contain;
+		border-radius: 5px;
+	}
 }
 summary {
-    .table__item-img {
-        border-radius: 5px 0px 0px 5px;
+	.table__item-img {
+		border-radius: 5px 0px 0px 5px;
 
-        figcaption {
-            right: -16px;
-            background: variables.$color-white;
-            position: absolute;
-            @include mixins.gridCenter();
-            @include mixins.elemResolutionOptions(16px, 100%);
-            @include mixins.borderOptions(1px, solid, variables.$color-grey, 0px 5px 5px 0px);
-        }
-    }
+		figcaption {
+			right: -16px;
+			background: variables.$color-white;
+			position: absolute;
+			@include mixins.gridCenter();
+			@include mixins.elemResolutionOptions(16px, 100%);
+			@include mixins.borderOptions(1px, solid, variables.$color-grey, 0px 5px 5px 0px);
+		}
+	}
 }
 
 .field_error {
-    .form__item {
-        input {
-            border: 1px solid variables.$color-light-red;
-        }
-    }
+	.form__item {
+		input {
+			border: 1px solid variables.$color-light-red;
+		}
+	}
 }
 
 .Toastify {
-    .Toastify__toast-container {
-        max-width: 290px;
-        padding: 0;
+	.Toastify__toast-container {
+		max-width: 290px;
+		padding: 0;
 
-        &.Toastify__toast-container--top-right {
-            right: 25px;
-            top: 25px;
-        }
+		&.Toastify__toast-container--top-right {
+			right: 25px;
+			top: 25px;
+		}
 
-        .Toastify__toast {
-            border-radius: 5px;
-            background-color: rgba(27, 39, 52, 75%);
-            color: variables.$color-white;
-            padding: 10px 15px 15px 15px;
-            margin-bottom: 5px;
-            min-height: 65px;
-            transition: 0.2s ease;
+		.Toastify__toast {
+			border-radius: 5px;
+			background-color: rgba(27, 39, 52, 75%);
+			color: variables.$color-white;
+			padding: 10px 15px 15px 15px;
+			margin-bottom: 5px;
+			min-height: 65px;
+			transition: 0.2s ease;
 
-            &:hover {
-                background-color: rgba(27, 39, 52, 75%) !important;
-            }
+			&:hover {
+				background-color: rgba(27, 39, 52, 75%) !important;
+			}
 
-            .Toastify__toast-body {
-                margin: 0;
-                padding: 0;
-                align-items: flex-start;
-                white-space: unset;
-                font-size: 14px;
-                font-family: 'MyriadPro', sans-serif;
+			.Toastify__toast-body {
+				margin: 0;
+				padding: 0;
+				align-items: flex-start;
+				white-space: unset;
+				font-size: 14px;
+				font-family: "MyriadPro", sans-serif;
 
-                .Toastify__toast-title {
-                    margin-bottom: 10px;
-                    font-weight: 600;
-                }
+				.Toastify__toast-title {
+					margin-bottom: 10px;
+					font-weight: 600;
+				}
 
-                .Toastify__toast-description {
-                    max-width: 241px;
-                    overflow-wrap: break-word;
-                    word-break: break-word;
-                }
-            }
+				.Toastify__toast-description {
+					max-width: 241px;
+					overflow-wrap: break-word;
+					word-break: break-word;
+				}
+			}
 
-            .Toastify__close-button {
-                color: variables.$color-white;
-                opacity: 1;
-            }
+			.Toastify__close-button {
+				color: variables.$color-white;
+				opacity: 1;
+			}
 
-            .Toastify__toast-icon {
-                display: none;
-            }
+			.Toastify__toast-icon {
+				display: none;
+			}
 
-            @for $i from 1 through 15 {
-                &:nth-child(#{$i}) {
-                    background-color: rgba(27, 39, 52, 80% - $i * 5%);
-                }
-            }
-        }
-    }
+			@for $i from 1 through 15 {
+				&:nth-child(#{$i}) {
+					background-color: rgba(27, 39, 52, 80% - $i * 5%);
+				}
+			}
+		}
+	}
 }
 
-
 .h-editable {
-    * {
-        font-family: PT Sans;
-    }
+	* {
+		font-family: PT Sans;
+	}
 
-    .textarea {
-        textarea, .textarea__mirror {
-            padding: 0px;
-            border: none;
-            min-height: auto;
-        }
+	.textarea {
+		textarea,
+		.textarea__mirror {
+			padding: 0px;
+			border: none;
+			min-height: auto;
+		}
 
-        textarea {
-            background: transparent;
-            color:variables.$color-black;
-            line-height: normal; 
-        }
+		textarea {
+			background: transparent;
+			color: variables.$color-black;
+			line-height: normal;
+		}
 
-        .textarea__mirror {
-            top: 0px;
-            opacity: 0;
-            line-height: normal;
-        }
-    }
+		.textarea__mirror {
+			top: 0px;
+			opacity: 0;
+			line-height: normal;
+		}
+	}
 
-    .icon__edit {
-        display: inline;
-        cursor: pointer;
+	.icon__edit {
+		display: inline;
+		cursor: pointer;
 
-        svg {
-            @include mixins.elemResolutionOptions(18px, 18px);
+		svg {
+			@include mixins.elemResolutionOptions(18px, 18px);
 
-            * {
-                fill: variables.$color-grey;
-            }
-        }
-    }
+			* {
+				fill: variables.$color-grey;
+			}
+		}
+	}
 }

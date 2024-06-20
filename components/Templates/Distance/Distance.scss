@@ -8,6 +8,9 @@
 		font-size: 14px;
 		font-weight: 600;
 		padding: 15px 0;
+		@media (max-width: 650px) {
+			padding-top: 40px;
+		}
 	}
 	&__link {
 		&.active {
@@ -50,5 +53,8 @@
 	}
 	&__map {
 		display: contents;
+	}
+	&__social {
+		margin-bottom: 62px;
 	}
 }

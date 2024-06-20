@@ -7,11 +7,13 @@ export const useDistanceStore = defineStore("distanceStore", {
 			coords: "",
 			historyId: 0,
 			history: [],
-			tab: "",
 		};
 	},
 
 	persist: {
+		afterRestore: ctx => {
+			console.log(`about to restore '${ctx.store.$id}'`);
+		},
 		storage: persistedState.localStorage,
 	},
 
