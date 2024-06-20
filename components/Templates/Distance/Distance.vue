@@ -17,7 +17,7 @@
 	<hr class="distance__line" />
 	<AppSection class="distance section_without-background">
 		<div>
-			<AppH2 class="distance__title">Расчет расстояния за {{ textMap[activeTab] }}</AppH2>
+			<AppH2 class="distance__title distance__title_padding">Расчет расстояния за {{ textMap[activeTab] }}</AppH2>
 			<DistanceCard />
 		</div>
 		<div class="distance__wrapper">
@@ -118,11 +118,12 @@
 
 	watch(
 		() => router.query,
-		() => {
+		newVal => {
 			if (router.query.tab) {
-				activeTab.value = router.query.tab;
-				router.query.tab == "mkad" ? (coords.value = mkadCoords) : 0;
-				router.query.tab == "kad" ? (coords.value = kadCoords) : 0;
+				activeTab.value = newVal.tab;
+
+				newVal.tab == "mkad" ? (coords.value = mkadCoords) : 0;
+				newVal.tab == "kad" ? (coords.value = kadCoords) : 0;
 			} else {
 				activeTab.value = "mkad";
 				coords.value = mkadCoords;
@@ -135,6 +136,6 @@
 	);
 </script>
 
-<style scoped>
+<style>
 	@import url(./Distance.scss);
 </style>

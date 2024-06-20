@@ -22,8 +22,10 @@
 	&__title {
 		font-size: 31px;
 		font-weight: bold;
-		padding: 25px 0;
 		line-height: 1;
+		&_padding {
+			padding: 25px 0;
+		}
 	}
 	&__paragraph {
 		line-height: 1.19;

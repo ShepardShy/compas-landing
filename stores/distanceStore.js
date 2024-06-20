@@ -7,6 +7,7 @@ export const useDistanceStore = defineStore("distanceStore", {
 			coords: "",
 			historyId: 0,
 			history: [],
+			tab: "",
 		};
 	},
 

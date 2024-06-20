@@ -102,7 +102,7 @@
 	let map = null;
 	const autocompleteComponent = ref(null);
 	const arrPlacemarksRez = ref(null);
-	let polygon = ref(null);
+	let polygon = shallowRef(null);
 	let multiRoute = shallowRef(null);
 	let positionClick = shallowRef(null);
 	let lastRoute = shallowRef(null);
@@ -137,7 +137,13 @@
 					}
 				});
 			}
-		}, 5000);
+			watch(
+				() => props.polygonCoords,
+				() => {
+					changeCoords();
+				}
+			);
+		}, 100);
 
 		if (![null, undefined].includes(props.item.value) && props.item.value != "") {
 			value.value = JSON.parse(JSON.stringify(props.item.value));
@@ -303,10 +309,8 @@
 
 	// Создание полигона
 	const createPolygon = () => {
-		console.log(props.polygonCoords);
-		const polygon = new ymaps.Polygon(props.polygonCoords, {}, { fillColor: "#689c46", opacity: 0.1 });
-		console.log(polygon);
-		map.geoObjects.add(polygon);
+		polygon.value = new ymaps.Polygon(props.polygonCoords, {}, { fillColor: "#689c46", opacity: 0.1 });
+		map.geoObjects.add(polygon.value);
 
 		const arrPlacemarks = [];
 		for (let i = 0; i < props.polygonCoords[0].length; i++) {
@@ -315,6 +319,25 @@
 			arrPlacemarks[i] = placemark;
 		}
 		arrPlacemarksRez.value = ymaps.geoQuery(arrPlacemarks).addToMap(map);
+	};
+
+	// Удаление полигона
+	const removePolygon = () => {
+		map.geoObjects?.remove(polygon?.value);
+	};
+
+	// Смена координат
+	const changeCoords = () => {
+		removePolygon();
+		createPolygon();
+		map?.panTo(props.coords, {
+			flying: false,
+		});
+	};
+
+	// Удаление меток
+	const removeMarkers = () => {
+		map.geoObjects.removeAll();
 	};
 
 	// Клик по полигону
@@ -491,7 +514,7 @@
 			});
 			!props.isCountDistance && setMarkers();
 		} else {
-			map?.panTo([55.755864, 37.617698], {
+			map?.panTo(props.isCountDistance ? props.coords : [55.755864, 37.617698], {
 				flying: false,
 			});
 			!props.isCountDistance && setMarkers();
