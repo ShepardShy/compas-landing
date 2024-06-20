@@ -196,7 +196,6 @@
 		},
 		polygonCoords: {
 			default: false,
-			type: Array,
 		},
 		coords: {
 			default: [55.755864, 37.617698],

@@ -191,7 +191,7 @@
 	let options = ref([]);
 	let backupOptions = ref([]);
 
-	const actionState = inject("actionState");
+	const actionState = inject("actionState", () => ref(null), true);
 
 	const emit = defineEmits(["openLink", "changeValue", "createOption", "clickOutside", "searchOptions"]);
 

@@ -93,9 +93,10 @@
 
 	&_countDistance .autocomplete__input input {
 		height: 45px;
-		&::placeholder {
-			font-size: 10px;
-		}
+	}
+
+	&_countDistance .autocomplete__active-option {
+		height: 45px;
 	}
 
 	&_countDistance {
