@@ -309,13 +309,24 @@
 
 	// Создание полигона
 	const createPolygon = () => {
-		polygon.value = new ymaps.Polygon(props.polygonCoords, {}, { fillColor: "#689c46", opacity: 0.1 });
+		polygon.value = new ymaps.Polygon(props.polygonCoords, {}, { fillColor: "#689c46", opacity: 0.1 }); //  0.1
 		map.geoObjects.add(polygon.value);
+
+		// Рисование полигона
+
+		// polygon.value.editor.startDrawing();
+		// var stateMonitor = new ymaps.Monitor(polygon.value.editor.state);
+		// stateMonitor.add("drawing", function (newValue) {
+		// 	console.log(polygon.value.geometry.getCoordinates());
+		// 	polygon.value.options.set("strokeColor", newValue ? "#FF0000" : "#0000FF");
+		// });
 
 		const arrPlacemarks = [];
 		for (let i = 0; i < props.polygonCoords[0].length; i++) {
 			const placemark = new ymaps.Placemark(props.polygonCoords[0][i]);
 			placemark.options.set("visible", false);
+			placemark.options.set("draggable", true);
+
 			arrPlacemarks[i] = placemark;
 		}
 		arrPlacemarksRez.value = ymaps.geoQuery(arrPlacemarks).addToMap(map);
@@ -329,6 +340,7 @@
 	// Смена координат
 	const changeCoords = () => {
 		removePolygon();
+		removeMarkers();
 		createPolygon();
 		map?.panTo(props.coords, {
 			flying: false,
