@@ -15,6 +15,9 @@ export default defineNuxtConfig({
 			fs: {
 				allow: ["C:/node_modules/ufo/dist", "C:/node_modules/defu/dist"],
 			},
+			hmr: {
+				clientPort: 3000,
+			},
 		},
 	},
 	build: {

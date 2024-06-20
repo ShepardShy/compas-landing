@@ -25,6 +25,9 @@
 		padding: 25px 0;
 		line-height: 1;
 	}
+	&__paragraph {
+		line-height: 1.19;
+	}
 	&__wrapper {
 		display: grid;
 		grid-template-columns: 1fr 263px;

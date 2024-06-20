@@ -77,7 +77,6 @@
 <script setup>
 	import { loadYmap } from "vue-yandex-maps";
 	import "./Field.scss";
-	// import { useDayjs } from "#dayjs";
 
 	import AppAutocomplete from "@/components/AppAutocomplete/Input.vue";
 	import AppCopy from "@/components/AppCopy/AppCopy.vue";
@@ -124,7 +123,7 @@
 			if (props.isShowMap) {
 				ymaps.ready(["Map", "Polygon"]).then(function () {
 					map = new ymaps.Map("map", {
-						center: value.value.coords,
+						center: props.isCountDistance ? props.coords : value.value.coords,
 						zoom: props.mapZoom,
 						height: props.isCountDistance ? "550px" : undefined,
 					});
@@ -193,6 +192,10 @@
 			default: false,
 			type: Array,
 		},
+		coords: {
+			default: [55.755864, 37.617698],
+			type: Array,
+		},
 		mapZoom: {
 			default: 15,
 			type: Number,
@@ -233,7 +236,7 @@
 			renderRoute();
 
 			multiRoute.value.model.events.add("requestsuccess", function (route) {
-				address.value = multiRoute.value.getWayPoints().get(1).geometry.getCoordinates();
+				address.value = multiRoute.value.getWayPoints().get(1)?.geometry?.getCoordinates();
 				map.balloon.open(positionClick.value, multiRoute.value.getWayPoints().get(1).properties.get("address"), {
 					closeButton: false,
 				});
@@ -267,15 +270,14 @@
 		);
 		lastRoute.value && map?.geoObjects?.remove(lastRoute.value);
 		lastRoute.value = multiRoute.value;
-		multiRoute.value.model.events.add("requestsuccess", function (route) {
-			const between = new Promise(spaceBetween(multiRoute.value.getWayPoints().get(0).geometry.getCoordinates(), multiRoute.value.getWayPoints().get(1).geometry.getCoordinates()));
-			console.log(between);
+		multiRoute.value.model.events.add("requestsuccess", async function (route) {
+			let between = spaceBetween(multiRoute.value.getWayPoints().get(0).geometry.getCoordinates(), multiRoute.value.getWayPoints().get(1)?.geometry?.getCoordinates());
+			between = (await Promise.all([between]))[0];
 			map.balloon.open(positionClick.value, multiRoute.value.getWayPoints().get(1).properties.get("address"), {
 				closeButton: false,
 			});
 
-			const historyItem = { address: multiRoute.value.getWayPoints().get(1).properties.get("address"), distance: between, time: dayjs().format("DD.MM.YYYY HH:mm") };
-			console.log(historyItem);
+			const historyItem = { address: multiRoute.value.getWayPoints().get(1).properties.get("address"), distance: between, date: dayjs().format("DD.MM.YYYY"), time: dayjs().format("HH:mm") };
 			emit("selectAddress", historyItem);
 		});
 		map?.geoObjects.add(multiRoute.value);
@@ -287,19 +289,6 @@
 		let res = null;
 
 		arrayPromises.push(ymaps.geocode(point1), ymaps.geocode(point2));
-		// ymaps.geocode(point1).then(function (res) {
-		// 	const point1Coords = res.geoObjects.get(0).geometry.getCoordinates();
-		// 	ymaps.geocode(point2).then(function (res) {
-		// 		const point2Coords = res.geoObjects.get(0).geometry.getCoordinates();
-		// 		// Расстояние
-
-		// 		const between = ymaps.formatter.distance(ymaps.coordSystem.geo.getDistance(point1Coords, point2Coords));
-		// 		routeLength.value = between;
-		// 		emit("changeValue", routeLength.value);
-		// 		return ymaps.formatter.distance(ymaps.coordSystem.geo.getDistance(point1Coords, point2Coords));
-		// 	});
-		// });
-
 		res = await Promise.all(arrayPromises);
 		const point1Coords = res[0].geoObjects.get(0).geometry.getCoordinates();
 		const point2Coords = res[1].geoObjects.get(0).geometry.getCoordinates();
@@ -314,7 +303,9 @@
 
 	// Создание полигона
 	const createPolygon = () => {
+		console.log(props.polygonCoords);
 		const polygon = new ymaps.Polygon(props.polygonCoords, {}, { fillColor: "#689c46", opacity: 0.1 });
+		console.log(polygon);
 		map.geoObjects.add(polygon);
 
 		const arrPlacemarks = [];
@@ -477,7 +468,6 @@
 			if (coords?.length > 0 && !isNaN(+coords?.[0]) && !isNaN(+coords?.[1])) {
 				position = [+coords[0], +coords[1]];
 			}
-			console.log(data);
 			renderRoute(position, data);
 		}
 		if (data?.value && !props.isCountDistance) {

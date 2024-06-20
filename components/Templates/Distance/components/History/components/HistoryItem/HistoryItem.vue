@@ -1,14 +1,41 @@
 <template>
 	<div class="item">
-		<p class="item__text">Россия, Москва, улица Бутлерова, 38к4</p>
+		<p class="item__address item__text">{{ address }}</p>
 
-		<div class="item__distance item__text"><span class="item__text_gray">За МКАД:</span><span class="item__text_bold">13 км</span></div>
+		<p class="item__distance item__text">
+			<span class="item__text_gray">За {{ distanceType }}:</span>
+			<span
+				class="item__text_bold"
+				v-html="distance"
+			></span>
+		</p>
 
-		<div class="item__time item__text"><span>31.09.2020</span><span class="item__text_bold">18:15</span></div>
+		<p class="item__time item__text">
+			<span>{{ date }}</span>
+			<span class="item__text_bold">{{ time }}</span>
+		</p>
 	</div>
 </template>
 
-<script setup></script>
+<script setup>
+	const props = defineProps({
+		address: {
+			type: String,
+		},
+		distanceType: {
+			type: String,
+		},
+		distance: {
+			type: String,
+		},
+		date: {
+			type: String,
+		},
+		time: {
+			type: String,
+		},
+	});
+</script>
 
 <style lang="scss" scoped>
 	@import url(./HistoryItem.scss);

@@ -4,7 +4,12 @@
 	border: solid 1px #eeeff1;
 	background-color: #fbfcfd;
 	display: flex;
+	gap: 10px;
 	justify-content: space-between;
+	align-items: start;
+	@media (max-width: 960px) {
+		flex-direction: column;
+	}
 	&__text {
 		font-size: 21px;
 		&_bold {
@@ -17,6 +22,13 @@
 	&__distance {
 		display: flex;
 		gap: 5px;
+	}
+	&__address {
+		max-width: 365px;
+		width: 100%;
+		@media (max-width: 960px) {
+			max-width: 100%;
+		}
 	}
 	&__time {
 		display: flex;
