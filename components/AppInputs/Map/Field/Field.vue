@@ -274,6 +274,19 @@
 			},
 			{ wayPointVisible: false, viaPointVisible: false, routeActiveMarkerVisible: false, routeOpenBalloonOnClick: false }
 		);
+		const myObjects = ymaps.geoQuery({
+			type: "Point",
+			coordinates: positionClick.value,
+		});
+		const isInside = !!myObjects.searchInside(polygon.value).getLength();
+
+		if (isInside) {
+			multiRoute.value.options.set("visible", false);
+		}
+
+		// var newResult = myGeoQueryResult.add(ymaps.geocode(positionClick.value));
+		// console.log(newResult.searchInside(polygon.value));
+
 		lastRoute.value && map?.geoObjects?.remove(lastRoute.value);
 		lastRoute.value = multiRoute.value;
 		multiRoute.value.model.events.add("requestsuccess", async function (route) {
@@ -283,7 +296,13 @@
 				closeButton: false,
 			});
 
-			const historyItem = { address: multiRoute.value.getWayPoints().get(1).properties.get("address"), distance: between, date: dayjs().format("DD.MM.YYYY"), time: dayjs().format("HH:mm") };
+			let address = null;
+			if (data?.search) {
+				address = data.search;
+			} else {
+				address = multiRoute.value.getWayPoints().get(1).geometry.getCoordinates().join();
+			}
+			const historyItem = { address, distance: between, date: dayjs().format("DD.MM.YYYY"), time: dayjs().format("HH:mm") };
 			emit("selectAddress", historyItem);
 		});
 		map?.geoObjects.add(multiRoute.value);
