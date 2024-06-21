@@ -1,114 +1,114 @@
-@use '@/assets/variables.scss' as variables;
-@use '@/assets/mixins.scss' as mixins;
+@use "@/assets/variables.scss" as variables;
+@use "@/assets/mixins.scss" as mixins;
 
 .menu {
-    &.menu_desktop {
-        width: 100%;
-        background: radial-gradient(circle at 30% 23%, #000, #1c2734 73%);
+	&.menu_desktop {
+		width: 100%;
+		background: radial-gradient(circle at 30% 23%, #000, #1c2734 73%);
 
-        .menu__links {
-            gap: 30px;
-            display: flex;
-            align-items: center;
-        }
+		.menu__links {
+			gap: 30px;
+			display: flex;
+			align-items: center;
+		}
 
-        .menu__item {
-            font-weight: 300;
-            font-size: 18px;
-            color: #dedede;
-            position: relative;
-            overflow: visible;
-            font-size: 18px;
+		.menu__item {
+			font-weight: 300;
+			font-size: 18px;
+			color: #dedede;
+			position: relative;
+			overflow: visible;
+			font-size: 18px;
 
-            &.router-link-active {
-                color: variables.$color-orange;
-            }
+			&.router-link-active {
+				color: variables.$color-orange;
+			}
 
-            &:hover {
-                &::after {
-                    content: '';
-                    width: 100%;
-                    position: absolute;
-                    height: 1px;
-                    left: 0px;
-                    background: variables.$color-orange;
-                    bottom: -3px;
-                }
-            }
-        }
+			&:hover {
+				&::after {
+					content: "";
+					width: 100%;
+					position: absolute;
+					height: 1px;
+					left: 0px;
+					background: variables.$color-orange;
+					bottom: -3px;
+				}
+			}
+		}
 
-        .container {
-            gap: 30px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 20px;
-        }
+		.container {
+			gap: 30px;
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: space-between;
+			padding: 12px 20px;
+		}
 
-        .menu__list {
-            gap: 30px;
-            display: flex;
-            align-items: center;
-        }
+		.menu__list {
+			gap: 30px;
+			display: flex;
+			align-items: center;
+		}
 
-        .menu__actions {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
+		.menu__actions {
+			display: flex;
+			gap: 30px;
+			align-items: center;
+		}
 
-        .menu__link {
-            font-weight: 600;
-            color: variables.$color-white;
-            position: relative;
-        }
+		.menu__link {
+			font-weight: 600;
+			color: variables.$color-white;
+			position: relative;
+		}
 
-        .menu__buttons {
-            display: flex;
-            gap: 30px;
-            align-items: center;
+		.menu__buttons {
+			display: flex;
+			gap: 30px;
+			align-items: center;
 
-            * {
-                font-size: 15px;
-            }
+			* {
+				font-size: 15px;
+			}
 
-            .button-text {
-                color: #dedede;
-                position: relative;
-                overflow: visible;
-                font-weight: 300;
+			.button-text {
+				color: #dedede;
+				position: relative;
+				overflow: visible;
+				font-weight: 300;
 
-                &:hover {
-                    &::after {
-                        content: '';
-                        width: 100%;
-                        position: absolute;
-                        height: 1px;
-                        left: 0px;
-                        background: variables.$color-orange;
-                        bottom: -3px;
-                    }
-                }
-            }
-        }
-    }
+				&:hover {
+					&::after {
+						content: "";
+						width: 100%;
+						position: absolute;
+						height: 1px;
+						left: 0px;
+						background: variables.$color-orange;
+						bottom: -3px;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 960px) {
+	.menu {
+		&.menu_desktop {
+			.menu__link {
+				display: none;
+			}
+		}
+	}
 }
 
 @media (max-width: 750px) {
-    .menu {
-        &.menu_desktop {
-            .menu__link {
-                display: none;
-            }
-        }
-    }
-}
-
-@media (max-width: 650px) {
-    .menu {
-        &.menu_desktop {
-            display: none;
-        }
-    }
+	.menu {
+		&.menu_desktop {
+			display: none;
+		}
+	}
 }

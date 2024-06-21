@@ -1,18 +1,10 @@
 <template>
-	<div class="distance__links">
-		<NuxtLink
-			class="distance__link"
-			:class="{ active: activeTab == 'mkad' }"
-			to="distance?tab=mkad"
-			>Расчет расстояния за МКАД</NuxtLink
-		>
-		<NuxtLink
-			class="distance__link"
-			:class="{ active: activeTab == 'kad' }"
-			to="distance?tab=kad"
-			>Расчет расстояния за КАД</NuxtLink
-		>
-	</div>
+	<AppTabs
+		class="distance__links"
+		:tabs="tabs"
+		:showActions="false"
+		@callAction="tab => changeTab(tab)"
+	></AppTabs>
 
 	<hr class="distance__line" />
 	<AppSection class="distance section_without-background">
@@ -67,6 +59,7 @@
 
 <script setup>
 	import AppSection from "~/components/AppSection/AppSection.vue";
+	import AppTabs from "~/components/AppTabs/Tabs.vue";
 	import AppH2 from "@/components/AppHeaders/H2/H2.vue";
 	import DistanceCard from "./components/Card/Card.vue";
 	import DistanceCounter from "./components/Counter/Counter.vue";
@@ -81,6 +74,17 @@
 
 	let coords = ref(null);
 	const mapComponent = ref(null);
+	const route = useRoute();
+	const router = useRouter();
+
+	const tabs = [
+		{ id: 0, title: "Расчет расстояния за МКАД", tab: "mkad", enabled: true },
+		{ id: 2, title: "Расчет расстояния за КАД", tab: "kad", enabled: true },
+	];
+
+	const changeTab = tab => {
+		router.push({ path: "distance", query: { tab: tab.value } });
+	};
 
 	const textMap = {
 		mkad: "МКАД",
@@ -91,7 +95,6 @@
 	distanceStore.textLength = "0";
 
 	let activeTab = ref("mkad");
-	const router = useRoute();
 
 	const selectAddress = data => {
 		distanceStore.history.unshift({ ...data, distanceType: textMap[activeTab.value], id: ++distanceStore.historyId });
@@ -103,23 +106,21 @@
 	};
 
 	onMounted(() => {
-		if (router.query.tab) {
-			activeTab.value = router.query.tab;
-			router.query.tab == "mkad" ? (coords.value = mkadCoords) : 0;
-			router.query.tab == "kad" ? (coords.value = kadCoords) : 0;
+		if (route.query.tab) {
+			activeTab.value = route.query.tab;
+			route.query.tab == "mkad" ? (coords.value = mkadCoords) : 0;
+			route.query.tab == "kad" ? (coords.value = kadCoords) : 0;
 		} else {
 			activeTab.value = "mkad";
 			coords.value = mkadCoords;
 			commonScripts.setURLParams({ tab: activeTab.value });
 		}
-
-		localStorage.clear();
 	});
 
 	watch(
-		() => router.query,
+		() => route.query,
 		newVal => {
-			if (router.query.tab) {
+			if (route.query.tab) {
 				activeTab.value = newVal.tab;
 
 				newVal.tab == "mkad" ? (coords.value = mkadCoords) : 0;

@@ -242,7 +242,7 @@
 
 			multiRoute.value.model.events.add("requestsuccess", function (route) {
 				address.value = multiRoute.value.getWayPoints().get(1)?.geometry?.getCoordinates();
-				map.balloon.open(positionClick.value, multiRoute.value.getWayPoints().get(1).properties.get("address"), {
+				map.balloon.open(positionClick.value, multiRoute.value.getWayPoints().get(1)?.properties?.get("address"), {
 					closeButton: false,
 				});
 			});
@@ -295,9 +295,9 @@
 		lastRoute.value = multiRoute.value;
 
 		multiRoute.value.model.events.add("requestsuccess", async function (route) {
-			let between = spaceBetween(multiRoute.value.getWayPoints().get(0).geometry.getCoordinates(), multiRoute.value.getWayPoints().get(1)?.geometry?.getCoordinates());
+			let between = spaceBetween(multiRoute.value.getWayPoints().get(0)?.geometry?.getCoordinates(), multiRoute.value.getWayPoints().get(1)?.geometry?.getCoordinates());
 			between = (await Promise.all([between]))[0];
-			map.balloon.open(positionClick.value, multiRoute.value.getWayPoints().get(1).properties.get("address"), {
+			map.balloon.open(positionClick.value, multiRoute.value.getWayPoints().get(1)?.properties?.get("address"), {
 				closeButton: false,
 			});
 
@@ -321,8 +321,8 @@
 
 		arrayPromises.push(ymaps.geocode(point1), ymaps.geocode(point2));
 		res = await Promise.all(arrayPromises);
-		const point1Coords = res[0].geoObjects.get(0).geometry.getCoordinates();
-		const point2Coords = res[1].geoObjects.get(0).geometry.getCoordinates();
+		const point1Coords = res[0].geoObjects.get(0)?.geometry?.getCoordinates();
+		const point2Coords = res[1].geoObjects.get(0)?.geometry?.getCoordinates();
 		arrayPromises = [];
 		arrayPromises.push(ymaps.formatter.distance(ymaps.coordSystem.geo.getDistance(point1Coords, point2Coords)));
 		res = await Promise.all(arrayPromises);

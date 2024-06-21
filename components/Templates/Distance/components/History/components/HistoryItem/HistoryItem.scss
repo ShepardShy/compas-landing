@@ -26,6 +26,7 @@
 	&__address {
 		max-width: 365px;
 		width: 100%;
+		word-break: break-word;
 		@media (max-width: 960px) {
 			max-width: 100%;
 		}
