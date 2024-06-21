@@ -1,0 +1,10 @@
+.history {
+	display: flex;
+	flex-direction: column;
+	gap: 25px;
+	&__items {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+	}
+}

@@ -1,0 +1,60 @@
+.distance {
+	display: flex;
+	flex-direction: column;
+	gap: 45px;
+	&__links {
+		display: flex;
+		gap: 25px;
+		font-size: 14px;
+		font-weight: 600;
+		padding: 15px 0;
+		@media (max-width: 650px) {
+			padding-top: 40px;
+		}
+	}
+	&__link {
+		&.active {
+			color: #1253a2;
+		}
+	}
+	&__line {
+		width: 100%;
+		height: 1px;
+		background-image: linear-gradient(to right, #c8c8c8 0%, #fbfcfd 101%);
+	}
+	&__title {
+		font-size: 31px;
+		font-weight: bold;
+		line-height: 1;
+		&_padding {
+			padding: 25px 0;
+		}
+	}
+	&__paragraph {
+		line-height: 1.19;
+	}
+	&__wrapper {
+		display: grid;
+		grid-template-columns: 1fr 263px;
+		column-gap: 34px;
+		row-gap: 20px;
+		@media (max-width: 1024px) {
+			display: grid;
+			grid-template-columns: 1fr;
+			gap: 20px;
+		}
+	}
+	&__counter {
+		@media (max-width: 1024px) {
+			width: 100%;
+			grid-row: 2;
+			align-self: end;
+		}
+	}
+	&__map {
+		display: contents;
+	}
+	&__social {
+		margin-bottom: 62px;
+	}
+}
