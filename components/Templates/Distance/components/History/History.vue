@@ -13,7 +13,12 @@
 				:time
 				:key="id"
 			/>
-			<div class="history__item_empty" v-else>Нет истории</div>
+			<div
+				class="history__item_empty"
+				v-else
+			>
+				Нет истории
+			</div>
 		</div>
 	</div>
 </template>
@@ -25,13 +30,9 @@
 
 	const distanceStore = useDistanceStore();
 
-	let colorFirst = 'red'
+	let colorFirst = "red";
 </script>
 
 <style scoped lang="scss">
 	@import url("./History.scss");
-
-	.history__item_empty {
-		color: v-bind("colorFirst");
-	}
 </style>

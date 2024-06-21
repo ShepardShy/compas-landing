@@ -51,7 +51,7 @@
             </template>
         </div>
         
-        <div class="tabs__actions">
+        <div v-if="isShowActions" class="tabs__actions">
             <PopupSave 
                 v-show="settingsTabs.saves.isShow"
                 @saveSettings="(role) => callAction({action: 'saveSettings', value: role})"
@@ -161,6 +161,10 @@
             type: Number
         }, 
         isCanChange: {
+            default: true,
+            type: Boolean
+        },
+        isShowActions:{
             default: true,
             type: Boolean
         }

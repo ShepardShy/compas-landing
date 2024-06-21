@@ -2,7 +2,7 @@
 	<AppTabs
 		class="distance__links"
 		:tabs="tabs"
-		:showActions="false"
+		:isShowActions="false"
 		@callAction="tab => changeTab(tab)"
 	></AppTabs>
 
@@ -97,38 +97,38 @@
 	distanceStore.textLength = "0";
 
 	let activeTab = ref({
-        type: null,
-        tab: "mkad"
-    })
+		type: null,
+		tab: "mkad",
+	});
 
 	// Выбор адреса
 	const selectAddress = data => {
-		distanceStore.history.unshift({ ...data, distanceType: textMap[activeTab.value], id: ++distanceStore.historyId });
+		distanceStore.history.unshift({ ...data, distanceType: textMap[activeTab.value.tab], id: ++distanceStore.historyId });
 		if (distanceStore.history.length > 5) distanceStore.history.splice(5, distanceStore.history.length - 5);
 	};
 
 	// Установка координат
-	const setActiveCoord = (type) => {
+	const setActiveCoord = type => {
 		switch (type) {
-			case 'mkad':
-				coords.value = mkadCoords
+			case "mkad":
+				coords.value = mkadCoords;
 				break;
 
-			case 'kad':
-				coords.value = kadCoords
+			case "kad":
+				coords.value = kadCoords;
 				break;
-		
+
 			default:
 				break;
 		}
-	}
+	};
 
 	// Установка длины
 	const changeValue = length => {
 		distanceStore.textLength = length;
 	};
 
-	provide('activeTab', activeTab)
+	provide("activeTab", activeTab);
 
 	onMounted(() => {
 		if (route.query.tab) {
@@ -136,7 +136,7 @@
 		} else {
 			activeTab.value.tab = "mkad";
 		}
-		
+
 		commonScripts.setURLParams({ tab: activeTab.value.tab });
 		setActiveCoord(route.query.tab);
 	});
