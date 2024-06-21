@@ -5,15 +5,15 @@
 		<div class="history__items">
 			<HistoryItem
 				v-if="distanceStore.history.length > 0"
+				v-for="({ id, address, date, distance, distanceType, time }, index) in distanceStore.history"
 				:address
 				:date
 				:distance
 				:distanceType
 				:time
 				:key="id"
-				v-for="({ id, address, date, distance, distanceType, time }, index) in distanceStore.history"
 			/>
-			<div v-else>Нет истории</div>
+			<div class="history__item_empty" v-else>Нет истории</div>
 		</div>
 	</div>
 </template>
@@ -24,8 +24,14 @@
 	import { useDistanceStore } from "~/stores/distanceStore";
 
 	const distanceStore = useDistanceStore();
+
+	let colorFirst = 'red'
 </script>
 
 <style scoped lang="scss">
 	@import url("./History.scss");
+
+	.history__item_empty {
+		color: v-bind("colorFirst");
+	}
 </style>

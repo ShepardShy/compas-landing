@@ -9,7 +9,7 @@
 	<hr class="distance__line" />
 	<AppSection class="distance section_without-background">
 		<div>
-			<AppH2 class="distance__title distance__title_padding">Расчет расстояния за {{ textMap[activeTab] }}</AppH2>
+			<AppH2 class="distance__title distance__title_padding">Расчет расстояния за {{ textMap[activeTab.tab] }}</AppH2>
 			<DistanceCard />
 		</div>
 		<div class="distance__wrapper">
@@ -46,7 +46,7 @@
 			/>
 			<DistanceCounter
 				class="distance__counter"
-				:title="`За ${textMap[activeTab]}`"
+				:title="`За ${textMap[activeTab.tab]}`"
 				:count="distanceStore.textLength"
 				@reset="mapComponent.resetRoute()"
 			/>
@@ -75,15 +75,17 @@
 	let coords = ref(null);
 	const mapComponent = ref(null);
 	const route = useRoute();
-	const router = useRouter();
 
 	const tabs = [
 		{ id: 0, title: "Расчет расстояния за МКАД", tab: "mkad", enabled: true },
 		{ id: 2, title: "Расчет расстояния за КАД", tab: "kad", enabled: true },
 	];
 
+	// Смена вкладки
 	const changeTab = tab => {
-		router.push({ path: "distance", query: { tab: tab.value } });
+		activeTab.value.tab = tab.value;
+		commonScripts.setURLParams({ tab: tab.value });
+		setActiveCoord(tab.value);
 	};
 
 	const textMap = {
@@ -94,47 +96,50 @@
 	const distanceStore = useDistanceStore();
 	distanceStore.textLength = "0";
 
-	let activeTab = ref("mkad");
+	let activeTab = ref({
+        type: null,
+        tab: "mkad"
+    })
 
+	// Выбор адреса
 	const selectAddress = data => {
 		distanceStore.history.unshift({ ...data, distanceType: textMap[activeTab.value], id: ++distanceStore.historyId });
 		if (distanceStore.history.length > 5) distanceStore.history.splice(5, distanceStore.history.length - 5);
 	};
 
+	// Установка координат
+	const setActiveCoord = (type) => {
+		switch (type) {
+			case 'mkad':
+				coords.value = mkadCoords
+				break;
+
+			case 'kad':
+				coords.value = kadCoords
+				break;
+		
+			default:
+				break;
+		}
+	}
+
+	// Установка длины
 	const changeValue = length => {
 		distanceStore.textLength = length;
 	};
 
+	provide('activeTab', activeTab)
+
 	onMounted(() => {
 		if (route.query.tab) {
-			activeTab.value = route.query.tab;
-			route.query.tab == "mkad" ? (coords.value = mkadCoords) : 0;
-			route.query.tab == "kad" ? (coords.value = kadCoords) : 0;
+			activeTab.value.tab = route.query.tab;
 		} else {
-			activeTab.value = "mkad";
-			coords.value = mkadCoords;
-			commonScripts.setURLParams({ tab: activeTab.value });
+			activeTab.value.tab = "mkad";
 		}
+		
+		commonScripts.setURLParams({ tab: activeTab.value.tab });
+		setActiveCoord(route.query.tab);
 	});
-
-	watch(
-		() => route.query,
-		newVal => {
-			if (route.query.tab) {
-				activeTab.value = newVal.tab;
-
-				newVal.tab == "mkad" ? (coords.value = mkadCoords) : 0;
-				newVal.tab == "kad" ? (coords.value = kadCoords) : 0;
-			} else {
-				activeTab.value = "mkad";
-				coords.value = mkadCoords;
-				commonScripts.setURLParams({ tab: activeTab.value });
-			}
-		},
-		{
-			deep: true,
-		}
-	);
 </script>
 
 <style>

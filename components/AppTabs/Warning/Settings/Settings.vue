@@ -49,7 +49,7 @@
                             required: false,
                             title: 'Роли',
                             lockedOptions: [],
-                            options: []
+                            options: userStore.roles
                         }"
                         :isReadOnly="false"
                         :isHaveNullOption="false"
@@ -61,7 +61,7 @@
             </div>
 
             <div class="warning__actions">
-                <AppButton class="button_blue" @click="() => emit('callAction', {action: 'saveSettings', value: 'all'})">
+                <AppButton class="button_blue" @click="() => emit('callAction', {action: 'saveSettings', value: 'settings'})">
                     Сохранить
                 </AppButton>
                 <AppButton @click="() => showWarning(false)">
@@ -82,6 +82,9 @@
     import AppWarning from '@/components/AppWarning/AppWarning.vue';
     import AppSelect from '@/components/AppSelects/Select/Select.vue';
     import AppCheckbox from '@/components/AppInputs/Checkbox/Checkbox.vue';
+
+    import { useUserStore } from '@/stores/userStore.js'
+    const userStore = useUserStore()
 
     const isShow = inject('isShow')
     const settingsTab = inject('settingsTab')

@@ -19,7 +19,7 @@
                         <PopupOption 
                             v-for="child in tab.childs" 
                             :class="child.alias == activeTab.tab ? 'popup__option_active' : ''" 
-                            @click="() => callAction({action: 'changeTab', value: child.alias, type: 'module'})"
+                            @click="() => child.alias == activeTab.tab ? null : callAction({action: 'changeTab', value: child.alias, type: 'module'})"
                         >
                             {{ child.title }}
                         </PopupOption>
@@ -30,7 +30,7 @@
                     class="tabs__item" 
                     :class="activeTab.tab == tab.tab ? 'tabs__item_active' : '', !props.isCanChange ? 'tabs__item_disabled' : ''"
                 >
-                    <span class="tabs__item-text" @click="() => callAction({action: 'changeTab', value: tab.tab})">
+                    <span class="tabs__item-text" @click="() => activeTab.tab == tab.tab ? null : callAction({action: 'changeTab', value: tab.tab})">
                         {{ tab.title }}
                     </span>
 
@@ -51,7 +51,7 @@
             </template>
         </div>
         
-        <div v-if="props.showActions" class="tabs__actions">
+        <div class="tabs__actions">
             <PopupSave 
                 v-show="settingsTabs.saves.isShow"
                 @saveSettings="(role) => callAction({action: 'saveSettings', value: role})"
@@ -129,7 +129,7 @@
 <script setup>
     import './Tabs.scss';
     
-    import { onMounted, ref, inject, provide, watch } from 'vue'
+    import { onMounted, ref, inject } from 'vue'
     import draggable from 'vuedraggable'
 
     import IconDrag from '@/components/AppIcons/Drag/Drag.vue'
@@ -163,10 +163,6 @@
         isCanChange: {
             default: true,
             type: Boolean
-        },
-        showActions:{
-            default: true,
-            type: Boolean
         }
     })
 
@@ -174,14 +170,7 @@
         'callAction'
     ])
 
-    let activeTab = ref(
-        {
-            id: 0,
-            title: 'Общие',
-            tab: 'order',
-            enabled: true
-        }
-    )
+    let activeTab = inject('activeTab')
     let settingsTab = ref(null)
     let isShow = ref({
         state: false,
@@ -197,11 +186,11 @@
         tabs: [
             {
                 tab: 'enabled',
-                title: 'Отображение столбцов',
+                title: 'Отображение',
             },
             {
                 tab: 'order',
-                title: 'Порядок столбцов',
+                title: 'Порядок',
             }
         ],
         saves: {
@@ -235,14 +224,25 @@
 
         // Сохранение настроек
         const saveSettings = (data) => {
+            const transformTabs = () => {
+                let request = JSON.parse(JSON.stringify(tabs.value))
+                for (let tab of request) {
+                    if (!tab.has_roles_read) {
+                        tab.roles_read = []
+                    }
+                }
+                return request
+            }
+
             emit('callAction', {
                 action: 'saveSettings',
                 value: {
-                    fields: tabs.value,
+                    fields: transformTabs(),
                     role: data
                 }
             })
             isShow.value.state = false
+            settingsTabs.value.saves.isShow = false
         }
 
         // Изменение значений опций
