@@ -138,7 +138,7 @@
 		}
 
 		commonScripts.setURLParams({ tab: activeTab.value.tab });
-		setActiveCoord(route.query.tab);
+		setActiveCoord(activeTab.value.tab);
 	});
 </script>
 
