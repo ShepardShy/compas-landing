@@ -35,7 +35,8 @@ body {
 	line-height: normal;
 	font-size: variables.$font-size-default;
 	color: variables.$color-black;
-	font-family: PT Sans;
+	// font-family: PT Sans;
+	font-family: MyriadPro;
 	overflow-x: hidden;
 
 	&.body_uncscroll {

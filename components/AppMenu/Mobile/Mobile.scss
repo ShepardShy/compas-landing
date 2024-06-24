@@ -49,6 +49,7 @@
 		}
 
 		.menu__gamburger {
+			display: flex;
 			svg {
 				@include mixins.elemResolutionOptions(15px, 15px);
 			}
@@ -102,7 +103,7 @@
 	}
 }
 
-@media (max-width: 750px) {
+@media (max-width: 650px) {
 	.menu {
 		&.menu_mobile {
 			display: block;

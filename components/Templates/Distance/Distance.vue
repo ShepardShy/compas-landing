@@ -1,17 +1,27 @@
 <template>
-	<AppTabs
-		class="distance__links"
-		:tabs="tabs"
-		:isShowActions="false"
-		@callAction="tab => changeTab(tab)"
-	></AppTabs>
-
-	<hr class="distance__line" />
 	<AppSection class="distance section_without-background">
-		<div>
+		<AppBreadcrambs
+			class="distance__breadcrambs"
+			:breadcrumbs="breadcrumbs"
+		/>
+
+		<AppTabs
+			class="distance__links"
+			:tabs="tabs"
+			:isShowActions="false"
+			@callAction="tab => changeTab(tab)"
+		></AppTabs>
+
+		<hr class="distance__line" />
+		<div class="distance__header">
+			<AppMenu
+				:isShowDesktop="false"
+				class="distance__menu"
+			/>
 			<AppH2 class="distance__title distance__title_padding">Расчет расстояния за {{ textMap[activeTab.tab] }}</AppH2>
-			<DistanceCard />
 		</div>
+
+		<DistanceCard />
 		<div class="distance__wrapper">
 			<AppMap
 				ref="mapComponent"
@@ -71,6 +81,9 @@
 	import { useDistanceStore } from "~/stores/distanceStore";
 	import mkadCoords from "./composables/mkadCoords";
 	import kadCoords from "./composables/kadCoords";
+	import AppMenu from "@/components/AppMenu/AppMenu.vue";
+
+	// console.log(inject("settingsMenu"));
 
 	let coords = ref(null);
 	const mapComponent = ref(null);
@@ -140,8 +153,23 @@
 		commonScripts.setURLParams({ tab: activeTab.value.tab });
 		setActiveCoord(activeTab.value.tab);
 	});
+
+	let breadcrumbs = [
+		{
+			title: "Главная страница",
+			link: "/",
+		},
+		{
+			title: "Расчет расстояния",
+			link: `/tariffs`,
+		},
+	];
 </script>
 
-<style>
+<style lang="scss">
 	@import url(./Distance.scss);
+
+	.menu.menu_mobile {
+		display: none;
+	}
 </style>

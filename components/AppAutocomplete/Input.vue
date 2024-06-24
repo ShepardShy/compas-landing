@@ -57,13 +57,7 @@
 				</AppInput>
 				<AppButton
 					v-if="props.isShowButton"
-					@click.stop="
-						emit('changeValue', {
-							key: props.item.key,
-							value: activeOption,
-							search: search,
-						})
-					"
+					@click.stop="emit('clickButton', { key: props.item.key, value: activeOption, search: search })"
 					class="autocomplete__button button_blue"
 					:style="props.isCountDistance ? { height: '45px' } : ''"
 					>Расчитать</AppButton
@@ -193,7 +187,7 @@
 
 	const actionState = inject("actionState", () => ref(null), true);
 
-	const emit = defineEmits(["openLink", "changeValue", "createOption", "clickOutside", "searchOptions"]);
+	const emit = defineEmits(["openLink", "changeValue", "createOption", "clickOutside", "searchOptions", "clickButton"]);
 
 	// Превент клика при нажатии на блок
 	const preventClick = () => {
@@ -275,6 +269,11 @@
 
 		// Поиск опций
 		const searchOptions = value => {
+			emit("changeValue", {
+				key: props.item.key,
+				search: value,
+			});
+
 			search.value = value;
 			if (!popupRef.value.popupRef.hasAttribute("open")) {
 				popupRef.value.popupRef.setAttribute("open", true);
@@ -290,12 +289,11 @@
 				setActiveOption(value);
 				setTimeout(() => {
 					PopupScripts.hideDetails(popupRef.value.popupRef);
-					if (!props.isShowButton) {
-						emit("changeValue", {
-							key: props.item.key,
-							value: value,
-						});
-					}
+					emit("changeValue", {
+						key: props.item.key,
+						value: value,
+						search: search.value,
+					});
 					value?.text && callAction({ action: "searchOptions", value: value.text });
 				}, 10);
 			} else if (value == null) {

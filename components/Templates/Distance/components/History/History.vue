@@ -1,6 +1,6 @@
 <template>
 	<div class="history">
-		<AppH2 class="distance__title">История поиска по IP</AppH2>
+		<AppH2 class="distance__title">История поиска</AppH2>
 
 		<div class="history__items">
 			<HistoryItem
@@ -29,8 +29,6 @@
 	import { useDistanceStore } from "~/stores/distanceStore";
 
 	const distanceStore = useDistanceStore();
-
-	let colorFirst = "red";
 </script>
 
 <style scoped lang="scss">

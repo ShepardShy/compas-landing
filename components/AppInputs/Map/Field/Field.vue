@@ -42,6 +42,7 @@
 			:isCountDistance="props.isCountDistance"
 			@changeValue="data => changeValue(data)"
 			@searchOptions="data => searchOptions(data)"
+			@clickButton="data => changeValue(data, 'calculate')"
 		/>
 
 		<AppCopy
@@ -86,6 +87,7 @@
 
 	import { useUserStore } from "@/stores/userStore.js";
 	import { onMounted, ref, toRaw, watch } from "vue";
+	import { render } from "sass";
 
 	const userStore = useUserStore();
 
@@ -106,6 +108,7 @@
 	let multiRoute = shallowRef(null);
 	let positionClick = shallowRef(null);
 	let lastRoute = shallowRef(null);
+	let lastPoint = shallowRef(null);
 	let routeLength = ref(null);
 	let markers = ref([]);
 	let isSelectActive = ref(false);
@@ -122,11 +125,17 @@
 
 			if (props.isShowMap) {
 				ymaps.ready(["Map", "Polygon"]).then(function () {
-					map = new ymaps.Map("map", {
-						center: props.isCountDistance ? props.coords : value.value.coords,
-						zoom: props.mapZoom,
-						height: props.isCountDistance ? "550px" : undefined,
-					});
+					map = new ymaps.Map(
+						"map",
+						{
+							center: props.isCountDistance ? props.coords : value.value.coords,
+							zoom: props.mapZoom,
+							height: props.isCountDistance ? "550px" : undefined,
+						},
+						{ suppressMapOpenBlock: true, suppressObsoleteBrowserNotifier: true }
+					);
+					map.options.set("suppressMapOpenBlock", true);
+					map.options.set("suppressObsoleteBrowserNotifier", true);
 
 					if (props.isCountDistance) {
 						clickMap();
@@ -242,9 +251,9 @@
 
 			multiRoute.value.model.events.add("requestsuccess", function (route) {
 				address.value = multiRoute.value.getWayPoints().get(1)?.geometry?.getCoordinates();
-				map.balloon.open(positionClick.value, multiRoute.value.getWayPoints().get(1)?.properties?.get("address"), {
-					closeButton: false,
-				});
+				// map.balloon.open(positionClick.value, multiRoute.value.getWayPoints().get(1)?.properties?.get("address"), {
+				// 	closeButton: false,
+				// });
 			});
 		});
 	};
@@ -256,7 +265,6 @@
 			positionClick.value = positionRoute;
 		} else if (positionRoute === null) {
 			lastRoute.value && map.geoObjects?.remove(lastRoute.value);
-			map.balloon.close();
 			emit("changeValue", "0");
 			return;
 		}
@@ -264,6 +272,10 @@
 		// Ближайшая точка
 		const closestPoint = arrPlacemarksRez.value?.getClosestTo(positionClick.value);
 
+		// у позиции 6 цифр после запятой
+		positionClick.value = [(+positionClick.value[0]).toFixed(6), (+positionClick.value[1]).toFixed(6)];
+
+		// построение пути
 		multiRoute.value = new ymaps.multiRouter.MultiRoute(
 			{
 				referencePoints: [closestPoint?.geometry?.getCoordinates(), positionClick.value],
@@ -281,37 +293,50 @@
 			type: "Point",
 			coordinates: positionClick.value,
 		});
-		const isInside = !!myObjects.searchInside(polygon.value).getLength();
+		const isInside = !!myObjects?.searchInside(polygon.value)?.getLength();
 
 		if (isInside) {
+			renderPoint(positionClick.value);
 			multiRoute.value.options.set("visible", false);
+		} else {
+			renderPoint(positionClick.value);
 		}
-
-		// var newResult = myGeoQueryResult.add(ymaps.geocode(positionClick.value));
-		// console.log(newResult.searchInside(polygon.value));
 
 		// Удаление предыдущего пути
 		lastRoute.value && map?.geoObjects?.remove(lastRoute.value);
 		lastRoute.value = multiRoute.value;
 
-		multiRoute.value.model.events.add("requestsuccess", async function (route) {
+		multiRoute.value.model.events.add("requestsuccess", async function () {
 			let between = spaceBetween(multiRoute.value.getWayPoints().get(0)?.geometry?.getCoordinates(), multiRoute.value.getWayPoints().get(1)?.geometry?.getCoordinates());
 			between = (await Promise.all([between]))[0];
-			map.balloon.open(positionClick.value, multiRoute.value.getWayPoints().get(1)?.properties?.get("address"), {
-				closeButton: false,
-			});
+			if (isInside) {
+				emit("changeValue", "0");
+			} else {
+				emit("changeValue", between);
+			}
+			// map.balloon.open(positionClick.value, multiRoute.value.getWayPoints().get(1)?.properties?.get("address"), {
+			// 	closeButton: false,
+			// });
 
 			// Форимирование ответа с данными
 			let address = null;
 			if (data?.search) {
 				address = data.search;
 			} else {
-				address = multiRoute.value.getWayPoints().get(1).geometry.getCoordinates().join();
+				address = multiRoute.value.getWayPoints().get(1).geometry.getCoordinates().join(", ");
 			}
+
 			const historyItem = { address, distance: between, date: dayjs().format("DD.MM.YYYY"), time: dayjs().format("HH:mm") };
 			emit("selectAddress", historyItem);
 		});
 		map?.geoObjects.add(multiRoute.value);
+	};
+
+	// Удаление маршрута
+
+	const removeRoute = () => {
+		multiRoute.value && map?.geoObjects?.remove(multiRoute.value);
+		emit("changeValue", "0");
 	};
 
 	// Расчёт расстояния
@@ -328,7 +353,6 @@
 		res = await Promise.all(arrayPromises);
 		let between = res[0];
 		routeLength.value = between;
-		emit("changeValue", routeLength.value);
 		return between;
 	};
 
@@ -366,6 +390,7 @@
 		removePolygon();
 		removeMarkers();
 		createPolygon();
+		emit("changeValue", "0");
 		map?.panTo(props.coords, {
 			flying: false,
 		});
@@ -508,7 +533,12 @@
 
 	//Сброс маршрута
 	const resetRoute = () => {
-		changeValue(null);
+		// changeValue(null);
+		removeRoute();
+		removePoint();
+		map?.panTo(props.coords, {
+			flying: false,
+		});
 		autocompleteComponent.value.reset();
 		address.value = "";
 	};
@@ -517,8 +547,22 @@
 		resetRoute,
 	});
 
+	// Отрисовка точки
+
+	const renderPoint = position => {
+		map.geoObjects?.remove(lastPoint.value);
+		lastPoint.value = new ymaps.Placemark(position);
+		map.geoObjects.add(lastPoint.value);
+	};
+
+	// Удалить точку
+
+	const removePoint = () => {
+		map.geoObjects?.remove(lastPoint.value);
+	};
+
 	// Изменение значения
-	const changeValue = data => {
+	const changeValue = (data, action = "show") => {
 		if (props.isCountDistance) {
 			let position = data?.value?.coords ? data?.value?.coords : null;
 
@@ -527,7 +571,17 @@
 			if (coords?.length > 0 && !isNaN(+coords?.[0]) && !isNaN(+coords?.[1])) {
 				position = [+coords[0], +coords[1]];
 			}
-			renderRoute(position, data);
+
+			if (position) {
+				position = [+position[0], +position[1]];
+
+				map?.panTo(position, {
+					flying: false,
+				});
+
+				action == "show" && renderPoint(position);
+				action == "calculate" && renderRoute(position, data);
+			}
 		}
 		if (data?.value && !props.isCountDistance) {
 			markers.value.splice(
@@ -544,15 +598,16 @@
 			};
 		}
 
-		if (props.isShowMap && data?.value?.coords) {
+		if (props.isShowMap && data?.value?.coords && !props.isCountDistance) {
 			map?.panTo([data?.value?.coords], {
 				flying: false,
 			});
 			!props.isCountDistance && setMarkers();
 		} else {
-			map?.panTo(props.isCountDistance ? props.coords : [55.755864, 37.617698], {
-				flying: false,
-			});
+			!props.isCountDistance &&
+				map?.panTo(props.isCountDistance ? props.coords : [55.755864, 37.617698], {
+					flying: false,
+				});
 			!props.isCountDistance && setMarkers();
 		}
 

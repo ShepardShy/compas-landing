@@ -1,6 +1,9 @@
 <template>
-	<MenuDesktop @callAction="data => callAction(data)" />
-	<MenuMobile />
+	<MenuDesktop
+		v-if="props.isShowDesktop"
+		@callAction="data => callAction(data)"
+	/>
+	<MenuMobile v-bind="$attrs" />
 </template>
 
 <script setup>
@@ -8,6 +11,13 @@
 
 	import MenuDesktop from "./Desktop/Desktop.vue";
 	import MenuMobile from "./Mobile/Mobile.vue";
+
+	const props = defineProps({
+		isShowDesktop: {
+			type: Boolean,
+			default: true,
+		},
+	});
 
 	const emit = defineEmits(["callAction"]);
 
@@ -28,16 +38,6 @@
 			slug: "main",
 			sort: 0,
 			link: "/tariffs",
-			is_hidden: 0,
-			enabled: 1,
-			children: [],
-		},
-		{
-			id: 1,
-			name: "Расчёт расстояния",
-			slug: "main",
-			sort: 0,
-			link: "/distance",
 			is_hidden: 0,
 			enabled: 1,
 			children: [],
