@@ -3,7 +3,10 @@
 		v-if="props.isShowDesktop"
 		@callAction="data => callAction(data)"
 	/>
-	<MenuMobile v-bind="$attrs" />
+	<MenuMobile
+		v-if="props.isShowMobile"
+		v-bind="$attrs"
+	/>
 </template>
 
 <script setup>
@@ -14,6 +17,10 @@
 
 	const props = defineProps({
 		isShowDesktop: {
+			type: Boolean,
+			default: true,
+		},
+		isShowMobile: {
 			type: Boolean,
 			default: true,
 		},
@@ -31,6 +38,53 @@
 			is_hidden: 1,
 			enabled: 1,
 			children: [],
+		},
+		{
+			id: 1,
+			name: "Продукты",
+			slug: "main",
+			sort: 0,
+			is_hidden: 0,
+			enabled: 1,
+			children: [
+				{
+					id: 1,
+					name: "Проверка штрафов",
+					slug: "main",
+					sort: 0,
+					link: "/tariffs",
+					is_hidden: 0,
+					enabled: 1,
+				},
+				{
+					id: 1,
+					name: "Расчет расстояния",
+					slug: "main",
+					sort: 0,
+					is_hidden: 0,
+					enabled: 1,
+					children: [
+						{
+							id: 1,
+							name: "За МКАД",
+							slug: "main",
+							sort: 0,
+							link: "/distance?tab=mkad",
+							is_hidden: 0,
+							enabled: 1,
+						},
+						{
+							id: 1,
+							name: "За КАД",
+							slug: "main",
+							sort: 0,
+							link: "/distance?tab=kad",
+							is_hidden: 0,
+							enabled: 1,
+						},
+					],
+				},
+			],
 		},
 		{
 			id: 1,

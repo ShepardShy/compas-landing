@@ -1,0 +1,29 @@
+.menu__list {
+	& .popup__content {
+		top: unset;
+		bottom: -25px;
+		transform: translateY(100%);
+		color: #161616;
+		font-weight: 400;
+		font-size: 14px;
+	}
+	& .popup__option {
+		padding: 6px;
+	}
+	& .popup__summary:hover svg * {
+		fill: #fd8301;
+	}
+	& .popup[open] svg * {
+		fill: #fd8301;
+	}
+	& .popup_visible .icon__triangle svg {
+		transform: rotate(180deg);
+	}
+}
+
+.menu__triangle {
+	&-wrapper {
+		display: flex;
+		gap: 5px;
+	}
+}

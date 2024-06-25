@@ -82,8 +82,13 @@
 	import mkadCoords from "./composables/mkadCoords";
 	import kadCoords from "./composables/kadCoords";
 	import AppMenu from "@/components/AppMenu/AppMenu.vue";
+	import { useCommonStore } from "~/stores/commonStore";
 
-	// console.log(inject("settingsMenu"));
+	const commonStore = useCommonStore();
+	commonStore.isShowMobileMenu = false;
+	onBeforeUnmount(() => {
+		commonStore.isShowMobileMenu = true;
+	});
 
 	let coords = ref(null);
 	const mapComponent = ref(null);
@@ -168,8 +173,4 @@
 
 <style lang="scss">
 	@import url(./Distance.scss);
-
-	.menu.menu_mobile {
-		display: none;
-	}
 </style>

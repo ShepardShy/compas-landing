@@ -1,23 +1,22 @@
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia";
 
-export const useCommonStore = defineStore('commonStore', {
-    // states
-    state: () =>  {
-        return {
-            menu: [],
-            activeTab: null,
-            tabs: [],
-            updatedMethods: {},
-            modalInfo: [],
-        }
-    },
+export const useCommonStore = defineStore("commonStore", {
+	// states
+	state: () => {
+		return {
+			isShowMobileMenu: true,
+			menu: [],
+			activeTab: null,
+			tabs: [],
+			updatedMethods: {},
+			modalInfo: [],
+		};
+	},
 
-    persist: {
-        storage: persistedState.localStorage,
-    },
+	persist: {
+		storage: persistedState.localStorage,
+	},
 
-    // actions
-    actions: {
-        
-    }
-})
+	// actions
+	actions: {},
+});

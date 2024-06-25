@@ -20,6 +20,12 @@
 			overflow: visible;
 			font-size: 18px;
 
+			&_children {
+				&::after {
+					display: none;
+				}
+			}
+
 			&.router-link-active {
 				color: variables.$color-orange;
 			}

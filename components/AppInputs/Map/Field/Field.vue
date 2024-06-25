@@ -249,12 +249,12 @@
 
 			renderRoute();
 
-			multiRoute.value.model.events.add("requestsuccess", function (route) {
-				address.value = multiRoute.value.getWayPoints().get(1)?.geometry?.getCoordinates();
-				// map.balloon.open(positionClick.value, multiRoute.value.getWayPoints().get(1)?.properties?.get("address"), {
-				// 	closeButton: false,
-				// });
-			});
+			// multiRoute.value.model.events.add("requestsuccess", function (route) {
+			// 	address.value = multiRoute.value.getWayPoints().get(1)?.geometry?.getCoordinates();
+			// 	// map.balloon.open(positionClick.value, multiRoute.value.getWayPoints().get(1)?.properties?.get("address"), {
+			// 	// 	closeButton: false,
+			// 	// });
+			// });
 		});
 	};
 
@@ -270,15 +270,39 @@
 		}
 
 		// Ближайшая точка
-		const closestPoint = arrPlacemarksRez.value?.getClosestTo(positionClick.value);
+		// const distancesArr = [];
+		// let routes = [];
+
+		// Создаем коллекцию, в которую будем добавлять метки
+		let routes = [];
+
+		for (let elem of props.polygonCoords[0]) {
+			let route = new ymaps.route([positionClick.value, elem], { results: 1 });
+			routes.push(route);
+		}
+		routes = await Promise.all(routes);
+
+		// routes = ymaps.geoQuery(routes);
+		routes = routes.map(route => {
+			return {
+				length: route.getLength(),
+				route,
+			};
+		});
+		let sorted = routes.sort((a, b) => a.length - b.length)[0];
+		console.log(positionClick.value);
+		console.log(sorted.route.getWayPoints().get(1).geometry.getCoordinates(), "sorted");
+		let closestPoint = sorted.route.getWayPoints().get(1).geometry.getCoordinates();
 
 		// у позиции 6 цифр после запятой
 		positionClick.value = [(+positionClick.value[0]).toFixed(6), (+positionClick.value[1]).toFixed(6)];
 
 		// построение пути
+		// console.log(closestPoint.geometry?.getCoordinates());
+		console.log(closestPoint, positionClick.value);
 		multiRoute.value = new ymaps.multiRouter.MultiRoute(
 			{
-				referencePoints: [closestPoint?.geometry?.getCoordinates(), positionClick.value],
+				referencePoints: [closestPoint, positionClick.value],
 				params: {
 					routingMode: "auto",
 					results: 1,
