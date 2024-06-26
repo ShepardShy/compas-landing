@@ -159,6 +159,16 @@
 		setActiveCoord(activeTab.value.tab);
 	});
 
+	watch(
+		() => route.query.tab,
+		() => {
+			if (route.query.tab != activeTab.value.tab) {
+				activeTab.value.tab = route.query.tab;
+				setActiveCoord(activeTab.value.tab);
+			}
+		}
+	);
+
 	let breadcrumbs = [
 		{
 			title: "Главная страница",

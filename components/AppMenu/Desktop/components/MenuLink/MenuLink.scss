@@ -1,3 +1,5 @@
+@use "@/assets/variables.scss" as variables;
+
 .menu__list {
 	& .popup__content {
 		top: unset;
@@ -8,16 +10,45 @@
 		font-size: 14px;
 	}
 	& .popup__option {
-		padding: 6px;
+		padding: 7.5px;
+		&_active {
+			&::after {
+				display: none;
+			}
+		}
 	}
 	& .popup__summary:hover svg * {
-		fill: #fd8301;
+		fill: #fd8301 !important;
 	}
 	& .popup[open] svg * {
-		fill: #fd8301;
+		fill: #fd8301 !important;
 	}
-	& .popup_visible .icon__triangle svg {
-		transform: rotate(180deg);
+	& .popup svg * {
+		fill: #fd8301 !important;
+	}
+	& .tabs__item {
+		color: #dedede !important;
+		font-weight: 300;
+		&-text {
+			position: relative;
+			&:hover {
+				&::after {
+					content: "";
+					width: 100%;
+					position: absolute;
+					height: 1px;
+					left: 0px;
+					background: variables.$color-orange;
+					bottom: -3px;
+				}
+			}
+		}
+		&_active .tabs__item-text {
+			color: #fd8301;
+		}
+	}
+	& .popup__tabs {
+		margin-right: 0;
 	}
 }
 

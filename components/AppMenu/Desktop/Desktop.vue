@@ -6,7 +6,7 @@
 		<div class="container">
 			<div class="menu__links">
 				<NuxtLink
-					:to="menu.length > 0 ? menu[0].link : '/'"
+					:to="menu.length > 0 ? menu[0].tab : '/'"
 					class="menu__logo"
 				>
 					<IconLogo />
@@ -18,10 +18,10 @@
 							v-show="!item.is_hidden"
 							v-for="item in menu"
 							class="menu__item"
-							:class="{ menu__item_children: item.children.length > 0 }"
-							:to="item.link"
-							:children="item.children"
-							>{{ item.name }}</MenuLink
+							:class="{ menu__item_children: item.childs.length > 0 }"
+							:to="item.tab"
+							:item="item"
+							>{{ item.title }}</MenuLink
 						>
 					</nav>
 				</div>

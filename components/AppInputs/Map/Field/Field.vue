@@ -92,7 +92,7 @@
 	const userStore = useUserStore();
 
 	const settings = {
-		apiKey: "ef7607ff-665a-4e98-a65b-c73d97c69005",
+		apiKey: "cf49735b-c6b6-46d6-90d5-0ef59b9cdf11", // ef7607ff-665a-4e98-a65b-c73d97c69005
 		lang: "ru_RU",
 		coordorder: "latlong",
 		enterprise: false,
@@ -270,8 +270,6 @@
 		}
 
 		// Ближайшая точка
-		// const distancesArr = [];
-		// let routes = [];
 
 		// Создаем коллекцию, в которую будем добавлять метки
 		let routes = [];
@@ -298,7 +296,6 @@
 		positionClick.value = [(+positionClick.value[0]).toFixed(6), (+positionClick.value[1]).toFixed(6)];
 
 		// построение пути
-		// console.log(closestPoint.geometry?.getCoordinates());
 		console.log(closestPoint, positionClick.value);
 		multiRoute.value = new ymaps.multiRouter.MultiRoute(
 			{

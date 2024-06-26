@@ -22,13 +22,13 @@
 			>
 				<NuxtLink
 					@click="() => callAction({ action: 'showMenu', value: false })"
-					:to="item.link"
+					:to="item.tab"
 					class="menu__item"
 					v-for="item in menu"
 					:key="item.id"
 					v-show="item.enabled"
 				>
-					{{ item.name }}
+					{{ item.title }}
 				</NuxtLink>
 			</nav>
 		</div>

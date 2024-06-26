@@ -1,49 +1,43 @@
 <template>
 	<NuxtLink
-		v-if="props.children?.length <= 0"
+		v-if="props.item.childs?.length <= 0"
 		v-bind="$attrs"
 	>
 		<slot />
 	</NuxtLink>
-	<AppPopup
-		ref="popupRef"
+
+	<AppTabs
 		v-else
-	>
-		<template #summary>
-			<div class="menu__triangle-wrapper">
-				<IconTriangle
-					class="menu__triangle"
-					fill="#fd8301"
-				/>
-				<span>
-					<slot />
-				</span>
-			</div>
-		</template>
-		<template #content>
-			<PopupOption
-				v-if="props.children"
-				v-for="child in props.children"
-			>
-				{{ child.name }}
-			</PopupOption>
-		</template>
-	</AppPopup>
+		:tabs="[props.item]"
+		:isShowActions="false"
+		:isShowBlueArrow="true"
+		@callAction="tab => changeTab(tab)"
+	/>
 </template>
 
 <script setup>
-	import AppPopup from "@/components/AppPopup/Popup.vue";
-	import PopupOption from "@/components/AppPopup/PopupOption/PopupOption.vue";
-	import IconArrow from "@/components/AppIcons/Arrow/Arrow.vue";
-	import IconTriangle from "@/components/AppIcons/Triangle/Triangle.vue";
+	let activeTab = ref({
+		type: null,
+		tab: "mkad",
+	});
+	provide("activeTab", activeTab);
 
-	const popupRef = ref(null);
+	// Cмена вкладки
+	const changeTab = async tab => {
+		activeTab.value.tab = tab.value;
+		await navigateTo(tab.value);
+	};
 
 	const props = defineProps({
 		children: {
 			default: [],
 			type: Array,
 			required: false,
+		},
+		item: {
+			default: {},
+			type: Object,
+			required: true,
 		},
 	});
 </script>
