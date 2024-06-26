@@ -268,9 +268,7 @@
 
 		positionClick.value = [(+positionClick.value[0]).toFixed(6), (+positionClick.value[1]).toFixed(6)];
 
-		if (data?.search) {
-			address.value = data.search;
-		} else {
+		if (!data?.search) {
 			address.value = positionClick.value.join(", ");
 		}
 
@@ -313,6 +311,7 @@
 			doneAddress = positionClick.value.join(", ");
 		}
 
+		isInside ? (between = 0) : 0;
 		const historyItem = { address: doneAddress, distance: between, date: dayjs().format("DD.MM.YYYY"), time: dayjs().format("HH:mm") };
 		emit("selectAddress", historyItem);
 	};
