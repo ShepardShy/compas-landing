@@ -83,11 +83,8 @@
 	import AppCopy from "@/components/AppCopy/AppCopy.vue";
 	import IconLasso from "@/components/AppIcons/Lasso/Lasso.vue";
 	import IconLassoRemove from "@/components/AppIcons/Lasso/LassoRemove/LassoRemove.vue";
-	import _ from "lodash";
-
 	import { useUserStore } from "@/stores/userStore.js";
-	import { onMounted, ref, toRaw, watch } from "vue";
-	import { render } from "sass";
+	import { getNearCoords, getMinLengthRoute } from "./functions/index.js";
 
 	const userStore = useUserStore();
 
@@ -118,6 +115,13 @@
 		text: null,
 		coords: [55.755864, 37.617698],
 	});
+	let routeOptions = {
+		options: {
+			wayPointVisible: false,
+			routeActiveStrokeWidth: 3,
+			routeActiveStrokeColor: "#aa47d1",
+		},
+	};
 
 	onMounted(() => {
 		setTimeout(async () => {
@@ -248,13 +252,6 @@
 			positionClick.value = e.get("coords");
 
 			renderRoute();
-
-			// multiRoute.value.model.events.add("requestsuccess", function (route) {
-			// 	address.value = multiRoute.value.getWayPoints().get(1)?.geometry?.getCoordinates();
-			// 	// map.balloon.open(positionClick.value, multiRoute.value.getWayPoints().get(1)?.properties?.get("address"), {
-			// 	// 	closeButton: false,
-			// 	// });
-			// });
 		});
 	};
 
@@ -269,26 +266,12 @@
 			return;
 		}
 
-		// Ближайшая точка
-
-		let closestPoint = polygon.value.geometry.getClosest(positionClick.value).position;
-
-		// у позиции 6 цифр после запятой
 		positionClick.value = [(+positionClick.value[0]).toFixed(6), (+positionClick.value[1]).toFixed(6)];
+		address.value = positionClick.value;
 
-		// построение пути
-		console.log(closestPoint, positionClick.value);
-		multiRoute.value = new ymaps.multiRouter.MultiRoute(
-			{
-				referencePoints: [closestPoint, positionClick.value],
-				params: {
-					routingMode: "auto",
-					results: 1,
-					reverseGeocoding: true,
-				},
-			},
-			{ wayPointVisible: false, viaPointVisible: false, routeActiveMarkerVisible: false, routeOpenBalloonOnClick: false }
-		);
+		// Прокладка ближайшайшего пути
+		multiRoute.value = await getMinLengthRoute(positionClick.value, props.polygonCoords);
+		multiRoute.value.options.set(routeOptions.options);
 
 		// Проверка внутри полигона
 		const myObjects = ymaps.geoQuery({
@@ -303,35 +286,30 @@
 		} else {
 			renderPoint(positionClick.value);
 		}
+		map?.geoObjects.add(multiRoute.value);
 
 		// Удаление предыдущего пути
 		lastRoute.value && map?.geoObjects?.remove(lastRoute.value);
 		lastRoute.value = multiRoute.value;
 
-		multiRoute.value.model.events.add("requestsuccess", async function () {
-			let between = spaceBetween(multiRoute.value.getWayPoints().get(0)?.geometry?.getCoordinates(), multiRoute.value.getWayPoints().get(1)?.geometry?.getCoordinates());
-			between = (await Promise.all([between]))[0];
-			if (isInside) {
-				emit("changeValue", "0");
-			} else {
-				emit("changeValue", between);
-			}
-			// map.balloon.open(positionClick.value, multiRoute.value.getWayPoints().get(1)?.properties?.get("address"), {
-			// 	closeButton: false,
-			// });
+		let between = spaceBetween(multiRoute.value.getWayPoints().get(0)?.geometry?.getCoordinates(), multiRoute.value.getWayPoints().get(1)?.geometry?.getCoordinates());
+		between = (await Promise.all([between]))[0];
+		if (isInside) {
+			emit("changeValue", "0");
+		} else {
+			emit("changeValue", between);
+		}
 
-			// Форимирование ответа с данными
-			let address = null;
-			if (data?.search) {
-				address = data.search;
-			} else {
-				address = multiRoute.value.getWayPoints().get(1).geometry.getCoordinates().join(", ");
-			}
+		// Форимирование ответа с данными
+		let doneAddress = null;
+		if (data?.search) {
+			doneAddress = data.search;
+		} else {
+			doneAddress = positionClick.value.join(", ");
+		}
 
-			const historyItem = { address, distance: between, date: dayjs().format("DD.MM.YYYY"), time: dayjs().format("HH:mm") };
-			emit("selectAddress", historyItem);
-		});
-		map?.geoObjects.add(multiRoute.value);
+		const historyItem = { address: doneAddress, distance: between, date: dayjs().format("DD.MM.YYYY"), time: dayjs().format("HH:mm") };
+		emit("selectAddress", historyItem);
 	};
 
 	// Удаление маршрута
@@ -364,7 +342,6 @@
 		map.geoObjects.add(polygon.value);
 
 		// Рисование полигона
-
 		// polygon.value.editor.startDrawing();
 		// var stateMonitor = new ymaps.Monitor(polygon.value.editor.state);
 		// stateMonitor.add("drawing", function (newValue) {
