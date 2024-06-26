@@ -247,9 +247,9 @@
 		// Установка выбранной опции
 		const setActiveOption = value => {
 			search.value = "";
-			if (Array.isArray(value)) {
-				search.value = value.join();
-				activeOption.value = { ...nullOption, text: value.join() };
+			if (typeof value == "string") {
+				search.value = value;
+				activeOption.value = { ...nullOption, text: value };
 			} else if (value === null || !value?.text) {
 				activeOption.value = nullOption;
 			} else {

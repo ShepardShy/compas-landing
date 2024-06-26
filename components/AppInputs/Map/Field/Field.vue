@@ -267,7 +267,12 @@
 		}
 
 		positionClick.value = [(+positionClick.value[0]).toFixed(6), (+positionClick.value[1]).toFixed(6)];
-		address.value = positionClick.value;
+
+		if (data?.search) {
+			address.value = data.search;
+		} else {
+			address.value = positionClick.value.join(", ");
+		}
 
 		// Прокладка ближайшайшего пути
 		multiRoute.value = await getMinLengthRoute(positionClick.value, props.polygonCoords);
