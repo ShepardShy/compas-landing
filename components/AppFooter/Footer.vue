@@ -60,13 +60,13 @@
 						Логистика
 					</NuxtLink> -->
 					<NuxtLink
-						to="/fines_gibdd"
+						to="/products/fines_gibdd"
 						class="footer-link__href"
 					>
 						Отслеживание штрафов
 					</NuxtLink>
 					<NuxtLink
-						to="/distance"
+						to="/products/distance"
 						class="footer-link__href"
 					>
 						Расчёт расстояния

@@ -12,7 +12,10 @@
 					@clickOutside="callAction({ action: 'closeAllChild' })"
 				>
 					<template #summary>
-						<div class="tabs__item">
+						<div
+							:class="{ tabs__item_active: $route.fullPath.includes(tab.tab), tabs__item_disabled: !props.isCanChange }"
+							class="tabs__item"
+						>
 							<IconTriangle />
 							<p class="tabs__item-text">
 								{{ tab.title }}
@@ -325,7 +328,6 @@
 			activeTab.value.type = type;
 			callAction({ action: "closeAllChild" });
 			popupRef.value?.[0]?.popupRef?.removeAttribute("open");
-			console.log(activeTab.value.tab);
 			emit("callAction", {
 				action: "changeTab",
 				value: activeTab.value.tab,
