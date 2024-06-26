@@ -32,6 +32,10 @@
 	color: variables.$color-active;
 	@include mixins.flexBlock($vertical: center, $horizontal: flex-start, $gap: 5px);
 
+	&-text {
+		cursor: pointer;
+	}
+
 	&.tabs__item_disabled {
 		cursor: not-allowed;
 		opacity: 0.5;

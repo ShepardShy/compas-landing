@@ -271,26 +271,7 @@
 
 		// Ближайшая точка
 
-		// Создаем коллекцию, в которую будем добавлять метки
-		let routes = [];
-
-		for (let elem of props.polygonCoords[0]) {
-			let route = new ymaps.route([positionClick.value, elem], { results: 1 });
-			routes.push(route);
-		}
-		routes = await Promise.all(routes);
-
-		// routes = ymaps.geoQuery(routes);
-		routes = routes.map(route => {
-			return {
-				length: route.getLength(),
-				route,
-			};
-		});
-		let sorted = routes.sort((a, b) => a.length - b.length)[0];
-		console.log(positionClick.value);
-		console.log(sorted.route.getWayPoints().get(1).geometry.getCoordinates(), "sorted");
-		let closestPoint = sorted.route.getWayPoints().get(1).geometry.getCoordinates();
+		let closestPoint = polygon.value.geometry.getClosest(positionClick.value).position;
 
 		// у позиции 6 цифр после запятой
 		positionClick.value = [(+positionClick.value[0]).toFixed(6), (+positionClick.value[1]).toFixed(6)];
