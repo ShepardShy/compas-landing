@@ -100,9 +100,9 @@
 	];
 
 	// Смена вкладки
-	const changeTab = tab => {
+	const changeTab = async tab => {
 		activeTab.value.tab = tab.value;
-		commonScripts.setURLParams({ tab: tab.value });
+		await navigateTo({ query: { tab: tab.value } });
 		setActiveCoord(tab.value);
 	};
 
@@ -148,14 +148,14 @@
 
 	provide("activeTab", activeTab);
 
-	onMounted(() => {
+	onMounted(async () => {
 		if (route.query.tab) {
 			activeTab.value.tab = route.query.tab;
 		} else {
 			activeTab.value.tab = "mkad";
 		}
 
-		commonScripts.setURLParams({ tab: activeTab.value.tab });
+		await navigateTo({ query: { tab: activeTab.value.tab } });
 		setActiveCoord(activeTab.value.tab);
 	});
 

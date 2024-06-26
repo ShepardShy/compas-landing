@@ -276,8 +276,10 @@
 		// Закрытие всех child
 		const closeAllChild = () => {
 			for (let tab of tabs.value) {
-				for (let child of tab.childs) {
-					child.open = false;
+				if (tab.childs?.length > 0) {
+					for (let child of tab.childs) {
+						child.open = false;
+					}
 				}
 			}
 		};
@@ -323,9 +325,10 @@
 			activeTab.value.type = type;
 			callAction({ action: "closeAllChild" });
 			popupRef.value?.[0]?.popupRef?.removeAttribute("open");
+			console.log(activeTab.value.tab);
 			emit("callAction", {
 				action: "changeTab",
-				value: data,
+				value: activeTab.value.tab,
 				type: type,
 			});
 		};

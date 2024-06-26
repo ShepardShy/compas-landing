@@ -56,6 +56,7 @@
 					alias: "/fines_gibdd",
 					is_hidden: 0,
 					enabled: 1,
+					childs: [],
 				},
 				{
 					id: 1,
