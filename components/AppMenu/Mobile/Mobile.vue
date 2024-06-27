@@ -1,5 +1,8 @@
 <template>
-	<aside class="menu menu_mobile">
+	<aside
+		class="menu menu_mobile"
+		:class="{ menu_mobile_absolute: props.isAbsolute }"
+	>
 		<IconGamburger
 			class="menu__gamburger"
 			@click="() => callAction({ action: 'showMenu', value: true })"
@@ -42,6 +45,13 @@
 	import IconGamburger from "@/components/AppIcons/Gamburger/Gamburger.vue";
 
 	import AppH2 from "@/components/AppHeaders/H2/H2.vue";
+
+	const props = defineProps({
+		isAbsolute: {
+			default: true,
+			required: false,
+		},
+	});
 
 	let settingsMenu = ref({
 		isShow: false,

@@ -5,6 +5,7 @@
 	/>
 	<MenuMobile
 		v-if="props.isShowMobile"
+		:isAbsolute="props.isAbsolute"
 		v-bind="$attrs"
 	/>
 </template>
@@ -21,6 +22,10 @@
 			default: true,
 		},
 		isShowMobile: {
+			type: Boolean,
+			default: true,
+		},
+		isAbsolute: {
 			type: Boolean,
 			default: true,
 		},

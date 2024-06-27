@@ -57,7 +57,8 @@
 				</AppInput>
 				<AppButton
 					v-if="props.isShowButton"
-					@click.stop="emit('clickButton', { key: props.item.key, value: activeOption, search: search })"
+					@click.stop="clickButton"
+					:disabled="isDisableButton || search?.length === 0"
 					class="autocomplete__button button_blue"
 					:style="props.isCountDistance ? { height: '45px' } : ''"
 					>Расчитать</AppButton
@@ -184,6 +185,7 @@
 	let search = ref(null);
 	let options = ref([]);
 	let backupOptions = ref([]);
+	let isDisableButton = ref(false);
 
 	const actionState = inject("actionState", () => ref(null), true);
 
@@ -215,6 +217,12 @@
 		activeOption.value = nullOption;
 		search.value = "";
 		options.value = backupOptions.value;
+	};
+
+	// Клик по кнопке
+	const clickButton = () => {
+		isDisableButton.value = true;
+		emit("clickButton", { key: props.item.key, value: activeOption.value, search: search.value });
 	};
 
 	// Действия с автокомплитом
@@ -365,6 +373,13 @@
 				action: "getOptions",
 				value: null,
 			});
+		}
+	);
+
+	watch(
+		() => search.value,
+		() => {
+			isDisableButton.value = false;
 		}
 	);
 

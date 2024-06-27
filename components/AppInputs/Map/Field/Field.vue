@@ -311,7 +311,7 @@
 			doneAddress = positionClick.value.join(", ");
 		}
 
-		isInside ? (between = 0) : 0;
+		isInside ? (between = "0") : 0;
 		const historyItem = { address: doneAddress, distance: between, date: dayjs().format("DD.MM.YYYY"), time: dayjs().format("HH:mm") };
 		emit("selectAddress", historyItem);
 	};
@@ -555,6 +555,7 @@
 				position = [+coords[0], +coords[1]];
 			}
 
+			console.log(data);
 			if (position) {
 				position = [+position[0], +position[1]];
 

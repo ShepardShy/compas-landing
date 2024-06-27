@@ -28,9 +28,6 @@
 		}
 	}
 	&__header {
-		display: flex;
-		align-items: center;
-		gap: 10px;
 		@media (max-width: 700px) {
 			order: -1;
 		}
@@ -48,6 +45,7 @@
 		margin-left: 0;
 		@media (max-width: 700px) {
 			padding-bottom: 20px;
+			order: -3;
 		}
 	}
 	&__title {

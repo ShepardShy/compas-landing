@@ -1,7 +1,13 @@
 <template>
 	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
 
-	<AppH1> Тарифы </AppH1>
+	<div class="title__menu-wrapper">
+		<AppMenu
+			:isShowDesktop="false"
+			:isAbsolute="false"
+		/>
+		<AppH1> Тарифы </AppH1>
+	</div>
 
 	<CommonProgramm
 		class="tariffs__programm"
@@ -51,6 +57,14 @@
 	import TariffsSlider from "@/components/Templates/Common/TariffsSlider/TariffsSlider.vue";
 	import AppTable from "@/components/AppTable/AppTable.vue";
 	import CommonSocial from "@/components/Templates/Common/Social/Social.vue";
+
+	import { useGlobalStore } from "~/stores/globalStore";
+
+	const globalStore = useGlobalStore();
+	globalStore.isShowMobileMenu = false;
+	onBeforeRouteLeave(() => {
+		globalStore.isShowMobileMenu = true;
+	});
 
 	let table = {
 		// Таблица

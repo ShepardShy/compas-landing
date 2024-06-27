@@ -102,6 +102,14 @@ body.body__cursor-style {
 	min-height: 100%;
 }
 
+// обёртка для кнопки меню и тайтла
+.title__menu-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	line-height: 1;
+}
+
 .v-binder-follower-container {
 	.v-binder-follower-content {
 		min-width: 200px !important;

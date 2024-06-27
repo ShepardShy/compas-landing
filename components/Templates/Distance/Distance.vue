@@ -13,7 +13,7 @@
 		></AppTabs>
 
 		<hr class="distance__line" />
-		<div class="distance__header">
+		<div class="title__menu-wrapper distance__header">
 			<AppMenu
 				:isShowDesktop="false"
 				class="distance__menu"
@@ -86,7 +86,7 @@
 
 	const globalStore = useGlobalStore();
 	globalStore.isShowMobileMenu = false;
-	onBeforeUnmount(() => {
+	onBeforeRouteLeave(() => {
 		globalStore.isShowMobileMenu = true;
 	});
 

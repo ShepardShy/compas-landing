@@ -4,9 +4,11 @@
 .menu {
 	&.menu_mobile {
 		display: none;
-		z-index: 10000;
-		position: absolute;
-		@include mixins.elemPositionOptions(20px, 15px);
+		&_absolute {
+			position: absolute;
+			z-index: 10000;
+			@include mixins.elemPositionOptions(20px, 15px);
+		}
 
 		.menu__content {
 			width: 100%;
