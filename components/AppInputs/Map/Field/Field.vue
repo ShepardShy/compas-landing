@@ -555,7 +555,6 @@
 				position = [+coords[0], +coords[1]];
 			}
 
-			console.log(data);
 			if (position) {
 				position = [+position[0], +position[1]];
 

@@ -2,13 +2,7 @@
 	<div class="docs">
 		<AppBreadcrambs :breadcrumbs="breadcrumbs" />
 
-		<div class="title__menu-wrapper docs_margin">
-			<AppMenu
-				:isShowDesktop="false"
-				:isAbsolute="false"
-			/>
-			<AppH1> Документы </AppH1>
-		</div>
+		<AppH1> Документы </AppH1>
 		<div class="docs__list">
 			<NuxtLink
 				:to="`/docs/${doc.url}`"
@@ -36,7 +30,7 @@
 	import "./List.scss";
 
 	import docs from "../docs.json";
-	import AppH1 from "@/components/AppHeaders/H1/H1.vue";
+	import AppH1 from "@/components/AppHeaders/H1/MobileMenu/MobileMenu.vue";
 	import AppBreadcrambs from "@/components/AppBreadcrambs/Breadcrambs.vue";
 
 	import { useGlobalStore } from "~/stores/globalStore";

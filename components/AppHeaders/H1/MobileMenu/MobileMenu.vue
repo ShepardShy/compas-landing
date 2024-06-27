@@ -1,135 +1,138 @@
 <template>
-    <h1 class="h1_mobileMenu">
-        <MenuMobile />
-        <slot></slot>
-    </h1>
+	<h1 class="h1_mobileMenu">
+		<MenuMobile />
+		<slot></slot>
+	</h1>
 </template>
 
 <script setup>
-    import './MobileMenu.scss';
+	import "./MobileMenu.scss";
 
-    import MenuMobile from '@/components/AppMenu/Mobile/Mobile.vue'
-    
-    import { useCommonStore } from '~/stores/commonStore'
-    import { useUserStore } from '~/stores/userStore'
-    const commonStore = useCommonStore()
-    const userStore = useUserStore()
+	import MenuMobile from "@/components/AppMenu/Mobile/Mobile.vue";
 
-    let menu = ref([])
-    let user = ref({})
+	import { useCommonStore } from "~/stores/commonStore";
+	import { useUserStore } from "~/stores/userStore";
+	import menuItems from "./menu.json";
+	const commonStore = useCommonStore();
+	const userStore = useUserStore();
 
-    let menuVisible = ref([])
-    let menuHidden = ref([])
-    let activeLink = ref({})
+	let user = ref({});
 
-    const route = useRoute()
+	let menuVisible = ref([]);
+	let menuHidden = ref([]);
+	let activeLink = ref({});
 
-    provide('menu', menu)
-    provide('user', user)
-    provide('menuHidden', menuHidden)
-    provide('activeLink', activeLink)
-    provide('menuVisible', menuVisible)
+	const route = useRoute();
 
-    // Вызов действий
-    const callAction = (data) => {
-        // Устновка данных пользователя
-        const setUser = () => {
-            if ([null, undefined].includes(userStore.user) && typeof userStore.user != "object") {
-                user.value = {
-                    name: 'Неизвестный',
-                    last_name: 'Пользователь',
-                    avatar: {
-                        file: '/user/avatar.svg'
-                    },
-                    color: 'linear-gradient(82deg, #7ba06d, #6204c4)'
-                }
-            } else {
-                user.value = userStore.user 
-            }
-        }
+	let menu = ref(menuItems);
+	provide("menu", menu.value);
+	provide("user", user);
+	provide("menuHidden", menuHidden);
+	provide("activeLink", activeLink);
+	provide("menuVisible", menuVisible);
 
-        // Установка полей в меню
-        const setMenu = () => {
-            menu.value = Array.isArray(commonStore.menu) ? commonStore.menu : []
-        }
+	// Вызов действий
+	const callAction = data => {
+		// Устновка данных пользователя
+		const setUser = () => {
+			if ([null, undefined].includes(userStore.user) && typeof userStore.user != "object") {
+				user.value = {
+					name: "Неизвестный",
+					last_name: "Пользователь",
+					avatar: {
+						file: "/user/avatar.svg",
+					},
+					color: "linear-gradient(82deg, #7ba06d, #6204c4)",
+				};
+			} else {
+				user.value = userStore.user;
+			}
+		};
 
-        // Установка полей в меню
-        const setFields = () => {
-            menuVisible.value = menu.value.filter(item => !item.is_hidden)
-            menuHidden.value = menu.value.filter(item => item.is_hidden)
-        }
+		// Установка полей в меню
+		const setMenu = () => {
+			menu.value = Array.isArray(commonStore.menu) ? commonStore.menu : [];
+		};
 
-        // Установка активной ссылки
-        const setActiveLink = () => {
-            // Проверка переменной на число
-            const isInteger = (value) => {
-                return /^\d+$/.test(value);
-            }
+		// Установка полей в меню
+		const setFields = () => {
+			menuVisible.value = menu.value.filter(item => !item.is_hidden);
+			menuHidden.value = menu.value.filter(item => item.is_hidden);
+		};
 
-            // Определение является ли ссылка активной
-            const matchLink = (link) => {
-                let routeMatch = route.path.match(link)
-                if (routeMatch != null) {
-                    if (routeMatch.input.substr(routeMatch.input.length - 1) == '/') {
-                        routeMatch.input = routeMatch.input.slice(0, -1)
-                    } else {
-                        let routeString = routeMatch.input.split('/')
-                        if (isInteger(routeString[routeString.length - 1])) {
-                            routeString.pop()
-                            routeMatch.input = routeString.join('/')
-                        }
-                    }
-                }
-                return routeMatch != null
-            }
+		// Установка активной ссылки
+		const setActiveLink = () => {
+			// Проверка переменной на число
+			const isInteger = value => {
+				return /^\d+$/.test(value);
+			};
 
-            activeLink.value = menu.value.find(option => matchLink(option.link)) ?? menu.value[0]
-        }
+			// Определение является ли ссылка активной
+			const matchLink = link => {
+				let routeMatch = route.path.match(link);
+				if (routeMatch != null) {
+					if (routeMatch.input.substr(routeMatch.input.length - 1) == "/") {
+						routeMatch.input = routeMatch.input.slice(0, -1);
+					} else {
+						let routeString = routeMatch.input.split("/");
+						if (isInteger(routeString[routeString.length - 1])) {
+							routeString.pop();
+							routeMatch.input = routeString.join("/");
+						}
+					}
+				}
+				return routeMatch != null;
+			};
 
-        // Сохранение значений в настройках
-        const saveSettings = (data) => {
-            commonStore.updateMenu(data);
-        }
+			activeLink.value = menu.value.find(option => matchLink(option.link)) ?? menu.value[0];
+		};
 
-        switch (data.action) {
-            // Устновка данных пользователя
-            case 'setUser':
-                setUser()
-                break;
+		// Сохранение значений в настройках
+		const saveSettings = data => {
+			commonStore.updateMenu(data);
+		};
 
-            // Установка полей в меню
-            case 'setFields':
-                setFields()
-                break;
+		switch (data.action) {
+			// Устновка данных пользователя
+			case "setUser":
+				setUser();
+				break;
 
-            // Установка активной ссылки
-            case 'setActiveLink': 
-                setActiveLink()
-                break;
-        
-            // Установка полей в меню
-            case 'setMenu':
-                setMenu()
-                break;
+			// Установка полей в меню
+			case "setFields":
+				setFields();
+				break;
 
-            // Сохранение значений в настройках
-            case 'saveSettings':
-                saveSettings(data.value)
+			// Установка активной ссылки
+			case "setActiveLink":
+				setActiveLink();
+				break;
 
-            default:
-                break;
-        }
-    }
+			// Установка полей в меню
+			case "setMenu":
+				setMenu();
+				break;
 
-    watch(() => userStore.user, () => {
-        callAction({action: 'setUser', value: null})
-    })
+			// Сохранение значений в настройках
+			case "saveSettings":
+				saveSettings(data.value);
 
-    onMounted(() => {
-        callAction({action: 'setUser', value: null})
-        callAction({action: 'setMenu', value: null})
-        callAction({action: 'setFields', value: null})
-        callAction({action: 'setActiveLink', value: null})
-    })
+			default:
+				break;
+		}
+	};
 
+	watch(
+		() => userStore.user,
+		() => {
+			callAction({ action: "setUser", value: null });
+		}
+	);
+
+	onMounted(() => {
+		callAction({ action: "setUser", value: null });
+		callAction({ action: "setMenu", value: null });
+		callAction({ action: "setFields", value: null });
+		callAction({ action: "setActiveLink", value: null });
+	});
 </script>

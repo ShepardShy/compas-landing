@@ -15,6 +15,7 @@
 
 	import MenuDesktop from "./Desktop/Desktop.vue";
 	import MenuMobile from "./Mobile/Mobile.vue";
+	import menuItems from "./menu.json";
 
 	const props = defineProps({
 		isShowDesktop: {
@@ -33,97 +34,8 @@
 
 	const emit = defineEmits(["callAction"]);
 
-	let menu = ref([
-		{
-			id: 1,
-			title: "Главная",
-			slug: "main",
-			sort: 0,
-			tab: "/",
-			is_hidden: 1,
-			enabled: 1,
-			childs: [],
-		},
-		{
-			id: 1,
-			title: "Продукты",
-			slug: "main",
-			sort: 0,
-			tab: "products",
-			is_hidden: 0,
-			enabled: 1,
-			childs: [
-				{
-					id: 1,
-					title: "Проверка штрафов",
-					slug: "main",
-					sort: 0,
-					alias: "/products/fines_gibdd",
-					is_hidden: 0,
-					enabled: 1,
-					childs: [],
-				},
-				{
-					id: 1,
-					title: "Расчет расстояния",
-					slug: "main",
-					sort: 0,
-					is_hidden: 0,
-					enabled: 1,
-					childs: [
-						{
-							id: 1,
-							title: "За МКАД",
-							slug: "main",
-							sort: 0,
-							alias: "/products/distance?tab=mkad",
-							is_hidden: 0,
-							enabled: 1,
-						},
-						{
-							id: 1,
-							title: "За КАД",
-							slug: "main",
-							sort: 0,
-							alias: "/products/distance?tab=kad",
-							is_hidden: 0,
-							enabled: 1,
-						},
-					],
-				},
-			],
-		},
-		{
-			id: 1,
-			title: "Тарифы",
-			slug: "main",
-			sort: 0,
-			tab: "/tariffs",
-			is_hidden: 0,
-			enabled: 1,
-			childs: [],
-		},
-		{
-			id: 1,
-			title: "Контакты",
-			slug: "auth",
-			sort: 0,
-			tab: "/contacts",
-			is_hidden: 0,
-			enabled: 1,
-			childs: [],
-		},
-		{
-			id: 1,
-			title: "Войти",
-			slug: "auth",
-			sort: 0,
-			tab: "/auth?tab=registration",
-			is_hidden: 1,
-			enabled: 1,
-			childs: [],
-		},
-	]);
+	console.log(menuItems);
+	let menu = ref(menuItems);
 
 	provide("menu", menu);
 </script>

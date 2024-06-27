@@ -13,13 +13,7 @@
 		></AppTabs>
 
 		<hr class="distance__line" />
-		<div class="title__menu-wrapper distance__header">
-			<AppMenu
-				:isShowDesktop="false"
-				class="distance__menu"
-			/>
-			<AppH1 class="distance__title_no-size distance__title_padding">Расчет расстояния за {{ textMap[activeTab.tab] }}</AppH1>
-		</div>
+		<AppH1 class="distance__title_no-size distance__title_padding distance__header">Расчет расстояния за {{ textMap[activeTab.tab] }}</AppH1>
 
 		<DistanceCard />
 		<div class="distance__wrapper">
@@ -70,8 +64,7 @@
 <script setup>
 	import AppSection from "~/components/AppSection/AppSection.vue";
 	import AppTabs from "~/components/AppTabs/Tabs.vue";
-	import AppH2 from "@/components/AppHeaders/H2/H2.vue";
-	import AppH1 from "@/components/AppHeaders/H1/H1.vue";
+	import AppH1 from "@/components/AppHeaders/H1/MobileMenu/MobileMenu.vue";
 	import DistanceCard from "./components/Card/Card.vue";
 	import DistanceCounter from "./components/Counter/Counter.vue";
 	import DistanceHistory from "./components/History/History.vue";
