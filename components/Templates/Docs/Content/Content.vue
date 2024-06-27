@@ -11,7 +11,11 @@
                 Дата размещения: {{ setDate }}
             </div>
         </div>
-        <article class="personal-docs__content" ref="personalDocRef" v-html="activeDoc ? activeDoc.content : null"></article>
+        <AppH1 class="personal-docs__title" id="#h1">
+            {{ activeDoc ? activeDoc.h1 : null }}
+        </AppH1>
+        <article class="personal-docs__content" v-html="activeDoc ? activeDoc.content : null" ref="personalDocRef" >
+        </article>
         <DocsNav v-if="activeDoc != null"/>
     </div>
 </template>
@@ -21,6 +25,7 @@
     
     import docs from '../docs.json'
     import DocsNav from './Nav/Nav.vue'
+    import AppH1 from '@/components/AppHeaders/H1/MobileMenu/MobileMenu.vue';
     import AppBreadcrambs from '@/components/AppBreadcrambs/Breadcrambs.vue';
 
     const activeDoc = ref(null)
