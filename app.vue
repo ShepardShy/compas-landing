@@ -4,7 +4,7 @@
 			class="page"
 			:class="route.path == '/auth' ? 'page_auth' : ''"
 		>
-			<AppMenu :is-show-mobile="store.isShowMobileMenu" />
+			<AppMenu :isShowMobile="store.isShowMobileMenu" />
 			<AppMain>
 				<NuxtPage />
 			</AppMain>
@@ -16,9 +16,9 @@
 <script setup>
 	import AppMenu from "@/components/AppMenu/AppMenu.vue";
 	import AppFooter from "@/components/AppFooter/Footer.vue";
-	import { useCommonStore } from "~/stores/commonStore";
+	import { useGlobalStore } from "~/stores/globalStore";
 
-	const store = useCommonStore();
+	const store = useGlobalStore();
 
 	let route = useRoute();
 </script>

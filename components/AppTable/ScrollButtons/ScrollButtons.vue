@@ -96,11 +96,11 @@
 	const actionScroll = data => {
 		// Установка позиции у кнопок
 		const setPosition = () => {
-			if (tableRef.value?.getBoundingClientRect()?.top > 400 || tableRef.value?.getBoundingClientRect()?.top < 100) {
-				buttonsRef.value?.classList?.add("table-template__buttons_hide");
-			} else {
-				buttonsRef.value?.classList?.remove("table-template__buttons_hide");
-			}
+			// if (tableRef.value?.getBoundingClientRect()?.top > 400 || tableRef.value?.getBoundingClientRect()?.top < 100) {
+			// 	buttonsRef.value?.classList?.add("table-template__buttons_hide");
+			// } else {
+			// 	buttonsRef.value?.classList?.remove("table-template__buttons_hide");
+			// }
 
 			// старт таблицы
 			if (sectionRef.value && sectionRef.value.sectionRef.getBoundingClientRect().top > 0) {
@@ -317,8 +317,8 @@
 
 	// Установка положения кнопок
 	const setButtonPos = () => {
-		leftButtonPos.value = tableRef.value.parentNode.getBoundingClientRect().left;
-		rightButtonPos.value = tableRef.value.parentNode.getBoundingClientRect().left + tableRef.value.parentNode.offsetWidth - 40;
+		leftButtonPos.value = tableRef.value?.parentNode?.getBoundingClientRect()?.left;
+		rightButtonPos.value = tableRef.value?.parentNode?.getBoundingClientRect()?.left + tableRef.value?.parentNode?.offsetWidth - 40;
 	};
 
 	// Троттлинг скролла по горизонтали

@@ -18,7 +18,7 @@
 				:isShowDesktop="false"
 				class="distance__menu"
 			/>
-			<AppH2 class="distance__title distance__title_padding">Расчет расстояния за {{ textMap[activeTab.tab] }}</AppH2>
+			<AppH1 class="distance__title_no-size distance__title_padding">Расчет расстояния за {{ textMap[activeTab.tab] }}</AppH1>
 		</div>
 
 		<DistanceCard />
@@ -71,23 +71,23 @@
 	import AppSection from "~/components/AppSection/AppSection.vue";
 	import AppTabs from "~/components/AppTabs/Tabs.vue";
 	import AppH2 from "@/components/AppHeaders/H2/H2.vue";
+	import AppH1 from "@/components/AppHeaders/H1/H1.vue";
 	import DistanceCard from "./components/Card/Card.vue";
 	import DistanceCounter from "./components/Counter/Counter.vue";
 	import DistanceHistory from "./components/History/History.vue";
 	import DistanceTarif from "./components/Tarif/Tarif.vue";
 	import TemplateSocial from "@/components/Templates/Common/Social/Social.vue";
 	import AppMap from "@/components/AppInputs/Map/Field/Field.vue";
-	import commonScripts from "@/commonScripts/commonScripts";
 	import { useDistanceStore } from "~/stores/distanceStore";
 	import mkadCoords from "./composables/mkadCoords";
 	import kadCoords from "./composables/kadCoords";
 	import AppMenu from "@/components/AppMenu/AppMenu.vue";
-	import { useCommonStore } from "~/stores/commonStore";
+	import { useGlobalStore } from "~/stores/globalStore";
 
-	const commonStore = useCommonStore();
-	commonStore.isShowMobileMenu = false;
+	const globalStore = useGlobalStore();
+	globalStore.isShowMobileMenu = false;
 	onBeforeUnmount(() => {
-		commonStore.isShowMobileMenu = true;
+		globalStore.isShowMobileMenu = true;
 	});
 
 	let coords = ref(null);

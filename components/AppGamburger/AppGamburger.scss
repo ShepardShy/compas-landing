@@ -1,16 +1,16 @@
-@use '@/assets/variables.scss' as variables;
-@use '@/assets/mixins.scss' as mixins;
+@use "@/assets/variables.scss" as variables;
+@use "@/assets/mixins.scss" as mixins;
 
 .gamburger {
-    display: none;
-    cursor: pointer;
-    position: relative;
-    @include mixins.elemPositionOptions(10px, 0px);
-    @include mixins.elemResolutionOptions(15px, 15px);
+	display: none;
+	cursor: pointer;
+	position: relative;
+	@include mixins.elemPositionOptions(10px, 0px);
+	@include mixins.elemResolutionOptions(15px, 15px);
 }
 
-@media (max-width: 650px) {
-    .gamburger {
-        display: block;
-    }
+@media (max-width: 700px) {
+	.gamburger {
+		display: block;
+	}
 }
