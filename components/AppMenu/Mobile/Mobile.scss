@@ -83,8 +83,9 @@
 			}
 
 			&:hover,
-			&.router-link-active {
+			&.menu__item_active {
 				filter: none;
+				cursor: pointer;
 				border: 1px solid variables.$color-orange !important;
 			}
 
