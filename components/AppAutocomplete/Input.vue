@@ -44,7 +44,7 @@
 					:enabledAutocomplete="false"
 					:isShowSubstring="props.isShowSubstring"
 					@openLink="item => emit('openLink', item)"
-					@changeValue="data => callAction({ action: 'searchOptions', value: data.value })"
+					@changeValue="data => onInput(data)"
 					@mousedown="event => (props.isReadOnly ? null : event.target.classList.contains('popup_prevent') ? event.preventDefault() : null)"
 				>
 					<slot name="link"></slot>
@@ -213,10 +213,18 @@
 		}
 	};
 
+	// Печать в инпуте
+	const onInput = data => {
+		const isOpen = popupRef.value.popupRef.classList.contains("popup_visible");
+		if (!isOpen) {
+			popupRef.value.popupRef.classList.add("popup_visible");
+		}
+		callAction({ action: "searchOptions", value: data.value });
+	};
+
+	// Сброс
 	const reset = () => {
-		activeOption.value = nullOption;
-		search.value = "";
-		options.value = backupOptions.value;
+		callAction({ action: "changeValue", value: null });
 	};
 
 	// Клик по кнопке

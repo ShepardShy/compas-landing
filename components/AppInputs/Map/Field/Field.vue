@@ -251,7 +251,9 @@
 		map.events.add("click", function (e) {
 			positionClick.value = e.get("coords");
 
-			renderRoute();
+			renderPoint(positionClick.value);
+			positionClick.value = [(+positionClick.value[0]).toFixed(6), (+positionClick.value[1]).toFixed(6)];
+			address.value = positionClick.value.join(", ");
 		});
 	};
 
@@ -267,10 +269,6 @@
 		}
 
 		positionClick.value = [(+positionClick.value[0]).toFixed(6), (+positionClick.value[1]).toFixed(6)];
-
-		if (!data?.search) {
-			address.value = positionClick.value.join(", ");
-		}
 
 		// Прокладка ближайшайшего пути
 		multiRoute.value = await getMinLengthRoute(positionClick.value, props.polygonCoords);
@@ -523,7 +521,6 @@
 			flying: false,
 		});
 		autocompleteComponent.value.reset();
-		address.value = "";
 	};
 
 	defineExpose({

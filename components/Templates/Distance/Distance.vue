@@ -40,7 +40,7 @@
 				:mapZoom="10"
 				:polygonCoords="coords?.polygon"
 				:coords="coords?.coords"
-				:mapStyles="{ height: '550px' }"
+				:mapStyles="{ height: '34.375rem' }"
 				:showInputLabel="false"
 				:placeholder="'Адрес'"
 				:isShowSubstring="false"

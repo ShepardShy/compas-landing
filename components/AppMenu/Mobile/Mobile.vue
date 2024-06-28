@@ -1,8 +1,5 @@
 <template>
-	<aside
-		class="menu menu_mobile"
-		:class="{ menu_mobile_absolute: props.isAbsolute }"
-	>
+	<aside class="menu menu_mobile">
 		<IconGamburger
 			class="menu__gamburger"
 			@click="() => callAction({ action: 'showMenu', value: true })"
@@ -14,7 +11,12 @@
 		>
 			<AppH2
 				class="menu__nav-back"
-				@click="() => callAction({ action: 'navigateMenu', value: settingsMenu.activeTab == null ? false : null })"
+				@click="
+					() => {
+						callAction({ action: 'navigateMenu', value: settingsMenu.activeTab == null ? false : settingsMenu.parentTab ? settingsMenu.parentTab : null });
+						settingsMenu.parentTab = null;
+					}
+				"
 			>
 				<IconArrow />
 				{{ settingsMenu.activeTab == null ? "Меню" : settingsMenu.activeTab.title }}
@@ -23,17 +25,52 @@
 				class="menu__list"
 				v-if="settingsMenu.activeTab == null"
 			>
-				<NuxtLink
-					@click="() => callAction({ action: 'showMenu', value: false })"
-					:to="item.tab"
+				<a
+					@click.prevent="clickLink(item)"
 					class="menu__item"
+					:class="$route.fullPath.includes(item.tab) == item.tab ? 'menu__item_active' : ''"
 					v-for="item in menu"
 					:key="item.id"
 					v-show="item.enabled"
 				>
 					{{ item.title }}
-				</NuxtLink>
+					<IconArrow v-if="item?.childs?.length > 0" />
+				</a>
 			</nav>
+			<nav
+				class="menu__list"
+				v-if="settingsMenu?.activeTab?.childs?.length > 0"
+			>
+				<a
+					@click.prevent="clickChildLink(child)"
+					:to="child.alias"
+					class="menu__item"
+					v-for="child in settingsMenu.activeTab.childs"
+					:key="child.tab"
+					v-show="child.enabled"
+				>
+					{{ child.title }}
+					<IconArrow v-if="child?.childs?.length > 0" />
+				</a>
+			</nav>
+			<!-- <nav
+				class="menu__list"
+				v-else-if="settingsMenu.activeTab?.tab == 'user'"
+			>
+				<NuxtLink
+					to="/profile"
+					class="menu__item"
+					@click="() => callAction({ action: 'showMenu', value: false })"
+				>
+					Настройки
+				</NuxtLink>
+				<button
+					class="menu__item menu__button"
+					@click="logOut"
+				>
+					Выйти
+				</button>
+			</nav> -->
 		</div>
 	</aside>
 </template>
@@ -46,21 +83,35 @@
 
 	import AppH2 from "@/components/AppHeaders/H2/H2.vue";
 
-	const props = defineProps({
-		isAbsolute: {
-			default: true,
-			required: false,
-		},
-	});
-
 	let settingsMenu = ref({
 		isShow: false,
 		activeTab: null,
+		parentTab: null,
 	});
 
 	provide("settingsMenu", settingsMenu);
 
 	const menu = inject("menu");
+
+	// Клик по ссылке
+	const clickLink = async item => {
+		if (item?.childs?.length <= 0) {
+			navigateTo(item.tab);
+			callAction({ action: "showMenu", value: false });
+		} else {
+			callAction({ action: "navigateMenu", value: item });
+		}
+	};
+
+	// Клик по ссылке с другими ссылками
+	const clickChildLink = async child => {
+		if (!child?.childs || child?.childs?.length <= 0) {
+			navigateTo(child.alias);
+			callAction({ action: "showMenu", value: false });
+		} else {
+			callAction({ action: "navigateMenu", parent: child, value: child });
+		}
+	};
 
 	// Вызов действий
 	const callAction = data => {
@@ -79,11 +130,14 @@
 		};
 
 		// Навигация по меню
-		const navigateMenu = value => {
+		const navigateMenu = (value, parent) => {
+			if (parent) {
+				settingsMenu.value.parentTab = settingsMenu.value.activeTab;
+			}
 			if (value == false) {
 				showMenu(false);
 			} else {
-				settingsMenu.value.activeTab = settingsMenu.value.tabs.find(tab => tab.tab == value) ?? null;
+				settingsMenu.value.activeTab = value;
 			}
 		};
 
@@ -95,7 +149,7 @@
 
 			// Навигация по меню
 			case "navigateMenu":
-				navigateMenu(data.value);
+				navigateMenu(data.value, data.parent);
 				break;
 			default:
 				break;

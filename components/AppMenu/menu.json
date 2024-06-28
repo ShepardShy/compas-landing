@@ -43,7 +43,8 @@
 						"sort": 0,
 						"alias": "/products/distance?tab=mkad",
 						"is_hidden": 0,
-						"enabled": 1
+						"enabled": 1,
+						"childs": []
 					},
 					{
 						"id": 1,
@@ -52,7 +53,8 @@
 						"sort": 0,
 						"alias": "/products/distance?tab=kad",
 						"is_hidden": 0,
-						"enabled": 1
+						"enabled": 1,
+						"childs": []
 					}
 				]
 			}

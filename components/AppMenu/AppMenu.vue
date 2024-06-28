@@ -5,7 +5,6 @@
 	/>
 	<MenuMobile
 		v-if="props.isShowMobile"
-		:isAbsolute="props.isAbsolute"
 		v-bind="$attrs"
 	/>
 </template>
@@ -26,15 +25,10 @@
 			type: Boolean,
 			default: true,
 		},
-		isAbsolute: {
-			type: Boolean,
-			default: true,
-		},
 	});
 
 	const emit = defineEmits(["callAction"]);
 
-	console.log(menuItems);
 	let menu = ref(menuItems);
 
 	provide("menu", menu);
