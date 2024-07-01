@@ -50,7 +50,7 @@
 				</div>
 			</div>
 
-			<div class="footer__column">
+			<div class="footer__column footer__column_possibilities">
 				<div class="footer__title">Возможности сервиса</div>
 				<li class="footer__list">
 					<!-- <NuxtLink

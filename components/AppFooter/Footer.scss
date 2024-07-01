@@ -18,6 +18,11 @@
 	gap: 15px;
 	display: flex;
 	flex-direction: column;
+	&_possibilities {
+		@media (max-width: 1000px) {
+			display: none;
+		}
+	}
 }
 
 .footer__logo {

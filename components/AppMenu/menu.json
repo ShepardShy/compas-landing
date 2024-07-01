@@ -85,7 +85,7 @@
 		"title": "Войти",
 		"slug": "auth",
 		"sort": 0,
-		"tab": "/auth?tab=registration",
+		"tab": "/auth?tab=entry",
 		"is_hidden": 1,
 		"enabled": 1,
 		"childs": []

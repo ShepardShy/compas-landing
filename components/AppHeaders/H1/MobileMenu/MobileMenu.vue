@@ -9,10 +9,10 @@
 	import "./MobileMenu.scss";
 
 	import MenuMobile from "@/components/AppMenu/Mobile/Mobile.vue";
+	import menuItems from "@/components/AppMenu/menu.json";
 
 	import { useCommonStore } from "~/stores/commonStore";
 	import { useUserStore } from "~/stores/userStore";
-	import menuItems from "./menu.json";
 	const commonStore = useCommonStore();
 	const userStore = useUserStore();
 
