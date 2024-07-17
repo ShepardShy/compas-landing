@@ -331,12 +331,30 @@
 		const point1Coords = res[0].geoObjects.get(0)?.geometry?.getCoordinates();
 		const point2Coords = res[1].geoObjects.get(0)?.geometry?.getCoordinates();
 		arrayPromises = [];
-		arrayPromises.push(ymaps.formatter.distance(ymaps.coordSystem.geo.getDistance(point1Coords, point2Coords)));
-		res = await Promise.all(arrayPromises);
-		let between = res[0];
-		routeLength.value = between;
-		return between;
+		let lengthRoute = Math.round(ymaps.coordSystem.geo.getDistance(point1Coords, point2Coords));
+		if (lengthRoute > 10000) {
+			lengthRoute = `${(lengthRoute / 1000).toFixed(0)} км`;
+		} else if (lengthRoute > 1000) {
+			lengthRoute = `${roundAndFormat(lengthRoute / 1000)} км`;
+		} else {
+			lengthRoute = `${lengthRoute.toFixed(0)} м`;
+		}
+		routeLength.value = lengthRoute;
+		return lengthRoute;
 	};
+
+	// Форматирование расстояния
+	function roundAndFormat(number) {
+		let roundedNumber = number.toFixed(1);
+		// Преобразуем строку в число
+		let floatNumber = parseFloat(roundedNumber);
+		// Проверяем, является ли число целым
+		if (floatNumber % 1 === 0) {
+			return floatNumber.toFixed(0); // Возвращаем целое число без знаков после запятой
+		} else {
+			return roundedNumber; // Возвращаем число с одним знаком после запятой
+		}
+	}
 
 	// Создание полигона
 	const createPolygon = () => {

@@ -23,10 +23,60 @@
 				"title": "Проверка штрафов",
 				"slug": "main",
 				"sort": 0,
-				"alias": "/products/fines_gibdd",
 				"is_hidden": 0,
 				"enabled": 1,
-				"childs": []
+				"childs": [
+					{
+						"id": 1,
+						"title": "ГИБДД",
+						"slug": "main",
+						"sort": 0,
+						"alias": "/",
+						"is_hidden": 0,
+						"enabled": 1,
+						"childs": []
+					},
+					{
+						"id": 2,
+						"title": "по СТС",
+						"slug": "main",
+						"sort": 0,
+						"alias": "/?type=po-sts",
+						"is_hidden": 0,
+						"enabled": 1,
+						"childs": []
+					},
+					{
+						"id": 3,
+						"title": "по ВУ",
+						"slug": "main",
+						"sort": 0,
+						"alias": "/?type=po-voditelskomu-udostovereniyu",
+						"is_hidden": 0,
+						"enabled": 1,
+						"childs": []
+					},
+					{
+						"id": 4,
+						"title": "по УИН",
+						"slug": "main",
+						"sort": 0,
+						"alias": "/?type=po-nomeru-postanovleniya",
+						"is_hidden": 0,
+						"enabled": 1,
+						"childs": []
+					},
+					{
+						"id": 5,
+						"title": "по гос номеру",
+						"slug": "main",
+						"sort": 0,
+						"alias": "/?type=po-nomeru-avto",
+						"is_hidden": 0,
+						"enabled": 1,
+						"childs": []
+					}
+				]
 			},
 			{
 				"id": 1,

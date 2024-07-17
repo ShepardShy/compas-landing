@@ -8,7 +8,7 @@
 			<AppInput
 				v-for="item in form"
 				:class="item.class"
-				v-show="['number', 'region', 'certificate'].includes(item.key) || (form[0].value != '' && form[1].value != '' && form[2].value != '')"
+				v-show="(form.find(i => ['sts', 'vu', 'uin', 'gos'].includes(i.key)) && form[0].value != '') || ['number', 'region', 'certificate', 'sts', 'vu', 'uin', 'gos'].includes(item.key) || (form[0].value != '' && form[1].value != '' && form[2].value != '')"
 				:item="{
 					focus: false,
 					id: 0,
@@ -80,78 +80,146 @@
 
 	const route = useRoute();
 
-	const fields = null;
-	watchEffect(() => {
-		console.log(route.query);
+	let fields = computed(() => {
+		switch (route.query.type) {
+			case "po-sts": {
+				return [
+					{
+						title: "Номер СТС",
+						key: "sts",
+						type: "text",
+						mask: "##AA######",
+						value: "",
+						required: true,
+						placeholder: "00AA000000",
+						class: "input_line",
+					},
+				];
+			}
+			case "po-voditelskomu-udostovereniyu": {
+				return [
+					{
+						title: "Номер ВУ",
+						key: "vu",
+						type: "number",
+						mask: "##########",
+						value: "",
+						required: true,
+						placeholder: "0000000000",
+						class: "input_line",
+					},
+				];
+			}
+			case "po-nomeru-postanovleniya": {
+				return [
+					{
+						title: "Номер постановления",
+						key: "uin",
+						type: "number",
+						mask: "####################",
+						value: "",
+						required: true,
+						placeholder: "00000000000000000000",
+						class: "input_line",
+					},
+				];
+			}
+			case "po-nomeru-avto": {
+				return [
+					{
+						title: "Номер авто",
+						key: "gos",
+						type: "text",
+						mask: "А###АА##",
+						value: "",
+						required: true,
+						placeholder: "А000АА00",
+						class: "input_line",
+					},
+				];
+			}
+			default: {
+				return [
+					{
+						title: "Номер автомобиля",
+						key: "number",
+						type: "text",
+						mask: "A###AA",
+						value: "",
+						required: true,
+						placeholder: "A000AA",
+						class: null,
+					},
+					{
+						title: "Регион",
+						key: "region",
+						type: "number",
+						mask: null,
+						value: "",
+						required: true,
+						placeholder: "000",
+						class: null,
+					},
+					{
+						title: "Свидетельство о регистрации ТС",
+						key: "certificate",
+						type: "text",
+						mask: null,
+						value: "",
+						required: true,
+						placeholder: null,
+						class: "input_line",
+					},
+				];
+			}
+		}
 	});
 
-	let form = ref([
-		{
-			title: "Номер автомобиля",
-			key: "number",
-			type: "text",
-			mask: "A###AA",
-			value: "",
-			required: true,
-			placeholder: "A000AA",
-			class: null,
-		},
-		{
-			title: "Регион",
-			key: "region",
-			type: "number",
-			mask: null,
-			value: "",
-			required: true,
-			placeholder: "000",
-			class: null,
-		},
-		{
-			title: "Свидетельство о регистрации ТС",
-			key: "certificate",
-			type: "text",
-			mask: null,
-			value: "",
-			required: true,
-			placeholder: null,
-			class: "input_line",
-		},
-		{
-			title: "Электронная почта для входа",
-			key: "mail",
-			type: "text",
-			mask: null,
-			value: "",
-			required: true,
-			placeholder: "mail@mail.ru",
-			class: "input_line",
-		},
-		{
-			title: "Пароль для входа",
-			key: "password",
-			type: "password",
-			mask: null,
-			value: "",
-			required: true,
-			placeholder: null,
-			class: "input_line",
-		},
-		{
-			title: "Повторить пароль для входа",
-			key: "repeatPassword",
-			type: "password",
-			mask: null,
-			value: "",
-			required: true,
-			placeholder: null,
-			class: "input_line",
-		},
-	]);
+	// setTimeout(() => {
+	// 	navigateTo({ query: { type: "po-nomeru-avto" } });
+	// }, 5000);
+	let form = ref([]);
+	watchEffect(() => {
+		form.value = [
+			...fields.value,
+			{
+				title: "Электронная почта для входа",
+				key: "mail",
+				type: "text",
+				mask: null,
+				value: "",
+				required: true,
+				placeholder: "mail@mail.ru",
+				class: "input_line",
+			},
+			{
+				title: "Пароль для входа",
+				key: "password",
+				type: "password",
+				mask: null,
+				value: "",
+				required: true,
+				placeholder: null,
+				class: "input_line",
+			},
+			{
+				title: "Повторить пароль для входа",
+				key: "repeatPassword",
+				type: "password",
+				mask: null,
+				value: "",
+				required: true,
+				placeholder: null,
+				class: "input_line",
+			},
+		];
+	});
 
 	let invalidFields = ref([]);
 	let isShow = ref(false);
 
 	const changeValue = data => {
+		console.log(data);
 		let findIndex = form.value.findIndex(p => p.key == data.key);
 		form.value[findIndex].value = data.value;
 	};

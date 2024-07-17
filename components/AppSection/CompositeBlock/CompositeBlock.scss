@@ -1,45 +1,46 @@
-@use '@/assets/variables.scss' as variables;
-@use '@/assets/mixins.scss' as mixins;
+@use "@/assets/variables.scss" as variables;
+@use "@/assets/mixins.scss" as mixins;
 
 .composite-block {
-    position: relative;
-    padding: 45px;
+	position: relative;
+	padding: 45px;
 }
 
 .section__content {
-    border-radius: 20px;
-    border: 1px solid #eeeff1;
-    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.07);
-    padding: 45px;
+	border-radius: 20px;
+	border: 1px solid #eeeff1;
+	box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.07);
+	padding: 45px;
 }
 
 .section__image {
-    position: absolute;
-    right: 0px;
-    top: -35px;
+	position: absolute;
+	right: 0px;
+	top: -35px;
 
-    iframe {
-        @include mixins.elemResolutionOptions(600px, 361px);
-        overflow: hidden;
-        border-radius: 20px;
-    }
+	iframe {
+		@include mixins.elemResolutionOptions(600px, 361px);
+		overflow: hidden;
+		border-radius: 20px;
+		background-color: #fff;
+	}
 }
 
 @media (max-width: 1010px) {
-    .section__image {
-        position: static;
-        display: flex;
-        justify-content: center;
-        margin-top: 25px;
+	.section__image {
+		position: static;
+		display: flex;
+		justify-content: center;
+		margin-top: 25px;
 
-        iframe {
-            width: 100%;
-        }
-    }
+		iframe {
+			width: 100%;
+		}
+	}
 
-    .composite-block {
-        .section__content {
-            padding: 25px;
-        }
-    }
+	.composite-block {
+		.section__content {
+			padding: 25px;
+		}
+	}
 }
