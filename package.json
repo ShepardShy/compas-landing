@@ -33,8 +33,8 @@
 		"vue3-toastify": "^0.1.14",
 		"vuedraggable": "^4.1.0"
 	},
-	"packageManager": "yarn@4.1.1",
 	"devDependencies": {
+		"@nuxt/devtools": "^1.3.9",
 		"@types/bun": "^1",
 		"dayjs-nuxt": "^2.1.9"
 	}

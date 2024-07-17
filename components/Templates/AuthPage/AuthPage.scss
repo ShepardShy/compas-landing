@@ -7,18 +7,18 @@
 	padding: 0px;
 }
 
-.page {
-	// &.page_auth {
-	//     .main {
-	//         .container {
-	//             padding: 0px;
-	//             max-width: none;
-	//             width: 100%;
-	//             margin: 0;
-	//         }
-	//     }
-	// }
-}
+// .page {
+// &.page_auth {
+//     .main {
+//         .container {
+//             padding: 0px;
+//             max-width: none;
+//             width: 100%;
+//             margin: 0;
+//         }
+//     }
+// }
+// }
 
 .auth {
 	overflow: hidden;
@@ -193,6 +193,7 @@
 }
 
 .auth__text {
+	font-size: 16px;
 	&.auth__subtext {
 		position: relative;
 		z-index: 2;

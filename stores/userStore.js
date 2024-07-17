@@ -1,6 +1,7 @@
 import api from "@/helpers/api.js";
 import { defineStore } from "pinia";
 import commonScripts from "@/commonScripts/commonScripts.js";
+import axios from "axios";
 
 export const useUserStore = defineStore("userStore", {
 	// states
@@ -91,7 +92,8 @@ export const useUserStore = defineStore("userStore", {
 		},
 
 		async registration(data) {
-			console.log(data);
+			const res = await axios.post("/api/registration", { ...data, repeatPassword: undefined, confidence: undefined });
+			console.log(res);
 		},
 
 		async clearStore() {
