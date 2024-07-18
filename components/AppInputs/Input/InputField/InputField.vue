@@ -10,7 +10,7 @@
 		:value="props.item.value"
 		:disabled="props.disabled"
 		:placeholder="props.item.placeholder"
-		:autocomplete="props.enabledAutocomplete"
+		:autocomplete="props.enabledAutocomplete ? 'on' : 'off'"
 		@maska="(e) => $emit('changeValue', {key: props.item.key, value: e.target.value})"
     />
 
@@ -22,7 +22,7 @@
             :value="props.item.value"
             :disabled="props.disabled"
             :placeholder="props.item.placeholder"
-            :autocomplete="props.enabledAutocomplete"
+            :autocomplete="props.enabledAutocomplete ? 'on' : 'off'"
             @input="(e) => $emit('changeValue', {key: props.item.key, value: e.target.value})"
         />
         <IconPasswordEye  :class="passwordType == 'text' ? 'icon__password-eye_active' : ''" @click="changePasswordType"/>
@@ -36,7 +36,7 @@
 		:value="props.item.value"
 		:disabled="props.disabled"
 		:placeholder="props.item.placeholder"
-		:autocomplete="props.enabledAutocomplete"
+		:autocomplete="props.enabledAutocomplete ? 'on' : 'off'"
 		@input="(e) => $emit('changeValue', {key: props.item.key, value: e.target.value})"
     />
 </template>

@@ -1,6 +1,6 @@
 <template>
 	<AppSection class="fines section_without-background">
-		<AppH1> Проверьте штрафы и зарегестрируйтесь в 1 клик </AppH1>
+		<AppH1> Проверьте штрафы {{ titleMap[route.query.type] }} и зарегестрируйтесь в 1 клик </AppH1>
 		<form
 			class="fines__form"
 			@click.prevent
@@ -25,6 +25,7 @@
 				:mask="item.mask"
 				:isLink="null"
 				:isReadOnly="false"
+				:enabledAutocomplete="false"
 				@changeValue="data => changeValue(data)"
 			/>
 			<div class="fines__actions">
@@ -80,6 +81,13 @@
 
 	const route = useRoute();
 
+	const titleMap = {
+		"po-sts": "по СТС",
+		"po-voditelskomu-udostovereniyu": "по водительскому удостоверению",
+		"po-nomeru-postanovleniya": "по номеру постановления",
+		"po-nomeru-avto": "по гос. номеру",
+	};
+
 	let fields = computed(() => {
 		switch (route.query.type) {
 			case "po-sts": {
@@ -88,10 +96,10 @@
 						title: "Номер СТС",
 						key: "sts",
 						type: "text",
-						mask: "##AA######",
+						mask: "## AA ######",
 						value: "",
 						required: true,
-						placeholder: "00AA000000",
+						placeholder: "00 AA 000000",
 						class: "input_line",
 					},
 				];
@@ -101,11 +109,11 @@
 					{
 						title: "Номер ВУ",
 						key: "vu",
-						type: "number",
-						mask: "##########",
+						type: "text",
+						mask: "## ## ######",
 						value: "",
 						required: true,
-						placeholder: "0000000000",
+						placeholder: "00 00 000000",
 						class: "input_line",
 					},
 				];
@@ -130,10 +138,10 @@
 						title: "Номер авто",
 						key: "gos",
 						type: "text",
-						mask: "А###АА##",
+						mask: "А ### АА ##",
 						value: "",
 						required: true,
-						placeholder: "А000АА00",
+						placeholder: "А 000 АА 00",
 						class: "input_line",
 					},
 				];
@@ -144,17 +152,17 @@
 						title: "Номер автомобиля",
 						key: "number",
 						type: "text",
-						mask: "A###AA",
+						mask: "A ### AA",
 						value: "",
 						required: true,
-						placeholder: "A000AA",
+						placeholder: "A 000 AA",
 						class: null,
 					},
 					{
 						title: "Регион",
 						key: "region",
-						type: "number",
-						mask: null,
+						type: "text",
+						mask: "###",
 						value: "",
 						required: true,
 						placeholder: "000",
@@ -175,9 +183,6 @@
 		}
 	});
 
-	// setTimeout(() => {
-	// 	navigateTo({ query: { type: "po-nomeru-avto" } });
-	// }, 5000);
 	let form = ref([]);
 	watchEffect(() => {
 		form.value = [
@@ -185,7 +190,7 @@
 			{
 				title: "Электронная почта для входа",
 				key: "mail",
-				type: "text",
+				type: "email",
 				mask: null,
 				value: "",
 				required: true,
@@ -219,7 +224,6 @@
 	let isShow = ref(false);
 
 	const changeValue = data => {
-		console.log(data);
 		let findIndex = form.value.findIndex(p => p.key == data.key);
 		form.value[findIndex].value = data.value;
 	};

@@ -362,12 +362,12 @@
 		map.geoObjects.add(polygon.value);
 
 		// Рисование полигона
-		// polygon.value.editor.startDrawing();
-		// var stateMonitor = new ymaps.Monitor(polygon.value.editor.state);
-		// stateMonitor.add("drawing", function (newValue) {
-		// 	console.log(polygon.value.geometry.getCoordinates());
-		// 	polygon.value.options.set("strokeColor", newValue ? "#FF0000" : "#0000FF");
-		// });
+		polygon.value.editor.startDrawing();
+		var stateMonitor = new ymaps.Monitor(polygon.value.editor.state);
+		stateMonitor.add("drawing", function (newValue) {
+			console.log(polygon.value.geometry.getCoordinates());
+			polygon.value.options.set("strokeColor", newValue ? "#FF0000" : "#0000FF");
+		});
 
 		const arrPlacemarks = [];
 		for (let i = 0; i < props.polygonCoords[0].length; i++) {
@@ -399,8 +399,6 @@
 	const removeMarkers = () => {
 		map.geoObjects.removeAll();
 	};
-
-	// Клик по полигону
 
 	// Создание меток
 	const setMarkers = () => {

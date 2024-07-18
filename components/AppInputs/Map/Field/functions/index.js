@@ -9,12 +9,12 @@ export function getNearCoords(fromPoint, toCoords, n) {
 }
 
 export async function getMinLengthRoute(fromPoint, toCoords) {
-	const nearCoords = getNearCoords(fromPoint, toCoords, 15);
+	const nearCoords = getNearCoords(fromPoint, toCoords, 24);
 
-	let minRoute = await window.ymaps.route([fromPoint, nearCoords[0]]);
+	let minRoute = await window.ymaps.route([nearCoords[0], fromPoint]);
 	let minLength = minRoute.getLength();
 
-	const promises = nearCoords.map(el => window.ymaps.route([fromPoint, el]));
+	const promises = nearCoords.map(el => window.ymaps.route([el, fromPoint]));
 	const routes = await Promise.all(promises);
 
 	routes.forEach(route => {
