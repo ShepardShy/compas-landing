@@ -2,6 +2,7 @@
 
 export default defineNuxtConfig({
 	app: {
+		baseURL: "/landing/",
 		head: {
 			viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0",
 		},
@@ -10,6 +11,7 @@ export default defineNuxtConfig({
 	ssr: false,
 	modules: ["@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt", "nuxt-lodash", "dayjs-nuxt"],
 	vite: {
+		base: "/landing/",
 		mode: "production",
 		server: {
 			fs: {

@@ -1,6 +1,6 @@
 <template>
 	<AppSection class="fines section_without-background">
-		<AppH1> Проверьте штрафы {{ titleMap[route.query.type] }} и зарегестрируйтесь в 1 клик </AppH1>
+		<AppH1> Проверьте штрафы {{ titleMap[route.query.type] }} и зарегистрируйтесь в 1 клик </AppH1>
 		<form
 			class="fines__form"
 			@click.prevent
@@ -138,10 +138,10 @@
 						title: "Номер авто",
 						key: "gos",
 						type: "text",
-						mask: "А ### АА ##",
+						mask: "A ### AA ###",
 						value: "",
 						required: true,
-						placeholder: "А 000 АА 00",
+						placeholder: "A 000 AA 777",
 						class: "input_line",
 					},
 				];

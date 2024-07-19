@@ -36,31 +36,31 @@
 			id: 0,
 			title: "ГИБДД",
 			desc: "Поиск штрафов по базе ГИБДД",
-			link: "/main/base/gibdd.svg",
+			link: "main/base/gibdd.svg",
 		},
 		{
 			id: 1,
 			title: "Московский паркинг",
 			desc: "Поиск штрафов базе Московского паркинга",
-			link: "/main/base/moscow-parking.svg",
+			link: "main/base/moscow-parking.svg",
 		},
 		{
 			id: 2,
 			title: "ФССП",
 			desc: "Поиск штрафов по базе Федеральная служба судебных приставов",
-			link: "/main/base/fspp.svg",
+			link: "main/base/fspp.svg",
 		},
 		{
 			id: 3,
 			title: "МАДИ",
 			desc: "Поиск штрафов по базе МАДИ",
-			link: "/main/base/madi.svg",
+			link: "main/base/madi.svg",
 		},
 		{
 			id: 4,
 			title: "МУГАНД",
 			desc: "Поиск штрафов по базе Госавтодорнадзор",
-			link: "/main/base/mugand.svg",
+			link: "main/base/mugand.svg",
 		},
 	];
 </script>

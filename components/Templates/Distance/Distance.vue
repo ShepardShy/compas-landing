@@ -142,6 +142,7 @@
 	provide("activeTab", activeTab);
 
 	onMounted(async () => {
+		console.log(route.query.tab);
 		if (route.query.tab) {
 			activeTab.value.tab = route.query.tab;
 		} else {
