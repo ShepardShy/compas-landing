@@ -118,20 +118,24 @@
 
 	import IconLogo from "@/components/AppIcons/Logo/Logo.vue";
 
+	import telegram from "/footer/telegram.svg";
+	import vk from "/footer/vk.svg";
+	import youtube from "/footer/youtube.svg";
+
 	let icons = [
 		{
 			name: "Телеграм",
-			icon: "/footer/telegram.svg",
+			icon: telegram,
 			link: "https://t.me/compas_pro",
 		},
 		{
 			name: "ВКонтакте",
-			icon: "/footer/vk.svg",
+			icon: vk,
 			link: "https://vk.com/cmps_pr",
 		},
 		{
 			name: "Youtube",
-			icon: "/footer/youtube.svg",
+			icon: youtube,
 			link: "https://www.youtube.com/@cmps-pro",
 		},
 	];
