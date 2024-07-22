@@ -1,6 +1,6 @@
 <template>
 	<div class="personal-docs">
-		<AppBreadcrambs :breadcrumbs="breadcrumbs" />
+		<!-- <AppBreadcrambs :breadcrumbs="breadcrumbs" /> -->
 		<div
 			class="personal-docs__header"
 			v-if="activeDoc != null"

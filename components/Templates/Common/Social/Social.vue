@@ -28,21 +28,25 @@
 	import AppH2 from "@/components/AppHeaders/H2/H2.vue";
 	import AppSection from "@/components/AppSection/AppSection.vue";
 
+	import telegram from "/social/telegram.svg";
+	import vk from "/social/vk.svg";
+	import youtube from "/social/youtube.svg";
+
 	let icons = [
 		{
 			name: "Телеграм",
 			link: "https://t.me/compas_pro",
-			icon: "social/telegram.svg",
+			icon: telegram,
 		},
 		{
 			name: "ВКонтакте",
 			link: "https://vk.com/cmps_pr",
-			icon: "social/vk.svg",
+			icon: vk,
 		},
 		{
 			name: "YouTube",
 			link: "https://www.youtube.com/@cmps-pro",
-			icon: "social/youtube.svg",
+			icon: youtube,
 		},
 	];
 </script>

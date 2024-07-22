@@ -1,9 +1,9 @@
 <template>
 	<AppSection class="distance section_without-background">
-		<AppBreadcrambs
+		<!-- <AppBreadcrambs
 			class="distance__breadcrambs"
 			:breadcrumbs="breadcrumbs"
-		/>
+		/> -->
 
 		<AppTabs
 			class="distance__links"
@@ -95,7 +95,7 @@
 	// Смена вкладки
 	const changeTab = async tab => {
 		activeTab.value.tab = tab.value;
-		await navigateTo({ query: { tab: tab.value } });
+		await navigateTo({ params: { tab: tab.value } });
 		setActiveCoord(tab.value);
 	};
 
@@ -142,22 +142,21 @@
 	provide("activeTab", activeTab);
 
 	onMounted(async () => {
-		console.log(route.query.tab);
-		if (route.query.tab) {
-			activeTab.value.tab = route.query.tab;
+		if (route.params.tab) {
+			activeTab.value.tab = route.params.tab;
 		} else {
 			activeTab.value.tab = "mkad";
 		}
 
-		await navigateTo({ query: { tab: activeTab.value.tab } });
+		await navigateTo(`/products/distance/${activeTab.value.tab}`);
 		setActiveCoord(activeTab.value.tab);
 	});
 
 	watch(
-		() => route.query.tab,
+		() => route.params.tab,
 		() => {
-			if (route.query.tab != activeTab.value.tab) {
-				activeTab.value.tab = route.query.tab;
+			if (route.params.tab != activeTab.value.tab) {
+				activeTab.value.tab = route.params.tab;
 				setActiveCoord(activeTab.value.tab);
 			}
 		}

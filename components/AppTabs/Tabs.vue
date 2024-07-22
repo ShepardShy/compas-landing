@@ -32,12 +32,7 @@
 								<span>
 									{{ child.title }}
 								</span>
-								<img
-									class="popup__arrow"
-									v-if="child.childs?.length > 0 && props.isShowBlueArrow"
-									src="/icons/arrowBlue.svg"
-									alt=""
-								/>
+								<IconArrow class="popup__arrow" />
 							</PopupOption>
 							<PopupOption
 								v-for="kid in child?.childs"

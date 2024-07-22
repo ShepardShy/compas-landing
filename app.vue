@@ -4,7 +4,7 @@
 			class="page"
 			:class="route.path == '/auth' ? 'page_auth' : ''"
 		>
-			<AppMenu :isShowMobile="store.isShowMobileMenu" />
+			<AppMenu :isShowMobile="false" />
 			<AppMain>
 				<NuxtPage />
 			</AppMain>

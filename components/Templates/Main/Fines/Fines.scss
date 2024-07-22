@@ -110,10 +110,12 @@
 		grid-template-columns: 1fr;
 
 		h1 {
-			margin-bottom: 20px;
 			text-align: center;
-			text-indent: 20px;
 			font-size: 32px;
+			margin-bottom: 20px;
+			.menu_mobile {
+				top: 10px !important;
+			}
 		}
 
 		.fines__form {

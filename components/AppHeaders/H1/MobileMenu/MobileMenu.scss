@@ -2,14 +2,24 @@
 @use "@/assets/mixins.scss" as mixins;
 
 .h1_mobileMenu {
-	display: flex;
+	line-height: 1;
 	gap: 10px;
-	align-items: center;
 	font-size: variables.$font-size-h1;
+	display: flex;
+	width: 100%;
+
+	&_center {
+		&__text {
+			margin: 0 auto;
+		}
+	}
 
 	.menu {
 		&.menu_mobile {
-			position: static;
+			position: relative;
+			top: 0.33em;
+			left: 0;
+			bottom: unset;
 		}
 	}
 }

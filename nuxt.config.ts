@@ -2,16 +2,16 @@
 
 export default defineNuxtConfig({
 	app: {
-		baseURL: "/landing/",
+		cdnURL: "https://compas.pro/landing/",
 		head: {
 			viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0",
+			link: [{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
 		},
 	},
 	spaLoadingTemplate: false,
 	ssr: false,
 	modules: ["@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt", "nuxt-lodash", "dayjs-nuxt"],
 	vite: {
-		base: "/landing/",
 		mode: "production",
 		server: {
 			fs: {

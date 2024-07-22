@@ -1,5 +1,5 @@
 <template>
-	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
+	<!-- <AppBreadcrambs :breadcrumbs="breadcrumbs" /> -->
 
 	<AppH1> Тарифы </AppH1>
 

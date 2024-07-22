@@ -108,11 +108,21 @@
 	}
 
 	.popup__arrow {
-		transform: rotate(-90deg);
-		width: 11.8px;
+		width: 7.8px;
+		height: 11.8px;
+
+		& svg {
+			width: 7.8px;
+			height: 11.8px;
+
+			transform: rotate(0deg);
+			& * {
+				fill: #0584fe !important;
+			}
+		}
 	}
 	.popup__option {
-		gap: 5px;
+		gap: 7px;
 		line-height: 1;
 	}
 	.popup__option_open {
@@ -120,7 +130,9 @@
 		justify-content: start;
 		& .popup__arrow {
 			order: -1;
-			transform: rotate(90deg);
+			& svg {
+				transform: rotate(-180deg);
+			}
 		}
 	}
 }

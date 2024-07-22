@@ -113,7 +113,7 @@
 	import AppCheckbox from "@/components/AppInputs/Checkbox/Checkbox.vue";
 	import AppButton from "@/components/AppButton/AppButton.vue";
 	import AppSection from "@/components/AppSection/AppSection.vue";
-	import AppH1 from "@/components/AppHeaders/H1/H1.vue";
+	import AppH1 from "@/components/AppHeaders/H1/MobileMenu/MobileMenu.vue";
 
 	import { useUserStore } from "@/stores/userStore.js";
 	const userStore = useUserStore();

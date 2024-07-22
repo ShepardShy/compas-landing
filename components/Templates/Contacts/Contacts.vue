@@ -1,5 +1,5 @@
 <template>
-	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
+	<!-- <AppBreadcrambs :breadcrumbs="breadcrumbs" /> -->
 
 	<AppH1> Контакты </AppH1>
 	<CompositeBlock class="contacts__map contacts-map">

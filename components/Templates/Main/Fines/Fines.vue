@@ -1,6 +1,6 @@
 <template>
 	<AppSection class="fines section_without-background">
-		<AppH1 class="fines__title"> Проверьте штрафы {{ titleMap[route.query.type] }} и зарегистрируйтесь в 1 клик </AppH1>
+		<AppH1 class="fines__title"> Проверьте штрафы {{ titleMap[route.params.type] }} и зарегистрируйтесь в 1 клик </AppH1>
 		<form
 			class="fines__form"
 			@click.prevent
@@ -8,7 +8,7 @@
 			<AppInput
 				v-for="item in form"
 				:class="item.class"
-				v-show="(form.find(i => ['sts', 'vu', 'uin', 'gos'].includes(i.key)) && form[0].value != '') || ['number', 'region', 'certificate', 'sts', 'vu', 'uin', 'gos'].includes(item.key) || (form[0].value != '' && form[1].value != '' && form[2].value != '')"
+				v-show="(form.find(i => ['sts', 'vu', 'uin', 'gos', 'inn', 'platon', 'parkovka'].includes(i.key)) && form[0].value != '') || ['number', 'region', 'certificate', 'sts', 'vu', 'uin', 'gos', 'inn', 'platon', 'parkovka'].includes(item.key) || (form[0].value != '' && form[1].value != '' && form[2].value != '')"
 				:item="{
 					focus: false,
 					id: 0,
@@ -73,7 +73,7 @@
 	import _ from "lodash";
 	import FinesWarning from "./Warning/Warning.vue";
 	import AppSection from "@/components/AppSection/AppSection.vue";
-	import AppH1 from "@/components/AppHeaders/H1/H1.vue";
+	import AppH1 from "@/components/AppHeaders/H1/MobileMenu/MobileMenu.vue";
 	import AppInput from "@/components/AppInputs/Input/Input.vue";
 	import AppButton from "@/components/AppButton/AppButton.vue";
 	import FansyBox from "@/components/AppFansyBox/FansyBox.vue";
@@ -86,10 +86,13 @@
 		"po-voditelskomu-udostovereniyu": "по водительскому удостоверению",
 		"po-nomeru-postanovleniya": "по номеру постановления",
 		"po-nomeru-avto": "по гос. номеру",
+		"po-inn": "по ИНН",
+		"za-platon": "за платон",
+		"za-parkovku": "за неправильную парковку",
 	};
 
 	let fields = computed(() => {
-		switch (route.query.type) {
+		switch (route.params.type) {
 			case "po-sts": {
 				return [
 					{
@@ -146,6 +149,48 @@
 					},
 				];
 			}
+			case "po-inn": {
+				return [
+					{
+						title: "Номер ИНН",
+						key: "inn",
+						type: "text",
+						mask: "############",
+						value: "",
+						required: true,
+						placeholder: "000000000000",
+						class: "input_line",
+					},
+				];
+			}
+			case "za-platon": {
+				return [
+					{
+						title: "Номер Платона",
+						key: "platon",
+						type: "text",
+						mask: "",
+						value: "",
+						required: true,
+						placeholder: "",
+						class: "input_line",
+					},
+				];
+			}
+			case "za-parkovku": {
+				return [
+					{
+						title: "Номер Парковки",
+						key: "parkovka",
+						type: "text",
+						mask: "",
+						value: "",
+						required: true,
+						placeholder: "",
+						class: "input_line",
+					},
+				];
+			}
 			default: {
 				return [
 					{
@@ -194,7 +239,7 @@
 				mask: null,
 				value: "",
 				required: true,
-				placeholder: "mail@mail.ru",
+				placeholder: "mail@compas.pro",
 				class: "input_line",
 			},
 			{

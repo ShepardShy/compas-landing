@@ -1,6 +1,6 @@
 <template>
 	<div class="docs">
-		<AppBreadcrambs :breadcrumbs="breadcrumbs" />
+		<!-- <AppBreadcrambs :breadcrumbs="breadcrumbs" /> -->
 
 		<AppH1> Документы </AppH1>
 		<div class="docs__list">

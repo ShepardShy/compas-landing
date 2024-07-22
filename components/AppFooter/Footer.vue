@@ -60,7 +60,7 @@
 						Логистика
 					</NuxtLink> -->
 					<NuxtLink
-						to="/products/fines_gibdd"
+						to="/products/fines"
 						class="footer-link__href"
 					>
 						Отслеживание штрафов

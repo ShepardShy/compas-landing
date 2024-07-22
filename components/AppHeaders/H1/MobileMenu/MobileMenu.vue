@@ -1,7 +1,9 @@
 <template>
 	<h1 class="h1_mobileMenu">
 		<MenuMobile />
-		<slot></slot>
+		<span class="h1_mobileMenu__text">
+			<slot></slot>
+		</span>
 	</h1>
 </template>
 

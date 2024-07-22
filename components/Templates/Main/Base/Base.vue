@@ -31,36 +31,43 @@
 	import AppH2 from "@/components/AppHeaders/H2/H2.vue";
 	import AppSection from "@/components/AppSection/AppSection.vue";
 
+	import gibdd from "/main/base/gibdd.svg";
+	import parking from "/main/base/moscow-parking.svg";
+	import mugand from "/main/base/mugand.svg";
+	import madi from "/main/base/madi.svg";
+	import fspp from "/main/base/fspp.svg";
+
 	let fines = [
 		{
 			id: 0,
 			title: "ГИБДД",
 			desc: "Поиск штрафов по базе ГИБДД",
-			link: "main/base/gibdd.svg",
+			link: gibdd,
 		},
 		{
 			id: 1,
 			title: "Московский паркинг",
 			desc: "Поиск штрафов базе Московского паркинга",
-			link: "main/base/moscow-parking.svg",
+			link: parking,
 		},
 		{
-			id: 2,
-			title: "ФССП",
-			desc: "Поиск штрафов по базе Федеральная служба судебных приставов",
-			link: "main/base/fspp.svg",
+			id: 3,
+			title: "МУГАНД",
+			desc: "Поиск штрафов по базе Госавтодорнадзор",
+			link: mugand,
 		},
+
 		{
 			id: 3,
 			title: "МАДИ",
 			desc: "Поиск штрафов по базе МАДИ",
-			link: "main/base/madi.svg",
+			link: madi,
 		},
 		{
 			id: 4,
-			title: "МУГАНД",
-			desc: "Поиск штрафов по базе Госавтодорнадзор",
-			link: "main/base/mugand.svg",
+			title: "ФССП",
+			desc: "Поиск штрафов по базе Федеральная служба судебных приставов",
+			link: fspp,
 		},
 	];
 </script>
