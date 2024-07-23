@@ -7,6 +7,7 @@
 		</div>
 		<div class="questions__right">
 			<Title />
+			<QuestionsList />
 		</div>
 	</div>
 </template>
@@ -16,6 +17,7 @@
 	import Title from "./components/Title/Title.vue";
 	import AskQuestion from "./components/AskQuestion/AskQuestion.vue";
 	import Nav from "./components/Nav/Nav.vue";
+	import QuestionsList from "./components/QuestionsList/QuestionsList.vue";
 </script>
 
 <style scoped>

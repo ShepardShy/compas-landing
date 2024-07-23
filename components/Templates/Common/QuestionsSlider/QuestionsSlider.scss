@@ -1,17 +1,6 @@
 @use "@/assets/variables.scss" as variables;
 @use "@/assets/mixins.scss" as mixins;
 
-.questions-slider__item {
-	display: flex;
-	height: 280px;
-	width: 263px;
-	flex-direction: column;
-	border-radius: 10px;
-	overflow: hidden;
-	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.07);
-	border: solid 1px #eeeff1;
-}
-
 :deep(.swiper-button-next) {
 	right: var(--swiper-navigation-sides-offset, 17px) !important;
 	@media (max-width: 480px) {
@@ -22,50 +11,4 @@
 :global(.swiper-slide) {
 	display: flex;
 	justify-content: center;
-}
-
-.questions-slider__top {
-	background-color: #fbfcfd;
-	height: 80px;
-	width: 100%;
-	background-color: #f0f4fb;
-}
-
-.questions-slider__icon {
-	width: 100%;
-	height: 100%;
-}
-
-.questions-slider__body {
-	padding: 15px 15px 45px 15px;
-	background-color: #fbfcfd;
-	position: relative;
-}
-
-.questions-slider__title {
-	font-size: 16px;
-	color: #1253a2;
-	font-weight: 700;
-	margin-bottom: 10px;
-	line-height: 1.2;
-}
-.questions-slider__subtitle {
-	font-size: 16px;
-	line-height: 1;
-	display: -webkit-box;
-	-webkit-line-clamp: 4; // количество строк
-	-webkit-box-orient: vertical;
-	overflow: hidden;
-}
-.questions-slder__views {
-	position: absolute;
-	bottom: 5px;
-	right: 15px;
-	display: flex;
-	align-items: center;
-	gap: 5px;
-	font-size: 14px;
-	height: 17px;
-	text-align: right;
-	color: #8f8f8f;
 }

@@ -107,6 +107,12 @@
 					>
 						Регистрация
 					</NuxtLink>
+					<NuxtLink
+						to="/questions"
+						class="footer-link__href"
+					>
+						Часто задаваемые вопросы
+					</NuxtLink>
 				</nav>
 			</div>
 		</div>

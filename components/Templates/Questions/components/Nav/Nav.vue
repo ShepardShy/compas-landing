@@ -12,11 +12,17 @@
 					:class="{ nav__item_active: category.value == activeNav, nav__item_main: category.isMain }"
 				>
 					{{ category.title }}
+					<Triangle
+						class="nav__item-triangle"
+						v-if="category.children"
+					/>
 				</div>
 				<div
+					@click="child.value ? (activeNav = child.value) : null"
 					v-if="category.isOpen"
 					v-for="child in category.children"
 					:key="child.value"
+					:class="{ nav__item_active: child.value == activeNav }"
 					class="nav__item nav__item_child"
 				>
 					{{ child.title }}
@@ -28,6 +34,7 @@
 
 <script setup>
 	import categoriesJson from "./composables/categories.json";
+	import Triangle from "~/components/AppIcons/Triangle/Triangle.vue";
 
 	let categories = ref(categoriesJson);
 	let activeNav = ref("all");

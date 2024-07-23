@@ -10,30 +10,12 @@
 					:key="slide.id"
 					:virtual-index="slide.id"
 				>
-					<div class="questions-slider__item">
-						<div class="questions-slider__top">
-							<figure class="ibg questions-slider__icon">
-								<img
-									:src="slide.image ? slide.image : '/main/questions/question.jpg'"
-									:alt="slide.title"
-								/>
-							</figure>
-						</div>
-						<div class="questions-slider__body">
-							<div class="questions-slider__title">
-								{{ slide.title }}
-							</div>
-							<div class="questions-slider__subtitle">
-								{{ slide.subtitle }}
-							</div>
-							<div class="questions-slder__views">
-								<IconPasswordEye />
-								<span>
-									{{ slide.views }}
-								</span>
-							</div>
-						</div>
-					</div>
+					<QuestionItem
+						:image="slide.image"
+						:title="slide.title"
+						:subtitle="slide.subtitle"
+						:views="slide.views"
+					/>
 				</SwiperSlide>
 			</template>
 		</AppSlider>
@@ -43,20 +25,12 @@
 <script setup>
 	import { SwiperSlide } from "swiper/vue";
 	import AppSlider from "@/components/AppSlider/Slider.vue";
-	import IconPasswordEye from "@/components/AppIcons/PasswordEye/PasswordEye.vue";
+	import QuestionItem from "@/components/Templates/Common/QuestionItem/QuestionItem.vue";
 
 	import questions from "./questions.json";
 
 	let countSlides = ref(3);
 	let slides = ref(questions);
-
-	const setPrice = item => {
-		return item.prices[0].price;
-	};
-
-	const setDayPrice = item => {
-		return item.day_prices[0].price;
-	};
 
 	onMounted(() => {
 		slides.value = questions;
