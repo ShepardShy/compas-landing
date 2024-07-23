@@ -1,0 +1,14 @@
+.ask {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	&__button {
+		max-width: 155px;
+		height: 45px;
+		font-size: 16px;
+		font-weight: 600;
+	}
+	&__title {
+		font-size: 25px;
+	}
+}

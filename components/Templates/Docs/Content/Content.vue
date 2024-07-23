@@ -1,5 +1,8 @@
 <template>
-	<div class="personal-docs">
+	<div
+		ref="personalDocWrapperRef"
+		class="personal-docs"
+	>
 		<!-- <AppBreadcrambs :breadcrumbs="breadcrumbs" /> -->
 		<div
 			class="personal-docs__header"
@@ -43,8 +46,10 @@
 	const activeDoc = ref(null);
 	const route = useRoute();
 	const personalDocRef = ref(null);
+	const personalDocWrapperRef = ref(null);
 
 	provide("personalDocRef", personalDocRef);
+	provide("personalDocWrapperRef", personalDocWrapperRef);
 
 	onMounted(() => {
 		activeDoc.value = docs.find(p => p.url == route.params.doc);

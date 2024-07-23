@@ -1,0 +1,17 @@
+@use "@/assets/variables.scss" as variables;
+@use "@/assets/mixins.scss" as mixins;
+
+.main__questinos {
+	margin-top: 130px;
+
+	h2 {
+		text-align: center;
+		margin-bottom: 45px;
+	}
+}
+
+@media (max-width: 520px) {
+	.main__questinos {
+		margin-top: 70px;
+	}
+}

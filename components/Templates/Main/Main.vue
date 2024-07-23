@@ -1,10 +1,11 @@
 <template>
 	<AppTabs
-		class="distance__links"
+		class="main__links"
 		:tabs="tabs"
 		:isShowActions="false"
 		@callAction="tab => changeTab(tab)"
 	></AppTabs>
+	<hr class="main__line" />
 	<MainFines />
 	<MainCompanies
 		:list="fines"
@@ -19,6 +20,7 @@
 		:desc="'Вы можете проверять неограниченное кол-во машин на наличие штрафов и оплачивать в одном интерфейсе'"
 	/>
 	<!-- <MainTariffs /> -->
+	<MainQuestions />
 	<PlusesFines />
 	<CommonSocial class="main__social" />
 </template>
@@ -29,6 +31,7 @@
 	import MainBase from "./Base/Base.vue";
 	import MainFines from "./Fines/Fines.vue";
 	import MainPluses from "./Pluses/Pluses.vue";
+	import MainQuestions from "./Questions/Questions.vue";
 	import MainCompanies from "@/components/Templates/Common/Companies/Companies.vue";
 	import CommonProgramm from "@/components/Templates/Common/Programm/Programm.vue";
 	// import MainTariffs from '@/components/Templates/Main/Tariffs/Tariffs.vue';
@@ -46,14 +49,14 @@
 
 	// Табы
 	const tabs = [
-		{ id: 0, title: "ГИБДД", tab: "", enabled: true },
-		{ id: 1, title: "по СТС", tab: "po-sts", enabled: true },
-		{ id: 2, title: "по ВУ", tab: "po-voditelskomu-udostovereniyu", enabled: true },
-		{ id: 3, title: "по постановлению", tab: "po-nomeru-postanovleniya", enabled: true },
-		{ id: 4, title: "по гос номеру", tab: "po-nomeru-avto", enabled: true },
-		{ id: 5, title: "по ИНН", tab: "po-inn", enabled: true },
-		{ id: 6, title: "за платон", tab: "za-platon", enabled: true },
-		{ id: 7, title: "за парковку", tab: "za-parkovku", enabled: true },
+		{ id: 0, title: "Штрафы ГИБДД", tab: "", enabled: true },
+		{ id: 1, title: "Штрафы по СТС", tab: "po-sts", enabled: true },
+		{ id: 2, title: "Штрафы по ВУ", tab: "po-voditelskomu-udostovereniyu", enabled: true },
+		{ id: 3, title: "Штрафы по постановлению", tab: "po-nomeru-postanovleniya", enabled: true },
+		{ id: 4, title: "Штрафы по гос. номеру", tab: "po-nomeru-avto", enabled: true },
+		{ id: 5, title: "Штрафы по ИНН", tab: "po-inn", enabled: true },
+		{ id: 6, title: "Штрафы за Платон", tab: "za-platon", enabled: true },
+		{ id: 7, title: "Штрафы за парковку", tab: "za-parkovku", enabled: true },
 	];
 
 	// Смена вкладки

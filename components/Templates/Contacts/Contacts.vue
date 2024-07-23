@@ -34,7 +34,7 @@
 			Реквизиты компании Compas (Компас)
 
 			<a
-				href="/pages/contacts/requisites.pdf"
+				:href="requisitesPdf"
 				download
 				target="_blank"
 				class="contacts-requisites__link"
@@ -76,6 +76,8 @@
 	import AppH2 from "@/components/AppHeaders/H2/H2.vue";
 	import TemplateSocial from "@/components/Templates/Common/Social/Social.vue";
 	import CompositeBlock from "@/components/AppSection/CompositeBlock/CompositeBlock.vue";
+
+	import requisitesPdf from "/pages/contacts/requisites.pdf";
 
 	import { useGlobalStore } from "~/stores/globalStore";
 

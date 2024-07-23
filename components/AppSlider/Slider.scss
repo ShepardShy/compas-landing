@@ -1,40 +1,40 @@
-@use '@/assets/variables.scss' as variables;
-@use '@/assets/mixins.scss' as mixins;
+@use "@/assets/variables.scss" as variables;
+@use "@/assets/mixins.scss" as mixins;
 
 .slider {
-    max-width: 90vw;
-    padding-left: 25px !important;
+	max-width: 90vw;
+	padding-left: 25px !important;
 
-    .swiper-wrapper {
-        margin-bottom: 30px;
-    }
+	.swiper-wrapper {
+		margin-bottom: 30px;
+	}
 
-    .swiper-slide {
-        opacity: 0;
-        padding-right: 25px;
-    
-        &.swiper-slide-visible {
-            opacity: 1;
-        }
-    }
+	.swiper-slide {
+		opacity: 0;
+		padding-right: 25px;
 
-    &.swiper-slider_only {
-        .swiper-slide {
-            padding-right: 0px;
-        }
-    }
+		&.swiper-slide-visible {
+			opacity: 1;
+		}
+	}
 
-    .swiper-button-next {
-        right: var(--swiper-navigation-sides-offset,33px) !important;
-        &::after {
-            content: url('/icons/scrollButtonRight.svg');
-        }
-    }
+	&.swiper-slider_only {
+		.swiper-slide {
+			padding-right: 0px;
+		}
+	}
 
-    .swiper-button-prev {
-        left: var(--swiper-navigation-sides-offset,32px) !important;
-        &::after {
-            content: url('/icons/scrollButtonLeft.svg');
-        }
-    }
+	.swiper-button-next {
+		right: var(--swiper-navigation-sides-offset, 33px) !important;
+		&::after {
+			content: url("/icons/scrollButtonRight.svg");
+		}
+	}
+
+	.swiper-button-prev {
+		left: var(--swiper-navigation-sides-offset, 32px) !important;
+		&::after {
+			content: url("/icons/scrollButtonLeft.svg");
+		}
+	}
 }
