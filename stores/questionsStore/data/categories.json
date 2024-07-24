@@ -1,0 +1,76 @@
+[
+	{
+		"title": "Все категории",
+		"mainTitle": "Вопрос-ответ",
+		"isMain": true,
+		"value": "all"
+	},
+	{
+		"title": "О компании",
+		"mainTitle": "Общие вопросы по компании ОПТ6",
+		"value": "o-kompanii"
+	},
+	{
+		"title": "Товары",
+		"isOpen": false,
+		"value": "tovary",
+		"mainTitle": "Ответы на вопросы по товарам",
+		"children": [
+			{
+				"title": "Противоголоелдные регенты",
+				"mainTitle": "Вопрос ответ о противогололедных реагентах",
+				"value": "protivogololednye-reagenty"
+			},
+			{
+				"title": "Техническая соль",
+				"mainTitle": "Вопрос ответ о технической соли",
+				"value": "tekhnicheskaya-sol"
+			},
+			{
+				"title": "Пескосоляная смесь",
+				"mainTitle": "Вопрос ответ о пескосоляной смеси",
+				"value": "peskosolyanaya-smes"
+			},
+			{
+				"title": "Песок",
+				"mainTitle": "Вопрос ответ о речном, кварцевом, карьерном песке",
+				"value": "pesok"
+			},
+			{
+				"title": "Абразивные материалы",
+				"mainTitle": "Вопрос ответ о абразивных материалах",
+				"value": "abrazivnye-materialy"
+			},
+			{
+				"title": "Цемент",
+				"mainTitle": "Вопрос ответ о цементе",
+				"value": "tsement"
+			},
+			{
+				"title": "Таблетированная соль",
+				"mainTitle": "Вопрос ответ о таблетированной соли",
+				"value": "tabletirovannaya-sol"
+			},
+			{
+				"title": "Щебень",
+				"mainTitle": "Вопрос ответ о щебне",
+				"value": "shcheben"
+			}
+		]
+	},
+	{
+		"title": "Возврат товара",
+		"mainTitle": "Вопросы и инструкция по возврату товаров",
+		"value": "vozvrat-tovara"
+	},
+	{
+		"title": "Доставка",
+		"mainTitle": "Вопросы по доставке",
+		"value": "dostavka"
+	},
+	{
+		"title": "Самовывоз",
+		"mainTitle": "Вопросы по самовывозу",
+		"value": "samovyvoz"
+	}
+]

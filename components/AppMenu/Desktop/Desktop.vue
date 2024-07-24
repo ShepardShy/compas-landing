@@ -4,7 +4,10 @@
 		ref="menuRef"
 	>
 		<div class="container">
-			<div class="menu__links">
+			<div
+				v-if="!isShowOnlyLogo"
+				class="menu__links"
+			>
 				<NuxtLink
 					:to="menu.length > 0 ? menu[0].tab : '/'"
 					class="menu__logo"
@@ -20,6 +23,7 @@
 							class="menu__item"
 							:class="{ menu__item_children: item.childs.length > 0 }"
 							:to="item.tab"
+							:key="item.id"
 							:item="item"
 							>{{ item.title }}</MenuLink
 						>
@@ -27,7 +31,10 @@
 				</div>
 			</div>
 
-			<div class="menu__actions">
+			<div
+				v-if="!isShowOnlyLogo"
+				class="menu__actions"
+			>
 				<a
 					href="tel:74951184422"
 					class="menu__link"
@@ -46,6 +53,14 @@
 					</NuxtLink>
 				</div>
 			</div>
+
+			<NuxtLink
+				v-else
+				:to="menu.length > 0 ? menu[0].tab : '/'"
+				class="menu__logo menu__logo_centered"
+			>
+				<IconLogo />
+			</NuxtLink>
 		</div>
 	</header>
 </template>
@@ -56,6 +71,11 @@
 	import IconLogo from "@/components/AppIcons/Logo/Logo.vue";
 	import AppButton from "@/components/AppButton/AppButton.vue";
 	import MenuLink from "./components/MenuLink/MenuLink.vue";
+	import { useGlobalStore } from "~/stores/globalStore";
+	import { storeToRefs } from "pinia";
+
+	const globalStore = useGlobalStore();
+	const { isShowOnlyLogo } = storeToRefs(globalStore);
 
 	const menuRef = ref(null);
 

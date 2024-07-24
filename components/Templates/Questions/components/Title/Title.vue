@@ -1,14 +1,16 @@
 <template>
-	<AppH2 class="title">Вопрос ответ о противогололедных реагентах</AppH2>
+	<AppH2 class="title">{{ currentTitle }}</AppH2>
 </template>
 
 <script setup>
+	import { storeToRefs } from "pinia";
 	import AppH2 from "@/components/AppHeaders/H2/H2.vue";
+	import { useQuestionsStore } from "~/stores/questionsStore";
+
+	const questionsStore = useQuestionsStore();
+	const { currentTitle } = storeToRefs(questionsStore);
 </script>
 
 <style>
-	.title {
-		line-height: 1;
-		margin-bottom: 35px;
-	}
+	@import url(./Title.scss);
 </style>

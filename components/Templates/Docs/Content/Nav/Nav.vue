@@ -84,7 +84,7 @@
 			});
 		}
 
-		if (personalDocWrapperRef.value.getBoundingClientRect().top < 0) {
+		if (personalDocWrapperRef.value.getBoundingClientRect().top - 20 < 0) {
 			docsNavRef.value.classList.add("docs-nav_fixed");
 		} else {
 			docsNavRef.value.classList.remove("docs-nav_fixed");

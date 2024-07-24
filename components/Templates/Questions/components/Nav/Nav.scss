@@ -12,6 +12,7 @@
 		font-weight: 600;
 		padding: 10px 20px;
 		border-bottom: 1px solid #e2e5e9;
+		font-size: 14px;
 	}
 	&__list {
 		display: flex;
@@ -25,9 +26,14 @@
 		position: relative;
 		user-select: none;
 		transition: 0.2s;
+		&:hover {
+			background: variables.$color-hover;
+		}
 		&-triangle {
 			position: absolute;
-			left: 15px;
+			left: 5px;
+			padding: 10px;
+			box-sizing: content-box;
 			top: 50%;
 			transform: translateY(-50%);
 		}

@@ -87,8 +87,6 @@
 		"po-nomeru-postanovleniya": "по номеру постановления",
 		"po-nomeru-avto": "по гос. номеру",
 		"po-inn": "по ИНН",
-		"za-platon": "за платон",
-		"za-parkovku": "за неправильную парковку",
 	};
 
 	let fields = computed(() => {
@@ -159,34 +157,6 @@
 						value: "",
 						required: true,
 						placeholder: "000000000000",
-						class: "input_line",
-					},
-				];
-			}
-			case "za-platon": {
-				return [
-					{
-						title: "Номер Платона",
-						key: "platon",
-						type: "text",
-						mask: "",
-						value: "",
-						required: true,
-						placeholder: "",
-						class: "input_line",
-					},
-				];
-			}
-			case "za-parkovku": {
-				return [
-					{
-						title: "Номер Парковки",
-						key: "parkovka",
-						type: "text",
-						mask: "",
-						value: "",
-						required: true,
-						placeholder: "",
 						class: "input_line",
 					},
 				];

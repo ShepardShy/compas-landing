@@ -25,34 +25,34 @@
 				class="menu__list"
 				v-if="settingsMenu.activeTab == null"
 			>
-				<NuxtLink
+				<a
 					@click.prevent="clickLink(item)"
 					class="menu__item"
-					:class="$route.fullPath === item.tab ? 'menu__item_active' : ''"
+					:class="{ menu__item_active: (item?.childs?.length > 0 && $route.fullPath.includes(item.tab)) || $route.fullPath === item.tab }"
 					v-for="item in menu"
 					:key="item.id"
 					v-show="item.enabled"
 				>
 					{{ item.title }}
 					<IconArrow v-if="item?.childs?.length > 0" />
-				</NuxtLink>
+				</a>
 			</nav>
 			<nav
 				class="menu__list"
 				v-if="settingsMenu?.activeTab?.childs?.length > 0"
 			>
-				<NuxtLink
+				<a
 					@click.prevent="clickChildLink(child)"
 					:to="child.alias"
 					class="menu__item"
-					:class="$route.fullPath === child.alias ? 'menu__item_active' : ''"
+					:class="{ menu__item_active: (child?.childs?.length > 0 && $route.fullPath.includes(child.alias)) || $route.fullPath === child.alias }"
 					v-for="child in settingsMenu.activeTab.childs"
 					:key="child.tab"
 					v-show="child.enabled"
 				>
 					{{ child.title }}
 					<IconArrow v-if="child?.childs?.length > 0" />
-				</NuxtLink>
+				</a>
 			</nav>
 			<!-- <nav
 				class="menu__list"

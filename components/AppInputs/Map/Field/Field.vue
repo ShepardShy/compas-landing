@@ -616,11 +616,11 @@
 	const searchOptions = async data => {
 		// Метод для вставки запроса на получение опций
 		const getOptions = async search => {
-			let request = await fetch(`https://opt6.compas.pro/api/map/geocode?address=${search}`, {
+			let request = await fetch(`https://compas.pro/api/map/geocode?address=${search}`, {
 				method: "GET",
-				headers: {
-					Authorization: `Bearer ${userStore.userToken}`,
-				},
+				// headers: {
+				// 	Authorization: `Bearer ${userStore.userToken}`,
+				// },
 			});
 			return await request.json();
 		};

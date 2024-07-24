@@ -2,13 +2,25 @@
 @use "@/assets/mixins.scss" as mixins;
 
 :deep(.swiper-button-next) {
-	right: var(--swiper-navigation-sides-offset, 17px) !important;
+	right: var(--swiper-navigation-sides-offset, 7px) !important;
+	@media (max-width: 480px) {
+		right: var(--swiper-navigation-sides-offset, 7px) !important;
+	}
+}
+
+:deep(.swiper-button-prev) {
+	right: var(--swiper-navigation-sides-offset, 7px) !important;
 	@media (max-width: 480px) {
 		right: var(--swiper-navigation-sides-offset, 7px) !important;
 	}
 }
 
 :global(.swiper-slide) {
+	padding-right: 0 !important;
 	display: flex;
 	justify-content: center;
+}
+
+:global(.slider) {
+	padding-left: 0 !important;
 }

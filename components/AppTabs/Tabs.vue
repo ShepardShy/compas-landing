@@ -32,7 +32,10 @@
 								<span>
 									{{ child.title }}
 								</span>
-								<IconArrow class="popup__arrow" />
+								<IconArrow
+									v-if="child.childs?.length > 0"
+									class="popup__arrow"
+								/>
 							</PopupOption>
 							<PopupOption
 								v-for="kid in child?.childs"

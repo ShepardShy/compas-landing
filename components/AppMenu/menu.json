@@ -10,7 +10,7 @@
 		"childs": []
 	},
 	{
-		"id": 1,
+		"id": 2,
 		"title": "Продукты",
 		"slug": "main",
 		"sort": 0,
@@ -19,97 +19,16 @@
 		"enabled": 1,
 		"childs": [
 			{
-				"id": 1,
+				"id": 3,
 				"title": "Проверка штрафов",
 				"slug": "main",
 				"sort": 0,
 				"is_hidden": 0,
 				"enabled": 1,
-				"childs": [
-					{
-						"id": 1,
-						"title": "ГИБДД",
-						"slug": "main",
-						"sort": 0,
-						"alias": "/products/fines",
-						"is_hidden": 0,
-						"enabled": 1,
-						"childs": []
-					},
-					{
-						"id": 2,
-						"title": "По СТС",
-						"slug": "main",
-						"sort": 0,
-						"alias": "/products/fines/po-sts",
-						"is_hidden": 0,
-						"enabled": 1,
-						"childs": []
-					},
-					{
-						"id": 3,
-						"title": "По ВУ",
-						"slug": "main",
-						"sort": 0,
-						"alias": "/products/fines/po-voditelskomu-udostovereniyu",
-						"is_hidden": 0,
-						"enabled": 1,
-						"childs": []
-					},
-					{
-						"id": 4,
-						"title": "По постановлению",
-						"slug": "main",
-						"sort": 0,
-						"alias": "/products/fines/po-nomeru-postanovleniya",
-						"is_hidden": 0,
-						"enabled": 1,
-						"childs": []
-					},
-					{
-						"id": 5,
-						"title": "По гос номеру",
-						"slug": "main",
-						"sort": 0,
-						"alias": "/products/fines/po-nomeru-avto",
-						"is_hidden": 0,
-						"enabled": 1,
-						"childs": []
-					},
-					{
-						"id": 6,
-						"title": "По ИНН",
-						"slug": "main",
-						"sort": 0,
-						"alias": "/products/fines/po-inn",
-						"is_hidden": 0,
-						"enabled": 1,
-						"childs": []
-					},
-					{
-						"id": 7,
-						"title": "За платон",
-						"slug": "main",
-						"sort": 0,
-						"alias": "/products/fines/za-platon",
-						"is_hidden": 0,
-						"enabled": 1,
-						"childs": []
-					},
-					{
-						"id": 8,
-						"title": "За парковку",
-						"slug": "main",
-						"sort": 0,
-						"alias": "/products/fines/za-parkovku",
-						"is_hidden": 0,
-						"enabled": 1,
-						"childs": []
-					}
-				]
+				"alias": "/products/fines"
 			},
 			{
-				"id": 1,
+				"id": 12,
 				"title": "Расчет расстояния",
 				"slug": "main",
 				"sort": 0,
@@ -117,7 +36,7 @@
 				"enabled": 1,
 				"childs": [
 					{
-						"id": 1,
+						"id": 13,
 						"title": "За МКАД",
 						"slug": "main",
 						"sort": 0,
@@ -127,7 +46,7 @@
 						"childs": []
 					},
 					{
-						"id": 1,
+						"id": 14,
 						"title": "За КАД",
 						"slug": "main",
 						"sort": 0,
@@ -141,7 +60,7 @@
 		]
 	},
 	{
-		"id": 1,
+		"id": 15,
 		"title": "Тарифы",
 		"slug": "main",
 		"sort": 0,
@@ -151,7 +70,7 @@
 		"childs": []
 	},
 	{
-		"id": 1,
+		"id": 16,
 		"title": "Контакты",
 		"slug": "auth",
 		"sort": 0,
@@ -161,7 +80,7 @@
 		"childs": []
 	},
 	{
-		"id": 1,
+		"id": 17,
 		"title": "Войти",
 		"slug": "auth",
 		"sort": 0,

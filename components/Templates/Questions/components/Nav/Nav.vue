@@ -7,18 +7,19 @@
 				:key="category.value"
 			>
 				<div
-					@click="category.value ? (activeNav = category.value) : category.children ? (category.isOpen = !category.isOpen) : ''"
+					@click="() => (category.value == 'all' ? navigateTo(`/questions`) : navigateTo(`/questions/${category.value}`))"
 					class="nav__item"
 					:class="{ nav__item_active: category.value == activeNav, nav__item_main: category.isMain }"
 				>
 					{{ category.title }}
 					<Triangle
+						@click.stop="category.isOpen = !category.isOpen"
 						class="nav__item-triangle"
 						v-if="category.children"
 					/>
 				</div>
 				<div
-					@click="child.value ? (activeNav = child.value) : null"
+					@click="() => navigateTo(`/questions/${child.value}`)"
 					v-if="category.isOpen"
 					v-for="child in category.children"
 					:key="child.value"
@@ -33,11 +34,19 @@
 </template>
 
 <script setup>
-	import categoriesJson from "./composables/categories.json";
+	import { storeToRefs } from "pinia";
 	import Triangle from "~/components/AppIcons/Triangle/Triangle.vue";
+	import { useQuestionsStore } from "~/stores/questionsStore";
 
-	let categories = ref(categoriesJson);
-	let activeNav = ref("all");
+	const questionsStore = useQuestionsStore();
+	const { categories, activeParent } = storeToRefs(questionsStore);
+
+	// Отрытие списка если у родителя активный ребенок
+	onMounted(() => (activeParent.value ? (activeParent.value.isOpen = true) : null));
+
+	const route = useRoute();
+
+	let activeNav = computed(() => (route.params.category ? route.params.category : "all"));
 </script>
 
 <style>

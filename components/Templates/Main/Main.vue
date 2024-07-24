@@ -49,20 +49,18 @@
 
 	// Табы
 	const tabs = [
-		{ id: 0, title: "Штрафы ГИБДД", tab: "", enabled: true },
+		// { id: 0, title: "Штрафы ГИБДД", tab: "", enabled: true },
 		{ id: 1, title: "Штрафы по СТС", tab: "po-sts", enabled: true },
 		{ id: 2, title: "Штрафы по ВУ", tab: "po-voditelskomu-udostovereniyu", enabled: true },
 		{ id: 3, title: "Штрафы по постановлению", tab: "po-nomeru-postanovleniya", enabled: true },
 		{ id: 4, title: "Штрафы по гос. номеру", tab: "po-nomeru-avto", enabled: true },
 		{ id: 5, title: "Штрафы по ИНН", tab: "po-inn", enabled: true },
-		{ id: 6, title: "Штрафы за Платон", tab: "za-platon", enabled: true },
-		{ id: 7, title: "Штрафы за парковку", tab: "za-parkovku", enabled: true },
 	];
 
 	// Смена вкладки
 	const changeTab = async tab => {
 		activeTab.value.tab = tab.value;
-		await navigateTo(`/products/fines/${activeTab.value.tab}`);
+		await navigateTo(`/products/fines${activeTab.value.tab ? `/${activeTab.value.tab}` : ""}`);
 	};
 
 	onMounted(async () => {
@@ -71,7 +69,7 @@
 		} else {
 			activeTab.value.tab = "";
 		}
-		await navigateTo(`/products/fines/${activeTab.value.tab}`);
+		await navigateTo(`/products/fines${activeTab.value.tab ? `/${activeTab.value.tab}` : ""}`);
 	});
 
 	watch(

@@ -3,6 +3,7 @@
 
 .menu {
 	&.menu_desktop {
+		min-height: 61px;
 		width: 100%;
 		background: radial-gradient(circle at 30% 23%, #000, #1c2734 73%);
 
@@ -43,7 +44,12 @@
 			}
 		}
 
+		.menu__logo {
+			margin: 0 auto;
+		}
+
 		.container {
+			height: 100%;
 			gap: 30px;
 			display: flex;
 			flex-wrap: wrap;

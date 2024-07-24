@@ -111,7 +111,7 @@
 						to="/questions"
 						class="footer-link__href"
 					>
-						Часто задаваемые вопросы
+						Вопрос-ответ
 					</NuxtLink>
 				</nav>
 			</div>

@@ -5,6 +5,7 @@ export const useGlobalStore = defineStore("globalStore", {
 	state: () => {
 		return {
 			isShowMobileMenu: true,
+			isShowOnlyLogo: false,
 		};
 	},
 });

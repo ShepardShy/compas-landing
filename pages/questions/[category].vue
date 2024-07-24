@@ -1,13 +1,13 @@
 <template>
-	<TemplateMain />
+	<TemplateQuestions />
 </template>
 
 <script setup>
-	import TemplateMain from "@/components/Templates/Main/Main.vue";
+	import TemplateQuestions from "@/components/Templates/Questions/Questions.vue";
 
 	// Мета теги
 	useHead({
-		title: "Отслеживание штрафов. Компас",
+		title: "Вопросы ответы . Компас",
 		meta: [
 			{
 				name: "description",
