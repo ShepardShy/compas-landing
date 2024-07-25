@@ -44,11 +44,11 @@
 				<div class="menu__buttons">
 					<NuxtLink
 						class="button-text"
-						to="/auth?tab=entry"
+						to="/auth/entry"
 					>
 						Вход
 					</NuxtLink>
-					<NuxtLink to="/auth?tab=registration">
+					<NuxtLink to="/auth/registration">
 						<AppButton class="button_blue"> Регистрация </AppButton>
 					</NuxtLink>
 				</div>

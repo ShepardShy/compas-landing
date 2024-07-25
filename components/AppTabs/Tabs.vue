@@ -9,6 +9,7 @@
 					:closeByClick="false"
 					:isCanSelect="false"
 					:class="{ tabs__item_active: tab.childs.find(p => p.alias == activeTab.tab) != undefined, tabs__item_disabled: props.isCanChange == false }"
+					@click="!popupRef[0].popupRef.hasAttribute('open') ? callAction({ action: 'closeAllChild' }) : ''"
 					@clickOutside="callAction({ action: 'closeAllChild' })"
 				>
 					<template #summary>

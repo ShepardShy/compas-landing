@@ -17,7 +17,7 @@ export const useUserStore = defineStore("userStore", {
 			authData: {
 				email: "",
 				password: "",
-				portalName: "",
+				domain: "",
 				remember_me: false,
 			},
 			authError: {
@@ -39,10 +39,10 @@ export const useUserStore = defineStore("userStore", {
 			let response = null;
 			try {
 				this.authButtonLoad = true;
-				response = await api.callMethod("POST", `auth`, data, { Authorization: "Bearer null" }, true, true, this.authData.portalName);
+				response = await api.callMethod("POST", `auth`, data, { Authorization: "Bearer null" }, true, true, this.authData.domain);
 				if (response.code == 401) {
 					this.authData = {
-						portalName: "",
+						domain: "",
 						email: "",
 						password: "",
 					};
@@ -58,7 +58,7 @@ export const useUserStore = defineStore("userStore", {
 						status: false,
 						text: "",
 					};
-					window.location.href = `http://${this.authData.portalName}/${response.url}`;
+					window.location.href = `http://${this.authData.domain}.compas.pro/${response.url}`;
 				}
 			} catch (error) {
 				console.log(error);

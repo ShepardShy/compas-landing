@@ -38,7 +38,6 @@
 	import AuthEntry from "./Entry/Entry.vue";
 	import AuthForget from "./Forget/Forget.vue";
 	import AuthRegistration from "./Registration/Registration.vue";
-	import commonScripts from "@/commonScripts/commonScripts";
 	import { useGlobalStore } from "~/stores/globalStore";
 
 	const globalStore = useGlobalStore();
@@ -53,29 +52,28 @@
 
 	const changeActiveTab = tab => {
 		activeTab.value = tab;
-		router.query.tab = tab;
-		commonScripts.setURLParams({ tab: tab });
+		navigateTo(`/auth/${tab}`);
 	};
 
 	onMounted(() => {
-		if (router.query.tab) {
-			activeTab.value = router.query.tab;
+		if (router.params.tab) {
+			activeTab.value = router.params.tab;
 		} else {
 			activeTab.value = "entry";
-			commonScripts.setURLParams({ tab: activeTab.value });
+			navigateTo(`/auth/${activeTab.value}`);
 		}
 
 		localStorage.clear();
 	});
 
 	watch(
-		() => router.query,
+		() => router.params,
 		() => {
-			if (router.query.tab) {
-				activeTab.value = router.query.tab;
+			if (router.params.tab) {
+				activeTab.value = router.params.tab;
 			} else {
 				activeTab.value = "entry";
-				commonScripts.setURLParams({ tab: activeTab.value });
+				navigateTo(`/auth/${activeTab.value}`);
 			}
 		},
 		{

@@ -2,7 +2,7 @@
 	<div class="questions-slider">
 		<AppSlider
 			:class="countSlides == 1 ? 'swiper-slider_only' : ''"
-			:options="{ VisibleSlides: countSlides, spaceBetween: 0, pagination: { clickable: true, dynamicBullets: true } }"
+			:options="{ VisibleSlides: countSlides, spaceBetween: 20, pagination: { clickable: true, dynamicBullets: true } }"
 		>
 			<template #slide>
 				<SwiperSlide

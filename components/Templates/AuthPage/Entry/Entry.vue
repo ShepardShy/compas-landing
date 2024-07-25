@@ -12,10 +12,10 @@
 			:item="{
 				id: 0,
 				title: 'Название портала',
-				value: userStore.authData.portalName,
+				value: userStore.authData.domain,
 				placeholder: 'Название портала',
 				type: 'text',
-				key: 'portalName',
+				key: 'domain',
 				substring: '.compas.pro',
 			}"
 			:mask="null"

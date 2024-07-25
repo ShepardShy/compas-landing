@@ -102,7 +102,7 @@
 						Документы
 					</NuxtLink>
 					<NuxtLink
-						to="/auth?tab=registration"
+						to="/auth/registration"
 						class="footer-link__href"
 					>
 						Регистрация

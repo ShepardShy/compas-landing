@@ -6,10 +6,10 @@
 			:item="{
 				id: 0,
 				title: 'Название портала',
-				value: userData.portalName,
+				value: userData.domain,
 				placeholder: 'Название портала',
 				type: 'text',
-				key: 'portalName',
+				key: 'domain',
 				substring: '.compas.pro',
 			}"
 			:mask="null"
@@ -72,7 +72,7 @@
 
 	let userData = ref({
 		email: "",
-		portalName: "",
+		domain: "",
 	});
 
 	const changeValue = data => {

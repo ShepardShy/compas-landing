@@ -5,7 +5,7 @@ export default defineNuxtConfig({
 		cdnURL: "https://compas.pro/landing/",
 		head: {
 			viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0",
-			link: [{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
+			link: [{ rel: "icon", type: "image/svg+xml", href: "/landing/favicon.svg" }],
 		},
 	},
 	spaLoadingTemplate: false,

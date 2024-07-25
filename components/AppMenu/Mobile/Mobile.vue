@@ -47,7 +47,7 @@
 					class="menu__item"
 					:class="{ menu__item_active: (child?.childs?.length > 0 && $route.fullPath.includes(child.alias)) || $route.fullPath === child.alias }"
 					v-for="child in settingsMenu.activeTab.childs"
-					:key="child.tab"
+					:key="child.id"
 					v-show="child.enabled"
 				>
 					{{ child.title }}

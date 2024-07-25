@@ -1,26 +1,36 @@
 @use "@/assets/variables.scss" as variables;
 @use "@/assets/mixins.scss" as mixins;
 
-:deep(.swiper-button-next) {
-	right: var(--swiper-navigation-sides-offset, 7px) !important;
+:global(.questions-slider .swiper-button-next) {
+	right: var(--swiper-navigation-sides-offset, 12px) !important;
 	@media (max-width: 480px) {
-		right: var(--swiper-navigation-sides-offset, 7px) !important;
+		right: var(--swiper-navigation-sides-offset, 12px) !important;
 	}
 }
 
-:deep(.swiper-button-prev) {
-	right: var(--swiper-navigation-sides-offset, 7px) !important;
+:global(.questions-slider .swiper-button-prev) {
+	left: var(--swiper-navigation-sides-offset, 12px) !important;
 	@media (max-width: 480px) {
-		right: var(--swiper-navigation-sides-offset, 7px) !important;
+		left: var(--swiper-navigation-sides-offset, 12px) !important;
 	}
 }
 
-:global(.swiper-slide) {
+:global(.questions-slider .swiper-slide) {
 	padding-right: 0 !important;
 	display: flex;
 	justify-content: center;
 }
 
-:global(.slider) {
-	padding-left: 0 !important;
+:global(.questions-slider .slider) {
+	max-width: 100%;
+	// padding-left: 0 !important;
+	padding: 0 5px !important;
+}
+
+:global(.swiper-slide) {
+	opacity: 1 !important;
+}
+
+.question__item {
+	width: auto;
 }

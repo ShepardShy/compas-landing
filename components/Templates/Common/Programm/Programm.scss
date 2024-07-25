@@ -1,82 +1,83 @@
-@use '@/assets/variables.scss' as variables;
-@use '@/assets/mixins.scss' as mixins;
+@use "@/assets/variables.scss" as variables;
+@use "@/assets/mixins.scss" as mixins;
 
 .programm {
-    .section__image {
-        right: -25px;
-        top: -50px;
-    }
+	.section__image {
+		right: -25px;
+		top: -50px;
+	}
 
-    .section__content {
-        max-width: calc(100% - 150px);
-    }
+	.section__content {
+		max-width: calc(100% - 150px);
+	}
 
-    .section__info {
-        max-width: calc(100% - 420px)
-    }
+	.section__info {
+		max-width: calc(100% - 420px);
+	}
 
-    button {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 15px 20px;
+	button {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 15px 20px;
 
-        &::after {
-            content: url('/icons/arrow-right.svg');
-            height: 14px;
-            transition: 0.4s all;
-            display: flex;
-            align-items: center;
-        }
+		&::after {
+			content: url("/icons/arrow-right.svg");
+			height: 14px;
+			transition: 0.4s all;
+			display: flex;
+			align-items: center;
+		}
 
-        &:hover {
-            &::after {
-                transform: translateX(5px);
-            }
-        }
-    }
+		&:hover {
+			&::after {
+				transform: translateX(5px);
+			}
+		}
+	}
 }
 .programm__title {
-    margin-bottom: 15px;
-    font-size: 31px;
+	margin-bottom: 15px;
+	font-size: 31px;
 }
 
 .programm__desc {
-    margin-bottom: 25px;
+	margin-bottom: 25px;
 }
 
 .programm__image {
-    @include mixins.elemResolutionOptions(630px, 425px);
+	@include mixins.elemResolutionOptions(630px, 425px);
 }
 
 @media (max-width: 1080px) {
-    .programm__image {
-        @include mixins.elemResolutionOptions(540px, 375px);
-    }
+	.programm__image {
+		@include mixins.elemResolutionOptions(540px, 375px);
+	}
 
-    .programm {
-        .section__image {
-            top: 0px;
-        }
+	.programm {
+		.section__image {
+			top: 0px;
+			margin-top: 0;
+		}
 
-        .section__content {
-            max-width: none;
-        }
+		.section__content {
+			max-width: none;
+		}
 
-        .section__info {
-            max-width: calc(100% - 500px);
-        }
-    }
+		.section__info {
+			max-width: calc(100% - 500px);
+		}
+	}
 }
 
 @media (max-width: 1010px) {
-    .programm__image {
-        display: none;    
-    }
+	.programm__image {
+		display: none;
+	}
 
-    .programm {
-        .section__info {
-            max-width: none;
-        }
-    }
+	.programm {
+		.section__info {
+			max-width: none;
+		}
+	}
 }
