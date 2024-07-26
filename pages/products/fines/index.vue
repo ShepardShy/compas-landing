@@ -7,7 +7,7 @@
 
 	// Мета теги
 	useHead({
-		title: "Проверка и оплата штрафов ГИБДД онлайн. compas.pro",
+		title: "Проверка и оплата штрафов ГИБДД онлайн . compas.pro",
 		meta: [
 			{
 				name: "description",
