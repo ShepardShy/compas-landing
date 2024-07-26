@@ -7,7 +7,7 @@
 
 	// Мета теги
 	useHead({
-		title: "Вопросы ответы . Компас",
+		title: "Вопросы ответы . compas.pro",
 		meta: [
 			{
 				name: "description",

@@ -23,50 +23,6 @@
 			:enabledAutocomplete="true"
 			@changeValue="data => changeValue(data)"
 		/>
-		<AppInput
-			class="auth__input"
-			:item="{
-				id: 0,
-				title: 'E-mail',
-				value: userStore.authData.email,
-				placeholder: 'E-mail',
-				type: 'text',
-				key: 'email',
-			}"
-			:mask="null"
-			:disabled="false"
-			:enabledAutocomplete="true"
-			@keyup.enter="logIn()"
-			@changeValue="data => changeValue(data)"
-		/>
-		<AppInput
-			class="auth__input"
-			:item="{
-				id: 1,
-				title: 'Пароль',
-				value: userStore.authData.password,
-				placeholder: 'Пароль',
-				type: 'password',
-				key: 'password',
-			}"
-			:mask="null"
-			:disabled="false"
-			:enabledAutocomplete="true"
-			@keyup.enter="logIn()"
-			@changeValue="data => changeValue(data)"
-		/>
-		<AppCheckbox
-			class="auth__checkbox"
-			:item="{
-				id: 2,
-				title: 'Запомнить пароль',
-				value: userStore.authData.remember_me,
-				placeholder: 'Запомнить пароль',
-				type: 'checkbox',
-				key: 'remember_me',
-			}"
-			@changeValue="data => changeValue(data)"
-		/>
 		<AppButton
 			:class="userStore.authButtonLoad ? 'button_loading' : ''"
 			class="auth__button button_blue"
@@ -74,13 +30,6 @@
 		>
 			Войти
 		</AppButton>
-
-		<div
-			class="auth__text auth__link"
-			@click="() => $emit('changeActiveTab', 'forget')"
-		>
-			Восстановление пароля
-		</div>
 	</AppSection>
 	<div class="auth__text auth__subtext">
 		Нет портала?

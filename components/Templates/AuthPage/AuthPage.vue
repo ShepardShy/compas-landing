@@ -11,10 +11,10 @@
 					@changeActiveTab="tab => changeActiveTab(tab)"
 				/>
 
-				<AuthForget
+				<!-- <AuthForget
 					v-else-if="activeTab == 'forget'"
 					@changeActiveTab="tab => changeActiveTab(tab)"
-				/>
+				/> -->
 
 				<AuthRegistration
 					v-else-if="activeTab == 'registration'"
@@ -39,6 +39,8 @@
 	import AuthForget from "./Forget/Forget.vue";
 	import AuthRegistration from "./Registration/Registration.vue";
 	import { useGlobalStore } from "~/stores/globalStore";
+	import { useUserStore } from "@/stores/userStore.js";
+	const userStore = useUserStore();
 
 	const globalStore = useGlobalStore();
 	globalStore.isShowOnlyLogo = true;
@@ -51,6 +53,7 @@
 	const router = useRoute();
 
 	const changeActiveTab = tab => {
+		userStore.authError.text = "";
 		activeTab.value = tab;
 		navigateTo(`/auth/${tab}`);
 	};

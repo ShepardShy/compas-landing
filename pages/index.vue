@@ -7,7 +7,7 @@
 
 	// Мета теги
 	useHead({
-		title: "Отслеживание штрафов. Компас",
+		title: "Отслеживание штрафов. compas.pro",
 		meta: [
 			{
 				name: "description",

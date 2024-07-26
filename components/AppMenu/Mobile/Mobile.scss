@@ -77,12 +77,14 @@
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
+			will-change: border;
+			cursor: pointer;
 
 			& .icon__arrow {
 				transform: rotate(0deg);
 			}
 
-			&:hover,
+			&:active,
 			&.menu__item_active {
 				filter: none;
 				cursor: pointer;

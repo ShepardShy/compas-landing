@@ -15,23 +15,24 @@ export const useUserStore = defineStore("userStore", {
 			roles: [],
 			authButtonLoad: false,
 			authData: {
-				email: "",
-				password: "",
+				// email: "",
+				// password: "",
 				domain: "",
-				remember_me: false,
+				// remember_me: false,
 			},
 			authError: {
 				text: "",
 				status: false,
 			},
 			modals: [],
-			userToken: "1Eg6R5LWw2VsRXwn7gYcSYJ81awict9B5xllQES9yTcwavoaDQFslm9BtkQ7",
+			// userToken: "1Eg6R5LWw2VsRXwn7gYcSYJ81awict9B5xllQES9yTcwavoaDQFslm9BtkQ7",
+			userToken: null,
 		};
 	},
 
-	persist: {
-		storage: persistedState.localStorage,
-	},
+	// persist: {
+	// 	storage: persistedState.localStorage,
+	// },
 
 	// actions
 	actions: {
@@ -39,17 +40,9 @@ export const useUserStore = defineStore("userStore", {
 			let response = null;
 			try {
 				this.authButtonLoad = true;
-				response = await api.callMethod("POST", `auth`, data, { Authorization: "Bearer null" }, true, true, this.authData.domain);
-				if (response.code == 401) {
-					this.authData = {
-						domain: "",
-						email: "",
-						password: "",
-					};
-					this.authError = {
-						status: true,
-						text: "Данные введены неверно",
-					};
+				response = await api.callMethod("POST", `tenant/check`, data, { Authorization: "Bearer null" }, true, true, this.authData.domain);
+				console.log(response, "response");
+				if (response?.code == 404) {
 					return;
 				} else {
 					authRef.classList.add("auth_disabled");
@@ -61,7 +54,13 @@ export const useUserStore = defineStore("userStore", {
 					window.location.href = `http://${this.authData.domain}.compas.pro/${response.url}`;
 				}
 			} catch (error) {
-				console.log(error);
+				this.authData = {
+					domain: "",
+				};
+				this.authError = {
+					status: true,
+					text: error.data.error,
+				};
 			} finally {
 				this.authButtonLoad = false;
 			}
