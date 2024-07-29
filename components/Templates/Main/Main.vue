@@ -13,15 +13,17 @@
 		:desc="'Бесплатная проверка авто, водителей, компании на наличие штрафов'"
 	/>
 	<MainBase />
+	<MainSteps />
 	<MainPluses />
 	<CommonProgramm
 		class="main__programm"
 		:title="'Проверки абсолютно бесплатны'"
-		:desc="'Вы можете проверять неограниченное кол-во машин на наличие штрафов и оплачивать в одном интерфейсе'"
+		:desc="'«Автокод» собирает информацию из официальных источников: ГИБДД, МАДИ, АМПП, ГИС ГМП. После проверки увидите общее количество и общую сумму штрафов. Также в отчете будет история штрафов и отдельная информация по каждому штрафу ГИБДД:'"
 	/>
-	<!-- <MainTariffs /> -->
-	<MainQuestions />
 	<PlusesFines />
+	<!-- <MainTariffs /> -->
+	<MainAbout />
+	<MainQuestions />
 	<CommonSocial class="main__social" />
 </template>
 
@@ -31,6 +33,8 @@
 	import MainBase from "./Base/Base.vue";
 	import MainFines from "./Fines/Fines.vue";
 	import MainPluses from "./Pluses/Pluses.vue";
+	import MainSteps from "./Steps/Steps.vue";
+	import MainAbout from "./About/About.vue";
 	import MainQuestions from "./Questions/Questions.vue";
 	import MainCompanies from "@/components/Templates/Common/Companies/Companies.vue";
 	import CommonProgramm from "@/components/Templates/Common/Programm/Programm.vue";
@@ -49,7 +53,6 @@
 
 	// Табы
 	const tabs = [
-		// { id: 0, title: "Штрафы ГИБДД", tab: "", enabled: true },
 		{ id: 1, title: "Штрафы по СТС", tab: "po-sts", enabled: true },
 		{ id: 2, title: "Штрафы по ВУ", tab: "po-voditelskomu-udostovereniyu", enabled: true },
 		{ id: 3, title: "Штрафы по постановлению", tab: "po-nomeru-postanovleniya", enabled: true },

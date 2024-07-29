@@ -7,7 +7,7 @@
 
 	// Мета теги
 	useHead({
-		title: "Авторизация . compas.pro",
+		title: "Авторизация | Compas.pro",
 		meta: [
 			{
 				name: "description",

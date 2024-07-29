@@ -25,6 +25,7 @@
 	}
 
 	.swiper-button-next {
+		will-change: opacity;
 		right: var(--swiper-navigation-sides-offset, 33px) !important;
 		&::after {
 			content: url("/icons/scrollButtonRight.svg");
@@ -32,6 +33,7 @@
 	}
 
 	.swiper-button-prev {
+		will-change: opacity;
 		left: var(--swiper-navigation-sides-offset, 32px) !important;
 		&::after {
 			content: url("/icons/scrollButtonLeft.svg");

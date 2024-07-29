@@ -23,7 +23,7 @@
 
 	// Мета теги
 	useHead({
-		title: `${titles[route.params.type]} . compas.pro`,
+		title: `${titles[route.params.type]} | Compas.pro`,
 		meta: [
 			{
 				name: "description",

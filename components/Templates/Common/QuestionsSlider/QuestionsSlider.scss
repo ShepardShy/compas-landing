@@ -24,12 +24,12 @@
 :global(.questions-slider .slider) {
 	max-width: 100%;
 	// padding-left: 0 !important;
-	padding: 0 5px !important;
+	padding: 15px 5px 0 5px !important;
 }
 
-:global(.swiper-slide) {
-	opacity: 1 !important;
-}
+// :global(.swiper-slide) {
+// 	opacity: 1 !important;
+// }
 
 .question__item {
 	width: auto;

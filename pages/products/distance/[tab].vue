@@ -7,7 +7,7 @@
 
 	// Мета теги
 	useHead({
-		title: "Расчёт расстояния . compas.pro",
+		title: "Расчёт расстояния | Compas.pro",
 		meta: [
 			{
 				name: "description",

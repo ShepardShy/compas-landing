@@ -7,7 +7,7 @@
 
 	// Мета теги
 	useHead({
-		title: "Контакты . compas.pro",
+		title: "Контакты | Compas.pro",
 		meta: [
 			{
 				name: "description",

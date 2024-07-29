@@ -6,8 +6,9 @@
 	import TemplateMain from "@/components/Templates/Main/Main.vue";
 
 	// Мета теги
+
 	useHead({
-		title: "Отслеживание штрафов. compas.pro",
+		title: "Отслеживание штрафов| Compas.pro",
 		meta: [
 			{
 				name: "description",

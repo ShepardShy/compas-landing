@@ -51,7 +51,12 @@ export const useUserStore = defineStore("userStore", {
 						status: false,
 						text: "",
 					};
-					window.location.href = `http://${this.authData.domain}.compas.pro/${response.url}`;
+					location.assign(`http://${this.authData.domain}.compas.pro/`);
+					// window.location.href = `http://${this.authData.domain}.compas.pro/`;
+					// navigateTo(`http://${this.authData.domain}.compas.pro`, {
+					// external: true,
+					// });
+					// window.location.replace(`http://${this.authData.domain}.compas.pro`);
 				}
 			} catch (error) {
 				this.authData = {
