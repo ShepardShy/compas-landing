@@ -1,13 +1,13 @@
 <template>
 	<nav class="nav">
-		<div class="nav__header">Вопрос-ответ</div>
+		<div class="nav__header">{{ title }}</div>
 		<div class="nav__list">
 			<template
 				v-for="category in categories"
 				:key="category.value"
 			>
 				<div
-					@click="() => (category.value == 'all' ? navigateTo(`/questions`) : navigateTo(`/questions/${category.value}`))"
+					@click="() => (category.value == 'all' ? navigateTo(`/${path}`) : navigateTo(`/${path}?category=${category.value}`))"
 					class="nav__item"
 					:class="{ nav__item_active: category.value == activeNav, nav__item_main: category.isMain }"
 				>
@@ -19,7 +19,7 @@
 					/>
 				</div>
 				<div
-					@click="() => navigateTo(`/questions/${child.value}`)"
+					@click="() => navigateTo(`/${path}?category=${child.value}`)"
 					v-if="category.isOpen"
 					v-for="child in category.children"
 					:key="child.value"
@@ -34,21 +34,27 @@
 </template>
 
 <script setup>
-	import { storeToRefs } from "pinia";
 	import Triangle from "~/components/AppIcons/Triangle/Triangle.vue";
-	import { useQuestionsStore } from "~/stores/questionsStore";
 
-	const questionsStore = useQuestionsStore();
-	const { categories, activeParent } = storeToRefs(questionsStore);
+	const props = defineProps({
+		title: { type: String, required: true },
+		categories: { type: Array, required: true },
+		navParam: { type: String, default: "category" },
+		path: { type: String, default: "" },
+	});
+
+	const { categories, title, navParam, path } = toRefs(props);
+
+	const activeParent = computed(() => categories.value.find(category => category.children?.some(child => route.fullPath.includes(child.value))));
 
 	// Отрытие списка если у родителя активный ребенок
 	onMounted(() => (activeParent.value ? (activeParent.value.isOpen = true) : null));
 
 	const route = useRoute();
 
-	let activeNav = computed(() => (route.params.category ? route.params.category : "all"));
+	let activeNav = computed(() => (route.query[navParam.value] ? route.query[navParam.value] : "all"));
 </script>
 
 <style>
-	@import url("./Nav.scss");
+	@import url("./AppNav.scss");
 </style>

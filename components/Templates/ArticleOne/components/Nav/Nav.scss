@@ -1,0 +1,73 @@
+@use "@/assets/variables.scss" as variables;
+@use "@/assets/mixins.scss" as mixins;
+
+.personal-docs__nav {
+	border-radius: 10px;
+	box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.07);
+	border: solid 1px #eeeff1;
+	background-color: #fff;
+	height: max-content;
+	padding-bottom: 25px;
+	grid-row: 1 / 5;
+	grid-column: 2 / 3;
+	min-width: 263px;
+
+	@media (max-width: 768px) {
+		grid-column: 1/2;
+		grid-row: 2 / 5;
+		margin-bottom: 20px;
+	}
+
+	&.docs-nav_fixed {
+		position: fixed;
+		top: 20px;
+		left: var(--contentPos);
+		width: 270px;
+	}
+}
+
+.docs-nav__header {
+	font-weight: 600;
+	padding: 10px 20px;
+	border-bottom: 1px solid #e2e5e9;
+}
+.docs-nav__list {
+	display: flex;
+	flex-direction: column;
+}
+.docs-nav__item {
+	padding: 10px 15px;
+	position: relative;
+
+	&.docs-nav__item_H2 {
+		padding-left: 40px;
+	}
+
+	&.docs-nav__item_H3,
+	&.docs-nav__item_H4,
+	&.docs-nav__item_H5,
+	&.docs-nav__item_H6 {
+		padding-left: 80px;
+	}
+
+	&.docs-nav__item_active {
+		background: variables.$color-hover;
+	}
+
+	&.docs-nav__item_scrolled {
+		&::before {
+			content: "";
+			height: 100%;
+			background: variables.$color-blue;
+			width: 2px;
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 2;
+		}
+	}
+
+	&:hover {
+		background: variables.$color-hover;
+	}
+}

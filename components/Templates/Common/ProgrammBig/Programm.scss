@@ -2,10 +2,18 @@
 @use "@/assets/mixins.scss" as mixins;
 
 .programm {
+	padding: 42px 0 !important;
+	position: relative;
+	z-index: 1;
+	.programm__link {
+		display: inline-block;
+	}
+
 	.section__image {
 		right: -25px;
-		top: 0;
+		top: -50px;
 	}
+
 	button {
 		display: flex;
 		align-items: center;
@@ -27,25 +35,59 @@
 		}
 	}
 }
-
-:deep(.section__content) {
-	max-width: calc(100% - 150px);
-}
-
-:deep(.section__info) {
-	max-width: calc(100% - 420px);
-}
-
 .programm__title {
+	line-height: 1;
+	color: variables.$color-light-black;
 	margin-bottom: 15px;
 	font-size: 31px;
 }
 
 .programm__desc {
-	margin-bottom: 25px;
+	line-height: 1;
+	margin-bottom: 45px;
+	max-width: 858px;
+}
+
+.programm__left {
+	display: flex;
+	flex-direction: column;
+	gap: 25px;
+}
+
+.programm__advantages {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	&-wrapper {
+		display: flex;
+		justify-content: space-between;
+	}
+}
+
+.programm__advantage {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	&-text {
+		line-height: 1;
+	}
+}
+
+:deep(.programm__checkmark) {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 20px;
+	min-height: 20px;
+	border-radius: 5px;
+	.programm__checkmark-image {
+		width: 13px;
+		height: 8.5px;
+	}
 }
 
 .programm__image {
+	margin-top: -30px;
 	@include mixins.elemResolutionOptions(630px, 425px);
 }
 

@@ -113,6 +113,12 @@
 					>
 						Вопрос-ответ
 					</NuxtLink>
+					<NuxtLink
+						to="/articles"
+						class="footer-link__href"
+					>
+						Статьи
+					</NuxtLink>
 				</nav>
 			</div>
 		</div>

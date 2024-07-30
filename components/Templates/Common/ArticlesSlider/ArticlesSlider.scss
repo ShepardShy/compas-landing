@@ -1,0 +1,36 @@
+@use "@/assets/variables.scss" as variables;
+@use "@/assets/mixins.scss" as mixins;
+
+:global(.articles-slider .swiper-button-next) {
+	right: var(--swiper-navigation-sides-offset, 12px) !important;
+	@media (max-width: 480px) {
+		right: var(--swiper-navigation-sides-offset, 12px) !important;
+	}
+}
+
+:global(.articles-slider .swiper-button-prev) {
+	left: var(--swiper-navigation-sides-offset, 12px) !important;
+	@media (max-width: 480px) {
+		left: var(--swiper-navigation-sides-offset, 12px) !important;
+	}
+}
+
+:global(.articles-slider .swiper-slide) {
+	padding-right: 0 !important;
+	display: flex;
+	justify-content: center;
+}
+
+:global(.articles-slider .slider) {
+	max-width: 100%;
+	// padding-left: 0 !important;
+	padding: 15px 5px 0 5px !important;
+}
+
+// :global(.swiper-slide) {
+// 	opacity: 1 !important;
+// }
+
+.question__item {
+	width: auto;
+}
