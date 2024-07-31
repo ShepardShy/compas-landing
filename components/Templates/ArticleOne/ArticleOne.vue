@@ -1,6 +1,9 @@
 <template>
-	<div class="article">
-		<div class="article__wrapper">
+	<div
+		class="article"
+		ref="$articleWrapper"
+	>
+		<div class="article__left">
 			<Header
 				:title
 				:image
@@ -10,16 +13,59 @@
 				:date
 				:views
 			/>
+			<div
+				class="article__content"
+				ref="$articleContent"
+			>
+				<component
+					:is="conmponentsMap[type]"
+					:text="body"
+					:title
+					:items
+					:image
+					:answer
+					:views
+					:questionId
+					:date
+					:isShowMore="true"
+					v-for="{ type, body, image, title, items, answer, views, questionId, date } in content"
+				/>
+			</div>
 		</div>
-		<Nav />
+
+		<div class="article__right">
+			<Nav />
+		</div>
 	</div>
+	<Articles />
+	<Social class="article__social" />
 </template>
 
 <script setup>
+	import Articles from "~/components/Templates/Main/Articles/Articles.vue";
+	import Social from "@/components/Templates/Common/Social/Social.vue";
 	import Header from "./components/Header/Header.vue";
 	import article from "./article.json";
+
+	// Компоненты конструктора
 	import Nav from "./components/Nav/Nav.vue";
-	const { author, date, image, title, views } = article;
+	import wrap from "./components/Wrap/Wrap.vue";
+	import registration from "./components/Fines/Fines.vue";
+	import interestItems from "./components/InterestItems/InterestItems.vue";
+	import question from "~/components/Templates/Common/QuestionFull/QuestionFull.vue";
+
+	const $articleWrapper = ref(null);
+	const $articleContent = ref(null);
+	provide("$articleWrapper", $articleWrapper);
+	provide("$articleContent", $articleContent);
+
+	const conmponentsMap = {
+		wrap,
+		registration,
+		interestItems,
+		question,
+	};
+	const { author, date, image, title, views, content } = article;
 </script>
 
 <style>

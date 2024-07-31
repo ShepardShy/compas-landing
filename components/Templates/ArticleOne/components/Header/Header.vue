@@ -22,8 +22,8 @@
 				</div>
 			</div>
 			<div class="header__info">
-				<div class="header__date">{{ dayjs(date).locale("ru").format("D MMMM YYYY") }}</div>
-				<div class="header__views">
+				<div class="header__date date">{{ dayjs(date).locale("ru").format("D MMMM YYYY") }}</div>
+				<div class="header__views views">
 					<IconPasswordEye class="header__views-eye" />
 					<span>
 						{{ views }}

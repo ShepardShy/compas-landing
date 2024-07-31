@@ -3,6 +3,7 @@
 		<div class="questions__left">
 			<Search />
 			<AppNav
+				class="questions__nav"
 				title="Вопрос-ответ"
 				:categories="categories"
 				path="questions"

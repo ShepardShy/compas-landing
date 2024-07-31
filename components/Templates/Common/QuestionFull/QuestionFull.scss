@@ -1,0 +1,39 @@
+.question {
+	background-color: #f7f8fa;
+	border-radius: 10px;
+	overflow: hidden;
+	&__body {
+		padding: 35px 25px;
+
+		& h2 {
+			font-size: 31px;
+			color: #1253a2;
+			line-height: 1;
+			margin-bottom: 15px;
+		}
+	}
+	&__text {
+		display: flex;
+		flex-direction: column;
+		gap: 25px;
+		line-height: 1.2;
+	}
+
+	&__more {
+		line-height: 1;
+		color: #1865c4;
+		font-size: 16px;
+		margin-bottom: 15px;
+	}
+
+	&__image {
+		max-height: 132px;
+		width: 100%;
+	}
+
+	&__info {
+		margin-top: 15px;
+		display: flex;
+		justify-content: space-between;
+	}
+}

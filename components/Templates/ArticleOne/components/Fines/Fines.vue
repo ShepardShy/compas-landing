@@ -1,6 +1,6 @@
 <template>
-	<AppSection class="fines section_without-background">
-		<AppH1 class="fines__title"> Проверьте штрафы {{ titleMap[route.params.type] }} и зарегистрируйтесь в 1 клик </AppH1>
+	<AppSection class="fines section_without-background section_gray">
+		<AppH2 class="fines__title"> Проверьте штрафы {{ titleMap[route.params.type] }} и зарегистрируйтесь в 1 клик </AppH2>
 		<form
 			class="fines__form"
 			@click.prevent
@@ -49,7 +49,6 @@
 							/>
 						</figure>
 						О сервисе
-						<span class="button-text"> (1 мин 20 сек) </span>
 					</AppButton>
 				</FansyBox>
 			</div>
@@ -58,7 +57,7 @@
 
 		<figure class="ibg fines__image">
 			<img
-				src="/main/fines/preview.webp"
+				src="/articles/registration.png"
 				alt="Проверьте штрафы и зарегестрируйтесь в 1 клик"
 			/>
 		</figure>
@@ -71,7 +70,7 @@
 	import _ from "lodash";
 	import FinesWarning from "./Warning/Warning.vue";
 	import AppSection from "@/components/AppSection/AppSection.vue";
-	import AppH1 from "@/components/AppHeaders/H1/MobileMenu/MobileMenu.vue";
+	import AppH2 from "@/components/AppHeaders/H2/H2.vue";
 	import AppInput from "@/components/AppInputs/Input/Input.vue";
 	import AppButton from "@/components/AppButton/AppButton.vue";
 	import FansyBox from "@/components/AppFansyBox/FansyBox.vue";
@@ -304,6 +303,6 @@
 	provide("invalidFields", invalidFields);
 </script>
 
-<style>
+<style scoped>
 	@import url(./Fines.scss);
 </style>

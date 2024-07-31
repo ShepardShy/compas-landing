@@ -1,15 +1,14 @@
 <template>
 	<nav
-		class="personal-docs__nav docs-nav"
+		class="nav"
 		ref="docsNavRef"
-		:style="`--contentPos: ${contentPos}px`"
 	>
-		<div class="docs-nav__header">Содержание</div>
-		<div class="docs-nav__list">
+		<div class="nav__header">Содержание</div>
+		<div class="nav__list">
 			<a
 				:href="item.link"
-				class="docs-nav__item"
-				:class="(`docs-nav__item_${item.nodeName}`, item.isScrolled ? 'docs-nav__item_scrolled' : '', item.isActive ? 'docs-nav__item_active' : '')"
+				class="nav__item"
+				:class="(`nav__item_${item.nodeName}`, item.isScrolled ? 'nav__item_scrolled' : '', item.isActive ? 'nav__item_active' : '')"
 				v-for="item in docsNav"
 			>
 				{{ item.text }}
@@ -19,48 +18,38 @@
 </template>
 
 <script setup>
-	import "./Nav.scss";
-
-	const personalDocRef = inject("personalDocRef");
-	const personalDocWrapperRef = inject("personalDocWrapperRef");
+	const $articleContent = inject("$articleContent");
+	const $articleWrapper = inject("$articleWrapper");
 
 	let docsNav = ref([]);
 	const docsNavRef = ref(null);
 	const headers = ref([]);
-	const contentPos = ref(0);
 
 	onMounted(() => {
 		setTimeout(() => {
-			for (let i = 0; i < personalDocRef.value.children.length; i++) {
-				if (["H1", "H2", "H3", "H4", "H5", "H6"].includes(personalDocRef.value.children[i].nodeName)) {
-					personalDocRef.value.children[i].id = i;
-					personalDocRef.value.children[i].classList.add("header-link");
+			const titles = $articleContent.value.querySelectorAll("h2");
+			for (let i = 0; i < titles.length; i++) {
+				if (["H1", "H2", "H3", "H4", "H5", "H6"].includes(titles[i].nodeName)) {
+					titles[i].id = i;
+					titles[i].classList.add("header-link");
 					docsNav.value.push({
 						id: i,
 						isActive: docsNav.value.length == 0,
-						link: `#${personalDocRef.value.children[i].id}`,
-						text: personalDocRef.value.children[i].textContent,
-						nodeName: personalDocRef.value.children[i].nodeName,
+						link: `#${titles[i].id}`,
+						text: titles[i].textContent,
+						nodeName: titles[i].nodeName,
 					});
 				}
 			}
-			setNavPos();
-			headers.value = personalDocRef.value.querySelectorAll(".header-link");
+			headers.value = $articleContent.value.querySelectorAll(".header-link");
 		}, 100);
 
-		window.addEventListener("resize", setNavPos);
 		window.addEventListener("scroll", throt_funScroll);
 	});
 
 	onUnmounted(() => {
 		window.removeEventListener("scroll", throt_funScroll);
-		window.removeEventListener("resize", setNavPos);
 	});
-
-	const setNavPos = () => {
-		let docRect = document.querySelector(".personal-docs__content").getBoundingClientRect();
-		contentPos.value = Number((docRect.left + docRect.width).toFixed(0)) + 25;
-	};
 
 	// Троттлинг скролла по вертикали
 	const throt_funScroll = () => {
@@ -84,10 +73,15 @@
 			});
 		}
 
-		if (personalDocWrapperRef.value.getBoundingClientRect().top - 20 < 0) {
-			docsNavRef.value.classList.add("docs-nav_fixed");
+		console.log($articleWrapper.value.getBoundingClientRect().top);
+		if ($articleWrapper.value.getBoundingClientRect().top - 20 < 0) {
+			docsNavRef.value.classList.add("nav_fixed");
 		} else {
-			docsNavRef.value.classList.remove("docs-nav_fixed");
+			docsNavRef.value.classList.remove("nav_fixed");
 		}
 	};
 </script>
+
+<style scoped>
+	@import url(./Nav.scss);
+</style>

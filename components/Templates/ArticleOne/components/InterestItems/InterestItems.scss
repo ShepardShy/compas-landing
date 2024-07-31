@@ -1,0 +1,14 @@
+.items {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	justify-content: space-between;
+	&__title {
+		font-size: 26px;
+		line-height: 1;
+		margin-bottom: 25px;
+	}
+	&__wrapper {
+		grid-column: 1;
+	}
+}

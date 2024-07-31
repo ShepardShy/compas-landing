@@ -1,0 +1,26 @@
+.views {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	font-size: 14px;
+	color: #8f8f8f;
+	line-height: 1;
+	white-space: nowrap;
+	.header__views-eye {
+		height: 11px;
+		cursor: default;
+		& path {
+			stroke: #000;
+		}
+		& circle {
+			stroke: #000;
+		}
+	}
+}
+
+.date {
+	font-size: 14px;
+	color: #8f8f8f;
+	line-height: 1;
+	white-space: nowrap;
+}

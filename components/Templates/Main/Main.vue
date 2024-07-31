@@ -24,7 +24,7 @@
 	<!-- <MainTariffs /> -->
 	<MainAbout />
 	<MainQuestions />
-	<MainArticles />
+	<MainArticles class="main__questinos" />
 	<CommonSocial class="main__social" />
 </template>
 
@@ -38,12 +38,12 @@
 	import MainAbout from "./About/About.vue";
 	import MainQuestions from "./Questions/Questions.vue";
 	import MainArticles from "./Articles/Articles.vue";
+	import CommonSocial from "@/components/Templates/Common/Social/Social.vue";
 	import MainCompanies from "@/components/Templates/Common/Companies/Companies.vue";
 	import CommonProgramm from "@/components/Templates/Common/ProgrammBig/Programm.vue";
 	// import MainTariffs from '@/components/Templates/Main/Tariffs/Tariffs.vue';
 	import PlusesFines from "./PlusesFines/PlusesFines.vue";
 	import AppTabs from "~/components/AppTabs/Tabs.vue";
-	import CommonSocial from "@/components/Templates/Common/Social/Social.vue";
 
 	const route = useRoute();
 

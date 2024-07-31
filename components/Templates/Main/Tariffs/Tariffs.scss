@@ -1,22 +1,22 @@
-@use '@/assets/variables.scss' as variables;
-@use '@/assets/mixins.scss' as mixins;
+@use "@/assets/variables.scss" as variables;
+@use "@/assets/mixins.scss" as mixins;
 
 .main__tariffs {
-    margin-top: 130px;
+	margin-top: 130px;
 
-    h2 {
-        text-align: center;
-        margin-bottom: 45px;
-    }
+	h2 {
+		text-align: center;
+		margin-bottom: 45px;
+	}
 }
 
 .main__social {
-    margin-top: 100px;
+	margin-top: 100px;
 }
 
 @media (max-width: 520px) {
-    .main__tariffs, 
-    .main__social {
-        margin-top: 70px;
-    }
+	.main__tariffs,
+	.main__social {
+		margin-top: 70px;
+	}
 }
