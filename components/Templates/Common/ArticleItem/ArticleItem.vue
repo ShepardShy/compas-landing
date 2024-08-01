@@ -1,7 +1,7 @@
 <template>
-	<div
+	<NuxtLink
 		class="article__item"
-		@click="navigateTo(`/articles/${value}`)"
+		:to="`/articles/${value}`"
 	>
 		<div class="article__top">
 			<figure class="ibg article__icon">
@@ -25,7 +25,7 @@
 				{{ dayjs(date).locale("ru").format("D MMMM YYYY") }}
 			</div>
 		</div>
-	</div>
+	</NuxtLink>
 </template>
 
 <script setup>

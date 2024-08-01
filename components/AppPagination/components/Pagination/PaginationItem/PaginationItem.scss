@@ -1,0 +1,56 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.pagination__item {
+    font-size: variables.$font-size-default;
+    cursor: pointer;
+    @include mixins.gridCenter();
+    @include mixins.userSelect($value: none);
+    @include mixins.borderOptions(1px, solid, variables.$color-grey, 0px);
+    @include mixins.elemResolutionOptions(37px, 31px);
+    
+    &:first-child {
+        @include mixins.borderOptions(1px, solid, variables.$color-grey, 5px 0px 0px 5px);
+    }
+
+    &:last-child {
+        border-radius: 0px 5px 5px 0px;
+    }
+
+    &:not(:first-child) {
+        border-left: 0px;
+    }
+
+    &.pagination__item_alone {
+        border-radius: 5px;
+    }
+
+    &.pagination__item_disabled {
+        cursor: default;
+        border-top: 0px;
+        border-bottom: 0px;
+        background: variables.$color-white;
+
+        &:hover {
+            background-color: variables.$color-white;
+        }
+    }
+
+    &:hover {
+        background-color: variables.$color-hover;
+    }
+
+    &.pagination__item_active {
+        background-color: variables.$color-hover;
+    }
+
+    &.pagination__item_action {
+        width: 100%;
+        color: variables.$color-hover;
+        grid-column: var(--paginationColumnPrev)/var(--paginationColumnNext);
+
+        &:hover {
+            color: variables.$color-active;
+        }
+    }
+}

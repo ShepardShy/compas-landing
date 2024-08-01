@@ -9,6 +9,7 @@ b::before,
 	margin: 0;
 	border: 0;
 	box-sizing: border-box;
+	font-family: MyriadPro;
 }
 
 a {
@@ -37,7 +38,7 @@ body {
 	color: variables.$color-black;
 	// font-family: PT Sans;
 	font-family: MyriadPro;
-	overflow-x: hidden;
+	overflow-x: clip;
 
 	&.body_uncscroll {
 		overflow: hidden;

@@ -1,5 +1,8 @@
 <template>
-	<div class="question__item">
+	<NuxtLink
+		:to="`/questions/${id}`"
+		class="question__item"
+	>
 		<div class="question__top">
 			<figure class="ibg question__icon">
 				<img
@@ -15,19 +18,26 @@
 			<div class="question__subtitle">
 				{{ subtitle }}
 			</div>
-			<div class="questions-slder__views">
-				<IconPasswordEye />
-				<span>
-					{{ views }}
-				</span>
+			<div class="question__info">
+				<p class="question__date date">
+					{{ dayjs(date).locale("ru").format("D MMMM YYYY") }}
+				</p>
+				<div class="question__views views">
+					<IconPasswordEye />
+					<span>
+						{{ views }}
+					</span>
+				</div>
 			</div>
 		</div>
-	</div>
+	</NuxtLink>
 </template>
 
 <script setup>
 	import IconPasswordEye from "@/components/AppIcons/PasswordEye/PasswordEye.vue";
 	import defaultImgQuestion from "/main/questions/question.jpg";
+
+	const dayjs = useDayjs();
 
 	const props = defineProps({
 		title: {
@@ -44,8 +54,14 @@
 			type: Number,
 			default: 0,
 		},
+		date: {
+			type: String,
+		},
+		id: {
+			type: String,
+		},
 	});
-	const { title, views, image, subtitle } = toRefs(props);
+	const { title, views, image, subtitle, date, id } = toRefs(props);
 </script>
 
 <style lang="scss" scoped>

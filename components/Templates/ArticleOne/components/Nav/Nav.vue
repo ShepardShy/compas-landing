@@ -72,13 +72,6 @@
 				}
 			});
 		}
-
-		console.log($articleWrapper.value.getBoundingClientRect().top);
-		if ($articleWrapper.value.getBoundingClientRect().top - 20 < 0) {
-			docsNavRef.value.classList.add("nav_fixed");
-		} else {
-			docsNavRef.value.classList.remove("nav_fixed");
-		}
 	};
 </script>
 

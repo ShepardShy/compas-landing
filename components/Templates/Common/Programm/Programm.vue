@@ -7,7 +7,7 @@
 			<div class="programm__desc">
 				{{ props.desc }}
 			</div>
-			<NuxtLink to="/auth?tab=registration">
+			<NuxtLink to="/auth/registration">
 				<AppButton class="button_blue"> Попробовать бесплатно </AppButton>
 			</NuxtLink>
 		</template>
@@ -39,6 +39,6 @@
 	});
 </script>
 
-<style scoped>
+<style>
 	@import url(./Programm.scss);
 </style>

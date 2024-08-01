@@ -1,0 +1,12 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.pagination__list {
+    display: flex;
+    overflow: hidden;
+}
+
+.pagination__list_grid {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns-short), 37px);    
+} 

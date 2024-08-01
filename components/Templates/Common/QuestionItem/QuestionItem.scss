@@ -28,9 +28,12 @@
 }
 
 .question__body {
-	padding: 15px 15px 45px 15px;
+	padding: 15px 15px 15px 15px;
+	height: 100%;
 	background-color: #fbfcfd;
 	position: relative;
+	display: flex;
+	flex-direction: column;
 }
 
 .question__title {
@@ -48,15 +51,9 @@
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 }
-.questions-slder__views {
-	position: absolute;
-	bottom: 5px;
-	right: 15px;
+
+.question__info {
 	display: flex;
-	align-items: center;
-	gap: 5px;
-	font-size: 14px;
-	height: 17px;
-	text-align: right;
-	color: #8f8f8f;
+	justify-content: space-between;
+	margin-top: auto;
 }

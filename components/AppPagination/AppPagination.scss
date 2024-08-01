@@ -1,0 +1,86 @@
+@use "@/assets/variables.scss" as variables;
+@use "@/assets/mixins.scss" as mixins;
+
+.pagination-full {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	width: 100%;
+	&__wrapper {
+		display: flex;
+		justify-content: space-between;
+		gap: 20px;
+		@media (max-width: 600px) {
+			flex-direction: column;
+			align-items: center;
+		}
+	}
+	& .pagination {
+		gap: 10px;
+	}
+	& .pagination__item_disabled {
+		border-top: 1px solid #bcbcbc !important;
+		border-bottom: 1px solid #bcbcbc !important;
+	}
+	& .pagination__title {
+		font-size: 14px;
+		line-height: 1;
+		@media (max-width: 440px) {
+			display: none;
+		}
+	}
+}
+
+.pagination-full__select {
+	@include mixins.flexBlock($vertical: center, $horizontal: flex-start, $gap: 10px);
+
+	.form-item__title {
+		color: #bcbcbc;
+		font-size: 14px;
+		margin-bottom: 0;
+	}
+
+	.select__popup[open] {
+		.form-item__substring {
+			top: 5px !important;
+		}
+	}
+
+	.select__popup {
+		width: 80px;
+
+		.form-item__substring {
+			padding: 0;
+			top: 2px !important;
+			width: 14px;
+			background-color: transparent;
+			&::after {
+				width: 100%;
+				display: inline-flex;
+			}
+		}
+
+		.form-item__input {
+			min-width: auto;
+
+			input {
+				height: 31px;
+				min-height: 31px;
+				padding: 10px 10px 10px 15px;
+			}
+		}
+
+		.select__active-option {
+			width: 100%;
+			font-size: 14px;
+			height: 31px;
+		}
+
+		.popup__content {
+			top: auto;
+			left: auto;
+			bottom: 50px;
+			right: 0px;
+		}
+	}
+}

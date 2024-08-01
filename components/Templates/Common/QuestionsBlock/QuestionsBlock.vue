@@ -1,12 +1,12 @@
 <template>
-	<AppSection class="main__questinos section_without-background">
+	<AppSection class="questions-block section_without-background">
 		<AppH2> Часто задаваемые вопросы </AppH2>
 		<QuestionsSlider />
 	</AppSection>
 </template>
 
 <script setup>
-	import "./Questions.scss";
+	import "./QuestionsBlock.scss";
 
 	import AppSection from "@/components/AppSection/AppSection.vue";
 	import AppH2 from "@/components/AppHeaders/H2/H2.vue";

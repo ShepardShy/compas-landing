@@ -36,8 +36,8 @@
 	import MainPluses from "./Pluses/Pluses.vue";
 	import MainSteps from "./Steps/Steps.vue";
 	import MainAbout from "./About/About.vue";
-	import MainQuestions from "./Questions/Questions.vue";
-	import MainArticles from "./Articles/Articles.vue";
+	import MainQuestions from "~/components/Templates/Common/QuestionsBlock/QuestionsBlock.vue";
+	import MainArticles from "~/components/Templates/Common/ArticlesBlock/ArticlesBlock.vue";
 	import CommonSocial from "@/components/Templates/Common/Social/Social.vue";
 	import MainCompanies from "@/components/Templates/Common/Companies/Companies.vue";
 	import CommonProgramm from "@/components/Templates/Common/ProgrammBig/Programm.vue";

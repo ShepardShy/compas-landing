@@ -13,8 +13,8 @@ export const useQuestionsStore = defineStore("questionsStore", {
 			if (activeChild) {
 				return activeChild.mainTitle;
 			}
-			const category = this.categories.find(category => (route.fullPath.includes(category.value) ? category.value : "all"));
-			return category ? category.mainTitle : null;
+			const category = this.categories.find(category => (route.fullPath.includes(category.value) ? category : null));
+			return category ? category.mainTitle : this.categories[0].mainTitle;
 		},
 
 		activeChild: state => {

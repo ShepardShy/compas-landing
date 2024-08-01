@@ -47,7 +47,7 @@
 								Цена за месяц {{ setDayPrice(slide).new * 30 }} руб
 							</div>
 						</div>
-						<NuxtLink to="/auth?tab=registration">
+						<NuxtLink to="/auth/registration">
 							<AppButton class="button_blue"> Попробовать </AppButton>
 						</NuxtLink>
 					</div>

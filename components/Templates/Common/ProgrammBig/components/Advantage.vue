@@ -1,13 +1,13 @@
 <template>
-	<div class="programm__advantage">
+	<div class="programm-full__advantage">
 		<div
-			class="programm__checkmark"
+			class="programm-full__checkmark"
 			:style="`background-color:${background ? background : '#0584fe'}`"
 		>
-			<AppCheckMark class="programm__checkmark-image" />
+			<AppCheckMark class="programm-full__checkmark-image" />
 		</div>
 
-		<div class="programm__advantage-text">{{ text }}</div>
+		<div class="programm-full__advantage-text">{{ text }}</div>
 	</div>
 </template>
 

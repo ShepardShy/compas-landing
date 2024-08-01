@@ -28,11 +28,11 @@
 	}
 }
 
-:deep(.section__content) {
+.section__content {
 	max-width: calc(100% - 150px);
 }
 
-:deep(.section__info) {
+.section__info {
 	max-width: calc(100% - 420px);
 }
 
@@ -46,6 +46,7 @@
 }
 
 .programm__image {
+	top: -35px;
 	@include mixins.elemResolutionOptions(630px, 425px);
 }
 

@@ -57,6 +57,8 @@
 		</div>
 		<DistanceHistory />
 		<DistanceTarif />
+		<QuestionsBlock />
+		<ArticlesBlock />
 		<TemplateSocial class="distance__social" />
 	</AppSection>
 </template>
@@ -69,6 +71,8 @@
 	import DistanceCounter from "./components/Counter/Counter.vue";
 	import DistanceHistory from "./components/History/History.vue";
 	import DistanceTarif from "./components/Tarif/Tarif.vue";
+	import QuestionsBlock from "~/components/Templates/Common/QuestionsBlock/QuestionsBlock.vue";
+	import ArticlesBlock from "~/components/Templates/Common/ArticlesBlock/ArticlesBlock.vue";
 	import TemplateSocial from "@/components/Templates/Common/Social/Social.vue";
 	import AppMap from "@/components/AppInputs/Map/Field/Field.vue";
 	import { useDistanceStore } from "~/stores/distanceStore";

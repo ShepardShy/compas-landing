@@ -1,0 +1,12 @@
+@use "@/assets/variables.scss" as variables;
+@use "@/assets/mixins.scss" as mixins;
+
+.articles-block {
+	margin-top: 85px;
+	h2 {
+		text-align: center;
+		line-height: 1;
+		margin-bottom: 20px;
+		color: #383838;
+	}
+}

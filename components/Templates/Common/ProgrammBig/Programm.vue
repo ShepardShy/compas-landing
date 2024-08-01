@@ -1,14 +1,14 @@
 <template>
-	<AppSection class="section_without-background section_gray programm">
-		<AppH2 class="programm__title">
+	<AppSection class="section_without-background section_gray programm-full">
+		<AppH2 class="programm-full__title">
 			{{ props.title }}
 		</AppH2>
-		<div class="programm__desc">
+		<div class="programm-full__desc">
 			{{ props.desc }}
 		</div>
-		<div class="programm__advantages-wrapper">
-			<div class="programm__left">
-				<div class="programm__advantages">
+		<div class="programm-full__advantages-wrapper">
+			<div class="programm-full__left">
+				<div class="programm-full__advantages">
 					<Advantage
 						:text
 						:background
@@ -16,14 +16,14 @@
 					/>
 				</div>
 				<NuxtLink
-					class="programm__link"
-					to="/auth?tab=registration"
+					class="programm-full__link"
+					to="/auth/registration"
 				>
 					<AppButton class="button_blue"> Попробуйте бесплатно </AppButton>
 				</NuxtLink>
 			</div>
 
-			<figure class="ibg programm__image">
+			<figure class="ibg programm-full__image">
 				<img
 					src="/tariffs/program.webp"
 					alt=""
@@ -53,6 +53,6 @@
 	});
 </script>
 
-<style scoped>
+<style>
 	@import url(./Programm.scss);
 </style>

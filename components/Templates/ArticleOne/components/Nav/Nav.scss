@@ -12,21 +12,14 @@
 	min-width: 263px;
 	max-width: 263px;
 	z-index: 1;
+	position: sticky;
+	top: 20px;
+	margin-bottom: 35px;
 
 	@media (max-width: 768px) {
 		min-width: 100%;
 		max-width: 100%;
-	}
-
-	&.nav_fixed {
-		position: fixed;
-		top: 20px;
-		// left: var(--contentPos);
-		width: 270px;
-		@media (max-width: 768px) {
-			position: static;
-			width: 100%;
-		}
+		margin-bottom: 0;
 	}
 }
 

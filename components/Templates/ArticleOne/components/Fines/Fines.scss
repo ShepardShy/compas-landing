@@ -110,10 +110,30 @@
 	grid-row: span 2;
 	grid-row-end: 2;
 	@include mixins.elemResolutionOptions(100%, 100%);
-	min-height: 340px;
+	height: 340px;
+	overflow: hidden;
+	&::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		height: 100%;
+		width: 1px;
+		background-image: linear-gradient(to right, #c8c8c8 0%, #fbfcfd 101%);
+	}
+	@media (max-width: 1120px) {
+		&::before {
+			display: none;
+		}
+		img {
+			width: 100% !important;
+		}
+	}
 
 	img {
 		object-fit: contain;
+		width: unset;
 	}
 }
 

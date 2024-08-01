@@ -1,28 +1,31 @@
 <template>
 	<AppH1 class="auth__title"> Вход на портал <span class="auth__title-portal__name"></span> </AppH1>
 	<AppSection class="auth__form">
-		<div
-			class="auth__error"
-			v-show="userStore.authError.status"
-		>
-			{{ userStore.authError.text }}
+		<div class="auth__input-wrapper">
+			<AppInput
+				class="auth__input auth__input_substr"
+				:item="{
+					id: 0,
+					title: 'Название портала',
+					value: userStore.authData.domain,
+					placeholder: 'Название портала',
+					type: 'text',
+					key: 'domain',
+					substring: '.compas.pro',
+				}"
+				:mask="null"
+				:disabled="false"
+				:enabledAutocomplete="true"
+				@changeValue="data => changeValue(data)"
+			/>
+			<p
+				v-if="userStore.authError.text"
+				class="warning-list__field-error"
+			>
+				{{ userStore.authError.text }}
+			</p>
 		</div>
-		<AppInput
-			class="auth__input auth__input_substr"
-			:item="{
-				id: 0,
-				title: 'Название портала',
-				value: userStore.authData.domain,
-				placeholder: 'Название портала',
-				type: 'text',
-				key: 'domain',
-				substring: '.compas.pro',
-			}"
-			:mask="null"
-			:disabled="false"
-			:enabledAutocomplete="true"
-			@changeValue="data => changeValue(data)"
-		/>
+
 		<AppButton
 			:class="userStore.authButtonLoad ? 'button_loading' : ''"
 			class="auth__button button_blue"

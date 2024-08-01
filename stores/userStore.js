@@ -96,7 +96,8 @@ export const useUserStore = defineStore("userStore", {
 		},
 
 		async registration(data) {
-			const res = await axios.post("/api/registration", { ...data, repeatPassword: undefined, confidence: undefined });
+			console.log(data);
+			const res = await api.callMethod("POST", "registration", { domain: data.domain, email: data.email, password: data.password });
 			console.log(res);
 		},
 
