@@ -17,6 +17,7 @@
 				:disabled="false"
 				:enabledAutocomplete="true"
 				@changeValue="data => changeValue(data)"
+				@keyup.enter="logIn"
 			/>
 			<p
 				v-if="userStore.authError.text"
@@ -29,7 +30,7 @@
 		<AppButton
 			:class="userStore.authButtonLoad ? 'button_loading' : ''"
 			class="auth__button button_blue"
-			@click="() => logIn()"
+			@click="logIn"
 		>
 			Войти
 		</AppButton>

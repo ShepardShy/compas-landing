@@ -2,8 +2,21 @@
 @use "@/assets/mixins.scss" as mixins;
 
 .slider {
-	max-width: 90vw;
-	padding-left: 25px !important;
+	// max-width: 90vw;
+	// padding-left: 25px !important;
+	overflow: unset !important;
+	.swiper-button-disabled {
+		opacity: 0 !important;
+	}
+
+	// .swiper-button-next,
+	// .swiper-button-prev {
+	// 	top: calc(50% - 5px) !important;
+	// }
+
+	.swiper-pagination-bullets {
+		bottom: -24px !important;
+	}
 
 	.swiper-wrapper {
 		margin-bottom: 30px;
@@ -11,7 +24,7 @@
 
 	.swiper-slide {
 		opacity: 0;
-		padding-right: 25px;
+		// padding-right: 25px;
 
 		&.swiper-slide-visible {
 			opacity: 1;
@@ -26,7 +39,7 @@
 
 	.swiper-button-next {
 		will-change: opacity;
-		right: var(--swiper-navigation-sides-offset, 33px) !important;
+		transform: translateX(3px);
 		&::after {
 			content: url("/icons/scrollButtonRight.svg");
 		}
@@ -34,7 +47,7 @@
 
 	.swiper-button-prev {
 		will-change: opacity;
-		left: var(--swiper-navigation-sides-offset, 32px) !important;
+		transform: translateX(-3px);
 		&::after {
 			content: url("/icons/scrollButtonLeft.svg");
 		}

@@ -23,6 +23,7 @@
 				:mask="null"
 				:disabled="false"
 				:enabledAutocomplete="true"
+				@keyup.enter="!disabledButton ? registration() : null"
 				@changeValue="data => changeValue(data)"
 			/>
 			<p
@@ -49,6 +50,7 @@
 				:mask="null"
 				:disabled="false"
 				:enabledAutocomplete="true"
+				@keyup.enter="!disabledButton ? registration() : null"
 				@changeValue="data => changeValue(data)"
 			/>
 			<p
@@ -75,6 +77,7 @@
 				:required="true"
 				:disabled="false"
 				:enabledAutocomplete="false"
+				@keyup.enter="!disabledButton ? registration() : null"
 				@changeValue="data => changeValue(data)"
 			/>
 			<p
@@ -100,6 +103,7 @@
 				:required="true"
 				:disabled="false"
 				:enabledAutocomplete="false"
+				@keyup.enter="!disabledButton ? registration() : null"
 				@changeValue="data => changeValue(data)"
 			/>
 			<p
@@ -127,9 +131,9 @@
 		/>
 		<AppButton
 			:disabledOption="disabledButton"
-			:class="userStore.authButtonLoad ? 'button_loading' : ''"
+			:class="userStore.regButtonLoad ? 'button_loading' : ''"
 			class="auth__button button_blue"
-			@click="() => registration()"
+			@click="registration"
 		>
 			Создать портал
 		</AppButton>
@@ -174,7 +178,7 @@
 	});
 
 	const registration = () => {
-		if (!userStore.authButtonLoad) {
+		if (!userStore.regButtonLoad) {
 			userStore.registration(regData.value);
 		}
 	};

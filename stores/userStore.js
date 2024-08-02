@@ -14,6 +14,7 @@ export const useUserStore = defineStore("userStore", {
 			},
 			roles: [],
 			authButtonLoad: false,
+			regButtonLoad: false,
 			authData: {
 				domain: "",
 			},
@@ -58,7 +59,7 @@ export const useUserStore = defineStore("userStore", {
 						status: false,
 						text: "",
 					};
-					location.assign(`http://${this.authData.domain}.compas.pro/`);
+					navigateTo(`http://${this.authData.domain}.compas.pro/`, { external: true });
 				}
 			} catch (error) {
 				this.authData = {
@@ -98,25 +99,40 @@ export const useUserStore = defineStore("userStore", {
 		},
 
 		async registration(payload) {
-			const res = await api.callMethod("POST", "registration", { domain: payload.domain, email: payload.email, password: payload.password, password_confirmation: payload.passwordConfirmation });
-			const { success, data } = res;
+			try {
+				this.regButtonLoad = true;
+				this.regData.emailError = [];
+				this.regData.passwordError = [];
+				this.regData.domainError = [];
+				this.regData.passwordConfirmationError = [];
+				const res = await api.callMethod("POST", "registration", { domain: payload.domain, email: payload.email, password: payload.password, password_confirmation: payload.passwordConfirmation });
+				const { success, data } = res;
 
-			if (success) {
-				location.assign(`http://${this.regData.domain}.compas.pro/`);
-				return;
-			}
-			for (let key in data) {
-				if (key == "password_confirmation") {
-					this.regData["passwordConfirmationError"] = data[key];
+				if (success) {
+					navigateTo(`http://${this.regData.domain}.compas.pro/`, { external: true });
+					return;
 				}
-				if (key in this.regData) {
-					this.regData[`${key}Error`] = data[key];
+				for (let key in data) {
+					if (key == "password_confirmation") {
+						this.regData["passwordConfirmationError"] = data[key];
+					}
+					if (key in this.regData) {
+						this.regData[`${key}Error`] = data[key];
+					}
 				}
+			} catch (e) {
+				this.regData.email = "";
+				this.regData.password = "";
+				this.regData.domain = "";
+				this.regData.passwordConfirmation = "";
+			} finally {
+				this.regButtonLoad = false;
 			}
 		},
 
 		async clearStore() {
 			this.authButtonLoad = false;
+			this.regButtonLoad = false;
 			this.authData = {
 				email: "",
 				password: "",
