@@ -37,11 +37,6 @@
             <div class="table-item__border"></div>
         </div>
 
-        <div class="table-item__content" v-else-if="props.item.isHTMLTitle">
-            <span class="table-item__title table-item__title_html" v-html="props.item.alternativeTitle"></span>
-            <div class="table-item__border"></div>
-        </div>
-
         <div class="table-item__content" @click="() => doubleClick()" v-else>
             <span class="table-item__title">
                 {{ props.item.title }}

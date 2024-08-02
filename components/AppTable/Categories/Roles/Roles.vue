@@ -1,5 +1,5 @@
 <template>
-	<AppSection class="table__categories table-categories">
+	<AppSection :isCanResize="false" class="table__categories table-categories">
 		<SectionHeader :title="'Роли'">
 			<ButtonText @click="() => emit('callAction', { action: 'initCreateRole', item: null })">
 				Создать

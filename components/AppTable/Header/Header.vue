@@ -11,7 +11,7 @@
                     item.fixed ? 'table__item_fixed' : '', 
                     !item.enabled ? 'table__item_hidden' : '',
                     item.required ? 'table__item_required' : '', 
-                    item.read_only ? 'table__item_readonly' : '',
+                    item.read_only || item.key == 'actions' ? 'table__item_readonly' : '',
                     item.isUpdated ? 'table__item_updated' : ''
                 ]" 
                 @mousedown="() => hideAllDetails()"
@@ -31,6 +31,7 @@
     import _ from 'lodash'
     import HeaderItem from './Item/Item.vue'
     import resizeTable from './resizeTable.js'
+    import commonScripts from '@/helpers/commonScripts.js'
 
     const headerRef = ref(null)
     
@@ -260,6 +261,10 @@
             menu.value.saves.isShow = true
             let findedIndex = fields.value.findIndex(p => p.key == mouseDown.value.closest('.table__item').getAttribute('data-key')) 
             fields.value[findedIndex].width = `${mouseDown.value.closest('.table__item').offsetWidth}px`
+
+            setTimeout(() => {
+                commonScripts.clearSelection()
+            }, 5);
         }
     }
 

@@ -31,7 +31,7 @@
                             options: ['status', 'relation'].includes(item.type) ? item.options : null,
                             external_link: activeRow[item.key].value != undefined ? activeRow[item.key].value.external_link : null,
                         }"
-                        :isCanCreate="true"
+                        :isCanCreate="Boolean(item.can_create)"
                         :isUseEnter="false"
                         :enabledAutocomplete="false"
                         :isReadOnly="false"

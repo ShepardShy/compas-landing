@@ -25,6 +25,10 @@
             
             .table__item {
                 background: #fffbe2;
+
+                &.table__item_sticky {
+                    background: #fffbe2 !important;
+                }
             }
         }
     
@@ -33,6 +37,10 @@
     
             .table__item {
                 background: #eef3f8;
+
+                &.table__item_sticky {
+                    background: #eef3f8 !important;
+                }
             }
         }
     
@@ -42,6 +50,10 @@
             .table__item {
                 background: #d9e4f0;
     
+                &.table__item_sticky {
+                    background: #d9e4f0 !important;
+                }
+
                 .table-item__content {
                     .form-item__relation {
                         .relation__item {
@@ -76,7 +88,10 @@
             position: relative;
             
             .table__item {
-                overflow: visible;
+                &.table__item_select,
+                &.table__item_relation {
+                    overflow: visible;
+                }
             }
         }
     }
@@ -113,7 +128,7 @@ tbody {
 						background: transparent;
 
                         &.table__item_sticky {
-                            background: #f9f9fa;
+                            background: #f9f9fa !important;
                         }
 					}
 				}

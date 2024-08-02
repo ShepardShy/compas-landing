@@ -60,7 +60,7 @@
 <script setup>
     import './Actions.scss';
 
-    import { ref, computed } from 'vue';
+    import { ref } from 'vue';
 
     import IconDots from '@/components/AppIcons/Dots/Dots.vue'
     import IconArrow from '@/components/AppIcons/Arrow/Arrow.vue'
@@ -91,8 +91,8 @@
             type: Boolean
         },
         permissions: {
-            default: null,
-            type: String
+            default: {},
+            type: Object
         },
         userID: {
             default: null,

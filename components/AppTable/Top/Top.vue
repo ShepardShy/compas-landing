@@ -1,5 +1,7 @@
 <template>
     <div class="table-template__header table-top">
+        <slot name="top"></slot>
+
         <caption class="table__title">
             {{ props.tableTitle }}
         </caption>
@@ -30,7 +32,7 @@
                 v-show="menu.saves.isShow"
                 @saveSettings="(role) => callAction({action: 'saveSettings', value: role})"
             />
-            <AppPopup :isCanSelect="false" class="table-top__item table-top__item_excel" v-if="is_admin || permissions.export_p != 'N'" :closeByClick="true">
+            <AppPopup :isCanSelect="false" class="table-top__item table-top__item_excel" v-if="is_admin || props.permissions.export_p != 'N'" :closeByClick="true">
                 <template #summary>
                     <IconDots />
                 </template>
@@ -104,7 +106,7 @@
 <script setup>
     import './Top.scss';
 
-    import { ref, inject, onMounted, watch } from 'vue'
+    import { ref, inject, onMounted } from 'vue'
 
     import IconDots from '@/components/AppIcons/Dots/Dots.vue'
     import IconDrag from '@/components/AppIcons/Drag/Drag.vue'
@@ -127,7 +129,6 @@
     const fields = inject('fields')
     const sortItem = inject('sortItem')
     const tableRef = inject('tableRef')
-    const permissions = inject('permissions')
     const is_admin = inject('is_admin')
     const isMobile = inject('isMobile')
     
@@ -139,6 +140,10 @@
         tableTitle: {
             default: null,
             type: String
+        },
+        permissions: {
+            default: {},
+            type: Object
         }
     })
 
@@ -192,6 +197,13 @@
         // Сохранение настроек полей для выбранной роли
         const saveSettings = (role) => {
             showSaves(false)
+            let tableFields = tableRef.value.querySelectorAll('.table__header .table__item:not(.table__item_hidden)')
+
+            tableFields.forEach(element => {
+                let findedField = fields.value.find(p => p.key == element.getAttribute('data-key'))
+                findedField.width = `${element.offsetWidth}px`
+            });
+
             emit('callAction', {
                 action: 'saveFields', 
                 value: {

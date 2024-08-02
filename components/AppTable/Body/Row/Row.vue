@@ -14,6 +14,7 @@
             :slug="props.slug"
             :isTrash="isTrash"
             :actionType="props.actionType"
+            :permissions="props.permissions"
             :isPermanentEdit="props.isPermanentEdit"
             @clickRow="() => clickRow(true)"
             @dragRowStart="(event) => setDragImage(event)"
@@ -55,6 +56,10 @@
         actionType: {
             default: 'view',
             type: String
+        },
+        permissions: {
+            default: {},
+            type: Object
         }
     })
 

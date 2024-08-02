@@ -2,11 +2,12 @@
     <draggable 
         tag="tbody"
         class="table__body"
-        itemKey="table-body"
+        :itemKey="props.slug"
         v-model="bodyData" 
-        handle=".icon__draggable"
+        :group="props.groupBody"
+        :handle="props.isDraggableRow ? '.table__row' : '.icon__draggable'"
         @start="() => dragStart()"
-        @end="(event) => emit('callAction', {action: 'moveRows', value: event.to.__draggable_component__.modelValue})" 
+        @end="(event) => emit('callAction', {action: 'moveRows', value: event})" 
     >
         <template #item="{ element: row, index }">
             <TableRow 
@@ -15,6 +16,7 @@
                 :slug="props.slug"
                 :isTrash="props.isTrash"
                 :actionType="props.actionType"
+                :permissions="props.permissions"
                 :isPermanentEdit="props.isPermanentEdit"
                 @callAction="(data) => emit('callAction', data)"
             />
@@ -50,6 +52,18 @@
         actionType: {
             default: 'view',
             type: String
+        },
+        permissions: {
+            default: {},
+            type: Object
+        },
+        groupBody: {
+            default: null,
+            type: String
+        },
+        isDraggableRow: {
+            default: false,
+            type: Boolean
         }
     })
 

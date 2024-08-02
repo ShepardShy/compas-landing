@@ -1,96 +1,95 @@
-@use "@/assets/variables.scss" as variables;
-@use "@/assets/mixins.scss" as mixins;
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
 
 .table__header {
-	.table__item {
-		font-weight: 400;
-		overflow: visible;
-		border-right: 1px solid variables.$color-light-grey;
-		border-bottom: 1px solid variables.$color-light-grey;
+    .table__item {
+        font-weight: 400;
+        overflow: visible;
+        border-right: 1px solid variables.$color-light-grey;
+        border-bottom: 1px solid variables.$color-light-grey;
 
-		&.table__item_disabled {
-			pointer-events: none;
-		}
+        &.table__item_disabled {
+            pointer-events: none;
+        }
 
-		.table-item__title,
-		.form-item__checkbox {
-			overflow: hidden;
-			@include mixins.userSelect(none);
-		}
+        .table-item__title, .form-item__checkbox {
+            overflow: hidden;
+            @include mixins.userSelect(none);
+        }
 
-		&.sortable-ghost {
-			border-radius: 5px 5px 0px 0px;
-			border-bottom: none;
-			border-right: 2px dashed variables.$color-blue-grey;
-		}
+        &.sortable-ghost {
+            border-radius:  5px 5px 0px 0px;
+            border-bottom: none;
+            border-right: 2px dashed variables.$color-blue-grey;
+            
+        }
 
-		&.table__item_resizing {
-			&.table__item {
-				.table__item-border {
-					z-index: 22;
-				}
-			}
-		}
+        &.table__item_resizing {
+            &.table__item {
+                .table__item-border {
+                    z-index: 22;
+                }
+            }
+        }
 
-		&.table__item_hover {
-			z-index: 21;
-		}
+        &.table__item_hover {
+            z-index: 31;
+        }
 
-		.form-item__checkbox {
-			position: relative;
-			z-index: 4;
-		}
-	}
+        .form-item__checkbox {
+            position: relative;
+            z-index: 4;
 
-	&:hover {
-		.table-item__border {
-			height: 500vh;
-		}
-	}
+            .form-item__title {
+                color: variables.$color-grey;
+            }
+        }
+    }
 
-	&.table__header_copy {
-		position: fixed;
-		top: 0px;
-		max-width: var(--sectionWidth);
-		overflow: hidden;
-		z-index: 100;
-		background: variables.$color-white;
+    &:hover {
+        .table-item__border {
+            height: 500vh;
+        }
+    }
 
-		.table-item__drag-area,
-		.table-item__border {
-			pointer-events: none;
-		}
-	}
+    &.table__header_copy {
+        position: fixed;
+        top: 0px;
+        max-width: var(--sectionWidth);
+        overflow: hidden;
+        z-index: 100;
+        background: variables.$color-white;
+
+        .table-item__drag-area, 
+        .table-item__border {
+            pointer-events: none;
+        }
+    }
 }
 
 .table_resizing {
-	.table__header {
-		.table__item {
-			&:hover,
-			&.table__item_resizing {
-				.table-item__border {
-					height: auto;
-				}
-			}
-		}
-	}
+    .table__header {
+        .table-item__border_changing {
+            height: 500vh;
+        }
+    }
 
-	.table-item__drag-area {
-		pointer-events: none;
-	}
+    .table-item__drag-area {
+        pointer-events: none;
+    }
 }
 
 .table-template__body_empty {
-	.table__header {
-		.table__item {
-			.table-item__border {
-				height: 100% !important;
-			}
+    .table__header {
+        .table__item {
+            .table-item__border {
+                height: 100% !important;
+            }
 
-			&.sortable-ghost {
-				border-radius: 5px;
-				border: 2px dashed variables.$color-blue-grey;
-			}
-		}
-	}
+            &.sortable-ghost {
+                border-radius:  5px;
+                border: 2px dashed variables.$color-blue-grey;
+            }
+        }
+    }
 }

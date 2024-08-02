@@ -116,7 +116,7 @@ export default {
             this.setDefaultWidth(cols, fields)
             this.setCellsWidth(table)
         
-            if (localTableHeader.offsetWidth + 10 <= sectionBody.offsetWidth) {
+            if (localTableHeader.offsetWidth <= sectionBody.offsetWidth - 10) {
                 setCellsWidthDefference(localTableHeader, sectionBody)    
             }
     
@@ -169,7 +169,9 @@ export default {
         for (let cell of cells) {
             width = fields.find(p => p.key == cell.getAttribute('data-key')).width
             setCellWidth(cell, width)
-            setVisibleTitle(cell)    
+            setTimeout(() => {
+                setVisibleTitle(cell)    
+            }, 100);
         }
     }
 }
@@ -230,7 +232,7 @@ const setCellsWidthDefference = (tableHeader, sectionBody) => {
 
         // Нахождение доли ячейки в секции
         function getWidthPercent(cell) {
-            return cell.offsetWidth * 100 / tableHeader.offsetWidth
+            return cell.offsetWidth * 100 / (tableHeader.offsetWidth + 5)
         }
 
         // Нахождение пикселей для ячейки 
@@ -258,7 +260,9 @@ const setCellsWidthDefference = (tableHeader, sectionBody) => {
 
     for (let i = 0; i <= cells.length - 1; i++) {
         setCellWidth(cells[i], widthData[i])
-        setVisibleTitle(cells[i])
+        setTimeout(() => {
+            setVisibleTitle(cells[i],)    
+        }, 10);
     }
 }
 

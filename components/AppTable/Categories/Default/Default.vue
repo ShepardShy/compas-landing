@@ -1,5 +1,5 @@
 <template>
-	<AppSection class="table__categories table-categories">
+	<AppSection :isCanResize="false" class="table__categories table-categories">
 		<SectionHeader :title="'Каталог'">
 			<ButtonText @click="() => emit('callAction', { action: 'initCreateCategory', item: null })">
 				Создать

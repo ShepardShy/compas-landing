@@ -6,7 +6,6 @@
 
 	<div
 		class="table-template__buttons"
-		ref="buttonsRef"
 		:class="`table-template__buttons_${buttonsPos}`"
 	>
 		<div
@@ -43,7 +42,6 @@
 	const buttonScrollRightRef = ref(null);
 	const tableHeadRef = ref(null);
 	const buttonsPos = ref("start");
-	const buttonsRef = ref(null);
 
 	let leftButtonPos = ref(0);
 	let rightButtonPos = ref(0);
@@ -65,6 +63,10 @@
 		tableRef: {
 			default: null,
 		},
+		isHaveScrollingHeader: {
+			default: true,
+			type: Boolean,
+		},
 	});
 
 	const emit = defineEmits(["callAction"]);
@@ -77,31 +79,55 @@
 	});
 
 	onMounted(async () => {
+		let modal = checkModal();
 		tableHeadRef.value = tableRef.value.querySelector(".table__header");
-		window.addEventListener("scroll", throt_funScroll);
+
+		if (props.isHaveScrollingHeader) {
+			if (modal) {
+				modal.addEventListener("scroll", throt_funScroll);
+				modal.addEventListener("resize", setButtonPos);
+			} else {
+				window.addEventListener("scroll", throt_funScroll);
+				window.addEventListener("resize", setButtonPos);
+			}
+		}
+
 		tableRef.value.parentNode.addEventListener("scroll", scrollXThrottling);
 		if (tableRef.value) {
 			new ResizeObserver(resizeTable).observe(tableRef.value);
 		}
-
-		window.addEventListener("resize", setButtonPos);
 	});
 
 	onUnmounted(() => {
-		window.removeEventListener("scroll", throt_funScroll);
-		window.removeEventListener("resize", setButtonPos);
+		let modal = checkModal();
+
+		if (props.isHaveScrollingHeader) {
+			if (modal) {
+				modal.removeEventListener("scroll", throt_funScroll);
+				modal.removeEventListener("resize", setButtonPos);
+			} else {
+				window.removeEventListener("scroll", throt_funScroll);
+				window.removeEventListener("resize", setButtonPos);
+			}
+		}
 	});
+
+	const checkModal = () => {
+		const modalContainer = document.querySelector(".modal");
+
+		if (modalContainer) {
+			let modals = modalContainer.querySelectorAll(".modal__content");
+			let lastModal = modals[modals.length - 1];
+			return lastModal;
+		} else {
+			return null;
+		}
+	};
 
 	// Скролл таблицы и кнопок
 	const actionScroll = data => {
 		// Установка позиции у кнопок
 		const setPosition = () => {
-			// if (tableRef.value?.getBoundingClientRect()?.top > 400 || tableRef.value?.getBoundingClientRect()?.top < 100) {
-			// 	buttonsRef.value?.classList?.add("table-template__buttons_hide");
-			// } else {
-			// 	buttonsRef.value?.classList?.remove("table-template__buttons_hide");
-			// }
-
 			// старт таблицы
 			if (sectionRef.value && sectionRef.value.sectionRef.getBoundingClientRect().top > 0) {
 				const rect = sectionRef.value.sectionRef.getBoundingClientRect();
@@ -115,15 +141,17 @@
 				}
 				// конец таблицы
 			} else {
-				let startPosScrollBlock = sectionRef.value?.sectionRef?.getBoundingClientRect()?.top + window.pageYOffset - document.body.clientTop;
-				if (sectionRef.value && sectionRef.value?.sectionRef?.getBoundingClientRect()?.height + startPosScrollBlock < window.scrollY + window.innerHeight) {
-					buttonsPos.value = "end";
-					return window.innerHeight / 2 + (window.scrollY - startPosScrollBlock - startPosScrollBlock + 5);
-				}
-				// середина таблицы
-				else {
-					buttonsPos.value = "center";
-					return window.innerHeight / 2 + window.scrollY - startPosScrollBlock - 41;
+				if (sectionRef.value) {
+					let startPosScrollBlock = sectionRef.value.sectionRef.getBoundingClientRect().top + window.pageYOffset - document.body.clientTop;
+					if (sectionRef.value.sectionRef.getBoundingClientRect().height + startPosScrollBlock < window.scrollY + window.innerHeight) {
+						buttonsPos.value = "end";
+						return window.innerHeight / 2 + (window.scrollY - startPosScrollBlock - startPosScrollBlock + 5);
+					}
+					// середина таблицы
+					else {
+						buttonsPos.value = "center";
+						return window.innerHeight / 2 + window.scrollY - startPosScrollBlock - 41;
+					}
 				}
 			}
 		};
@@ -158,13 +186,41 @@
 					copyHeader.classList.add("table__header_copy");
 					tableRef.value.appendChild(copyHeader);
 					copyHeader.addEventListener("click", doubleClick);
+					copyHeader.scroll(tableRef.value.parentNode.scrollLeft, 0);
 				}
 			} else {
 				if (copyHeader) {
 					copyHeader.removeEventListener("click", doubleClick);
 					copyHeader.remove();
 					tableHeadCopy.value = null;
+					copyHeader.scroll(tableRef.value.parentNode.scrollLeft, 0);
 				}
+			}
+		};
+
+		const syncHeaders = () => {
+			let copyHeader = tableRef.value.querySelector(".table__header_copy");
+
+			if (copyHeader) {
+				let localTableHeader = tableRef.value.querySelector(".table__header");
+
+				const getWidth = () => {
+					let cellsWidth = [];
+					for (let cell of localTableHeader.querySelectorAll(".table__item")) {
+						cellsWidth.push(cell.offsetWidth);
+					}
+					return cellsWidth;
+				};
+
+				const setWidth = () => {
+					let arrWidth = getWidth();
+					copyHeader.querySelectorAll(".table__item").forEach((element, index) => {
+						element.width = `${arrWidth[index]}px`;
+						element.style.setProperty("--defaultWidth", `${arrWidth[index].toFixed(2)}px`);
+					});
+				};
+
+				setWidth();
 			}
 		};
 
@@ -240,6 +296,10 @@
 			// Отображение псевдошапки
 			case "showCopyHeader":
 				showCopyHeader();
+				break;
+
+			case "syncHeaders":
+				syncHeaders();
 				break;
 			default:
 				break;
@@ -317,8 +377,9 @@
 
 	// Установка положения кнопок
 	const setButtonPos = () => {
-		leftButtonPos.value = tableRef.value?.parentNode?.getBoundingClientRect()?.left;
-		rightButtonPos.value = tableRef.value?.parentNode?.getBoundingClientRect()?.left + tableRef.value?.parentNode?.offsetWidth - 40;
+		leftButtonPos.value = tableRef.value.parentNode.getBoundingClientRect().left;
+		rightButtonPos.value = tableRef.value.parentNode.getBoundingClientRect().left + tableRef.value.parentNode.offsetWidth - 40;
+		actionScroll({ action: "syncHeaders", value: null });
 	};
 
 	// Троттлинг скролла по горизонтали

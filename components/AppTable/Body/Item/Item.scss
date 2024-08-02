@@ -23,7 +23,7 @@
     }
 
     &.table__item_updated {
-        background: #fffbe280;
+        background: #fffbe280 !important;
     }
 
     &.table__item_required {
@@ -72,15 +72,9 @@
 
     .table-item__content {
         color: var(--colorItem);
-        padding: 10px;
+        padding: 10px 0px 10px 10px;
         -webkit-tap-highlight-color: transparent;
-        @include mixins.flexBlock($vertical: center, $horizontal: center, $gap: 5px);
-
-        &.table-item__content_text {
-            .form__item  {
-                justify-content: center;
-            }
-        }
+        @include mixins.flexBlock($vertical: center, $horizontal: space-between, $gap: 5px);
 
         &.table-item__content_address {
             .form-item__substring {
@@ -294,6 +288,7 @@
     }
 
     .table-template__body {
+        height: 100%;
         padding-bottom: 10px;
         min-height: auto;
     }

@@ -72,6 +72,14 @@
     }
 }
 
+.table__product-actions {
+    padding: 20px 25px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .table {
     width: 100%;
     border-spacing: 0;
@@ -118,14 +126,14 @@
         left: -10000px;
         background: variables.$color-white;
     }
-}
 
-.table__product-actions {
-    padding: 20px 25px;
-    margin-bottom: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    &.table_resizing {
+        * {
+            .form-item__value {
+                @include mixins.userSelect(none);
+            }
+        }
+    }
 }
 
 @media (max-width: 1320px) {
@@ -135,7 +143,6 @@
         }
     }
 }
-
 
 @media (max-width: 1120px) {
     .table__product-actions {

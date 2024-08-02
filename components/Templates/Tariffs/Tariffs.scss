@@ -40,6 +40,26 @@
 			overflow: hidden;
 		}
 
+		.table-item__content,
+		.form__item {
+			justify-content: center;
+		}
+		.table-item__title {
+			color: #1253a2;
+			font-size: 20px;
+			font-weight: 600;
+		}
+		.table-template__buttons {
+			position: absolute;
+		}
+		.scroll-button_left {
+			left: 0;
+		}
+		.scroll-button_right {
+			left: unset !important;
+			right: 0;
+		}
+
 		.section__scroll-area {
 			@include mixins.scrollBar();
 		}

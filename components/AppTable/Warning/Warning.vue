@@ -9,6 +9,7 @@
 
     <WarningPayment 
         v-else-if="isShow.state && isShow.type == 'payment'"
+        :balance="props.balance"
     />
 
     <WarningValidation 
@@ -48,4 +49,10 @@
     
     const isShow = inject('isShow')
 
+    const props = defineProps({
+        balance: {
+            default: 0,
+            type: Number
+        }
+    })
 </script>

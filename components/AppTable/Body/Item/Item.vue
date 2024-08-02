@@ -5,6 +5,7 @@
         :style="`--colorItem: ${Boolean(props.item.set_color) ? props.item.color : '#000'}; --defaultWidth: ${props.item.width};`"
         :data-key="props.item.key" 
         :class="[
+            `table__item_${props.item.type}`,
             props.item.fixed ? 'table__item_fixed' : '', 
             !props.item.enabled ? 'table__item_hidden' : '',
             props.item.isUpdated ? 'table__item_updated' : ''
@@ -27,16 +28,19 @@
                     @clickOutside="() => callAction({action: 'openPopup', value: false})"
                 />
 
-                <IconSuccess v-else-if="props.item.isHTMLTitle && props.row[props.item.key] == true"/>
-                <IconDelete v-else-if="props.item.isHTMLTitle && props.row[props.item.key] == false"/>
-
                 <ButtonPayment 
                     v-else-if="props.item.type == 'payment'"
-                    :item="props.row[props.item.key]"
-                    @click="callAction({
-                        action: 'initPayment',
-                        value: props.row[props.item.key]
-                    })"
+                    :item="{
+                        id: props.row.id,
+                        value: props.row[props.item.key] ? props.row[props.item.key].value : null,
+                        state: props.row[props.item.key] ? props.row[props.item.key].state : 1,
+                        key: props.item.key,
+                        title: props.item.title,
+                    }"
+                    @initPayment="(data) => emit('callAction', {action: 'initPayment', value: {
+                        id: props.row.id,
+                        value: data.value
+                    }})"
                 />
 
                 <AppRelation 
@@ -55,11 +59,12 @@
                         options: ['status', 'relation'].includes(props.item.type) ? props.item.options : null,
                         lockedOptions: props.item.choosed,
                     }"
-                    :isCanCreate="true"
                     :isAnotherTitle="isDinamyc"
+                    :isCanCreate="Boolean(props.item.can_create)"
                     :isCanEdit="Boolean(props.item.can_edit)"
                     :isMultiple="Boolean(props.item.is_plural)"
                     :isReadOnly="Boolean(props.item.read_only || (!props.row.isEdit && !props.isPermanentEdit))"
+                    :isHaveLink="props.item.key != 'role_id'"
                     @click="() => callAction({action: 'openPopup', value: true})"
                     @changeValue="(data) => changeValue(props.rowId, data)"
                     @openLink="(data) => callAction({action: 'openLink', value: {id: data.id, slug: props.item.related_table}})"
@@ -79,7 +84,7 @@
                         substring: props.item.unit,
                         required: Boolean(props.item.required),
                         external_link: ![null, undefined].includes(props.row[props.item.key]) && props.row[props.item.key] != '' ? props.row[props.item.key].external_link : null,
-                        value: [null, undefined].includes(props.row[props.item.key]) ? null : typeof props.row[props.item.key] == 'object' ? String(props.row[props.item.key].value) : String(props.row[props.item.key]),
+                        value: [null, undefined].includes(props.row[props.item.key]) ? null : typeof props.row[props.item.key] == 'object' ? [null, undefined].includes(props.row[props.item.key].value) ? null : String(props.row[props.item.key].value) : String(props.row[props.item.key]),
                     }"
                     :class="Boolean(props.item.read_only || (!props.row.isEdit && !props.isPermanentEdit)) ? 'table-item__content_read-only' : ''"
                     :disabled="false"
@@ -91,7 +96,6 @@
                     @changeValue="(data) => changeValue(props.rowId, data)"
                     @clickOutside="() => callAction({action: 'openPopup', value: false})"
                 />
-
                 <FormValue 
                     v-else-if="item.type == 'json'"
                     :isHTML="true"
@@ -106,14 +110,14 @@
                     :isLink="Boolean(props.item.is_external_link)"
                     :link="typeof props.row[props.item.key] == 'object' && props.row[props.item.key] != null ? props.row[props.item.key].external_link : null"
                 />
-                <AppActions 
+                <AppActions
                     v-else-if="item.type == 'actions'"
                     :item="{
                         title: 'Действие',
                         slug: props.row.isEdit ? 'edit' : props.actionType
                     }"
                     :disabled="!props.row.isChoose && actionState == 'saving'"
-                    :permissions="permissions"
+                    :permissions="props.permissions"
                     :userID="userID"
                     :is_admin="is_admin"
                     :relationID="props.row.user_id ? props.row.user_id.value : null"
@@ -124,7 +128,7 @@
                     v-else-if="props.item.type == 'status'"
                     :item="{
                         focus: false,
-                        id: props.row.id,
+                        id: props.item.id,
                         key: props.item.key,
                         title: props.item.title,
                         options: props.item.options,
@@ -227,7 +231,6 @@
                 </div>
 
                 <IconDelete
-                    class="icon__delete_grey"
                     v-else-if="props.item.type == 'iconDelete'"
                     @click="() => callAction({action: 'removeRow', value: props.rowId})"
                 />
@@ -251,7 +254,6 @@
     import AppTextarea from "@/components/AppInputs/Textarea/Textarea.vue"
     import AppRelation from "@/components/AppSelects/Relation/Relation.vue"
     import AppMap from '@/components/AppInputs/Map/Map.vue';
-    import IconSuccess from '@/components/AppIcons/Success/Success.vue';
     import ButtonPayment from '@/components/AppButton/ButtonPayment/ButtonPayment.vue';
 
     const itemRef = ref(null)
@@ -262,7 +264,6 @@
     const backupValues = inject('backupValues')
     const skipChecking = inject('skipChecking')
     const backupRows = inject('backupRows')
-    const permissions = inject('permissions')
     const is_admin = inject('is_admin')
     const userID = inject('userID')
 
@@ -321,6 +322,10 @@
         rowId: {
             default: 0,
             type: Number
+        },
+        permissions: {
+            default: {},
+            type: Object
         }
     })
 
@@ -338,7 +343,6 @@
             if (actionState.value == null) {
                 backupRows.value =  JSON.parse(JSON.stringify(bodyData.value))
                 actionState.value = props.isTrash ? 'restoring' : 'saving'
-                console.log(bodyData.value);
                 emit('callAction', {
                     action: "changeStateTab",
                     value: false
@@ -357,20 +361,20 @@
         } 
 
         if (isDinamyc && data.key == 'product_id') {
-            console.log(data.value.selectedOption);
-            findedRow.id = data.value.selectedOption ? data.value.selectedOption.id : null
-            findedRow.product_price = data.value.selectedOption ? data.value.selectedOption.price : null
-            findedRow.product_weight = data.value.selectedOption ? data.value.selectedOption.weight : null
-            findedRow.product_count = 1
-            findedRow.quantity = data.value.selectedOption ? data.value.selectedOption.quantity ?? 0 : 0
-            findedRow.product_name = data.value.selectedOption.text
-
-            if (data.value.value != null) {
-                findedRow[data.key].localOptions = [{
-                    label: data.value.selectedOption,
-                    value:  data.value.selectedOption.id
-                }]
+            for (let key in data.value.selectedOption) {
+                if (['price', 'weight'].includes(key)) {
+                    findedRow[`product_${key}`] = data.value.selectedOption[key]
+                } else if (key == 'text') {
+                    findedRow.product_name = data.value.selectedOption.text
+                } else {
+                    findedRow[key] = data.value.selectedOption[key]
+                }
             }
+            findedRow.product_count = 1,
+            findedRow.localOptions = data.value.selectedOption ? [{
+                label: data.value.selectedOption,
+                value:  data.value.selectedOption.id
+            }] : []
         }
     }
 
