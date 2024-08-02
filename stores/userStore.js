@@ -15,10 +15,18 @@ export const useUserStore = defineStore("userStore", {
 			roles: [],
 			authButtonLoad: false,
 			authData: {
-				// email: "",
-				// password: "",
 				domain: "",
-				// remember_me: false,
+			},
+			regData: {
+				email: "",
+				emailError: [],
+				password: "",
+				passwordError: [],
+				domain: "",
+				domainError: [],
+				passwordConfirmation: "",
+				passwordConfirmationError: [],
+				confidence: false,
 			},
 			authError: {
 				text: "",
@@ -26,7 +34,6 @@ export const useUserStore = defineStore("userStore", {
 			},
 			modals: [],
 			// userToken: "1Eg6R5LWw2VsRXwn7gYcSYJ81awict9B5xllQES9yTcwavoaDQFslm9BtkQ7",
-			userToken: null,
 		};
 	},
 
@@ -52,11 +59,6 @@ export const useUserStore = defineStore("userStore", {
 						text: "",
 					};
 					location.assign(`http://${this.authData.domain}.compas.pro/`);
-					// window.location.href = `http://${this.authData.domain}.compas.pro/`;
-					// navigateTo(`http://${this.authData.domain}.compas.pro`, {
-					// external: true,
-					// });
-					// window.location.replace(`http://${this.authData.domain}.compas.pro`);
 				}
 			} catch (error) {
 				this.authData = {
@@ -95,10 +97,22 @@ export const useUserStore = defineStore("userStore", {
 			});
 		},
 
-		async registration(data) {
-			console.log(data);
-			const res = await api.callMethod("POST", "registration", { domain: data.domain, email: data.email, password: data.password });
-			console.log(res);
+		async registration(payload) {
+			const res = await api.callMethod("POST", "registration", { domain: payload.domain, email: payload.email, password: payload.password, password_confirmation: payload.passwordConfirmation });
+			const { success, data } = res;
+
+			if (success) {
+				location.assign(`http://${this.regData.domain}.compas.pro/`);
+				return;
+			}
+			for (let key in data) {
+				if (key == "password_confirmation") {
+					this.regData["passwordConfirmationError"] = data[key];
+				}
+				if (key in this.regData) {
+					this.regData[`${key}Error`] = data[key];
+				}
+			}
 		},
 
 		async clearStore() {

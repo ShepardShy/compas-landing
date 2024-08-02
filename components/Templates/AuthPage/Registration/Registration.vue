@@ -14,7 +14,7 @@
 				:item="{
 					id: 0,
 					title: 'Название портала',
-					value: userData.domain,
+					value: regData.domain,
 					placeholder: 'Название портала',
 					type: 'text',
 					key: 'domain',
@@ -26,10 +26,11 @@
 				@changeValue="data => changeValue(data)"
 			/>
 			<p
-				v-if="userData.domainError"
+				v-for="error in regData.domainError"
+				v-if="regData.domainError"
 				class="warning-list__field-error"
 			>
-				{{ userData.domainError }}
+				{{ error }}
 			</p>
 		</div>
 
@@ -39,7 +40,7 @@
 				:item="{
 					id: 0,
 					title: 'E-mail',
-					value: userData.email,
+					value: regData.email,
 					placeholder: 'E-mail',
 					type: 'text',
 					key: 'email',
@@ -51,10 +52,11 @@
 				@changeValue="data => changeValue(data)"
 			/>
 			<p
-				v-if="userData.emailError"
+				v-for="error in regData.emailError"
+				v-if="regData.emailError"
 				class="warning-list__field-error"
 			>
-				{{ userData.emailError }}
+				{{ error }}
 			</p>
 		</div>
 
@@ -64,7 +66,7 @@
 				:item="{
 					id: 1,
 					title: 'Пароль',
-					value: userData.password,
+					value: regData.password,
 					placeholder: 'Пароль',
 					type: 'password',
 					key: 'password',
@@ -76,10 +78,11 @@
 				@changeValue="data => changeValue(data)"
 			/>
 			<p
-				v-if="userData.passwordError"
+				v-for="error in regData.passwordError"
+				v-if="regData.passwordError"
 				class="warning-list__field-error"
 			>
-				{{ userData.passwordError }}
+				{{ error }}
 			</p>
 		</div>
 		<div class="auth__input-wrapper">
@@ -88,10 +91,10 @@
 				:item="{
 					id: 1,
 					title: 'Подтверждение пароля',
-					value: userData.repeatPassword,
+					value: regData.passwordConfirmation,
 					placeholder: 'Подтверждение пароля',
 					type: 'password',
-					key: 'repeatPassword',
+					key: 'passwordConfirmation',
 				}"
 				:mask="null"
 				:required="true"
@@ -100,10 +103,11 @@
 				@changeValue="data => changeValue(data)"
 			/>
 			<p
-				v-if="userData.repeatPasswordError"
+				v-for="error in regData.passwordConfirmationError"
+				v-if="regData.passwordConfirmationError"
 				class="warning-list__field-error"
 			>
-				{{ userData.repeatPasswordError }}
+				{{ error }}
 			</p>
 		</div>
 
@@ -112,7 +116,7 @@
 			:item="{
 				id: 2,
 				title: checkboxLink,
-				value: userData.confidence,
+				value: regData.confidence,
 				placeholder: '',
 				type: 'checkbox',
 				key: 'confidence',
@@ -143,6 +147,7 @@
 
 <script setup>
 	import "./Registration.scss";
+	import { storeToRefs } from "pinia";
 
 	import AppInput from "@/components/AppInputs/Input/Input.vue";
 	import AppCheckbox from "@/components/AppInputs/Checkbox/Checkbox.vue";
@@ -153,35 +158,24 @@
 	import { useUserStore } from "@/stores/userStore.js";
 	const userStore = useUserStore();
 
-	let userData = ref({
-		email: "",
-		emailError: "",
-		password: "",
-		passwordError: "",
-		repeatPassword: "",
-		repeatPasswordError: "",
-		domain: "",
-		domainError: "",
-
-		confidence: false,
-	});
+	const { regData } = storeToRefs(userStore);
 
 	const checkboxLink = `<div class="auth__text">
 	       Я понимаю и принимаю <a href="/docs/politics" class="auth__link" target="_blank"> условия и политику конфиденциальности </a> Compas
 	   </div>`;
 
 	const changeValue = data => {
-		userData.value[data.key] = data.value;
+		regData.value[data.key] = data.value;
 	};
 
 	const disabledButton = computed(() => {
 		let txt = /^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-		return !userData.value.confidence || userData.value.password != userData.value.repeatPassword || userData.value.domain == "" || userData.value.password == "" || userData.value.repeatPassword == "" || userData.value.email == "" || !txt.test(userData.value.email);
+		return !regData.value.confidence || regData.value.domain == "" || regData.value.password == "" || regData.value.passwordConfirmation == "" || regData.value.email == "";
 	});
 
 	const registration = () => {
 		if (!userStore.authButtonLoad) {
-			userStore.registration(userData.value);
+			userStore.registration(regData.value);
 		}
 	};
 </script>

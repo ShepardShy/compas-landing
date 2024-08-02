@@ -44,7 +44,7 @@
 			countSlides.value = 4;
 		} else if (window.innerWidth <= 1240 && window.innerWidth >= 950) {
 			countSlides.value = 3;
-		} else if (window.innerWidth <= 950 && window.innerWidth >= 640) {
+		} else if (window.innerWidth <= 950 && window.innerWidth >= 500) {
 			countSlides.value = 2;
 		} else {
 			countSlides.value = 1;

@@ -1,148 +1,154 @@
-@use '@/assets/variables.scss' as variables;
-@use '@/assets/mixins.scss' as mixins;
+@use "@/assets/variables.scss" as variables;
+@use "@/assets/mixins.scss" as mixins;
 
 .tariffs-slider__tabs {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 55px;
+	display: flex;
+	gap: 15px;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 55px;
 }
 .tariffs-slider__tab {
-    display: grid;
-    place-items: center;
-    padding: 15px 20px;
-    cursor: pointer;
-    background: #f6f5f3;
+	display: grid;
+	place-items: center;
+	padding: 15px 20px;
+	cursor: pointer;
+	background: #f6f5f3;
 
-    &.tariffs-slider__tab_active {
-        box-shadow: 0 0 3px 0 #1253a2, inset 0 1px 2px 0 rgba(255, 255, 255, 0.5);
-        outline: solid 1px #2f8cff;
-        background-color: #fff;
-    }
+	&.tariffs-slider__tab_active {
+		box-shadow: 0 0 3px 0 #1253a2, inset 0 1px 2px 0 rgba(255, 255, 255, 0.5);
+		outline: solid 1px #2f8cff;
+		background-color: #fff;
+	}
+}
+
+@media (max-width: 680px) {
+	.tariffs-slider .slider.swiper-slider_only .swiper-slide {
+		padding-right: 25px !important;
+	}
 }
 
 .tariffs-slider__item {
-    display: flex;
-    height: 450px;
-    flex-direction: column;
-    border-radius: 10px;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.07);
-    border: solid 1px #eeeff1;
-    padding: 25px;
-    
-    button {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        padding: 15px 20px;
+	display: flex;
+	height: 450px;
+	flex-direction: column;
+	border-radius: 10px;
+	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.07);
+	border: solid 1px #eeeff1;
+	padding: 25px;
 
-        &::after {
-            content: url('/icons/arrow-right.svg');
-            height: 14px;
-            transition: 0.4s all;
-            display: flex;
-            align-items: center;
-        }
+	button {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 10px;
+		padding: 15px 20px;
 
-        &:hover {
-            &::after {
-                transform: translateX(5px);
-            }
-        }
-    }
+		&::after {
+			content: url("/icons/arrow-right.svg");
+			height: 14px;
+			transition: 0.4s all;
+			display: flex;
+			align-items: center;
+		}
+
+		&:hover {
+			&::after {
+				transform: translateX(5px);
+			}
+		}
+	}
 }
 
 .tariffs-slider__title {
-    font-size: 31px;
-    color: #1253a2;
-    font-weight: 700;
-    margin-bottom: 10px;
+	font-size: 31px;
+	color: #1253a2;
+	font-weight: 700;
+	margin-bottom: 10px;
 }
 .tariffs-slider__subtitle {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 25px;
+	font-size: 16px;
+	font-weight: 600;
+	margin-bottom: 25px;
 }
 
 .tariffs-slider__advantages {
-    margin-bottom: 25px;
-    flex: 1;
+	margin-bottom: 25px;
+	flex: 1;
 }
 .tariffs-slider__advantage {
 }
 
 .tariffs-slider__price {
-    &::before {
-        font-size: 12px;
-        margin-bottom: 10px;
-        color: #8f8f8f;
-    }
+	&::before {
+		font-size: 12px;
+		margin-bottom: 10px;
+		color: #8f8f8f;
+	}
 
-    &.tariffs-slider__price_month {
-        margin-bottom: 15px;
+	&.tariffs-slider__price_month {
+		margin-bottom: 15px;
 
-        &::before {
-            content: 'Цена за месяц';
-        }
-    }
+		&::before {
+			content: "Цена за месяц";
+		}
+	}
 
-    &.tariffs-slider__price_day {
-        margin-bottom: 10px;
+	&.tariffs-slider__price_day {
+		margin-bottom: 10px;
 
-        &::before {
-            content: 'Цена за день';
-        }
-    }
+		&::before {
+			content: "Цена за день";
+		}
+	}
 }
 
 .tariffs-slider__values {
-    gap: 15px;
-    display: flex;
-    align-items: flex-end;
+	gap: 15px;
+	display: flex;
+	align-items: flex-end;
 }
 .tariffs-slider__value {
-    font-size: 31px;
+	font-size: 31px;
 }
 .tariffs-slider__value_new {
-    color: #1253a2;
-    font-weight: 600;
+	color: #1253a2;
+	font-weight: 600;
 }
 
 .tariffs-slider__value_old {
-    font-size: 21px;
-    color: #8f8f8f;
-    text-decoration: line-through;
+	font-size: 21px;
+	color: #8f8f8f;
+	text-decoration: line-through;
 }
 
 .tariffs-slider__value_free {
-    font-size: 0px;
+	font-size: 0px;
 
-    &::before {
-        content: 'Бесплатно';
-        font-size: 31px;
-        color:variables.$color-red;
-    }
+	&::before {
+		content: "Бесплатно";
+		font-size: 31px;
+		color: variables.$color-red;
+	}
 }
 .tariffs-slider__discount {
-    font-size: 12px;
-    margin-bottom: 10px;
-    color: #8f8f8f;
+	font-size: 12px;
+	margin-bottom: 10px;
+	color: #8f8f8f;
 
-    &.tariffs-slider__discount_none {
-        display: none;
-        // height: 15px;
-    }
+	&.tariffs-slider__discount_none {
+		display: none;
+		// height: 15px;
+	}
 }
 
 @media (max-width: 590px) {
-    .tariffs-slider__tabs {
-        flex-direction: column;
+	.tariffs-slider__tabs {
+		flex-direction: column;
 
-        .tariffs-slider__tab {
-            width: 100%;
-        }
-    }
+		.tariffs-slider__tab {
+			width: 100%;
+		}
+	}
 }

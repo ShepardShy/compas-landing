@@ -3,8 +3,8 @@
 		<div class="page error">
 			<AppMenu />
 			<AppMain>
-				<undefinedPage v-if="error.statusCode === 404" />
-				<restrictedPage v-else-if="error.statusCode === 403" />
+				<restrictedPage v-if="error.statusCode === 403 || route.fullPath.split('/').includes('403')" />
+				<undefinedPage v-else-if="error.statusCode === 404" />
 			</AppMain>
 		</div>
 	</div>
@@ -21,6 +21,10 @@
 	import AppMenu from "@/components/AppMenu/AppMenu.vue";
 	import AppMain from "@/components/AppMain/AppMain.vue";
 	const error = useError();
+
+	const route = useRoute();
+
+	console.log(route);
 
 	onMounted(() => {
 		console.log(error);

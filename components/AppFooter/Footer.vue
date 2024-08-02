@@ -96,12 +96,6 @@
 						Контакты
 					</NuxtLink>
 					<NuxtLink
-						to="/docs"
-						class="footer-link__href"
-					>
-						Документы
-					</NuxtLink>
-					<NuxtLink
 						to="/auth/registration"
 						class="footer-link__href"
 					>
@@ -118,6 +112,12 @@
 						class="footer-link__href"
 					>
 						Статьи
+					</NuxtLink>
+					<NuxtLink
+						to="/docs"
+						class="footer-link__href"
+					>
+						Документы
 					</NuxtLink>
 				</nav>
 			</div>

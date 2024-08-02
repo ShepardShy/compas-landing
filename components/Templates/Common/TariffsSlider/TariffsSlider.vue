@@ -58,8 +58,6 @@
 </template>
 
 <script setup>
-	import "./TariffsSlider.scss";
-
 	import { SwiperSlide } from "swiper/vue";
 	import AppSlider from "@/components/AppSlider/Slider.vue";
 	import AppButton from "@/components/AppButton/AppButton.vue";
@@ -93,3 +91,7 @@
 		}
 	};
 </script>
+
+<style>
+	@import url("./TariffsSlider.scss");
+</style>
