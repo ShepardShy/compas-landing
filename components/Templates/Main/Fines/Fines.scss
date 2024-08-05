@@ -8,6 +8,7 @@
 	grid-template-columns: repeat(2, 1fr);
 	& h1 {
 		font-size: 35px;
+		line-height: 1;
 	}
 }
 
@@ -37,7 +38,7 @@
 
 			&::after {
 				content: url("/icons/arrow-right.svg");
-				height: 14px;
+				height: 18px;
 				transition: 0.4s all;
 			}
 

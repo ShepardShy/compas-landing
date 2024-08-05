@@ -22,5 +22,5 @@
 </script>
 
 <style>
-	@import url(./Wrap.scss);
+	@import url(./WrapText.scss);
 </style>

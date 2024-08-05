@@ -68,14 +68,14 @@
 			background: #fff;
 			border: 1px solid #2f8cff;
 
-			span {
+			:deep(span) {
 				display: flex;
 				align-items: center;
 				gap: 5px;
 				white-space: nowrap;
 			}
 
-			.button-text {
+			:deep(.button-text) {
 				color: #1253a2;
 			}
 

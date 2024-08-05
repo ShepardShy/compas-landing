@@ -2,13 +2,22 @@
 	<AppSection class="section_without-background section_gray steps">
 		<div class="steps__top">
 			<AppH2 class="steps__title">Проверка и оплата штрафов ГИБДД</AppH2>
-			<p class="steps__text">Проверить штрафы онлайн можно через сервис «Автокод» всего за 2 минуты. Отчет покажет взыскания, выписанные за превышение скорости, неправильную парковку и другие нарушения.</p>
+			<p class="steps__text">С помощью сервиса «Компас.про» вы можете быстро и удобно проверить штрафы ГИБДД онлайн всего за пару минут. Отчет включает штрафы за превышение скорости, неправильную парковку и другие нарушения.</p>
 		</div>
 		<div class="steps__steps">
 			<AppH3 class="steps__subtitle">Проверка и оплата штрафов ГИБДД</AppH3>
 			<p class="steps__text">Чтобы проверить штрафы ГИБДД, нужно выполнить три простых шага.</p>
-			<StepsList />
-			<p class="steps__text">По ГРЗ «Автокод» найдет штрафы с камер видеофиксации, по номеру в/у – штрафы, выписанные инспектором ГИБДД.</p>
+			<StepsList
+				v-model="activeStep"
+				:steps="steps1"
+			/>
+			<p class="steps__text">С помощью сервиса «Компас.про» вы можете быстро и удобно проверить штрафы ГИБДД онлайн всего за пару минут. Отчет включает штрафы за превышение скорости, неправильную парковку и другие нарушения.</p>
+			<StepsList
+				v-model="activeStep"
+				:steps="steps2"
+			/>
+
+			<p class="steps__text">Чтобы оплатить штраф, убедитесь, что у вас достаточно средств на балансе личного кабинета нашего сервиса. Оплата штрафов производится с вашего баланса в Компас.про.</p>
 		</div>
 		<FansyBox>
 			<div
@@ -29,6 +38,11 @@
 	import StepsList from "./components/StepsList/StepsList.vue";
 	import YoutubeWhite from "~/components/AppIcons/YoutubeWhite/YoutubeWhite.vue";
 	import FansyBox from "~/components/AppFansyBox/FansyBox.vue";
+
+	import steps1 from "./composables/steps1-3.json";
+	import steps2 from "./composables/steps4-5.json";
+
+	const activeStep = ref(1);
 </script>
 
 <style>

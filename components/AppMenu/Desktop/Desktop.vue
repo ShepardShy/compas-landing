@@ -66,8 +66,6 @@
 </template>
 
 <script setup>
-	import "./Desktop.scss";
-
 	import IconLogo from "@/components/AppIcons/Logo/Logo.vue";
 	import AppButton from "@/components/AppButton/AppButton.vue";
 	import MenuLink from "./components/MenuLink/MenuLink.vue";
@@ -83,3 +81,7 @@
 
 	const emit = defineEmits(["callAction"]);
 </script>
+
+<style>
+	@import "./Desktop.scss";
+</style>

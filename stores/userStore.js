@@ -100,15 +100,23 @@ export const useUserStore = defineStore("userStore", {
 
 		async registration(payload) {
 			try {
+				console.log("try");
 				this.regButtonLoad = true;
 				this.regData.emailError = [];
 				this.regData.passwordError = [];
 				this.regData.domainError = [];
 				this.regData.passwordConfirmationError = [];
 				const res = await api.callMethod("POST", "registration", { domain: payload.domain, email: payload.email, password: payload.password, password_confirmation: payload.passwordConfirmation });
+				console.log(res);
+
 				const { success, data } = res;
 
+				console.log(success, "success");
+				console.log(data, "data");
+
 				if (success) {
+					console.log(123);
+
 					navigateTo(`http://${this.regData.domain}.compas.pro/`, { external: true });
 					return;
 				}
@@ -126,6 +134,7 @@ export const useUserStore = defineStore("userStore", {
 				this.regData.domain = "";
 				this.regData.passwordConfirmation = "";
 			} finally {
+				console.log("finally");
 				this.regButtonLoad = false;
 			}
 		},

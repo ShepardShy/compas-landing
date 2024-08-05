@@ -24,12 +24,11 @@
 			</NuxtLink>
 		</div>
 
-		<figure class="ibg programm-full__image">
-			<img
-				src="/tariffs/program.webp"
-				alt=""
-			/>
-		</figure>
+		<img
+			class="programm-full__image"
+			src="/tariffs/program.webp"
+			alt=""
+		/>
 	</AppSection>
 </template>
 

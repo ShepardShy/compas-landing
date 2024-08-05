@@ -9,6 +9,10 @@
 		flex-direction: column;
 		gap: 25px;
 
+		& .bold {
+			font-weight: 600;
+		}
+
 		& p {
 			line-height: 1.2;
 		}
@@ -22,6 +26,23 @@
 			font-size: 26px;
 			color: #1253a2;
 			line-height: 1;
+		}
+		ul {
+			list-style: none;
+			padding-left: 0;
+			li {
+				text-indent: 12px;
+				position: relative;
+				&::before {
+					content: "";
+					position: absolute;
+					top: 12px;
+					left: 0;
+					width: 7px;
+					height: 2px;
+					background-color: #000;
+				}
+			}
 		}
 	}
 	&__image {

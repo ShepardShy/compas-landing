@@ -10,7 +10,6 @@
 	<MainCompanies
 		:list="fines"
 		:title="'1 000 компаний проверили и оплатили более 50 000 штрафов на 50% дешевле чем это делали раньше.'"
-		:desc="'Бесплатная проверка авто, водителей, компании на наличие штрафов'"
 	/>
 	<MainBase />
 	<MainSteps />
@@ -18,11 +17,12 @@
 	<CommonProgramm
 		class="main__programm"
 		:title="'Проверки абсолютно бесплатны'"
-		:desc="'«Автокод» собирает информацию из официальных источников: ГИБДД, МАДИ, АМПП, ГИС ГМП. После проверки увидите общее количество и общую сумму штрафов. Также в отчете будет история штрафов и отдельная информация по каждому штрафу ГИБДД:'"
+		desc="Сервис «Компас.про» собирает данные из официальных источников: ГИБДД, МАДИ, АМПП, ГИС ГМП. После проверки вы получите общее количество и сумму всех штрафов. Отчет также включает историю штрафов и детальную информацию по каждому нарушению ГИБДД."
 	/>
 	<PlusesFines />
 	<!-- <MainTariffs /> -->
-	<MainAbout />
+	<MainAbout :text="aboutJson.text" />
+
 	<MainQuestions />
 	<MainArticles class="main__questinos" />
 	<CommonSocial class="main__social" />
@@ -35,7 +35,7 @@
 	import MainFines from "./Fines/Fines.vue";
 	import MainPluses from "./Pluses/Pluses.vue";
 	import MainSteps from "./Steps/Steps.vue";
-	import MainAbout from "./About/About.vue";
+	import MainAbout from "@/components/Templates/Common/WrapText/WrapText.vue";
 	import MainQuestions from "~/components/Templates/Common/QuestionsBlock/QuestionsBlock.vue";
 	import MainArticles from "~/components/Templates/Common/ArticlesBlock/ArticlesBlock.vue";
 	import CommonSocial from "@/components/Templates/Common/Social/Social.vue";
@@ -44,6 +44,8 @@
 	// import MainTariffs from '@/components/Templates/Main/Tariffs/Tariffs.vue';
 	import PlusesFines from "./PlusesFines/PlusesFines.vue";
 	import AppTabs from "~/components/AppTabs/Tabs.vue";
+
+	import aboutJson from "./data/about.json";
 
 	const route = useRoute();
 

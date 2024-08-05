@@ -14,7 +14,6 @@
 	z-index: 1;
 	position: sticky;
 	top: 20px;
-	margin-bottom: 35px;
 
 	@media (max-width: 768px) {
 		min-width: 100%;
@@ -36,15 +35,11 @@
 	padding: 10px 15px;
 	position: relative;
 
-	&.nav__item_H2 {
-		padding-left: 40px;
-	}
-
 	&.nav__item_H3,
 	&.nav__item_H4,
 	&.nav__item_H5,
 	&.nav__item_H6 {
-		padding-left: 80px;
+		padding-left: 30px;
 	}
 
 	&.nav__item_active {

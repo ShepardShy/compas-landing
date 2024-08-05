@@ -18,7 +18,20 @@
 					required: false,
 					title: 'На странице:',
 					lockedOptions: [],
-					options: onPageOptions(),
+					options: [
+						{
+							label: '25',
+							value: 25,
+						},
+						{
+							label: '50',
+							value: 50,
+						},
+						{
+							label: '100',
+							value: 100,
+						},
+					],
 				}"
 				:isFiltered="false"
 				:isHaveNullOption="false"
@@ -43,22 +56,7 @@
 	const activePage = defineModel();
 
 	// Опции "На странице"
-	const activeOnPage = ref(totalPages.value);
-	const onPageOptions = () => {
-		const arr = [];
-		for (let i = 1; i <= 4; i++) {
-			if (i == 3) {
-				continue;
-			}
-			const value = Math.floor((totalPages.value / 4) * i);
-			arr.push({ label: value, value });
-		}
-		return arr;
-	};
-	const changeOnPage = data => {
-		activeOnPage.value = data.value;
-		changePage(data);
-	};
+	const activeOnPage = ref(25);
 
 	// Выбор текущей страницы
 	const changePage = data => {

@@ -2,24 +2,18 @@
 @use "@/assets/mixins.scss" as mixins;
 
 .slider {
-	// max-width: 90vw;
-	// padding-left: 25px !important;
 	overflow: unset !important;
 	.swiper-button-disabled {
-		opacity: 0 !important;
+		pointer-events: all !important;
 	}
 
-	// .swiper-button-next,
-	// .swiper-button-prev {
-	// 	top: calc(50% - 5px) !important;
-	// }
-
-	.swiper-pagination-bullets {
-		bottom: -24px !important;
+	.swiper-button-next,
+	.swiper-button-prev {
+		top: calc(50% - 15px) !important;
 	}
 
 	.swiper-wrapper {
-		margin-bottom: 30px;
+		padding-bottom: 30px;
 	}
 
 	.swiper-slide {

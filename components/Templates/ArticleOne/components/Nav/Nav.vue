@@ -7,8 +7,9 @@
 		<div class="nav__list">
 			<a
 				:href="item.link"
+				@click.prevent="() => scroll(item.link)"
 				class="nav__item"
-				:class="(`nav__item_${item.nodeName}`, item.isScrolled ? 'nav__item_scrolled' : '', item.isActive ? 'nav__item_active' : '')"
+				:class="{ nav__item_H3: item.nodeName == 'H3', nav__item_H4: item.nodeName == 'H4', nav__item_scrolled: item.isScrolled, nav__item_active: item.isActive }"
 				v-for="item in docsNav"
 			>
 				{{ item.text }}
@@ -25,9 +26,15 @@
 	const docsNavRef = ref(null);
 	const headers = ref([]);
 
+	const scroll = link => {
+		const item = document.getElementById(link.replace("#", ""));
+		item.scrollIntoView();
+		window.scrollBy({ top: -200 });
+	};
+
 	onMounted(() => {
 		setTimeout(() => {
-			const titles = $articleContent.value.querySelectorAll("h2");
+			const titles = $articleContent.value.querySelectorAll("h2,h3");
 			for (let i = 0; i < titles.length; i++) {
 				if (["H1", "H2", "H3", "H4", "H5", "H6"].includes(titles[i].nodeName)) {
 					titles[i].id = i;

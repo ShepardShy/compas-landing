@@ -2,7 +2,7 @@
 	display: flex;
 	gap: 34px;
 	padding-bottom: 100px;
-	@media (max-width: 1024px) {
+	@media (max-width: 900px) {
 		flex-direction: column;
 	}
 	&__left {
@@ -11,7 +11,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 35px;
-		@media (max-width: 1024px) {
+		@media (max-width: 900px) {
 			max-width: 100%;
 		}
 	}
