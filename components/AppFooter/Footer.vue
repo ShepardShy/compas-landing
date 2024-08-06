@@ -48,6 +48,7 @@
 						</figure>
 					</NuxtLink>
 				</div>
+				<div class="footer-link__title">Оплата штрафов ГИБДД осуществляется НКО «МОНЕТА.РУ» (ООО). Лицензия ЦБ РФ №3508-К от 2 июля 2012 года.</div>
 			</div>
 
 			<div class="footer__column footer__column_possibilities">

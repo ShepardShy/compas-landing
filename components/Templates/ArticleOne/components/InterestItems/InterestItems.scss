@@ -3,6 +3,9 @@
 	flex-wrap: wrap;
 	gap: 35px;
 	justify-content: center;
+	@media (max-width: 1024px) {
+		flex-direction: column;
+	}
 	&__title {
 		font-size: 26px;
 		line-height: 1;

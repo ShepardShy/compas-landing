@@ -53,7 +53,7 @@ export const useUserStore = defineStore("userStore", {
 				if (response?.code == 404) {
 					return;
 				} else {
-					authRef.classList.add("auth_disabled");
+					// authRef.classList.add("auth_disabled");
 					this.userToken = response.token;
 					this.authError = {
 						status: false,

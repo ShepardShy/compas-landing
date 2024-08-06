@@ -31,6 +31,7 @@
 			:table="table"
 			:activeCategory="null"
 			:categories="[]"
+			:isCanSort="false"
 			:isHaveCategories="false"
 			:categoryType="'default'"
 		/>
@@ -103,7 +104,7 @@
                 `,
 				title: "Бесплатный",
 				key: "free",
-				width: "200px",
+				width: "300px",
 				enabled: true,
 				sort_order: null,
 				type: "text",
@@ -140,7 +141,7 @@
                 `,
 				title: "Базовый тариф",
 				key: "base",
-				width: "200px",
+				width: "300px",
 				enabled: true,
 				sort_order: null,
 				type: "text",
@@ -179,7 +180,7 @@
                 `,
 				title: "Бизнес",
 				key: "business",
-				width: "200px",
+				width: "300px",
 				enabled: true,
 				sort_order: null,
 				type: "text",
@@ -216,7 +217,7 @@
                 `,
 				title: "Профессиональный",
 				key: "prof",
-				width: "200px",
+				width: "300px",
 				enabled: true,
 				sort_order: null,
 				type: "text",

@@ -255,6 +255,7 @@
 	import AppDate from "@/components/AppInputs/Date/Date.vue";
 	import IconDrag from "@/components/AppIcons/Drag/Drag.vue";
 	import IconDelete from "@/components/AppIcons/Delete/Delete.vue";
+	import IconSuccess from "@/components/AppIcons/Success/Success.vue";
 	import AppActions from "../Actions/Actions.vue";
 	import AppFile from "@/components/AppInputs/File/File.vue";
 	import AppStatus from "@/components/AppSelects/Status/Status.vue";

@@ -2,11 +2,10 @@
 @use "@/assets/mixins.scss" as mixins;
 
 .pluses-fines {
-	margin: 85px 0px 100px;
+	margin: 85px 0px 85px;
 
 	h2 {
 		text-align: center;
-		max-width: 35vw;
 		margin: 0 auto 45px;
 		margin-bottom: 35px;
 	}
@@ -56,22 +55,6 @@
 	}
 }
 
-@media (max-width: 1400px) {
-	.pluses-fines {
-		h2 {
-			max-width: 55vw;
-		}
-	}
-}
-
-@media (max-width: 900px) {
-	.pluses-fines {
-		h2 {
-			max-width: 75vw;
-		}
-	}
-}
-
 @media (max-width: 770px) {
 	.pluses-fines__list {
 		gap: 15px;
@@ -79,16 +62,8 @@
 	}
 }
 
-@media (max-width: 660px) {
-	.pluses-fines {
-		h2 {
-			max-width: none;
-		}
-	}
-}
-
-@media (max-width: 520px) {
-	.pluses-fines {
-		margin-top: 70px;
-	}
-}
+// @media (max-width: 520px) {
+// 	.pluses-fines {
+// 		margin-top: 70px;
+// 	}
+// }

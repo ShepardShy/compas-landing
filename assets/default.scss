@@ -29,6 +29,7 @@ img {
 
 button {
 	cursor: pointer;
+	font-weight: 400;
 }
 
 html,
@@ -163,6 +164,7 @@ body.body__cursor-style {
 
 .main {
 	min-width: 320px;
+	position: relative;
 }
 
 /*фоновое изображение*/
@@ -531,7 +533,7 @@ summary {
 		cursor: pointer;
 
 		svg {
-			@include mixins.elemResolutionOptions(18px, 18px);
+			@include mixins.elemResolutionOptions(16px, 16px);
 
 			* {
 				fill: variables.$color-grey;
