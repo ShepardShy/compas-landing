@@ -65,7 +65,7 @@
 	import AppInput from "@/components/AppInputs/Input/Input.vue";
 	import AppButton from "@/components/AppButton/AppButton.vue";
 	import AppSection from "@/components/AppSection/AppSection.vue";
-	import AppH1 from "@/components/AppHeaders/H1/MobileMenu/MobileMenu.vue";
+	import AppH1 from "@/components/AppHeaders/H1/H1.vue";
 
 	import { useUserStore } from "@/stores/userStore.js";
 	const userStore = useUserStore();

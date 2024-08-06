@@ -1,6 +1,6 @@
 <template>
 	<div class="docs">
-		<!-- <AppBreadcrambs :breadcrumbs="breadcrumbs" /> -->
+		<AppBreadcrambs :breadcrumbs="breadcrumbs" />
 
 		<AppH1> Документы </AppH1>
 		<div class="docs__list">
@@ -30,7 +30,7 @@
 	import "./List.scss";
 
 	import docs from "../docs.json";
-	import AppH1 from "@/components/AppHeaders/H1/MobileMenu/MobileMenu.vue";
+	import AppH1 from "@/components/AppHeaders/H1/H1.vue";
 	import AppBreadcrambs from "@/components/AppBreadcrambs/Breadcrambs.vue";
 
 	import { useGlobalStore } from "~/stores/globalStore";

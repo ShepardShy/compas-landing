@@ -2,14 +2,16 @@
 @use "@/assets/mixins.scss" as mixins;
 
 .slider {
-	overflow: unset !important;
+	// overflow: unset !important;
+	padding: 0 10px !important;
+	padding-top: 15px !important;
 	.swiper-button-disabled {
 		pointer-events: all !important;
 	}
 
 	.swiper-button-next,
 	.swiper-button-prev {
-		top: calc(50% - 15px) !important;
+		top: calc(50% - 7.5px) !important;
 	}
 
 	.swiper-wrapper {
@@ -34,6 +36,7 @@
 	.swiper-button-next {
 		will-change: opacity;
 		transform: translateX(3px);
+		right: 20px;
 		&::after {
 			content: url("/icons/scrollButtonRight.svg");
 		}
@@ -42,6 +45,7 @@
 	.swiper-button-prev {
 		will-change: opacity;
 		transform: translateX(-3px);
+		left: 20px;
 		&::after {
 			content: url("/icons/scrollButtonLeft.svg");
 		}

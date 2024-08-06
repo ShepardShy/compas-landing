@@ -1,5 +1,5 @@
 <template>
-	<!-- <AppBreadcrambs :breadcrumbs="breadcrumbs" /> -->
+	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
 
 	<AppH1> Тарифы </AppH1>
 
@@ -42,7 +42,7 @@
 <script setup>
 	import "./Tariffs.scss";
 
-	import AppH1 from "@/components/AppHeaders/H1/MobileMenu/MobileMenu.vue";
+	import AppH1 from "@/components/AppHeaders/H1/H1.vue";
 	import AppH2 from "@/components/AppHeaders/H2/H2.vue";
 	import AppBreadcrambs from "@/components/AppBreadcrambs/Breadcrambs.vue";
 	import CommonProgramm from "@/components/Templates/Common/Programm/Programm.vue";

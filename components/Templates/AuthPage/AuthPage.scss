@@ -49,10 +49,6 @@
 	word-break: break-word;
 	max-width: 100%;
 
-	& .h1_mobileMenu__text {
-		margin: 0 auto;
-	}
-
 	.auth__title-portal__name {
 		display: block;
 	}
@@ -63,7 +59,7 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	position: relative;
+	// position: relative;
 	margin: 112px auto 100px auto;
 }
 
@@ -85,7 +81,7 @@
 
 	img {
 		pointer-events: none;
-		object-fit: contain;
+		object-fit: cover;
 	}
 }
 
@@ -233,10 +229,6 @@
 }
 
 @media (max-width: 550px) {
-	.auth__background {
-		display: none;
-	}
-
 	.auth__title {
 		font-size: 30px;
 		& .h1_mobileMenu__text {

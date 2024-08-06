@@ -1,9 +1,9 @@
 <template>
 	<AppSection class="distance section_without-background">
-		<!-- <AppBreadcrambs
+		<AppBreadcrambs
 			class="distance__breadcrambs"
 			:breadcrumbs="breadcrumbs"
-		/> -->
+		/>
 
 		<AppTabs
 			class="distance__links"
@@ -66,7 +66,7 @@
 <script setup>
 	import AppSection from "~/components/AppSection/AppSection.vue";
 	import AppTabs from "~/components/AppTabs/Tabs.vue";
-	import AppH1 from "@/components/AppHeaders/H1/MobileMenu/MobileMenu.vue";
+	import AppH1 from "@/components/AppHeaders/H1/H1.vue";
 	import DistanceCard from "./components/Card/Card.vue";
 	import DistanceCounter from "./components/Counter/Counter.vue";
 	import DistanceHistory from "./components/History/History.vue";

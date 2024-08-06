@@ -1,4 +1,6 @@
 <template>
+	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
+
 	<div class="questions">
 		<div class="questions__left">
 			<Search />
@@ -46,6 +48,17 @@
 	const { categories } = storeToRefs(questionsStore);
 
 	const questionId = computed(() => route.params.id);
+
+	let breadcrumbs = [
+		{
+			title: "Главная страница",
+			link: "/",
+		},
+		{
+			title: "Вопрос-ответ",
+			link: "/products/fines",
+		},
+	];
 </script>
 
 <style scoped>

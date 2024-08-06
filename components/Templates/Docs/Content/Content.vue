@@ -3,7 +3,7 @@
 		ref="personalDocWrapperRef"
 		class="personal-docs"
 	>
-		<!-- <AppBreadcrambs :breadcrumbs="breadcrumbs" /> -->
+		<AppBreadcrambs :breadcrumbs="breadcrumbs" />
 		<div
 			class="personal-docs__header"
 			v-if="activeDoc != null"
@@ -32,7 +32,7 @@
 
 	import docs from "../docs.json";
 	import DocsNav from "./Nav/Nav.vue";
-	import AppH1 from "@/components/AppHeaders/H1/MobileMenu/MobileMenu.vue";
+	import AppH1 from "@/components/AppHeaders/H1/H1.vue";
 	import AppBreadcrambs from "@/components/AppBreadcrambs/Breadcrambs.vue";
 
 	import { useGlobalStore } from "~/stores/globalStore";

@@ -8,6 +8,7 @@
 				v-if="!isShowOnlyLogo"
 				class="menu__links"
 			>
+				<MobileMenu />
 				<NuxtLink
 					:to="menu.length > 0 ? menu[0].tab : '/'"
 					class="menu__logo"
@@ -15,8 +16,8 @@
 					<IconLogo />
 				</NuxtLink>
 
-				<div class="menu__content">
-					<nav class="menu__list">
+				<div class="menu__content menu__list_desktop">
+					<nav class="menu__list menu__list_desktop">
 						<MenuLink
 							v-show="!item.is_hidden"
 							v-for="item in menu"
@@ -48,7 +49,10 @@
 					>
 						Вход
 					</NuxtLink>
-					<NuxtLink to="/auth/registration">
+					<NuxtLink
+						class="menu__registration"
+						to="/auth/registration"
+					>
 						<AppButton class="button_blue"> Регистрация </AppButton>
 					</NuxtLink>
 				</div>
@@ -69,6 +73,7 @@
 	import IconLogo from "@/components/AppIcons/Logo/Logo.vue";
 	import AppButton from "@/components/AppButton/AppButton.vue";
 	import MenuLink from "./components/MenuLink/MenuLink.vue";
+	import MobileMenu from "../Mobile/Mobile.vue";
 	import { useGlobalStore } from "~/stores/globalStore";
 	import { storeToRefs } from "pinia";
 

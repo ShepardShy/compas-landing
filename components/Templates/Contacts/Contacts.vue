@@ -1,5 +1,5 @@
 <template>
-	<!-- <AppBreadcrambs :breadcrumbs="breadcrumbs" /> -->
+	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
 
 	<AppH1> Контакты </AppH1>
 	<CompositeBlock class="contacts__map contacts-map">
@@ -72,7 +72,7 @@
 
 	import AppBreadcrambs from "@/components/AppBreadcrambs/Breadcrambs.vue";
 	import AppSection from "@/components/AppSection/AppSection.vue";
-	import AppH1 from "@/components/AppHeaders/H1/MobileMenu/MobileMenu.vue";
+	import AppH1 from "@/components/AppHeaders/H1/H1.vue";
 	import AppH2 from "@/components/AppHeaders/H2/H2.vue";
 	import TemplateSocial from "@/components/Templates/Common/Social/Social.vue";
 	import CompositeBlock from "@/components/AppSection/CompositeBlock/CompositeBlock.vue";

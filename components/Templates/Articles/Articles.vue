@@ -1,4 +1,6 @@
 <template>
+	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
+
 	<div class="articles">
 		<div class="articles__left">
 			<Search />
@@ -25,6 +27,17 @@
 
 	const articlesStore = useArticlesStore();
 	const { categories, currentTitle } = storeToRefs(articlesStore);
+
+	let breadcrumbs = [
+		{
+			title: "Главная страница",
+			link: "/",
+		},
+		{
+			title: "Статьи",
+			link: "/products/fines",
+		},
+	];
 </script>
 
 <style scoped>

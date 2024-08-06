@@ -1,4 +1,6 @@
 <template>
+	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
+
 	<AppTabs
 		class="main__links"
 		:tabs="tabs"
@@ -64,6 +66,14 @@
 		{ id: 5, title: "Штрафы по ИНН", tab: "po-inn", enabled: true },
 	];
 
+	const titleMap = {
+		"po-sts": "Штрафы по СТС",
+		"po-voditelskomu-udostovereniyu": "Штрафы по ВУ",
+		"po-nomeru-postanovleniya": "Штрафы по постановлению",
+		"po-nomeru-avto": "Штрафы по гос. номеру",
+		"po-inn": "Штрафы по ИНН",
+	};
+
 	// Смена вкладки
 	const changeTab = async tab => {
 		activeTab.value.tab = tab.value;
@@ -86,6 +96,34 @@
 				activeTab.value.tab = route.params.type;
 			}
 		}
+	);
+
+	let breadcrumbs = computed(() =>
+		activeTab.value.tab
+			? [
+					{
+						title: "Главная страница",
+						link: "/",
+					},
+					{
+						title: "Проверка штрафов",
+						link: "/products/fines",
+					},
+					{
+						title: titleMap[activeTab.value.tab],
+						link: `/products/fines${activeTab.value.tab ? `/${activeTab.value.tab}` : null}`,
+					},
+			  ]
+			: [
+					{
+						title: "Главная страница",
+						link: "/",
+					},
+					{
+						title: "Проверка штрафов",
+						link: "/products/fines",
+					},
+			  ]
 	);
 
 	let companies = [

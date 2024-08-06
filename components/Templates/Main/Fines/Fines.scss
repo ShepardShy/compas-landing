@@ -9,6 +9,12 @@
 	& h1 {
 		font-size: 35px;
 		line-height: 1;
+		@media (max-width: 1120px) {
+			text-align: center;
+		}
+		@media (max-width: 800px) {
+			text-align: left;
+		}
 	}
 }
 
