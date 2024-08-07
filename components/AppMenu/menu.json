@@ -89,5 +89,45 @@
 		"is_hidden": 1,
 		"enabled": 1,
 		"childs": []
+	},
+	{
+		"id": 18,
+		"title": "Регистрация",
+		"slug": "auth",
+		"sort": 0,
+		"tab": "/auth/registration",
+		"is_hidden": 1,
+		"enabled": 1,
+		"childs": []
+	},
+	{
+		"id": 19,
+		"title": "Документы",
+		"slug": "auth",
+		"sort": 0,
+		"tab": "/docs",
+		"is_hidden": 1,
+		"enabled": 1,
+		"childs": []
+	},
+	{
+		"id": 20,
+		"title": "Вопрос-ответ",
+		"slug": "auth",
+		"sort": 0,
+		"tab": "/questions",
+		"is_hidden": 1,
+		"enabled": 1,
+		"childs": []
+	},
+	{
+		"id": 21,
+		"title": "Статьи",
+		"slug": "auth",
+		"sort": 0,
+		"tab": "/articles",
+		"is_hidden": 1,
+		"enabled": 1,
+		"childs": []
 	}
 ]

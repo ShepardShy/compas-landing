@@ -42,7 +42,7 @@
 
 	.select__popup[open] {
 		.form-item__substring {
-			top: 5px !important;
+			top: 8px !important;
 		}
 	}
 
@@ -51,7 +51,7 @@
 
 		.form-item__substring {
 			padding: 0;
-			top: 2px !important;
+			top: 6px !important;
 			width: 14px;
 			background-color: transparent;
 			&::after {

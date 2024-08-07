@@ -20,12 +20,10 @@
 		& h2 {
 			font-size: 31px;
 			color: #1253a2;
-			line-height: 1;
 		}
 		h3 {
 			font-size: 26px;
 			color: #1253a2;
-			line-height: 1;
 		}
 		ul {
 			list-style: none;
@@ -36,7 +34,7 @@
 				&::before {
 					content: "";
 					position: absolute;
-					top: 12px;
+					top: 9px;
 					left: 0;
 					width: 7px;
 					height: 2px;
