@@ -10,6 +10,7 @@
 
 		<div class="auth__input-wrapper">
 			<AppInput
+				:disabled="userStore.regButtonLoad"
 				class="auth__input auth__input_substr"
 				:item="{
 					id: 0,
@@ -21,7 +22,6 @@
 					substring: '.compas.pro',
 				}"
 				:mask="null"
-				:disabled="false"
 				:enabledAutocomplete="true"
 				@keyup.enter="!disabledButton ? registration() : null"
 				@changeValue="data => changeValue(data)"
@@ -48,7 +48,7 @@
 				}"
 				:required="true"
 				:mask="null"
-				:disabled="false"
+				:disabled="userStore.regButtonLoad"
 				:enabledAutocomplete="true"
 				@keyup.enter="!disabledButton ? registration() : null"
 				@changeValue="data => changeValue(data)"
@@ -75,7 +75,7 @@
 				}"
 				:mask="null"
 				:required="true"
-				:disabled="false"
+				:disabled="userStore.regButtonLoad"
 				:enabledAutocomplete="false"
 				@keyup.enter="!disabledButton ? registration() : null"
 				@changeValue="data => changeValue(data)"
@@ -101,7 +101,7 @@
 				}"
 				:mask="null"
 				:required="true"
-				:disabled="false"
+				:disabled="userStore.regButtonLoad"
 				:enabledAutocomplete="false"
 				@keyup.enter="!disabledButton ? registration() : null"
 				@changeValue="data => changeValue(data)"
@@ -126,12 +126,12 @@
 				key: 'confidence',
 				isHTML: true,
 			}"
-			:disabled="false"
+			:disabled="userStore.regButtonLoad"
 			@changeValue="data => changeValue(data)"
 		/>
 		<AppButton
 			:disabledOption="disabledButton"
-			:class="userStore.regButtonLoad ? 'button_loading' : ''"
+			:class="{ button_loading: userStore.regButtonLoad }"
 			class="auth__button button_blue"
 			@click="registration"
 		>

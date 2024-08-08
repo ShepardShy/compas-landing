@@ -14,7 +14,7 @@
 					substring: '.compas.pro',
 				}"
 				:mask="null"
-				:disabled="false"
+				:disabled="userStore.authButtonLoad"
 				:enabledAutocomplete="true"
 				@changeValue="data => changeValue(data)"
 				@keyup.enter="logIn"

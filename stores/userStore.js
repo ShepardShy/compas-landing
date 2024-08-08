@@ -49,7 +49,6 @@ export const useUserStore = defineStore("userStore", {
 			try {
 				this.authButtonLoad = true;
 				response = await api.callMethod("POST", `tenant/check`, data, { Authorization: "Bearer null" }, true, true, this.authData.domain);
-				console.log(response, "response");
 				if (response?.code == 404) {
 					return;
 				} else {
@@ -91,7 +90,6 @@ export const useUserStore = defineStore("userStore", {
 		},
 
 		async forgetPassword(data) {
-			console.log(data);
 			commonScripts.showNotification({
 				title: "Восстановление пароля",
 				description: `Сообщение было отправлено на почту ${data.email}`,
@@ -100,24 +98,21 @@ export const useUserStore = defineStore("userStore", {
 
 		async registration(payload) {
 			try {
-				console.log("try");
 				this.regButtonLoad = true;
 				this.regData.emailError = [];
 				this.regData.passwordError = [];
 				this.regData.domainError = [];
 				this.regData.passwordConfirmationError = [];
 				const res = await api.callMethod("POST", "registration", { domain: payload.domain, email: payload.email, password: payload.password, password_confirmation: payload.passwordConfirmation });
-				console.log(res);
 
-				const { success, data } = res;
+				const { success, data, token } = res;
 
-				console.log(success, "success");
-				console.log(data, "data");
-
-				if (success) {
-					console.log(123);
-
-					navigateTo(`http://${this.regData.domain}.compas.pro/`, { external: true });
+				if (success && token) {
+					navigateTo(`http://${this.regData.domain}.compas.pro/?token=${token}`, { external: true });
+					this.regData.email = "";
+					this.regData.password = "";
+					this.regData.domain = "";
+					this.regData.passwordConfirmation = "";
 					return;
 				}
 				for (let key in data) {
@@ -134,7 +129,6 @@ export const useUserStore = defineStore("userStore", {
 				this.regData.domain = "";
 				this.regData.passwordConfirmation = "";
 			} finally {
-				console.log("finally");
 				this.regButtonLoad = false;
 			}
 		},
