@@ -78,14 +78,6 @@
 	import { useDistanceStore } from "~/stores/distanceStore";
 	import mkadCoords from "./composables/mkadCoords";
 	import kadCoords from "./composables/kadCoords";
-	import AppMenu from "@/components/AppMenu/AppMenu.vue";
-	import { useGlobalStore } from "~/stores/globalStore";
-
-	const globalStore = useGlobalStore();
-	globalStore.isShowMobileMenu = false;
-	onBeforeRouteLeave(() => {
-		globalStore.isShowMobileMenu = true;
-	});
 
 	let coords = ref(null);
 	const mapComponent = ref(null);

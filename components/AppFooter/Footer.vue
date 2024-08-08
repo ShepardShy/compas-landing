@@ -97,6 +97,12 @@
 						Контакты
 					</NuxtLink>
 					<NuxtLink
+						to="/auth/entry"
+						class="footer-link__href"
+					>
+						Войти
+					</NuxtLink>
+					<NuxtLink
 						to="/auth/registration"
 						class="footer-link__href"
 					>

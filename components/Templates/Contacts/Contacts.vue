@@ -79,14 +79,6 @@
 
 	import requisitesPdf from "/pages/contacts/requisites.pdf";
 
-	import { useGlobalStore } from "~/stores/globalStore";
-
-	const globalStore = useGlobalStore();
-	globalStore.isShowMobileMenu = false;
-	onBeforeRouteLeave(() => {
-		globalStore.isShowMobileMenu = true;
-	});
-
 	let contacts = [
 		{
 			title: "Телефон",

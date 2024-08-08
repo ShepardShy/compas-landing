@@ -9,15 +9,11 @@
 			<p class="steps__text">Чтобы проверить штрафы ГИБДД, нужно выполнить пять простых шагов.</p>
 			<StepsList
 				v-model="activeStep"
-				:steps="steps1"
-			/>
-			<p class="steps__text">С помощью сервиса «Compas.pro» вы можете быстро и удобно проверить штрафы ГИБДД онлайн всего за пару минут. Отчет включает штрафы за превышение скорости, неправильную парковку и другие нарушения.</p>
-			<StepsList
-				v-model="activeStep"
-				:steps="steps2"
+				:steps
 			/>
 
-			<p class="steps__text">Чтобы оплатить штраф, убедитесь, что у вас достаточно средств на балансе личного кабинета нашего сервиса. Оплата штрафов производится с вашего баланса в Compas.pro.</p>
+			<p class="steps__text steps__text_margin">Чтобы оплатить штраф, убедитесь, что у вас достаточно средств на балансе личного кабинета нашего сервиса. Оплата штрафов производится с вашего баланса в Compas.pro.</p>
+			<p class="steps__text">При проверке по гос номеру вы найдутся штрафы с камер видеофиксации, по номеру водительского удостоверения - выписанные инспекторами ГИБДД.</p>
 		</div>
 		<FansyBox>
 			<div
@@ -39,8 +35,7 @@
 	import YoutubeWhite from "~/components/AppIcons/YoutubeWhite/YoutubeWhite.vue";
 	import FansyBox from "~/components/AppFansyBox/FansyBox.vue";
 
-	import steps1 from "./composables/steps1-3.json";
-	import steps2 from "./composables/steps4-5.json";
+	import steps from "./composables/steps.json";
 
 	const activeStep = ref(1);
 </script>

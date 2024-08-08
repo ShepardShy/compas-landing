@@ -33,14 +33,6 @@
 	import AppH1 from "@/components/AppHeaders/H1/H1.vue";
 	import AppBreadcrambs from "@/components/AppBreadcrambs/Breadcrambs.vue";
 
-	import { useGlobalStore } from "~/stores/globalStore";
-
-	const globalStore = useGlobalStore();
-	globalStore.isShowMobileMenu = false;
-	onBeforeRouteLeave(() => {
-		globalStore.isShowMobileMenu = true;
-	});
-
 	const setDate = date => {
 		return new Date(date).toLocaleDateString("ru-RU", { year: "numeric", month: "2-digit", day: "2-digit" });
 	};

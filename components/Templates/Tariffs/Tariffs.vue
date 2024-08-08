@@ -52,14 +52,6 @@
 	import AppTable from "@/components/AppTable/AppTable.vue";
 	import CommonSocial from "@/components/Templates/Common/Social/Social.vue";
 
-	import { useGlobalStore } from "~/stores/globalStore";
-
-	const globalStore = useGlobalStore();
-	globalStore.isShowMobileMenu = false;
-	onBeforeRouteLeave(() => {
-		globalStore.isShowMobileMenu = true;
-	});
-
 	let table = {
 		// Таблица
 		tableKeys: [

@@ -35,14 +35,6 @@
 	import AppH1 from "@/components/AppHeaders/H1/H1.vue";
 	import AppBreadcrambs from "@/components/AppBreadcrambs/Breadcrambs.vue";
 
-	import { useGlobalStore } from "~/stores/globalStore";
-
-	const globalStore = useGlobalStore();
-	globalStore.isShowMobileMenu = false;
-	onBeforeRouteLeave(() => {
-		globalStore.isShowMobileMenu = true;
-	});
-
 	const activeDoc = ref(null);
 	const route = useRoute();
 	const personalDocRef = ref(null);

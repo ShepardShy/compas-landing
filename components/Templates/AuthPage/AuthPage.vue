@@ -36,17 +36,9 @@
 	import "./AuthPage.scss";
 
 	import AuthEntry from "./Entry/Entry.vue";
-	import AuthForget from "./Forget/Forget.vue";
 	import AuthRegistration from "./Registration/Registration.vue";
-	import { useGlobalStore } from "~/stores/globalStore";
 	import { useUserStore } from "@/stores/userStore.js";
 	const userStore = useUserStore();
-
-	const globalStore = useGlobalStore();
-	globalStore.isShowOnlyLogo = true;
-	onUnmounted(() => {
-		globalStore.isShowOnlyLogo = false;
-	});
 
 	let activeTab = ref("entry");
 	const authRef = ref(null);

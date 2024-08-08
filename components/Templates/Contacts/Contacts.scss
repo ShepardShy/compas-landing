@@ -68,6 +68,7 @@
 }
 .contacts-requisites__document {
 	display: flex;
+	align-items: center;
 	gap: 10px;
 	cursor: pointer;
 	@include mixins.elemResolutionOptions(23px, 27px);
@@ -87,6 +88,7 @@
 	font-size: 16px;
 	color: #1253a2;
 	text-decoration: underline;
+	line-height: 1;
 }
 
 @media (max-width: 1010px) {

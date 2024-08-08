@@ -5,7 +5,7 @@
 	>
 		<div class="container">
 			<div
-				v-if="!isShowOnlyLogo"
+				v-if="!route.fullPath.includes('/auth')"
 				class="menu__links"
 			>
 				<MobileMenu />
@@ -33,7 +33,7 @@
 			</div>
 
 			<div
-				v-if="!isShowOnlyLogo"
+				v-if="!route.fullPath.includes('/auth')"
 				class="menu__actions"
 			>
 				<a
@@ -74,11 +74,8 @@
 	import AppButton from "@/components/AppButton/AppButton.vue";
 	import MenuLink from "./components/MenuLink/MenuLink.vue";
 	import MobileMenu from "../Mobile/Mobile.vue";
-	import { useGlobalStore } from "~/stores/globalStore";
-	import { storeToRefs } from "pinia";
 
-	const globalStore = useGlobalStore();
-	const { isShowOnlyLogo } = storeToRefs(globalStore);
+	const route = useRoute();
 
 	const menuRef = ref(null);
 
