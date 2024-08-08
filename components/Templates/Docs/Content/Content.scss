@@ -11,12 +11,12 @@
 		grid-template-columns: 1fr;
 	}
 
-	.breadcrambs {
-		grid-column: 1/3;
-		@media (max-width: 768px) {
-			grid-column: 1/2;
-		}
-	}
+	// .breadcrambs {
+	// 	grid-column: 1/3;
+	// 	@media (max-width: 768px) {
+	// 		grid-column: 1/2;
+	// 	}
+	// }
 }
 
 .personal-docs__title {

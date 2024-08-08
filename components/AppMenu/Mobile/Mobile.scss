@@ -113,10 +113,10 @@
 	}
 }
 
-// @media (max-width: 700px) {
-// 	.menu {
-// 		&.menu_mobile {
-// 			display: block !important;
-// 		}
-// 	}
-// }
+@media (max-width: 700px) {
+	.menu {
+		&.menu_mobile {
+			display: block !important;
+		}
+	}
+}

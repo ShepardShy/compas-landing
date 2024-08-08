@@ -3,10 +3,10 @@
 		v-if="props.isShowDesktop"
 		@callAction="data => callAction(data)"
 	/>
-	<MenuMobile
+	<!-- <MenuMobile
 		v-if="props.isShowMobile"
 		v-bind="$attrs"
-	/>
+	/> -->
 </template>
 
 <script setup>
