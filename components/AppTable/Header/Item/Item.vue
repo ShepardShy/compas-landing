@@ -34,7 +34,7 @@
 
 			<div
 				class="table-item__drag-area"
-				:draggable="true"
+				:draggable="props.item.isHeaderDraggable"
 				@dragover.prevent
 				@dragenter.prevent
 				@dragstart="event => $emit('dragStart', event)"
@@ -63,6 +63,7 @@
 				@dragenter.prevent
 				@dragstart="event => $emit('dragStart', event)"
 				@dragend="event => $emit('dragEnd', event)"
+				:style="!props.item.isHeaderDraggable ? 'display:none' : ''"
 			></div>
 
 			<div class="table-item__border"></div>

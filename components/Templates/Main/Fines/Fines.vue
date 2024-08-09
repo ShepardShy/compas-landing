@@ -8,7 +8,7 @@
 			<AppInput
 				v-for="item in form"
 				:class="item.class"
-				v-show="(form.find(i => ['sts', 'vu', 'uin', 'gos', 'inn', 'platon', 'parkovka'].includes(i.key)) && form[0].value != '') || ['number', 'region', 'certificate', 'sts', 'vu', 'uin', 'gos', 'inn', 'platon', 'parkovka'].includes(item.key) || (form[0].value != '' && form[1].value != '' && form[2].value != '')"
+				v-show="(form.find(i => ['sts', 'vu', 'uin', 'gos', 'inn'].includes(i.key)) && form[0].value != '') || ['number', 'certificate', 'sts', 'vu', 'uin', 'gos', 'inn'].includes(item.key) || (form[0].value != '' && form[1].value != '')"
 				:item="{
 					focus: false,
 					id: 0,
@@ -76,6 +76,7 @@
 	import AppButton from "@/components/AppButton/AppButton.vue";
 	import FansyBox from "@/components/AppFansyBox/FansyBox.vue";
 	import ValidateField from "@/components/AppTable/Validate.js";
+	import api from "@/helpers/api.js";
 
 	const route = useRoute();
 
@@ -94,6 +95,7 @@
 					{
 						title: "Номер СТС",
 						key: "sts",
+						name: "sts_number",
 						type: "text",
 						mask: "## AA ######",
 						value: "",
@@ -108,6 +110,7 @@
 					{
 						title: "Номер ВУ",
 						key: "vu",
+						name: "driver_license",
 						type: "text",
 						mask: "## ## ######",
 						value: "",
@@ -122,6 +125,7 @@
 					{
 						title: "Номер постановления",
 						key: "uin",
+						name: "num_post",
 						type: "number",
 						mask: "####################",
 						value: "",
@@ -136,6 +140,7 @@
 					{
 						title: "Номер авто",
 						key: "gos",
+						name: "number",
 						type: "text",
 						mask: "A ### AA ###",
 						value: "",
@@ -150,6 +155,7 @@
 					{
 						title: "Номер ИНН",
 						key: "inn",
+						name: "inn",
 						type: "text",
 						mask: "############",
 						value: "",
@@ -164,31 +170,23 @@
 					{
 						title: "Номер автомобиля",
 						key: "number",
+						name: "number",
 						type: "text",
-						mask: "A ### AA",
+						mask: "A ### AA ###",
 						value: "",
 						required: true,
-						placeholder: "A 000 AA",
-						class: null,
-					},
-					{
-						title: "Регион",
-						key: "region",
-						type: "text",
-						mask: "###",
-						value: "",
-						required: true,
-						placeholder: "000",
-						class: null,
+						placeholder: "A 000 AA 777",
+						class: "input_line",
 					},
 					{
 						title: "Свидетельство о регистрации ТС",
 						key: "certificate",
+						name: "sts_number",
 						type: "text",
-						mask: null,
+						mask: "## AA ######",
 						value: "",
 						required: true,
-						placeholder: null,
+						placeholder: "00 AA 000000",
 						class: "input_line",
 					},
 				];
@@ -202,7 +200,8 @@
 			...fields.value,
 			{
 				title: "Электронная почта для входа",
-				key: "mail",
+				key: "email",
+				name: "email",
 				type: "email",
 				mask: null,
 				value: "",
@@ -213,6 +212,7 @@
 			{
 				title: "Пароль для входа",
 				key: "password",
+				name: "password",
 				type: "password",
 				mask: null,
 				value: "",
@@ -223,6 +223,7 @@
 			{
 				title: "Повторить пароль для входа",
 				key: "repeatPassword",
+				name: "password_confirmation",
 				type: "password",
 				mask: null,
 				value: "",
@@ -231,6 +232,17 @@
 				class: "input_line",
 			},
 		];
+	});
+
+	const formData = computed(() => {
+		const data = {};
+		for (let item of form.value) {
+			const trimmedValue = item.value.replace(/\s+/g, "");
+			console.log(trimmedValue);
+
+			data[item.name] = trimmedValue;
+		}
+		return data;
 	});
 
 	let invalidFields = ref([]);
@@ -244,7 +256,7 @@
 	// Сохранение редактируемых полей
 	const saveChanges = () => {
 		// Инициализация сохранения строк
-		const initSave = () => {
+		const initSave = async () => {
 			if (invalidFields.value.length > 0) {
 				isShow.value = {
 					state: true,
@@ -256,8 +268,11 @@
 					type: null,
 				};
 
-				alert("Данные отправлены на регшистрацию");
-				console.log("form", form.value);
+				const { domain, success, token } = await api.callMethod("POST", `registration`, formData.value);
+
+				if (success) {
+					navigateTo(`http://${domain}.compas.pro/`, { external: true });
+				}
 			}
 		};
 

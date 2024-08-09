@@ -72,17 +72,23 @@
 }
 
 .auth__background {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	top: 0;
 	bottom: 102px;
+	height: 60vh;
 	opacity: 0.3;
+	position: absolute;
+	top: 56px;
+	width: 100%;
+	left: 0;
+	right: 0;
 
 	img {
 		pointer-events: none;
 		object-fit: contain;
 	}
+}
+
+.container {
+	position: relative;
 }
 
 .auth__form {

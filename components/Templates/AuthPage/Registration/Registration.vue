@@ -174,7 +174,7 @@
 
 	const disabledButton = computed(() => {
 		let txt = /^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-		return !regData.value.confidence || regData.value.domain == "" || regData.value.password == "" || regData.value.passwordConfirmation == "" || regData.value.email == "";
+		return !regData.value.confidence || regData.value.password == "" || regData.value.passwordConfirmation == "" || regData.value.email == "";
 	});
 
 	const registration = () => {
