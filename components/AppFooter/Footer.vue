@@ -48,7 +48,12 @@
 						</figure>
 					</NuxtLink>
 				</div>
-				<div class="footer-link__title">Оплата штрафов ГИБДД осуществляется НКО «МОНЕТА.РУ» (ООО). Лицензия ЦБ РФ №3508-К от 2 июля 2012 года.</div>
+				<div
+					v-if="route.fullPath.includes('/products/fines')"
+					class="footer-link__title"
+				>
+					Оплата штрафов ГИБДД осуществляется НКО «МОНЕТА.РУ» (ООО). Лицензия ЦБ РФ №3508-К от 2 июля 2012 года.
+				</div>
 			</div>
 
 			<div class="footer__column footer__column_possibilities">
@@ -140,6 +145,8 @@
 	import telegram from "/footer/telegram.svg";
 	import vk from "/footer/vk.svg";
 	import youtube from "/footer/youtube.svg";
+
+	const route = useRoute();
 
 	let icons = [
 		{

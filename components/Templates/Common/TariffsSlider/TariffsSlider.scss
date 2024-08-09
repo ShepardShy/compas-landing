@@ -24,7 +24,7 @@
 
 .tariffs-slider__item {
 	display: flex;
-	height: 450px;
+	// height: 450px;
 	flex-direction: column;
 	border-radius: 10px;
 	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.07);
@@ -68,10 +68,7 @@
 }
 
 .tariffs-slider__advantages {
-	margin-bottom: 25px;
-	flex: 1;
-}
-.tariffs-slider__advantage {
+	margin-bottom: 70px;
 }
 
 .tariffs-slider__price {

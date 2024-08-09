@@ -4,14 +4,17 @@
 
 <script setup>
 	import Distance from "~/components/Templates/Distance/Distance.vue";
+	import meta from "/assets/json/distance/meta.json";
+
+	const route = useRoute();
 
 	// Мета теги
 	useHead({
-		title: "Расчёт расстояния | Compas.pro",
+		title: `${meta[route.params.tab].title} | Compas.pro`,
 		meta: [
 			{
 				name: "description",
-				content: "Описание.",
+				content: `${meta[route.params.tab].description}`,
 			},
 		],
 	});

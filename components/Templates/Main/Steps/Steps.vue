@@ -6,7 +6,7 @@
 		</div>
 		<div class="steps__steps">
 			<AppH3 class="steps__subtitle">Проверка и оплата штрафов ГИБДД</AppH3>
-			<p class="steps__text">Чтобы проверить штрафы ГИБДД, нужно выполнить пять простых шагов.</p>
+			<p class="steps__text">Чтобы проверить и оплатить штрафы ГИБДД, нужно выполнить пять простых шагов.</p>
 			<StepsList
 				v-model="activeStep"
 				:steps

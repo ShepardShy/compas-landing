@@ -9,7 +9,7 @@
 			<a
 				:href="item.link"
 				class="docs-nav__item"
-				:class="(`docs-nav__item_${item.nodeName}`, item.isScrolled ? 'docs-nav__item_scrolled' : '', item.isActive ? 'docs-nav__item_active' : '')"
+				:class="[`docs-nav__item_${item.nodeName}`, { 'docs-nav__item_scrolled': item.isScrolled, 'docs-nav__item_active': item.isActive }]"
 				v-for="item in docsNav"
 			>
 				{{ item.text }}
