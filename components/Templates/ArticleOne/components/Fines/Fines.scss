@@ -120,6 +120,7 @@
 		height: 100%;
 		width: 1px;
 		background-image: linear-gradient(to right, #c8c8c8 0%, #fbfcfd 101%);
+		z-index: 1;
 	}
 	@media (max-width: 1120px) {
 		&::before {

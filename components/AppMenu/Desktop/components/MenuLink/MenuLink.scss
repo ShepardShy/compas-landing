@@ -46,6 +46,9 @@
 			color: #fd8301;
 		}
 	}
+	.tabs__item-text {
+		will-change: color;
+	}
 	& .popup__tabs {
 		margin-right: 0;
 	}

@@ -26,6 +26,11 @@ button {
 	&.button_blue {
 		background: variables.$color-blue;
 		color: variables.$color-white;
+		&.button_loading {
+			&::after {
+				content: "" !important;
+			}
+		}
 	}
 
 	&.button_orange {

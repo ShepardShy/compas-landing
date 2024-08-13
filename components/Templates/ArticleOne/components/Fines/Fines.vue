@@ -8,7 +8,7 @@
 			<AppInput
 				v-for="item in form"
 				:class="item.class"
-				v-show="(form.find(i => ['sts', 'vu', 'uin', 'gos', 'inn', 'platon', 'parkovka'].includes(i.key)) && form[0].value != '') || ['number', 'region', 'certificate', 'sts', 'vu', 'uin', 'gos', 'inn', 'platon', 'parkovka'].includes(item.key) || (form[0].value != '' && form[1].value != '' && form[2].value != '')"
+				v-show="(form.find(i => ['sts', 'vu', 'uin', 'gos', 'inn'].includes(i.key)) && form[0].value != '') || ['number', 'certificate', 'sts', 'vu', 'uin', 'gos', 'inn'].includes(item.key) || (form[0].value != '' && form[1].value != '')"
 				:item="{
 					focus: false,
 					id: 0,
@@ -21,7 +21,7 @@
 					external_link: null,
 					value: item.value,
 				}"
-				:disabled="false"
+				:disabled="isLoading"
 				:mask="item.mask"
 				:isLink="null"
 				:isReadOnly="false"
@@ -32,6 +32,8 @@
 				<AppButton
 					class="button_blue"
 					@click="saveChanges()"
+					:disabled="isLoading"
+					:class="{ button_loading: isLoading }"
 				>
 					Проверить штрафы
 				</AppButton>
@@ -75,6 +77,7 @@
 	import AppButton from "@/components/AppButton/AppButton.vue";
 	import FansyBox from "@/components/AppFansyBox/FansyBox.vue";
 	import ValidateField from "@/components/AppTable/Validate.js";
+	import api from "@/helpers/api.js";
 
 	const route = useRoute();
 
@@ -232,8 +235,18 @@
 		];
 	});
 
+	const formData = computed(() => {
+		const data = {};
+		for (let item of form.value) {
+			const trimmedValue = item.value.replace(/\s+/g, "");
+			data[item.name] = trimmedValue;
+		}
+		return data;
+	});
+
 	let invalidFields = ref([]);
 	let isShow = ref(false);
+	const isLoading = ref(false);
 
 	const changeValue = data => {
 		let findIndex = form.value.findIndex(p => p.key == data.key);
@@ -243,7 +256,7 @@
 	// Сохранение редактируемых полей
 	const saveChanges = () => {
 		// Инициализация сохранения строк
-		const initSave = () => {
+		const initSave = async () => {
 			if (invalidFields.value.length > 0) {
 				isShow.value = {
 					state: true,
@@ -255,8 +268,17 @@
 					type: null,
 				};
 
-				alert("Данные отправлены на регшистрацию");
-				console.log("form", form.value);
+				isLoading.value = true;
+
+				const { domain, success, token } = await api.callMethod("POST", `registration`, formData.value);
+
+				if (success) {
+					navigateTo(`http://${domain}.compas.pro/`, { external: true });
+					for (let elem of form.value) {
+						elem.value = "";
+					}
+				}
+				isLoading.value = false;
 			}
 		};
 

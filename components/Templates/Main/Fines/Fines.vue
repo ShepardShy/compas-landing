@@ -21,7 +21,7 @@
 					external_link: null,
 					value: item.value,
 				}"
-				:disabled="false"
+				:disabled="isLoading"
 				:mask="item.mask"
 				:isLink="null"
 				:isReadOnly="false"
@@ -32,6 +32,8 @@
 				<AppButton
 					class="button_blue"
 					@click="saveChanges()"
+					:disabled="isLoading"
+					:class="{ button_loading: isLoading }"
 				>
 					Проверить штрафы
 				</AppButton>
@@ -247,6 +249,7 @@
 
 	let invalidFields = ref([]);
 	let isShow = ref(false);
+	const isLoading = ref(false);
 
 	const changeValue = data => {
 		let findIndex = form.value.findIndex(p => p.key == data.key);
@@ -267,12 +270,17 @@
 					state: false,
 					type: null,
 				};
+				isLoading.value = true;
 
 				const { domain, success, token } = await api.callMethod("POST", `registration`, formData.value);
 
 				if (success) {
 					navigateTo(`http://${domain}.compas.pro/`, { external: true });
+					for (let elem of form.value) {
+						elem.value = "";
+					}
 				}
+				isLoading.value = false;
 			}
 		};
 
