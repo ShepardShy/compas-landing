@@ -45,6 +45,8 @@
 			transition: 0.4s all;
 			display: flex;
 			align-items: center;
+			position: relative;
+			top: 2px;
 		}
 
 		&:hover {

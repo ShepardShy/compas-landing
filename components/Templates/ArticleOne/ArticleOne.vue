@@ -45,7 +45,7 @@
 	import Articles from "~/components/Templates/Common/ArticlesBlock/ArticlesBlock.vue";
 	import Social from "@/components/Templates/Common/Social/Social.vue";
 	import Header from "./components/Header/Header.vue";
-	import article from "./article.json";
+	import article from "./article";
 	import Nav from "./components/Nav/Nav.vue";
 
 	// Компоненты конструктора

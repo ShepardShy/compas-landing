@@ -93,6 +93,7 @@
 					{
 						title: "Номер СТС",
 						key: "sts",
+						name: "sts_number",
 						type: "text",
 						mask: "## AA ######",
 						value: "",
@@ -107,6 +108,7 @@
 					{
 						title: "Номер ВУ",
 						key: "vu",
+						name: "driver_license",
 						type: "text",
 						mask: "## ## ######",
 						value: "",
@@ -121,6 +123,7 @@
 					{
 						title: "Номер постановления",
 						key: "uin",
+						name: "num_post",
 						type: "number",
 						mask: "####################",
 						value: "",
@@ -135,6 +138,7 @@
 					{
 						title: "Номер авто",
 						key: "gos",
+						name: "number",
 						type: "text",
 						mask: "A ### AA ###",
 						value: "",
@@ -149,6 +153,7 @@
 					{
 						title: "Номер ИНН",
 						key: "inn",
+						name: "inn",
 						type: "text",
 						mask: "############",
 						value: "",
@@ -163,31 +168,23 @@
 					{
 						title: "Номер автомобиля",
 						key: "number",
+						name: "number",
 						type: "text",
-						mask: "A ### AA",
+						mask: "A ### AA ###",
 						value: "",
 						required: true,
-						placeholder: "A 000 AA",
-						class: null,
-					},
-					{
-						title: "Регион",
-						key: "region",
-						type: "text",
-						mask: "###",
-						value: "",
-						required: true,
-						placeholder: "000",
-						class: null,
+						placeholder: "A 000 AA 777",
+						class: "input_line",
 					},
 					{
 						title: "Свидетельство о регистрации ТС",
 						key: "certificate",
+						name: "sts_number",
 						type: "text",
-						mask: null,
+						mask: "## AA ######",
 						value: "",
 						required: true,
-						placeholder: null,
+						placeholder: "00 AA 000000",
 						class: "input_line",
 					},
 				];
@@ -201,7 +198,8 @@
 			...fields.value,
 			{
 				title: "Электронная почта для входа",
-				key: "mail",
+				key: "email",
+				name: "email",
 				type: "email",
 				mask: null,
 				value: "",
@@ -212,6 +210,7 @@
 			{
 				title: "Пароль для входа",
 				key: "password",
+				name: "password",
 				type: "password",
 				mask: null,
 				value: "",
@@ -222,6 +221,7 @@
 			{
 				title: "Повторить пароль для входа",
 				key: "repeatPassword",
+				name: "password_confirmation",
 				type: "password",
 				mask: null,
 				value: "",

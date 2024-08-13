@@ -8,11 +8,12 @@
 		<div class="docs-nav__list">
 			<a
 				:href="item.link"
+				@click.prevent="() => scroll(item.link)"
 				class="docs-nav__item"
 				:class="[`docs-nav__item_${item.nodeName}`, { 'docs-nav__item_scrolled': item.isScrolled, 'docs-nav__item_active': item.isActive }]"
 				v-for="item in docsNav"
 			>
-				{{ item.text }}
+				{{ item.text.replace(/[.,\/#1234567890!]/g, "") }}
 			</a>
 		</div>
 	</nav>
@@ -29,38 +30,42 @@
 	const headers = ref([]);
 	const contentPos = ref(0);
 
-	onMounted(() => {
+	const scroll = link => {
+		const item = document.getElementById(link.replace("#", ""));
+		item.parentNode.classList.add("active-bg");
 		setTimeout(() => {
-			for (let i = 0; i < personalDocRef.value.children.length; i++) {
-				if (["H1", "H2", "H3", "H4", "H5", "H6"].includes(personalDocRef.value.children[i].nodeName)) {
-					personalDocRef.value.children[i].id = i;
-					personalDocRef.value.children[i].classList.add("header-link");
+			item.parentNode.classList.remove("active-bg");
+		}, 2000);
+
+		item.scrollIntoView();
+		window.scrollBy({ top: -200 });
+	};
+
+	onMounted(() => {
+		const titles = personalDocRef.value.querySelectorAll("h1,h2,h3");
+		setTimeout(() => {
+			for (let i = 0; i < titles.length; i++) {
+				if (["H1", "H2", "H3", "H4", "H5", "H6"].includes(titles[i].nodeName)) {
+					titles[i].id = i;
+					titles[i].classList.add("header-link");
 					docsNav.value.push({
 						id: i,
 						isActive: docsNav.value.length == 0,
-						link: `#${personalDocRef.value.children[i].id}`,
-						text: personalDocRef.value.children[i].textContent,
-						nodeName: personalDocRef.value.children[i].nodeName,
+						link: `#${titles[i].id}`,
+						text: titles[i].textContent,
+						nodeName: titles[i].nodeName,
 					});
 				}
 			}
-			setNavPos();
 			headers.value = personalDocRef.value.querySelectorAll(".header-link");
 		}, 100);
 
-		window.addEventListener("resize", setNavPos);
 		window.addEventListener("scroll", throt_funScroll);
 	});
 
 	onUnmounted(() => {
 		window.removeEventListener("scroll", throt_funScroll);
-		window.removeEventListener("resize", setNavPos);
 	});
-
-	const setNavPos = () => {
-		let docRect = document.querySelector(".personal-docs__content").getBoundingClientRect();
-		contentPos.value = Number((docRect.left + docRect.width).toFixed(0)) + 25;
-	};
 
 	// Троттлинг скролла по вертикали
 	const throt_funScroll = () => {
@@ -82,12 +87,6 @@
 					element.isActive = false;
 				}
 			});
-		}
-
-		if (personalDocWrapperRef.value.getBoundingClientRect().top - 20 < 0) {
-			docsNavRef.value.classList.add("docs-nav_fixed");
-		} else {
-			docsNavRef.value.classList.remove("docs-nav_fixed");
 		}
 	};
 </script>

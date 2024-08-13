@@ -47,7 +47,7 @@
 						class="button-text"
 						to="/auth/entry"
 					>
-						Вход
+						Войти
 					</NuxtLink>
 					<NuxtLink
 						class="menu__registration"

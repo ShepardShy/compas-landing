@@ -1,28 +1,33 @@
 <template>
+	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
 	<div
 		ref="personalDocWrapperRef"
 		class="personal-docs"
 	>
-		<AppBreadcrambs :breadcrumbs="breadcrumbs" />
-		<div
-			class="personal-docs__header"
-			v-if="activeDoc != null"
-		>
-			<div class="personal-docs__text">г. {{ activeDoc.city }}</div>
-			<div class="personal-docs__text">Дата размещения: {{ setDate }}</div>
+		<div class="personal-docs__left">
+			<div
+				class="personal-docs__header"
+				v-if="activeDoc != null"
+			>
+				<div class="personal-docs__text">г. {{ activeDoc.city }}</div>
+				<div class="personal-docs__text">Дата размещения: {{ setDate }}</div>
+			</div>
+			<div
+				class="approved"
+				v-html="activeDoc?.approved"
+			></div>
+			<div
+				v-if="activeDoc?.h1"
+				v-html="activeDoc?.h1"
+				class="personal-docs__title"
+				id="#h1"
+			></div>
+			<article
+				class="personal-docs__content"
+				v-html="activeDoc ? activeDoc.content : null"
+				ref="personalDocRef"
+			></article>
 		</div>
-		<AppH1
-			v-if="activeDoc?.h1"
-			class="personal-docs__title"
-			id="#h1"
-		>
-			{{ activeDoc ? activeDoc.h1 : null }}
-		</AppH1>
-		<article
-			class="personal-docs__content"
-			v-html="activeDoc ? activeDoc.content : null"
-			ref="personalDocRef"
-		></article>
 		<DocsNav v-if="activeDoc != null" />
 	</div>
 </template>

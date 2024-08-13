@@ -272,6 +272,7 @@
 
 		// Отрытие child у child
 		const toggleOpenChild = data => {
+			popupRef.value?.[0]?.popupRef?.setAttribute("open", "");
 			data.open = !data?.open;
 		};
 

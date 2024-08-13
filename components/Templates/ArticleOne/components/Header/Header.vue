@@ -29,6 +29,7 @@
 						{{ views }}
 					</span>
 				</div>
+				<div class="header__duration duration">Читать статью: <span class="duration_black">2 мин</span></div>
 			</div>
 		</div>
 	</div>

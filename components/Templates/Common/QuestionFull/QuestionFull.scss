@@ -5,6 +5,7 @@
 	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.07);
 	&__body {
 		padding: 35px 25px;
+		transition: 0.3s;
 
 		& h2 {
 			font-size: 31px;
@@ -28,11 +29,14 @@
 	&__image {
 		max-height: 132px;
 		width: 100%;
+		object-fit: cover;
 	}
 
 	&__info {
 		margin-top: 15px;
 		display: flex;
-		justify-content: space-between;
+		flex-direction: column;
+		gap: 5px;
+		align-items: end;
 	}
 }

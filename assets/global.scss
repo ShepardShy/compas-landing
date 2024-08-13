@@ -18,9 +18,23 @@
 	}
 }
 
+.active-bg {
+	background-color: #fffbe2 !important;
+}
+
 .date {
 	font-size: 14px;
 	color: #8f8f8f;
 	line-height: 1;
 	white-space: nowrap;
+}
+
+.duration {
+	font-size: 14px;
+	color: #8f8f8f;
+	line-height: 1;
+	white-space: nowrap;
+	&_black {
+		color: #000;
+	}
 }

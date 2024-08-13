@@ -26,6 +26,7 @@
 						{{ views }}
 					</span>
 				</p>
+				<div class="header__duration duration">Читать ворос-ответ: <span class="duration_black">2 мин</span></div>
 			</div>
 		</div>
 	</div>

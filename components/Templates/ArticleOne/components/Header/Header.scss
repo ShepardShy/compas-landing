@@ -57,7 +57,10 @@
 			line-height: 1;
 		}
 	}
-	&__date {
-		margin-bottom: 5px;
+	&__info {
+		display: flex;
+		gap: 5px;
+		flex-direction: column;
+		align-items: end;
 	}
 }

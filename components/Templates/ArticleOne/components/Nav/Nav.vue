@@ -7,7 +7,7 @@
 		<div class="nav__list">
 			<a
 				:href="item.link"
-				@click.prevent="() => scroll(item.link)"
+				@click.prevent="() => scroll(item.link, item.nodeName)"
 				class="nav__item"
 				:class="{ nav__item_H3: item.nodeName == 'H3', nav__item_H4: item.nodeName == 'H4', nav__item_scrolled: item.isScrolled, nav__item_active: item.isActive }"
 				v-for="item in docsNav"
@@ -26,8 +26,15 @@
 	const docsNavRef = ref(null);
 	const headers = ref([]);
 
-	const scroll = link => {
+	const scroll = (link, tag) => {
 		const item = document.getElementById(link.replace("#", ""));
+		if (tag) {
+			item.parentNode.classList.add("active-bg");
+			setTimeout(() => {
+				item.parentNode.classList.remove("active-bg");
+			}, 2000);
+		}
+
 		item.scrollIntoView();
 		window.scrollBy({ top: -200 });
 	};

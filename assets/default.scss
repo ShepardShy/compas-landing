@@ -166,7 +166,7 @@ body.body__cursor-style {
 .main {
 	min-width: 320px;
 	position: relative;
-	overflow: hidden;
+	overflow: clip;
 }
 
 /*фоновое изображение*/
