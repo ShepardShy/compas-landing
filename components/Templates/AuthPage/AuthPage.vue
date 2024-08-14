@@ -40,7 +40,9 @@
 	import { useUserStore } from "@/stores/userStore.js";
 	const userStore = useUserStore();
 
-	let activeTab = ref("entry");
+	const route = useRoute();
+
+	let activeTab = ref(route.params.tab);
 	const authRef = ref(null);
 	const router = useRoute();
 
@@ -49,6 +51,14 @@
 		activeTab.value = tab;
 		navigateTo(`/auth/${tab}`);
 	};
+
+	onMounted(() => {
+		console.log(activeTab.value != "registration" && activeTab.value != "entry");
+
+		if (activeTab.value != "registration" && activeTab.value != "entry") {
+			navigateTo("/404");
+		}
+	});
 
 	onMounted(() => {
 		if (router.params.tab) {

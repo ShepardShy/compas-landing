@@ -13,7 +13,13 @@
 		:autocomplete="props.enabledAutocomplete ? 'on' : 'off'"
 		@maska="e => $emit('changeValue', { key: props.item.key, value: e.target.value })"
 		readonly
-		@focus="e => e.target.removeAttribute('readonly')"
+		@mousedown="
+			e => {
+				e.target.removeAttribute('readonly');
+				e.target.focus();
+			}
+		"
+		@focus.prevent
 	/>
 
 	<div
@@ -30,7 +36,13 @@
 			:autocomplete="props.enabledAutocomplete ? 'on' : 'off'"
 			@input="e => $emit('changeValue', { key: props.item.key, value: e.target.value })"
 			readonly
-			@focus="e => e.target.removeAttribute('readonly')"
+			@mousedown="
+				e => {
+					e.target.removeAttribute('readonly');
+					e.target.focus();
+				}
+			"
+			@focus.prevent
 		/>
 		<IconPasswordEye
 			:class="passwordType == 'text' ? 'icon__password-eye_active' : ''"
@@ -49,7 +61,13 @@
 		:autocomplete="props.enabledAutocomplete ? 'on' : 'off'"
 		@input="e => $emit('changeValue', { key: props.item.key, value: e.target.value })"
 		readonly
-		@focus="e => e.target.removeAttribute('readonly')"
+		@mousedown="
+			e => {
+				e.target.removeAttribute('readonly');
+				e.target.focus();
+			}
+		"
+		@focus.prevent
 	/>
 </template>
 

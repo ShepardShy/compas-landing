@@ -19,14 +19,15 @@
 				<div class="menu__content menu__list_desktop">
 					<nav class="menu__list menu__list_desktop">
 						<MenuLink
+							v-if="!item?.line"
 							v-show="!item.is_hidden"
 							v-for="item in menu"
 							class="menu__item"
-							:class="{ menu__item_children: item.childs.length > 0 }"
-							:to="item.tab"
-							:key="item.id"
+							:class="{ menu__item_children: item?.childs?.length > 0 }"
+							:to="item?.tab"
+							:key="item?.id"
 							:item="item"
-							>{{ item.title }}</MenuLink
+							>{{ item?.title }}</MenuLink
 						>
 					</nav>
 				</div>

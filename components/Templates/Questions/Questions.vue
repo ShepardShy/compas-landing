@@ -49,16 +49,22 @@
 
 	const questionId = computed(() => route.params.id);
 
-	let breadcrumbs = [
+	let breadcrumbs = computed(() => [
 		{
 			title: "Главная страница",
 			link: "/",
 		},
 		{
 			title: "Вопрос-ответ",
-			link: "/products/fines",
+			link: "/questions",
 		},
-	];
+		questionId.value
+			? {
+					title: title,
+					link: `/questions/${questionId.value}`,
+			  }
+			: null,
+	]);
 </script>
 
 <style scoped>

@@ -1,4 +1,6 @@
 <template>
+	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
+
 	<div
 		class="article"
 		ref="$articleWrapper"
@@ -66,6 +68,21 @@
 		question,
 	};
 	const { author, date, image, title, views, content } = article;
+
+	let breadcrumbs = [
+		{
+			title: "Главная страница",
+			link: "/",
+		},
+		{
+			title: "Статьи",
+			link: "/articles",
+		},
+		{
+			title: title,
+			link: "/articles/sheben",
+		},
+	];
 </script>
 
 <style>

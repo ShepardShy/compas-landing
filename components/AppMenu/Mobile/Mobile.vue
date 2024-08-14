@@ -25,17 +25,25 @@
 				class="menu__list"
 				v-if="settingsMenu.activeTab == null"
 			>
-				<a
-					@click.prevent="clickLink(item)"
-					class="menu__item"
-					:class="{ menu__item_active: (item?.childs?.length > 0 && $route.fullPath.includes(item.tab)) || $route.fullPath === item.tab }"
+				<template
+					:key="item?.id"
 					v-for="item in menu"
-					:key="item.id"
-					v-show="item.enabled"
 				>
-					{{ item.title }}
-					<IconArrow v-if="item?.childs?.length > 0" />
-				</a>
+					<hr
+						v-if="item?.line"
+						class="menu__line"
+					/>
+					<a
+						v-else
+						@click.prevent="clickLink(item)"
+						class="menu__item"
+						:class="{ menu__item_active: (item?.childs?.length > 0 && $route.fullPath.includes(item.tab)) || $route.fullPath === item.tab }"
+						v-show="item.enabled"
+					>
+						{{ item.title }}
+						<IconArrow v-if="item?.childs?.length > 0" />
+					</a>
+				</template>
 			</nav>
 			<nav
 				class="menu__list"
