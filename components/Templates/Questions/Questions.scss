@@ -5,6 +5,11 @@
 	@media (max-width: 900px) {
 		flex-direction: column;
 	}
+	&__nav {
+		@media (max-width: 900px) {
+			display: none;
+		}
+	}
 	&__left {
 		max-width: 263px;
 		width: 100%;
