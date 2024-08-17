@@ -15,9 +15,10 @@
 			<div class="question__title">
 				{{ title }}
 			</div>
-			<div class="question__subtitle">
-				{{ subtitle }}
-			</div>
+			<div
+				v-html="subtitle"
+				class="question__subtitle"
+			></div>
 			<div class="question__info">
 				<p class="question__date date">
 					{{ dayjs(date).locale("ru").format("D MMMM YYYY") }}
