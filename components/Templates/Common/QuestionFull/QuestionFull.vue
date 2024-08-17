@@ -49,6 +49,6 @@
 	const { image, answer, title, isShowMore, date, questionId, views } = toRefs(props);
 </script>
 
-<style scoped>
+<style>
 	@import url(./QuestionFull.scss);
 </style>

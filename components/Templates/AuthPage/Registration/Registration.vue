@@ -162,6 +162,8 @@
 	import { useUserStore } from "@/stores/userStore.js";
 	const userStore = useUserStore();
 
+	const route = useRoute();
+
 	const { regData } = storeToRefs(userStore);
 
 	const checkboxLink = `<div class="auth__text">
@@ -178,6 +180,9 @@
 	});
 
 	const registration = () => {
+		if (route.query.tariff) {
+			regData.value.tariff = route.query.tariff;
+		}
 		if (!userStore.regButtonLoad) {
 			userStore.registration(regData.value);
 		}

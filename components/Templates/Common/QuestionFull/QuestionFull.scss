@@ -18,6 +18,42 @@
 		flex-direction: column;
 		gap: 25px;
 		line-height: 1.2;
+		display: flex;
+		flex-direction: column;
+		gap: 25px;
+		& .bold {
+			font-weight: 600;
+		}
+
+		& p {
+			line-height: 1.2;
+		}
+
+		& h2 {
+			font-size: 31px;
+			color: #1253a2;
+		}
+		h3 {
+			font-size: 26px;
+			color: #1253a2;
+		}
+		ul {
+			list-style: none;
+			padding-left: 0;
+			li {
+				text-indent: 12px;
+				position: relative;
+				&::before {
+					content: "";
+					position: absolute;
+					top: 9px;
+					left: 0;
+					width: 7px;
+					height: 2px;
+					background-color: #000;
+				}
+			}
+		}
 	}
 
 	&__more {

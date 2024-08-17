@@ -24,6 +24,8 @@ export const useUserStore = defineStore("userStore", {
 				password: "",
 				passwordError: [],
 				domain: "",
+				tariff: "",
+				tariffError: "",
 				domainError: [],
 				passwordConfirmation: "",
 				passwordConfirmationError: [],
@@ -103,7 +105,7 @@ export const useUserStore = defineStore("userStore", {
 				this.regData.passwordError = [];
 				this.regData.domainError = [];
 				this.regData.passwordConfirmationError = [];
-				const res = await api.callMethod("POST", "registration", { domain: payload.domain ? payload.domain : undefined, email: payload.email, password: payload.password, password_confirmation: payload.passwordConfirmation });
+				const res = await api.callMethod("POST", "registration", { domain: payload.domain ? payload.domain : undefined, email: payload.email, password: payload.password, password_confirmation: payload.passwordConfirmation, tariff: payload.tariff ? payload.tariff : 1 });
 
 				const { success, data, token, domain } = res;
 
