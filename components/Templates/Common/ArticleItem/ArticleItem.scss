@@ -1,6 +1,6 @@
 .article__item {
 	display: flex;
-	max-height: 379px;
+	min-height: 379px;
 	width: 100%;
 	flex-direction: column;
 	border-radius: 10px;
@@ -31,7 +31,7 @@
 	padding: 15px 15px 55px 15px;
 	background-color: #fbfcfd;
 	position: relative;
-	min-height: 100px;
+	min-height: 110px;
 }
 
 .article__title {

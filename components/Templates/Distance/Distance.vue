@@ -57,8 +57,8 @@
 		</div>
 		<DistanceHistory />
 		<DistanceTarif />
-		<QuestionsBlock />
-		<ArticlesBlock />
+		<!-- <QuestionsBlock /> -->
+		<!-- <ArticlesBlock /> -->
 		<TemplateSocial class="distance__social" />
 	</AppSection>
 </template>
