@@ -36,12 +36,12 @@
 		}
 	}
 
-	// &.popup_visible {
-	// 	.popup__content {
-	// 		opacity: 1;
-	// 		pointer-events: all;
-	// 	}
-	// }
+	&.popup_visible {
+		.popup__content {
+			opacity: 1;
+			pointer-events: all;
+		}
+	}
 
 	* {
 		@include mixins.userSelect($value: none);

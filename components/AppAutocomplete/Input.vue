@@ -304,13 +304,13 @@
 				// options.value = backupOptions.value;
 				setActiveOption(value);
 				setTimeout(() => {
-					PopupScripts.hideDetails(popupRef.value.popupRef);
 					emit("changeValue", {
 						key: props.item.key,
 						value: value,
 						search: search.value,
 					});
 					value?.text && callAction({ action: "searchOptions", value: value.text });
+					PopupScripts.hideDetails(popupRef.value.popupRef);
 				}, 10);
 			} else if (value == null) {
 				emit("changeValue", null);
