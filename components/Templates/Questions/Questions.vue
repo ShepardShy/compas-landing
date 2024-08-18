@@ -1,7 +1,10 @@
 <template>
 	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
 
-	<div class="questions">
+	<div
+		class="questions"
+		:class="{ question_open: questionId }"
+	>
 		<div class="questions__left">
 			<Search />
 			<AppNav

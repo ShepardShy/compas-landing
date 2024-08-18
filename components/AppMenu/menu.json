@@ -101,19 +101,6 @@
 		"childs": []
 	},
 	{
-		"line": true
-	},
-	{
-		"id": 19,
-		"title": "Документы",
-		"slug": "auth",
-		"sort": 0,
-		"tab": "/docs",
-		"is_hidden": 1,
-		"enabled": 1,
-		"childs": []
-	},
-	{
 		"id": 20,
 		"title": "Вопрос-ответ",
 		"slug": "auth",
@@ -129,6 +116,16 @@
 		"slug": "auth",
 		"sort": 0,
 		"tab": "/articles",
+		"is_hidden": 1,
+		"enabled": 1,
+		"childs": []
+	},
+	{
+		"id": 19,
+		"title": "Документы",
+		"slug": "auth",
+		"sort": 0,
+		"tab": "/docs",
 		"is_hidden": 1,
 		"enabled": 1,
 		"childs": []

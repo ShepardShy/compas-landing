@@ -2,13 +2,20 @@
 	display: flex;
 	gap: 34px;
 	padding-bottom: 100px;
+	&.question_open {
+		.questions__nav {
+			@media (max-width: 900px) {
+				display: none;
+			}
+		}
+		.ask {
+			@media (max-width: 900px) {
+				display: none;
+			}
+		}
+	}
 	@media (max-width: 900px) {
 		flex-direction: column;
-	}
-	&__nav {
-		@media (max-width: 900px) {
-			display: none;
-		}
 	}
 	&__left {
 		max-width: 263px;
