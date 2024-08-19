@@ -4,12 +4,11 @@
 		:to="`/articles/${value}`"
 	>
 		<div class="article__top">
-			<figure class="ibg article__icon">
-				<img
-					:src="image ? image : defaultImgarticle"
-					:alt="title"
-				/>
-			</figure>
+			<img
+				class="article__icon"
+				:src="image ? image : defaultImgarticle"
+				:alt="title"
+			/>
 		</div>
 		<div class="article__body">
 			<div class="article__subtitle">

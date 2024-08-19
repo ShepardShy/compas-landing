@@ -80,7 +80,7 @@
 		},
 		{
 			title: title,
-			link: "/articles/sheben",
+			link: "/articles/za-chto-vypisan-shtraf",
 		},
 	];
 </script>
