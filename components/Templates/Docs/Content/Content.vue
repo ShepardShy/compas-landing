@@ -56,6 +56,30 @@
 		});
 	});
 
+	watchEffect(() => {
+		if (activeDoc.value) {
+			useHead({
+				title: activeDoc.value.meta.title + " | Compas.pro",
+				meta: [
+					{
+						name: "description",
+						content: activeDoc.value.meta.description,
+					},
+				],
+			});
+			return;
+		}
+		useHead({
+			title: "Документы и Юридическая Информация сервиса Compas.pro | Compas.pro",
+			meta: [
+				{
+					name: "description",
+					content: "В разделе представлены публичная оферта, политика конфиденциальности и другие важные документы для пользователей проекта Compas.pro.",
+				},
+			],
+		});
+	});
+
 	let breadcrumbs = ref([
 		{
 			title: "Главная страница",

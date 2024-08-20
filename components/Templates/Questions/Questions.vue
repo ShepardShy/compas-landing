@@ -43,7 +43,7 @@
 	import Question from "~/components/Templates/Common/QuestionFull/QuestionFull.vue";
 
 	import question from "./question.json";
-	const { answer, date, image, title, views } = question;
+	const { answer, date, image, title, views, meta } = question;
 
 	const route = useRoute();
 
@@ -51,6 +51,30 @@
 	const { categories } = storeToRefs(questionsStore);
 
 	const questionId = computed(() => route.params.id);
+
+	watchEffect(() => {
+		if (questionId.value) {
+			useHead({
+				title: meta.title + " | Compas.pro",
+				meta: [
+					{
+						name: "description",
+						content: meta.description,
+					},
+				],
+			});
+			return;
+		}
+		useHead({
+			title: "Вопросы и ответы — Часто задаваемые вопросы о штрафах и ПДД | Compas.pro",
+			meta: [
+				{
+					name: "description",
+					content: "Найдите ответы на самые частые вопросы о штрафах, правилах дорожного движения и правах водителей на странице 'Вопросы и ответы' Compas.pro. Мы поможем разобраться в сложных ситуациях и избежать ошибок.",
+				},
+			],
+		});
+	});
 
 	let breadcrumbs = computed(() => [
 		{

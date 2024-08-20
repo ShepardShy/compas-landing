@@ -67,7 +67,7 @@
 		interestItems,
 		question,
 	};
-	const { author, date, image, title, views, content } = article;
+	const { author, date, image, title, views, content, meta } = article;
 
 	let breadcrumbs = [
 		{
@@ -83,6 +83,15 @@
 			link: "/articles/za-chto-vypisan-shtraf",
 		},
 	];
+	useHead({
+		title: meta.title,
+		meta: [
+			{
+				name: "description",
+				content: meta.description,
+			},
+		],
+	});
 </script>
 
 <style>
