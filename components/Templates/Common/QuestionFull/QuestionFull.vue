@@ -13,7 +13,7 @@
 				class="question__text"
 			></p>
 			<NuxtLink
-				:href="`/questions/${questionId}`"
+				:href="`/questions/${id}`"
 				v-if="isShowMore"
 				class="question__more"
 				>Подробнее</NuxtLink
@@ -26,7 +26,7 @@
 						{{ views }}
 					</span>
 				</p>
-				<div class="header__duration duration">Читать ворос-ответ: <span class="duration_black">2 мин</span></div>
+				<div class="header__duration duration">Читать вопрос-ответ: <span class="duration_black">2 мин</span></div>
 			</div>
 		</div>
 	</div>
@@ -41,12 +41,12 @@
 		title: { type: String },
 		answer: { type: String },
 		image: { type: String },
-		questionId: { type: String },
+		id: { type: String },
 		date: { type: String },
 		views: { type: Number },
 		isShowMore: { type: Boolean, default: false },
 	});
-	const { image, answer, title, isShowMore, date, questionId, views } = toRefs(props);
+	const { image, answer, title, isShowMore, date, id, views } = toRefs(props);
 </script>
 
 <style>

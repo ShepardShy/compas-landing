@@ -27,10 +27,10 @@
 					:image
 					:answer
 					:views
-					:questionId
+					:id
 					:date
 					:isShowMore="true"
-					v-for="{ type, body, image, title, items, answer, views, questionId, date } in content"
+					v-for="{ type, body, image, title, items, answer, views, id, date } in content"
 				/>
 			</div>
 		</div>

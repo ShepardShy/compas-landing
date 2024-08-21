@@ -3,11 +3,11 @@
 		<QuestionItem
 			:date
 			:title
-			:subtitle
+			:answer
 			:image
 			:views
 			:id
-			v-for="{ date, id, image, subtitle, title, views } in questions"
+			v-for="{ date, id, image, answer, title, views } in questions"
 		/>
 	</div>
 	<AppPagination
@@ -20,12 +20,13 @@
 <script setup>
 	import QuestionItem from "@/components/Templates/Common/QuestionItem/QuestionItem.vue";
 	import AppPagination from "~/components/AppPagination/AppPagination.vue";
-	import questionsJson from "./questions.json";
+
+	const props = defineProps({
+		questions: { type: Array, required: true },
+	});
 
 	const totalPages = ref(66);
 	const activePage = ref(1);
-
-	const questions = ref(questionsJson);
 </script>
 
 <style>

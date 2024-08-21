@@ -1,6 +1,6 @@
 .question__item {
 	display: flex;
-	// height: 280px;
+	height: 305px;
 	width: 100%;
 	flex-direction: column;
 	border-radius: 10px;
@@ -17,7 +17,7 @@
 
 .question__top {
 	background-color: #fbfcfd;
-	height: 80px;
+	min-height: 80px;
 	width: 100%;
 	background-color: #f0f4fb;
 }
@@ -54,6 +54,7 @@
 	-webkit-line-clamp: 4; // количество строк
 	-webkit-box-orient: vertical;
 	overflow: hidden;
+	margin-bottom: auto;
 }
 
 .question__info {

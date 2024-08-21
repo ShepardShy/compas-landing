@@ -16,7 +16,7 @@
 				{{ title }}
 			</div>
 			<div
-				v-html="subtitle"
+				v-html="answer"
 				class="question__subtitle"
 			></div>
 			<div class="question__info">
@@ -45,7 +45,7 @@
 			type: String,
 			required: true,
 		},
-		subtitle: {
+		answer: {
 			type: String,
 		},
 		image: {
@@ -62,7 +62,7 @@
 			type: String,
 		},
 	});
-	const { title, views, image, subtitle, date, id } = toRefs(props);
+	const { title, views, image, answer, date, id } = toRefs(props);
 </script>
 
 <style lang="scss" scoped>
