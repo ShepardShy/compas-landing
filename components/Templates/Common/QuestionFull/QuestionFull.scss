@@ -63,9 +63,8 @@
 	}
 
 	&__image {
-		max-height: 132px;
+		min-height: 170px;
 		object-fit: cover;
-		height: 100%;
 		width: 100%;
 	}
 
