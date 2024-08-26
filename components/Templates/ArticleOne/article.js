@@ -1,4 +1,5 @@
 export default {
+	id: "za-chto-vypisan-shtraf",
 	title: "Как понять за что выписан штраф: пошаговая инструкция для водителей",
 	image: "",
 	author: {

@@ -6,16 +6,16 @@
 		>
 			<template #slide>
 				<SwiperSlide
-					v-for="{ id, image, date, text, views, value } in slides"
+					v-for="{ id, image, date, title, views } in slides"
 					:key="id"
 					:virtual-index="id"
 				>
 					<ArticleItem
+						:id
 						:image
-						:text
+						:title
 						:views
 						:date
-						:value
 					/>
 				</SwiperSlide>
 			</template>

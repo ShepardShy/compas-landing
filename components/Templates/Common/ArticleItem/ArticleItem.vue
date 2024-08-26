@@ -1,7 +1,7 @@
 <template>
 	<NuxtLink
 		class="article__item"
-		:to="`/articles/${value}`"
+		:to="`/articles/${id}`"
 	>
 		<div class="article__top">
 			<img
@@ -12,7 +12,7 @@
 		</div>
 		<div class="article__body">
 			<div class="article__subtitle">
-				{{ text }}
+				{{ title }}
 			</div>
 			<div class="article-slder__views">
 				<IconPasswordEye />
@@ -35,7 +35,7 @@
 	const dayjs = useDayjs();
 
 	const props = defineProps({
-		text: {
+		title: {
 			type: String,
 			required: true,
 		},
@@ -50,12 +50,12 @@
 			type: Number,
 			default: 0,
 		},
-		value: {
+		id: {
 			type: String,
 			default: "",
 		},
 	});
-	const { text, views, image, date, value } = toRefs(props);
+	const { title, views, image, date, id } = toRefs(props);
 </script>
 
 <style lang="scss" scoped>

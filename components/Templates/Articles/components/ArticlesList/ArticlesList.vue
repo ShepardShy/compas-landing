@@ -4,10 +4,9 @@
 			:date
 			:id
 			:image
-			:text
+			:title
 			:views
-			:value
-			v-for="{ date, id, image, text, views, value } in articles"
+			v-for="{ date, id, image, title, views } in articles"
 		/>
 	</div>
 	<AppPagination
@@ -20,7 +19,7 @@
 <script setup>
 	import ArticleItem from "~/components/Templates/Common/ArticleItem/ArticleItem.vue";
 	import AppPagination from "~/components/AppPagination/AppPagination.vue";
-	import articlesJson from "./articles.json";
+	import articlesJson from "../../articles.js";
 
 	const totalPages = ref(66);
 	const activePage = ref(1);

@@ -9,9 +9,9 @@
 			<Header
 				:title
 				:image
-				:authorAvatar="author.avatar"
-				:authorName="author.name"
-				:authorDesc="author.desc"
+				:authorAvatar="author?.avatar"
+				:authorName="author?.name"
+				:authorDesc="author?.desc"
 				:date
 				:views
 			/>
@@ -47,7 +47,8 @@
 	import Articles from "~/components/Templates/Common/ArticlesBlock/ArticlesBlock.vue";
 	import Social from "@/components/Templates/Common/Social/Social.vue";
 	import Header from "./components/Header/Header.vue";
-	import article from "./article";
+	// import article from "./article";
+	import articles from "../Articles/articles.js";
 	import Nav from "./components/Nav/Nav.vue";
 
 	// Компоненты конструктора
@@ -55,6 +56,10 @@
 	import registration from "./components/Fines/Fines.vue";
 	import interestItems from "./components/InterestItems/InterestItems.vue";
 	import question from "~/components/Templates/Common/QuestionFull/QuestionFull.vue";
+
+	const route = useRoute();
+
+	const article = computed(() => articles.find(i => i.id == route.params.id));
 
 	const $articleWrapper = ref(null);
 	const $articleContent = ref(null);
@@ -67,7 +72,7 @@
 		interestItems,
 		question,
 	};
-	const { author, date, image, title, views, content, meta } = article;
+	const { author, date, image, title, views, content, meta } = article.value;
 
 	let breadcrumbs = [
 		{
@@ -84,11 +89,11 @@
 		},
 	];
 	useHead({
-		title: meta.title,
+		title: meta?.title,
 		meta: [
 			{
 				name: "description",
-				content: meta.description,
+				content: meta?.description,
 			},
 		],
 	});
