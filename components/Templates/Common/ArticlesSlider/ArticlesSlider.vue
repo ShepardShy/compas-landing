@@ -6,13 +6,13 @@
 		>
 			<template #slide>
 				<SwiperSlide
-					v-for="{ id, image, date, title, views } in slides"
+					v-for="{ id, imageMini, date, title, views } in slides"
 					:key="id"
 					:virtual-index="id"
 				>
 					<ArticleItem
 						:id
-						:image
+						:image="imageMini"
 						:title
 						:views
 						:date
@@ -28,7 +28,7 @@
 	import AppSlider from "@/components/AppSlider/Slider.vue";
 	import ArticleItem from "@/components/Templates/Common/ArticleItem/ArticleItem.vue";
 
-	import articles from "./articles.json";
+	import articles from "@/components/Templates/Articles/articles.js";
 
 	let countSlides = ref(3);
 	let slides = ref(articles);

@@ -3,10 +3,10 @@
 		<ArticleItem
 			:date
 			:id
-			:image
+			:image="imageMini"
 			:title
 			:views
-			v-for="{ date, id, image, title, views } in articles"
+			v-for="{ date, id, imageMini, title, views } in articles"
 		/>
 	</div>
 	<AppPagination
