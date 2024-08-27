@@ -107,10 +107,10 @@ export const useUserStore = defineStore("userStore", {
 				this.regData.passwordConfirmationError = [];
 				const res = await api.callMethod("POST", "registration", { domain: payload.domain ? payload.domain : undefined, email: payload.email, password: payload.password, password_confirmation: payload.passwordConfirmation, tariff: payload.tariff ? payload.tariff : 1 });
 
-				const { success, data, token, domain } = res;
+				const { success, data, token, domain, url } = res;
 
 				if (success && token) {
-					navigateTo(`http://${!this.regData.domain == "" ? this.regData.domain : domain}.compas.pro/?token=${token}`, { external: true });
+					navigateTo(`http://${domain}.compas.pro${url ? url : ""}?token=${token}`, { external: true });
 					this.regData.email = "";
 					this.regData.password = "";
 					this.regData.domain = "";
