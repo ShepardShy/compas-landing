@@ -41,7 +41,7 @@
 					href="tel:74951184422"
 					class="menu__link"
 				>
-					+7 495 118-44-22
+					+7 495 118-00-12
 				</a>
 				<div class="menu__buttons">
 					<NuxtLink

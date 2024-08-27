@@ -115,7 +115,6 @@ export const useUserStore = defineStore("userStore", {
 					this.regData.password = "";
 					this.regData.domain = "";
 					this.regData.passwordConfirmation = "";
-					return;
 				}
 				for (let key in data) {
 					if (key == "password_confirmation") {

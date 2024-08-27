@@ -19,7 +19,6 @@
 				>Подробнее</NuxtLink
 			>
 			<div class="question__info">
-				<p class="question__date date">{{ dayjs(date).locale("ru").format("D MMMM YYYY") }}</p>
 				<p class="question__views views">
 					<IconPasswordEye class="header__views-eye" />
 					<span>

@@ -71,6 +71,27 @@
 		localStorage.clear();
 	});
 
+	onMounted(() => {
+		userStore.$patch({
+			authData: {
+				domain: "",
+			},
+			regData: {
+				email: "",
+				emailError: [],
+				password: "",
+				passwordError: [],
+				domain: "",
+				tariff: "",
+				tariffError: "",
+				domainError: [],
+				passwordConfirmation: "",
+				passwordConfirmationError: [],
+				confidence: false,
+			},
+		});
+	});
+
 	watch(
 		() => router.params,
 		() => {

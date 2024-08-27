@@ -39,6 +39,10 @@
 			overflow: hidden;
 		}
 
+		.form-item__value.form-item__value_html .table__cell-group .table-cell__desc {
+			margin-left: 4px;
+		}
+
 		.table-item__content,
 		.form__item {
 			justify-content: center;

@@ -20,9 +20,6 @@
 				class="question__subtitle"
 			></div>
 			<div class="question__info">
-				<p class="question__date date">
-					{{ dayjs(date).locale("ru").format("D MMMM YYYY") }}
-				</p>
 				<div class="question__views views">
 					<IconPasswordEye />
 					<span>
