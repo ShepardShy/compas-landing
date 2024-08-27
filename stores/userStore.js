@@ -110,7 +110,7 @@ export const useUserStore = defineStore("userStore", {
 				const { success, data, token, domain, url } = res;
 
 				if (success && token) {
-					navigateTo(`http://${domain}.compas.pro${url ? url : ""}?token=${token}`, { external: true });
+					navigateTo(`http://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });
 					this.regData.email = "";
 					this.regData.password = "";
 					this.regData.domain = "";
