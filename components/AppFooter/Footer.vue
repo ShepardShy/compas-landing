@@ -126,6 +126,12 @@
 						Статьи
 					</NuxtLink>
 					<NuxtLink
+						to="/knowledge-base"
+						class="footer-link__href"
+					>
+						База знаний
+					</NuxtLink>
+					<NuxtLink
 						to="/docs"
 						class="footer-link__href"
 					>

@@ -5,19 +5,23 @@
 			:options="{ VisibleSlides: countSlides, spaceBetween: 20, pagination: { clickable: true, dynamicBullets: true } }"
 		>
 			<template #slide>
-				<SwiperSlide
-					v-for="{ id, imageMini, date, title, views } in slides"
+				<template
 					:key="id"
-					:virtual-index="id"
+					v-for="{ id, imageMini, date, title, views } in slides"
 				>
-					<ArticleItem
-						:id
-						:image="imageMini"
-						:title
-						:views
-						:date
-					/>
-				</SwiperSlide>
+					<SwiperSlide
+						v-if="!route.fullPath?.includes(id)"
+						:virtual-index="id"
+					>
+						<ArticleItem
+							:id
+							:image="imageMini"
+							:title
+							:views
+							:date
+						/>
+					</SwiperSlide>
+				</template>
 			</template>
 		</AppSlider>
 	</div>
@@ -29,6 +33,8 @@
 	import ArticleItem from "@/components/Templates/Common/ArticleItem/ArticleItem.vue";
 
 	import articles from "@/components/Templates/Articles/articles.js";
+
+	const route = useRoute();
 
 	let countSlides = ref(3);
 	let slides = ref(articles);

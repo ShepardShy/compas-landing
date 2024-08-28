@@ -60,7 +60,7 @@
 
 		<figure class="ibg fines__image">
 			<img
-				src="/main/fines/preview.png"
+				:src="previewImage[route.params?.type] ? previewImage[route.params?.type] : defaultImage"
 				alt="Проверьте штрафы и зарегестрируйтесь в 1 клик"
 			/>
 		</figure>
@@ -79,6 +79,17 @@
 	import FansyBox from "@/components/AppFansyBox/FansyBox.vue";
 	import ValidateField from "@/components/AppTable/Validate.js";
 	import api from "@/helpers/api.js";
+
+	import vuImage from "/main/fines/preview-vu.png";
+	import defaultImage from "/main/fines/preview.webp";
+
+	const previewImage = {
+		"po-sts": defaultImage,
+		"po-voditelskomu-udostovereniyu": vuImage,
+		"po-nomeru-postanovleniya": defaultImage,
+		"po-nomeru-avto": defaultImage,
+		"po-inn": defaultImage,
+	};
 
 	const route = useRoute();
 

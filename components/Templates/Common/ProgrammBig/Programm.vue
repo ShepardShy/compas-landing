@@ -16,12 +16,14 @@
 					v-for="{ text, background } in advantages"
 				/>
 			</div>
-			<NuxtLink
-				class="programm-full__link"
-				to="/auth/registration"
-			>
-				<AppButton class="button_blue"> Попробуйте бесплатно </AppButton>
-			</NuxtLink>
+			<div class="programm-full__link">
+				<AppButton
+					@click="navigateTo('/auth/registration')"
+					class="button_blue"
+				>
+					Попробуйте бесплатно
+				</AppButton>
+			</div>
 		</div>
 
 		<img

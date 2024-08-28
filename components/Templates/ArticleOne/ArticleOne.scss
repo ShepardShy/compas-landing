@@ -23,6 +23,7 @@
 	}
 
 	&__right {
+		position: relative;
 		min-width: 263px;
 		@media (max-width: 768px) {
 			order: -1;
