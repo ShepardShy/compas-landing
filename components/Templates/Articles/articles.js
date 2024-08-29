@@ -133,8 +133,8 @@ export default [
 	{
 		id: "poriadok-obzhalovnia-shtrafov-gidbdd",
 		title: "Порядок обжалования штрафов ГИБДД: что нужно знать",
-		image: "/landing/articles/kakie-shtrafi-mozho-oplatit-so-skidkoi/image.png",
-		imageMini: "/landing/articles/kakie-shtrafi-mozho-oplatit-so-skidkoi/image_mini.png",
+		image: "/landing/articles/poriadok-obzhalovnia-shtrafov-gidbdd/image.png",
+		imageMini: "/landing/articles/poriadok-obzhalovnia-shtrafov-gidbdd/image_mini.png",
 		author: {
 			name: "Темур Киселев",
 			desc: "Эксперт компании Компас Дайнамикс",
@@ -184,8 +184,8 @@ export default [
 	{
 		id: "shtraf-za-previshenie-skorosti",
 		title: "Штраф за превышение скорости",
-		image: "/landing/articles/kakie-shtrafi-mozho-oplatit-so-skidkoi/image.png",
-		imageMini: "/landing/articles/kakie-shtrafi-mozho-oplatit-so-skidkoi/image_mini.png",
+		image: "/landing/articles/shtraf-za-previshenie-skorosti/image.png",
+		imageMini: "/landing/articles/shtraf-za-previshenie-skorosti/image_mini.png",
 		author: {
 			name: "Темур Киселев",
 			desc: "Эксперт компании Компас Дайнамикс",
@@ -256,8 +256,8 @@ export default [
 	{
 		id: "shtraf-za-podachu-zvukovogo-signala",
 		title: "Штраф за подачу звукового сигнала",
-		image: "/landing/articles/kakie-shtrafi-mozho-oplatit-so-skidkoi/image.png",
-		imageMini: "/landing/articles/kakie-shtrafi-mozho-oplatit-so-skidkoi/image_mini.png",
+		image: "/landing/articles/shtraf-za-podachu-zvukovogo-signala/image.png",
+		imageMini: "/landing/articles/shtraf-za-podachu-zvukovogo-signala/image_mini.png",
 		author: {
 			name: "Темур Киселев",
 			desc: "Эксперт компании Компас Дайнамикс",
@@ -314,8 +314,8 @@ export default [
 	{
 		id: "shtraf-za-ustanovku-specsignalov",
 		title: "Штраф за установку спецсигналов на автомобили",
-		image: "/landing/articles/kakie-shtrafi-mozho-oplatit-so-skidkoi/image.png",
-		imageMini: "/landing/articles/kakie-shtrafi-mozho-oplatit-so-skidkoi/image_mini.png",
+		image: "/landing/articles/shtraf-za-ustanovku-specsignalov/image.png",
+		imageMini: "/landing/articles/shtraf-za-ustanovku-specsignalov/image_mini.png",
 		author: {
 			name: "Темур Киселев",
 			desc: "Эксперт компании Компас Дайнамикс",

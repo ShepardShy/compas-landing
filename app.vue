@@ -8,7 +8,7 @@
 			<AppMain>
 				<NuxtPage />
 			</AppMain>
-			<AppFooter />
+			<AppFooter v-if="!route.fullPath.includes('/auth')" />
 		</div>
 	</div>
 </template>
