@@ -80,7 +80,7 @@
 	import ValidateField from "@/components/AppTable/Validate.js";
 	import api from "@/helpers/api.js";
 
-	import vuImage from "/main/fines/preview-vu.png";
+	import vuImage from "/main/fines/preview-vu.svg";
 	import defaultImage from "/main/fines/preview.webp";
 
 	const previewImage = {
@@ -283,10 +283,10 @@
 				};
 				isLoading.value = true;
 
-				const { domain, success, token } = await api.callMethod("POST", `registration`, formData.value);
+				const { domain, success, token, url } = await api.callMethod("POST", `registration`, formData.value);
 
 				if (success) {
-					navigateTo(`http://${domain}.compas.pro/`, { external: true });
+					navigateTo(`http://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });
 					for (let elem of form.value) {
 						elem.value = "";
 					}

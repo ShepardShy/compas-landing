@@ -5,8 +5,14 @@
 	>
 		<div class="auth__main">
 			<div class="auth__wrapper">
+				<AuthAccounts
+					v-if="activeTab == 'accounts'"
+					:authRef="authRef"
+					@changeActiveTab="tab => changeActiveTab(tab)"
+				/>
+
 				<AuthEntry
-					v-if="activeTab == 'entry'"
+					v-else-if="activeTab == 'entry'"
 					:authRef="authRef"
 					@changeActiveTab="tab => changeActiveTab(tab)"
 				/>
@@ -36,9 +42,12 @@
 	import "./AuthPage.scss";
 
 	import AuthEntry from "./Entry/Entry.vue";
+	import AuthAccounts from "./Accounts/Accounts.vue";
 	import AuthRegistration from "./Registration/Registration.vue";
 	import { useUserStore } from "@/stores/userStore.js";
+	import { useCommonStore } from "@/stores/commonStore.js";
 	const userStore = useUserStore();
+	const commonStore = useCommonStore();
 
 	const route = useRoute();
 
@@ -53,9 +62,7 @@
 	};
 
 	onMounted(() => {
-		console.log(activeTab.value != "registration" && activeTab.value != "entry");
-
-		if (activeTab.value != "registration" && activeTab.value != "entry") {
+		if (activeTab.value != "registration" && activeTab.value != "entry" && activeTab.value != "accounts") {
 			navigateTo("/404");
 		}
 	});
@@ -64,7 +71,7 @@
 		if (router.params.tab) {
 			activeTab.value = router.params.tab;
 		} else {
-			activeTab.value = "entry";
+			commonStore.accounts.length > 0 ? (activeTab.value = "accounts") : (activeTab.value = "entry");
 			navigateTo(`/auth/${activeTab.value}`);
 		}
 
@@ -98,7 +105,7 @@
 			if (router.params.tab) {
 				activeTab.value = router.params.tab;
 			} else {
-				activeTab.value = "entry";
+				commonStore.accounts.length > 0 ? (activeTab.value = "accounts") : (activeTab.value = "entry");
 				navigateTo(`/auth/${activeTab.value}`);
 			}
 		},

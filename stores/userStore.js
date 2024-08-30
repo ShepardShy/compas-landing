@@ -1,7 +1,7 @@
 import api from "@/helpers/api.js";
 import { defineStore } from "pinia";
 import commonScripts from "@/commonScripts/commonScripts.js";
-import axios from "axios";
+import { useCommonStore } from "@/stores/commonStore.js";
 
 export const useUserStore = defineStore("userStore", {
 	// states
@@ -60,6 +60,9 @@ export const useUserStore = defineStore("userStore", {
 						status: false,
 						text: "",
 					};
+					const commonStore = useCommonStore();
+					const isInside = commonStore.accounts.find(i => i == this.authData.domain);
+					!isInside && commonStore.accounts.push(this.authData.domain);
 					navigateTo(`http://${this.authData.domain}.compas.pro/`, { external: true });
 				}
 			} catch (error) {
@@ -110,6 +113,9 @@ export const useUserStore = defineStore("userStore", {
 				const { success, data, token, domain, url } = res;
 
 				if (success && token) {
+					const commonStore = useCommonStore();
+					const isInside = commonStore.accounts.find(i => i == this.authData.domain);
+					!isInside && commonStore.accounts.push(domain);
 					navigateTo(`http://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });
 					this.regData.email = "";
 					this.regData.password = "";

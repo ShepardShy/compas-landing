@@ -38,7 +38,7 @@
 				class="menu__actions"
 			>
 				<a
-					href="tel:74951184422"
+					href="tel:74951180012"
 					class="menu__link"
 				>
 					+7 495 118-00-12
@@ -46,7 +46,7 @@
 				<div class="menu__buttons">
 					<NuxtLink
 						class="button-text"
-						to="/auth/entry"
+						to="/auth"
 					>
 						Войти
 					</NuxtLink>

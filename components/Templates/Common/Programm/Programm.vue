@@ -7,7 +7,10 @@
 			<div class="programm__desc">
 				{{ props.desc }}
 			</div>
-			<NuxtLink to="/auth/registration">
+			<NuxtLink
+				class="programm__link"
+				to="/auth/registration"
+			>
 				<AppButton class="button_blue"> Попробовать бесплатно </AppButton>
 			</NuxtLink>
 		</template>

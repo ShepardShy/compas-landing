@@ -10,12 +10,11 @@ export const useCommonStore = defineStore("commonStore", {
 			tabs: [],
 			updatedMethods: {},
 			modalInfo: [],
+			accounts: [],
 		};
 	},
 
-	persist: {
-		storage: persistedState.localStorage,
-	},
+	persist: true,
 
 	// actions
 	actions: {},
