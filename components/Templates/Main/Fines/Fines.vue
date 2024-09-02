@@ -251,8 +251,6 @@
 		const data = {};
 		for (let item of form.value) {
 			const trimmedValue = item.value.replace(/\s+/g, "");
-			console.log(trimmedValue);
-
 			data[item.name] = trimmedValue;
 		}
 		return data;
@@ -283,7 +281,7 @@
 				};
 				isLoading.value = true;
 
-				const { domain, success, token, url } = await api.callMethod("POST", `registration`, formData.value);
+				const { domain, success, token, url } = await api.callMethod("POST", `registration`, { ...formData.value, tariff: 1 });
 
 				if (success) {
 					navigateTo(`http://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });

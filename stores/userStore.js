@@ -102,6 +102,8 @@ export const useUserStore = defineStore("userStore", {
 		},
 
 		async registration(payload) {
+			console.log(payload);
+
 			try {
 				this.regButtonLoad = true;
 				this.regData.emailError = [];
