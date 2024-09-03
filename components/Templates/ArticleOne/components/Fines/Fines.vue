@@ -273,7 +273,7 @@
 				const { domain, success, token } = await api.callMethod("POST", `registration`, formData.value);
 
 				if (success) {
-					navigateTo(`http://${domain}.compas.pro/`, { external: true });
+					navigateTo(`https://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });
 					for (let elem of form.value) {
 						elem.value = "";
 					}

@@ -63,7 +63,7 @@ export const useUserStore = defineStore("userStore", {
 					const commonStore = useCommonStore();
 					const isInside = commonStore.accounts.find(i => i == this.authData.domain);
 					!isInside && commonStore.accounts.push(this.authData.domain);
-					navigateTo(`http://${this.authData.domain}.compas.pro/`, { external: true });
+					navigateTo(`https://${this.authData.domain}.compas.pro/`, { external: true });
 				}
 			} catch (error) {
 				this.authData = {
@@ -116,9 +116,9 @@ export const useUserStore = defineStore("userStore", {
 
 				if (success && token) {
 					const commonStore = useCommonStore();
-					const isInside = commonStore.accounts.find(i => i == this.authData.domain);
+					const isInside = commonStore.accounts.find(i => i == this.regData.domain);
 					!isInside && commonStore.accounts.push(domain);
-					navigateTo(`http://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });
+					navigateTo(`https://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });
 					this.regData.email = "";
 					this.regData.password = "";
 					this.regData.domain = "";

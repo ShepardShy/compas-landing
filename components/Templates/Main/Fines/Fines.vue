@@ -284,7 +284,7 @@
 				const { domain, success, token, url } = await api.callMethod("POST", `registration`, { ...formData.value, tariff: 1 });
 
 				if (success) {
-					navigateTo(`http://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });
+					navigateTo(`https://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });
 					for (let elem of form.value) {
 						elem.value = "";
 					}
