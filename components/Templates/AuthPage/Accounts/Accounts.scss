@@ -2,9 +2,18 @@
 @use "@/assets/mixins.scss" as mixins;
 
 .auth__account {
-	background-color: #fbfcfd;
+	background: #fbfcfd;
 	border: 1px solid #eeeff1;
 	border-radius: 10px;
 	padding: 15px;
 	width: 100%;
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	line-height: 1;
+	&-exit {
+		padding: 7px;
+		cursor: pointer;
+	}
 }

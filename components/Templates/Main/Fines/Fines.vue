@@ -79,9 +79,14 @@
 	import FansyBox from "@/components/AppFansyBox/FansyBox.vue";
 	import ValidateField from "@/components/AppTable/Validate.js";
 	import api from "@/helpers/api.js";
+	import { useCommonStore } from "@/stores/commonStore.js";
 
+	// Картинки проверки штрафов
 	import vuImage from "/main/fines/preview-vu.svg";
 	import defaultImage from "/main/fines/preview.webp";
+
+	const commonStore = useCommonStore();
+	const route = useRoute();
 
 	const previewImage = {
 		"po-sts": defaultImage,
@@ -90,8 +95,6 @@
 		"po-nomeru-avto": defaultImage,
 		"po-inn": defaultImage,
 	};
-
-	const route = useRoute();
 
 	const titleMap = {
 		"po-sts": "по СТС",
@@ -281,15 +284,21 @@
 				};
 				isLoading.value = true;
 
-				const { domain, success, token, url } = await api.callMethod("POST", `registration`, { ...formData.value, tariff: 1 });
+				try {
+					const { domain, success, token, url } = await api.callMethod("POST", `registration`, { ...formData.value, tariff: 1 });
 
-				if (success) {
-					navigateTo(`https://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });
-					for (let elem of form.value) {
-						elem.value = "";
+					if (success) {
+						const isInside = commonStore.accounts.find(i => i == domain);
+						!isInside && commonStore.accounts.push(domain);
+						navigateTo(`https://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });
+						for (let elem of form.value) {
+							elem.value = "";
+						}
 					}
+				} catch (error) {
+				} finally {
+					isLoading.value = false;
 				}
-				isLoading.value = false;
 			}
 		};
 

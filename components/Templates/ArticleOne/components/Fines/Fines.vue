@@ -78,6 +78,9 @@
 	import FansyBox from "@/components/AppFansyBox/FansyBox.vue";
 	import ValidateField from "@/components/AppTable/Validate.js";
 	import api from "@/helpers/api.js";
+	import { useCommonStore } from "@/stores/commonStore.js";
+
+	const commonStore = useCommonStore();
 
 	const route = useRoute();
 
@@ -267,18 +270,23 @@
 					state: false,
 					type: null,
 				};
-
 				isLoading.value = true;
 
-				const { domain, success, token } = await api.callMethod("POST", `registration`, formData.value);
+				try {
+					const { domain, success, token, url } = await api.callMethod("POST", `registration`, { ...formData.value, tariff: 1 });
 
-				if (success) {
-					navigateTo(`https://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });
-					for (let elem of form.value) {
-						elem.value = "";
+					if (success) {
+						const isInside = commonStore.accounts.find(i => i == domain);
+						!isInside && commonStore.accounts.push(domain);
+						navigateTo(`https://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });
+						for (let elem of form.value) {
+							elem.value = "";
+						}
 					}
+				} catch (error) {
+				} finally {
+					isLoading.value = false;
 				}
-				isLoading.value = false;
 			}
 		};
 

@@ -8,8 +8,14 @@
 			<span
 				class="auth__link"
 				@click="navigateTo(`http://${account}.compas.pro/`, { external: true })"
-				>{{ account }}</span
+				>{{ `${account}.compas.pro` }}</span
 			>
+			<img
+				class="auth__account-exit"
+				@click="deleteAccount(account)"
+				:src="exitImg"
+				alt="Удалить"
+			/>
 		</div>
 	</AppSection>
 	<div class="auth__text auth__subtext">
@@ -25,6 +31,8 @@
 <script setup>
 	import "./Accounts.scss";
 
+	import exitImg from "/public/auth/exit.svg";
+
 	import AppSection from "@/components/AppSection/AppSection.vue";
 	import AppH1 from "@/components/AppHeaders/H1/H1.vue";
 
@@ -32,7 +40,16 @@
 	import { storeToRefs } from "pinia";
 	const commonStore = useCommonStore();
 	const { accounts } = storeToRefs(commonStore);
-	console.log(accounts.value);
+
+	const deleteAccount = accToDelete => {
+		accounts.value = accounts.value.filter(acc => acc != accToDelete);
+	};
+
+	watchEffect(() => {
+		if (accounts.value.length <= 0) {
+			navigateTo("/auth/entry");
+		}
+	});
 
 	const props = defineProps({
 		authRef: {
