@@ -23,7 +23,7 @@
 	/>
 	<PlusesFines />
 	<!-- <MainTariffs /> -->
-	<MainAbout :text="aboutJson.text" />
+	<MainAbout :text="route.params?.type in aboutJson ? aboutJson[route.params.type].text : aboutJson.default.text" />
 
 	<MainQuestions />
 	<MainArticles class="main__questinos" />

@@ -12,8 +12,23 @@
 	justify-content: space-between;
 	align-items: center;
 	line-height: 1;
+	&-wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+	}
 	&-exit {
+		height: 15px;
+		box-sizing: content-box;
 		padding: 7px;
 		cursor: pointer;
+		&:hover g {
+			fill: #1253a2;
+			stroke: #1253a2;
+		}
+	}
+	&-title {
+		font-size: 12px;
+		color: #bcbcbc;
 	}
 }

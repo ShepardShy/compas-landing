@@ -29,7 +29,7 @@
 	import AppSlider from "@/components/AppSlider/Slider.vue";
 	import QuestionItem from "@/components/Templates/Common/QuestionItem/QuestionItem.vue";
 
-	import questions from "./questions.json";
+	import questions from "@/components/Templates/Questions/questions.json";
 
 	let countSlides = ref(3);
 	let slides = ref(questions);

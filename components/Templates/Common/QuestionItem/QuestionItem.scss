@@ -47,7 +47,7 @@
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 }
-.question__subtitle {
+:deep(.question__subtitle) {
 	font-size: 16px;
 	line-height: 1.2;
 	display: -webkit-box;
@@ -55,6 +55,12 @@
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 	margin-bottom: auto;
+	h2 {
+		font-size: 16px;
+		margin-bottom: 0;
+		color: #000;
+		text-align: left;
+	}
 }
 
 .question__info {

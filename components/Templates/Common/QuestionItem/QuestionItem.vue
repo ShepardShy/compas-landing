@@ -35,8 +35,6 @@
 	import IconPasswordEye from "@/components/AppIcons/PasswordEye/PasswordEye.vue";
 	import defaultImgQuestion from "/main/questions/question.jpg";
 
-	const dayjs = useDayjs();
-
 	const props = defineProps({
 		title: {
 			type: String,
@@ -59,7 +57,7 @@
 			type: String,
 		},
 	});
-	const { title, views, image, answer, date, id } = toRefs(props);
+	const { title, views, image, answer, id } = toRefs(props);
 </script>
 
 <style lang="scss" scoped>
