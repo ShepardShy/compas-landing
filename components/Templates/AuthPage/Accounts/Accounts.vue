@@ -12,7 +12,10 @@
 					@click="navigateTo(`http://${account}.compas.pro/`, { external: true })"
 					>{{ `${account}.compas.pro` }}</span
 				>
-				<AppExit class="auth__account-exit" />
+				<AppExit
+					@click="deleteAccount(account)"
+					class="auth__account-exit"
+				/>
 			</div>
 		</div>
 	</AppSection>

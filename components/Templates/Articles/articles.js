@@ -350,8 +350,8 @@ export default [
 	{
 		id: "platit-li-shtraf-esli-za-rulem-ne-on",
 		title: "Будет ли платить штраф владелец авто, если за рулём был не он?",
-		image: "/landing/articles/shtraf-za-ustanovku-specsignalov/image.png",
-		imageMini: "/landing/articles/shtraf-za-ustanovku-specsignalov/image_mini.png",
+		image: "/landing/articles/platit-li-shtraf-esli-za-rulem-ne-on/image.png",
+		imageMini: "/landing/articles/platit-li-shtraf-esli-za-rulem-ne-on/image_mini.png",
 		author: {
 			name: "Темур Киселев",
 			desc: "Эксперт компании Компас Дайнамикс",
@@ -381,8 +381,8 @@ export default [
 	{
 		id: "shtraf-za-prodanuyu-machinu",
 		title: "Что делать, если приходят штрафы за проданную машину?",
-		image: "/landing/articles/shtraf-za-ustanovku-specsignalov/image.png",
-		imageMini: "/landing/articles/shtraf-za-ustanovku-specsignalov/image_mini.png",
+		image: "/landing/articles/shtraf-za-prodanuyu-machinu/image.png",
+		imageMini: "/landing/articles/shtraf-za-prodanuyu-machinu/image_mini.png",
 		author: {
 			name: "Темур Киселев",
 			desc: "Эксперт компании Компас Дайнамикс",
@@ -452,8 +452,8 @@ export default [
 	{
 		id: "shtraf-za-tuning",
 		title: "Штрафы за тюнинг автомобиля в России",
-		image: "/landing/articles/shtraf-za-ustanovku-specsignalov/image.png",
-		imageMini: "/landing/articles/shtraf-za-ustanovku-specsignalov/image_mini.png",
+		image: "/landing/articles/shtraf-za-tuning/image.png",
+		imageMini: "/landing/articles/shtraf-za-tuning/image_mini.png",
 		author: {
 			name: "Темур Киселев",
 			desc: "Эксперт компании Компас Дайнамикс",
@@ -500,8 +500,8 @@ export default [
 	{
 		id: "srok-davnosti-shtrafof",
 		title: "Срок давности по штрафам ГИБДД: когда ваш долг будет аннулирован",
-		image: "/landing/articles/shtraf-za-ustanovku-specsignalov/image.png",
-		imageMini: "/landing/articles/shtraf-za-ustanovku-specsignalov/image_mini.png",
+		image: "/landing/articles/srok-davnosti-shtrafof/image.png",
+		imageMini: "/landing/articles/srok-davnosti-shtrafof/image_mini.png",
 		author: {
 			name: "Темур Киселев",
 			desc: "Эксперт компании Компас Дайнамикс",

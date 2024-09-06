@@ -7,7 +7,7 @@
 			class="question__image"
 		/>
 		<div class="question__body">
-			<h2 class="question__title">{{ title }}</h2>
+			<h1 class="question__title">{{ title }}</h1>
 			<p
 				v-html="answer"
 				class="question__text"
