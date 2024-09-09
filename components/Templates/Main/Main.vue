@@ -1,14 +1,18 @@
 <template>
 	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
 
-	<AppTabs
-		class="main__links"
-		:tabs="tabs"
-		:isShowActions="false"
-		@callAction="tab => changeTab(tab)"
-	></AppTabs>
-	<hr class="main__line" />
-	<MainFines />
+	<template v-if="route.params?.type != 'list'">
+		<AppTabs
+			class="main__links"
+			:tabs="tabs"
+			:isShowActions="false"
+			@callAction="tab => changeTab(tab)"
+		></AppTabs>
+		<hr class="main__line" />
+		<MainFines />
+	</template>
+	<FinesList v-else />
+
 	<MainCompanies
 		:list="fines"
 		:title="'Уже 1000 клиентов оплатили более 50 000 штрафов на 50% дешевле чем это делали раньше.'"
@@ -46,6 +50,7 @@
 	// import MainTariffs from '@/components/Templates/Main/Tariffs/Tariffs.vue';
 	import PlusesFines from "./PlusesFines/PlusesFines.vue";
 	import AppTabs from "~/components/AppTabs/Tabs.vue";
+	import FinesList from "./FinesList/FinesList.vue";
 
 	import aboutJson from "./data/about.json";
 

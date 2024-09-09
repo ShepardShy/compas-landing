@@ -3,7 +3,7 @@
 		v-if="(props.mask != '' && ![undefined, null].includes(props.mask)) || props.item.type == 'number'"
 		ref="inputRef"
 		v-maska
-		data-maska-tokens="A:[a-zA-Zа-яА-Я]|#:[0-9]"
+		data-maska-tokens="A:[a-zA-Zа-яА-Я]|#:[0-9]|X:[0-9a-zA-Zа-яА-Я]"
 		:data-maska="props.item.type == 'number' ? '#######################' : props.mask"
 		:type="'text'"
 		autocorrect="off"

@@ -51,27 +51,41 @@ export const useUserStore = defineStore("userStore", {
 			try {
 				this.authButtonLoad = true;
 				response = await api.callMethod("POST", `tenant/check`, data, { Authorization: "Bearer null" }, true, true, this.authData.domain);
-				if (response?.code == 404) {
+				if (response?.code == 404 || !response?.success) {
+					this.authData = {
+						domain: "",
+					};
+					this.authError = {
+						status: true,
+						text: response?.error,
+					};
 					return;
 				} else {
 					// authRef.classList.add("auth_disabled");
-					this.userToken = response.token;
-					this.authError = {
-						status: false,
-						text: "",
-					};
-					const commonStore = useCommonStore();
-					const isInside = commonStore.accounts.find(i => i == this.authData.domain);
-					!isInside && commonStore.accounts.push(this.authData.domain);
-					navigateTo(`https://${this.authData.domain}.compas.pro/`, { external: true });
+					if (response.success) {
+						this.userToken = response.token;
+						this.authError = {
+							status: false,
+							text: "",
+						};
+						const commonStore = useCommonStore();
+						console.log(commonStore.accounts);
+						const isInside = commonStore.accounts.find(i => i == this.authData.domain);
+						!isInside && commonStore.accounts.push(this.authData.domain);
+						console.log(commonStore.accounts);
+						navigateTo(`https://${this.authData.domain}.compas.pro/`, { external: true });
+						this.authData = {
+							domain: "",
+						};
+					}
 				}
-			} catch (error) {
+			} catch (e) {
 				this.authData = {
 					domain: "",
 				};
 				this.authError = {
 					status: true,
-					text: error.data.error,
+					text: response?.error,
 				};
 			} finally {
 				this.authButtonLoad = false;

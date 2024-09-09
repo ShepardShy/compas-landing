@@ -1,6 +1,6 @@
 <template>
 	<AppSection class="fines section_without-background">
-		<AppH1 class="fines__title"> Проверьте штрафы {{ titleMap[route.params.type] }} и зарегистрируйтесь в 1 клик </AppH1>
+		<AppH1 class="fines__title"> Проверка штрафов {{ titleMap[route.params.type] }} в 1 клик </AppH1>
 		<form
 			class="fines__form"
 			@click.prevent
@@ -8,7 +8,7 @@
 			<AppInput
 				v-for="item in form"
 				:class="item.class"
-				v-show="(form.find(i => ['sts', 'vu', 'uin', 'gos', 'inn'].includes(i.key)) && form[0].value != '') || ['number', 'certificate', 'sts', 'vu', 'uin', 'gos', 'inn'].includes(item.key) || (form[0].value != '' && form[1].value != '')"
+				v-show="(form.find(i => ['sts', 'vu', 'uin', 'gos'].includes(i.key)) && form[0].value != '') || ['number', 'certificate', 'sts', 'vu', 'uin', 'gos', 'inn', 'kpp'].includes(item.key) || (form[0].value != '' && form[1].value != '')"
 				:item="{
 					focus: false,
 					id: 0,
@@ -83,17 +83,21 @@
 
 	// Картинки проверки штрафов
 	import vuImage from "/main/fines/preview-vu.svg";
+	import stsImage from "/main/fines/preview-sts.svg";
+	import gosImage from "/main/fines/preview-gos.svg";
+	import postanovlenieImage from "/main/fines/preview-postanovlenie.svg";
+	import innImage from "/main/fines/preview-inn.svg";
 	import defaultImage from "/main/fines/preview.webp";
 
 	const commonStore = useCommonStore();
 	const route = useRoute();
 
 	const previewImage = {
-		"po-sts": defaultImage,
+		"po-sts": stsImage,
 		"po-voditelskomu-udostovereniyu": vuImage,
-		"po-nomeru-postanovleniya": defaultImage,
-		"po-nomeru-avto": defaultImage,
-		"po-inn": defaultImage,
+		"po-nomeru-postanovleniya": postanovlenieImage,
+		"po-nomeru-avto": gosImage,
+		"po-inn": innImage,
 	};
 
 	const titleMap = {
@@ -113,7 +117,7 @@
 						key: "sts",
 						name: "sts_number",
 						type: "text",
-						mask: "## AA ######",
+						mask: "## XX ######",
 						value: "",
 						required: true,
 						placeholder: "00 AA 000000",
@@ -154,7 +158,7 @@
 			case "po-nomeru-avto": {
 				return [
 					{
-						title: "Номер авто",
+						title: "Гос. номер автомобиля",
 						key: "gos",
 						name: "number",
 						type: "text",
@@ -164,16 +168,38 @@
 						placeholder: "A 000 AA 777",
 						class: "input_line",
 					},
+					{
+						title: "Номер СТС",
+						key: "sts",
+						name: "sts_number",
+						type: "text",
+						mask: "## XX ######",
+						value: "",
+						required: true,
+						placeholder: "00 AA 000000",
+						class: "input_line",
+					},
 				];
 			}
 			case "po-inn": {
 				return [
 					{
-						title: "Номер ИНН",
+						title: "ИНН компании",
 						key: "inn",
 						name: "inn",
 						type: "text",
 						mask: "############",
+						value: "",
+						required: true,
+						placeholder: "000000000000",
+						class: "input_line",
+					},
+					{
+						title: "КПП компании",
+						key: "kpp",
+						name: "kpp",
+						type: "text",
+						mask: "#########",
 						value: "",
 						required: true,
 						placeholder: "000000000000",
@@ -184,7 +210,7 @@
 			default: {
 				return [
 					{
-						title: "Номер автомобиля",
+						title: "Гос. номер автомобиля",
 						key: "number",
 						name: "number",
 						type: "text",
@@ -195,7 +221,7 @@
 						class: "input_line",
 					},
 					{
-						title: "Свидетельство о регистрации ТС",
+						title: "Номер СТС",
 						key: "certificate",
 						name: "sts_number",
 						type: "text",
@@ -214,39 +240,39 @@
 	watchEffect(() => {
 		form.value = [
 			...fields.value,
-			{
-				title: "Электронная почта для входа",
-				key: "email",
-				name: "email",
-				type: "email",
-				mask: null,
-				value: "",
-				required: true,
-				placeholder: "mail@compas.pro",
-				class: "input_line",
-			},
-			{
-				title: "Пароль для входа",
-				key: "password",
-				name: "password",
-				type: "password",
-				mask: null,
-				value: "",
-				required: true,
-				placeholder: null,
-				class: "input_line",
-			},
-			{
-				title: "Повторить пароль для входа",
-				key: "repeatPassword",
-				name: "password_confirmation",
-				type: "password",
-				mask: null,
-				value: "",
-				required: true,
-				placeholder: null,
-				class: "input_line",
-			},
+			// {
+			// 	title: "Электронная почта для входа",
+			// 	key: "email",
+			// 	name: "email",
+			// 	type: "email",
+			// 	mask: null,
+			// 	value: "",
+			// 	required: true,
+			// 	placeholder: "mail@compas.pro",
+			// 	class: "input_line",
+			// },
+			// {
+			// 	title: "Пароль для входа",
+			// 	key: "password",
+			// 	name: "password",
+			// 	type: "password",
+			// 	mask: null,
+			// 	value: "",
+			// 	required: true,
+			// 	placeholder: null,
+			// 	class: "input_line",
+			// },
+			// {
+			// 	title: "Повторить пароль для входа",
+			// 	key: "repeatPassword",
+			// 	name: "password_confirmation",
+			// 	type: "password",
+			// 	mask: null,
+			// 	value: "",
+			// 	required: true,
+			// 	placeholder: null,
+			// 	class: "input_line",
+			// },
 		];
 	});
 

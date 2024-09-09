@@ -142,7 +142,7 @@
 			case "po-nomeru-avto": {
 				return [
 					{
-						title: "Номер авто",
+						title: "Гос. номер автомобиля",
 						key: "gos",
 						name: "number",
 						type: "text",
@@ -172,7 +172,7 @@
 			default: {
 				return [
 					{
-						title: "Номер автомобиля",
+						title: "Гос. номер автомобиля",
 						key: "number",
 						name: "number",
 						type: "text",
