@@ -66,9 +66,9 @@
 	provide("$articleWrapper", $articleWrapper);
 	provide("$articleContent", $articleContent);
 
-	onMounted(() => {
-		articlesStore.loadArticle("statia");
-	});
+	// onMounted(() => {
+	// 	articlesStore.loadArticle("statia");
+	// });
 
 	const conmponentsMap = {
 		wrap,
