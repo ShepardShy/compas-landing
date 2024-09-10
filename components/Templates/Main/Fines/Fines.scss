@@ -15,6 +15,12 @@
 			text-align: left;
 		}
 	}
+	&__title {
+		display: none;
+		@media (max-width: 1120px) {
+			display: block;
+		}
+	}
 }
 
 .fines__form {
@@ -22,6 +28,12 @@
 	grid-column: 1/2;
 	display: grid;
 	grid-template-columns: 1.5fr 1fr;
+	&-title {
+		grid-column: span 2;
+		@media (max-width: 1120px) {
+			display: none;
+		}
+	}
 }
 
 .fines__actions {

@@ -12,9 +12,9 @@ export default {
 					//withCredentials: true,
 				}).catch(error => {
 					const { response } = error;
-					if (response.status == 401) {
-						window.location.href = "/auth/entry";
-					}
+					// if (response.status == 401) {
+					// 	window.location.href = "/auth/entry";
+					// }
 
 					reject(response);
 
@@ -22,9 +22,6 @@ export default {
 					//     window.location.href = '/404';
 					// }
 				});
-
-				console.log(response, "response");
-
 				resolve(response.data);
 			} catch (e) {
 				reject(e);

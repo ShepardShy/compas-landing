@@ -1,10 +1,13 @@
 import { defineStore } from "pinia";
 import categories from "./data/categories.js";
+import api from "~/helpers/api.js";
 
 const route = useRoute();
 
 export const useArticlesStore = defineStore("articlesStore", {
 	state: () => ({
+		articles: null,
+		articleDetail: null,
 		categories: categories,
 	}),
 	getters: {
@@ -26,6 +29,18 @@ export const useArticlesStore = defineStore("articlesStore", {
 			}
 			return null;
 		},
+
+		articlesList() {
+			return this.articles?.list?.data || [];
+		},
 	},
-	actions: {},
+	actions: {
+		async loadArticles() {
+			this.articles = await api.callMethod("GET", "blog", {});
+			console.log(await api.callMethod("GET", `blog/statia`, {}));
+		},
+		async loadArticle(slug) {
+			this.articleDetail = await api.callMethod("GET", `blog/${slug}`, {});
+		},
+	},
 });

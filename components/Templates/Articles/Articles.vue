@@ -12,7 +12,7 @@
 		</div>
 		<div class="articles__right">
 			<Title :title="currentTitle" />
-			<articlesList />
+			<ArticlesList :articlesList />
 		</div>
 	</div>
 </template>
@@ -20,13 +20,13 @@
 <script setup>
 	import Search from "./components/Search/Search.vue";
 	import Title from "./components/Title/Title.vue";
-	import articlesList from "./components/ArticlesList/ArticlesList.vue";
+	import ArticlesList from "./components/ArticlesList/ArticlesList.vue";
 	import { storeToRefs } from "pinia";
 	import { useArticlesStore } from "~/stores/articlesStore";
 	import AppNav from "~/components/AppNav/AppNav.vue";
 
 	const articlesStore = useArticlesStore();
-	const { categories, currentTitle } = storeToRefs(articlesStore);
+	const { categories, currentTitle, articlesList } = storeToRefs(articlesStore);
 
 	let breadcrumbs = [
 		{
@@ -38,6 +38,10 @@
 			link: "/products/fines",
 		},
 	];
+
+	onMounted(() => {
+		articlesStore.loadArticles();
+	});
 </script>
 
 <style scoped>

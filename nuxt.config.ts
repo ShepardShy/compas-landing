@@ -16,7 +16,16 @@ export default defineNuxtConfig({
 	},
 	spaLoadingTemplate: false,
 	ssr: false,
-	modules: ["@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt", "nuxt-lodash", "dayjs-nuxt"],
+	modules: ["nuxt-yandex-metrika", "@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt", "nuxt-lodash", "dayjs-nuxt"],
+	yandexMetrika: {
+		id: "98290837",
+		options: {
+			clickmap: true,
+			trackLinks: true,
+			accurateTrackBounce: true,
+			webvisor: true,
+		},
+	},
 	vite: {
 		mode: "production",
 		server: {

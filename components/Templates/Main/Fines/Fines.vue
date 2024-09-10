@@ -5,6 +5,7 @@
 			class="fines__form"
 			@click.prevent
 		>
+			<AppH1 class="fines__form-title"> Проверка штрафов {{ titleMap[route.params.type] }} в 1 клик </AppH1>
 			<AppInput
 				v-for="item in form"
 				:class="item.class"
@@ -82,11 +83,11 @@
 	import { useCommonStore } from "@/stores/commonStore.js";
 
 	// Картинки проверки штрафов
-	import vuImage from "/main/fines/preview-vu.svg";
-	import stsImage from "/main/fines/preview-sts.svg";
-	import gosImage from "/main/fines/preview-gos.svg";
-	import postanovlenieImage from "/main/fines/preview-postanovlenie.svg";
-	import innImage from "/main/fines/preview-inn.svg";
+	import vuImage from "/main/fines/preview-vu.png";
+	import stsImage from "/main/fines/preview-sts.png";
+	import gosImage from "/main/fines/preview-gos.png";
+	import postanovlenieImage from "/main/fines/preview-postanovlenie.png";
+	import innImage from "/main/fines/preview-inn.png";
 	import defaultImage from "/main/fines/preview.webp";
 
 	const commonStore = useCommonStore();
