@@ -63,6 +63,12 @@
 	}
 }
 
+.question__views {
+	position: absolute;
+	bottom: 15px;
+	right: 15px;
+}
+
 .question__info {
 	display: flex;
 	justify-content: space-between;

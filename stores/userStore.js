@@ -74,9 +74,9 @@ export const useUserStore = defineStore("userStore", {
 						!isInside && commonStore.accounts.push(this.authData.domain);
 						console.log(commonStore.accounts);
 						navigateTo(`https://${this.authData.domain}.compas.pro/`, { external: true });
-						this.authData = {
-							domain: "",
-						};
+						// this.authData = {
+						// 	domain: "",
+						// };
 					}
 				}
 			} catch (e) {

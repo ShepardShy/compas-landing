@@ -1,11 +1,11 @@
 <template>
 	<AppSection class="fines section_without-background">
-		<AppH1 class="fines__title"> Проверка штрафов {{ titleMap[route.params.type] }} в 1 клик </AppH1>
+		<AppH1 class="fines__title"> Проверка штрафов ГИБДД {{ titleMap[route.params.type] }} в 1 клик </AppH1>
 		<form
 			class="fines__form"
 			@click.prevent
 		>
-			<AppH1 class="fines__form-title"> Проверка штрафов {{ titleMap[route.params.type] }} в 1 клик </AppH1>
+			<AppH1 class="fines__form-title"> Проверка штрафов ГИБДД {{ titleMap[route.params.type] }} в 1 клик </AppH1>
 			<AppInput
 				v-for="item in form"
 				:class="item.class"

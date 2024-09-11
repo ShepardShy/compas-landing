@@ -19,14 +19,14 @@
 				v-html="answer"
 				class="question__subtitle"
 			></div>
-			<div class="question__info">
-				<div class="question__views views">
-					<IconPasswordEye />
-					<span>
-						{{ views }}
-					</span>
-				</div>
+			<!-- <div class="question__info"> -->
+			<div class="question__views views">
+				<IconPasswordEye />
+				<span>
+					{{ views }}
+				</span>
 			</div>
+			<!-- </div> -->
 		</div>
 	</NuxtLink>
 </template>

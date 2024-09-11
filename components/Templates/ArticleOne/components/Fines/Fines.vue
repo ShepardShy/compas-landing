@@ -1,6 +1,6 @@
 <template>
 	<AppSection class="fines section_without-background">
-		<AppH2 class="fines__title"> Проверьте штрафы {{ titleMap[route.params.type] }} и зарегистрируйтесь в 1 клик </AppH2>
+		<AppH2 class="fines__title fines__title_show"> Проверьте штрафы ГИБДД {{ titleMap[route.params.type] }} и зарегистрируйтесь в 1 клик </AppH2>
 		<form
 			class="fines__form"
 			@click.prevent
