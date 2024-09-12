@@ -1,6 +1,6 @@
 <template>
 	<AppSection class="fines section_without-background">
-		<AppH2 class="fines__title fines__title_show"> Проверьте штрафы ГИБДД {{ titleMap[route.params.type] }} и зарегистрируйтесь в 1 клик </AppH2>
+		<AppH2 class="fines__title fines__title_show"> Проверка штрафов ГИБДД в 1 клик </AppH2>
 		<form
 			class="fines__form"
 			@click.prevent
@@ -276,7 +276,7 @@
 					const { domain, success, token, url } = await api.callMethod("POST", `registration`, { ...formData.value, tariff: 1 });
 
 					if (success) {
-						const isInside = commonStore.accounts.find(i => i == domain);
+						const isInside = commonStore.accounts.find(i => i.toLowerCase() == domain.toLowerCase());
 						!isInside && commonStore.accounts.push(domain);
 						navigateTo(`https://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });
 						for (let elem of form.value) {

@@ -226,7 +226,7 @@
 						key: "certificate",
 						name: "sts_number",
 						type: "text",
-						mask: "## AA ######",
+						mask: "## XX ######",
 						value: "",
 						required: true,
 						placeholder: "00 AA 000000",
@@ -315,7 +315,7 @@
 					const { domain, success, token, url } = await api.callMethod("POST", `registration`, { ...formData.value, tariff: 1 });
 
 					if (success) {
-						const isInside = commonStore.accounts.find(i => i == domain);
+						const isInside = commonStore.accounts.find(i => i.toLowerCase() == domain.toLowerCase());
 						!isInside && commonStore.accounts.push(domain);
 						navigateTo(`https://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });
 						for (let elem of form.value) {

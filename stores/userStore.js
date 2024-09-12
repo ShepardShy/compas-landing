@@ -70,7 +70,7 @@ export const useUserStore = defineStore("userStore", {
 						};
 						const commonStore = useCommonStore();
 						console.log(commonStore.accounts);
-						const isInside = commonStore.accounts.find(i => i == this.authData.domain);
+						const isInside = commonStore.accounts.find(i => i.toLowerCase() == this.authData.domain.toLowerCase());
 						!isInside && commonStore.accounts.push(this.authData.domain);
 						console.log(commonStore.accounts);
 						navigateTo(`https://${this.authData.domain}.compas.pro/`, { external: true });
@@ -116,8 +116,6 @@ export const useUserStore = defineStore("userStore", {
 		},
 
 		async registration(payload) {
-			console.log(payload);
-
 			try {
 				this.regButtonLoad = true;
 				this.regData.emailError = [];
@@ -130,7 +128,7 @@ export const useUserStore = defineStore("userStore", {
 
 				if (success && token) {
 					const commonStore = useCommonStore();
-					const isInside = commonStore.accounts.find(i => i == this.regData.domain);
+					const isInside = commonStore.accounts.find(i => i.toLowerCase() == this.regData.domain.toLowerCase());
 					!isInside && commonStore.accounts.push(domain);
 					navigateTo(`https://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });
 					this.regData.email = "";
@@ -147,6 +145,8 @@ export const useUserStore = defineStore("userStore", {
 					}
 				}
 			} catch (e) {
+				console.log(e, "123");
+
 				this.regData.email = "";
 				this.regData.password = "";
 				this.regData.domain = "";
