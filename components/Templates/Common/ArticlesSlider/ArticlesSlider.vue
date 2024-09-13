@@ -7,18 +7,18 @@
 			<template #slide>
 				<template
 					:key="id"
-					v-for="{ id, imageMini, date, title, views } in slides"
+					v-for="{ created_at, preview_picture, preview_text, slug, views } in articlesList"
 				>
 					<SwiperSlide
 						v-if="!route.fullPath?.includes(id)"
 						:virtual-index="id"
 					>
 						<ArticleItem
-							:id
-							:image="imageMini"
-							:title
+							:id="slug.value"
+							:image="preview_picture[0].file"
+							:title="preview_text"
 							:views
-							:date
+							:date="created_at"
 						/>
 					</SwiperSlide>
 				</template>
@@ -31,8 +31,17 @@
 	import { SwiperSlide } from "swiper/vue";
 	import AppSlider from "@/components/AppSlider/Slider.vue";
 	import ArticleItem from "@/components/Templates/Common/ArticleItem/ArticleItem.vue";
+	import { useArticlesStore } from "~/stores/articlesStore";
+	import { storeToRefs } from "pinia";
 
 	import articles from "@/components/Templates/Articles/articles.js";
+
+	const articlesStore = useArticlesStore();
+	const { categories, currentTitle, articlesList } = storeToRefs(articlesStore);
+
+	articlesList.value.length == 0 ? await articlesStore.loadArticles() : 0;
+
+	console.log(articlesList.value);
 
 	const route = useRoute();
 

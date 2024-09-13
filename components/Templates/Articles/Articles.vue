@@ -1,6 +1,5 @@
 <template>
 	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
-
 	<div class="articles">
 		<div class="articles__left">
 			<Search />

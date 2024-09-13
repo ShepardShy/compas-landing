@@ -277,7 +277,7 @@
 
 					if (success) {
 						const isInside = commonStore.accounts.find(i => i.toLowerCase() == domain.toLowerCase());
-						!isInside && commonStore.accounts.push(domain);
+						!isInside && commonStore.accounts.push(domain.toLowerCase());
 						navigateTo(`https://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });
 						for (let elem of form.value) {
 							elem.value = "";

@@ -7,7 +7,7 @@
 			class="wrap__image"
 		/>
 		<div
-			v-html="text"
+			v-html="decodeHtml(text)"
 			class="wrap__text"
 		></div>
 	</div>
@@ -19,6 +19,13 @@
 		image: { type: String },
 	});
 	const { image, text } = toRefs(props);
+
+	// Функция для декодирования HTML сущностей
+	const decodeHtml = html => {
+		const parser = new DOMParser();
+		const doc = parser.parseFromString(html, "text/html");
+		return doc.documentElement.textContent;
+	};
 </script>
 
 <style>

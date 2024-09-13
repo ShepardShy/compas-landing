@@ -1,12 +1,12 @@
 <template>
 	<div class="articles__list">
 		<ArticleItem
-			:date
-			:id
-			:image="imageMini"
-			:title
+			:date="created_at"
+			:id="slug.value"
+			:image="preview_picture[0]?.file"
+			:title="preview_text"
 			:views
-			v-for="{ date, id, imageMini, title, views } in articles"
+			v-for="{ preview_text, views, slug, preview_picture, created_at } in articles"
 		/>
 	</div>
 	<AppPagination
@@ -24,14 +24,14 @@
 	const totalPages = ref(66);
 	const activePage = ref(1);
 
-	// const props = defineProps({
-	// 	articlesList: {
-	// 		type: Array,
-	// 		required: true,
-	// 		default: [],
-	// 	},
-	// });
-	const articles = ref(articlesJson);
+	const props = defineProps({
+		articlesList: {
+			type: Array,
+			required: true,
+			default: [],
+		},
+	});
+	const articles = ref(props.articlesList);
 </script>
 
 <style>
