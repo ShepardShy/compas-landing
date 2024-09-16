@@ -38,9 +38,7 @@
 		},
 	];
 
-	onMounted(() => {
-		articlesStore.loadArticles();
-	});
+	articlesStore.loadArticles();
 </script>
 
 <style scoped>

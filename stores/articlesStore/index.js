@@ -37,7 +37,6 @@ export const useArticlesStore = defineStore("articlesStore", {
 	actions: {
 		async loadArticles() {
 			this.articles = await api.callMethod("GET", "blog", {});
-			console.log(await api.callMethod("GET", `blog/statia`, {}));
 		},
 		async loadArticle(slug) {
 			this.articleDetail = await api.callMethod("GET", `blog/${slug}`, {});

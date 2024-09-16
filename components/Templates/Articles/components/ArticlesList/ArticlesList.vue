@@ -1,4 +1,5 @@
 <template>
+	{{ articles }}
 	<div class="articles__list">
 		<ArticleItem
 			:date="created_at"
@@ -6,7 +7,7 @@
 			:image="preview_picture[0]?.file"
 			:title="preview_text"
 			:views
-			v-for="{ preview_text, views, slug, preview_picture, created_at } in articles"
+			v-for="{ preview_text, views, slug, preview_picture, created_at } in articlesList"
 		/>
 	</div>
 	<AppPagination
@@ -31,7 +32,7 @@
 			default: [],
 		},
 	});
-	const articles = ref(props.articlesList);
+	const { articlesList } = toRefs(props);
 </script>
 
 <style>

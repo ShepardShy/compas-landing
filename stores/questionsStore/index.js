@@ -1,10 +1,13 @@
 import { defineStore } from "pinia";
 import categories from "./data/categories.json";
+import api from "~/helpers/api.js";
 
 const route = useRoute();
 
 export const useQuestionsStore = defineStore("questionsStore", {
 	state: () => ({
+		questions: null,
+		questionDetail: null,
 		categories: categories,
 	}),
 	getters: {
@@ -26,6 +29,17 @@ export const useQuestionsStore = defineStore("questionsStore", {
 			}
 			return null;
 		},
+
+		questionsList() {
+			return this.questions?.list?.data || [];
+		},
 	},
-	actions: {},
+	actions: {
+		async loadQuestions() {
+			this.questions = await api.callMethod("GET", "faq", {});
+		},
+		async loadQuestion(slug) {
+			this.questionDetail = await api.callMethod("GET", `faq/${slug}`, {});
+		},
+	},
 });

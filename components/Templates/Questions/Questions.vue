@@ -51,7 +51,11 @@
 	// const { answer, date, image, title, views, meta, id } = question?.value;
 
 	const questionsStore = useQuestionsStore();
-	const { categories } = storeToRefs(questionsStore);
+	const { categories, questionsList } = storeToRefs(questionsStore);
+	console.log(questionsList);
+
+	await questionsStore.loadQuestions();
+	console.log(questionsList.value);
 
 	const questionId = computed(() => route.params.id);
 

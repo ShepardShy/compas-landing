@@ -29,7 +29,9 @@
 						{{ views }}
 					</span>
 				</div>
-				<div class="header__duration duration">Читать статью: <span class="duration_black">2 мин</span></div>
+				<div class="header__duration duration">
+					Читать статью: <span class="duration_black">{{ readingTime }} мин</span>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -72,8 +74,12 @@
 			type: Number,
 			required: true,
 		},
+		readingTime: {
+			type: Number,
+			required: true,
+		},
 	});
-	const { authorAvatar, authorDesc, authorName, date, image, title, views } = toRefs(props);
+	const { authorAvatar, authorDesc, authorName, date, image, title, views, readingTime } = toRefs(props);
 </script>
 
 <style scoped>
