@@ -18,16 +18,20 @@
 		<div class="questions__right">
 			<template v-if="!questionId">
 				<Title />
-				<QuestionsList :questions="questions" />
+				<QuestionsList
+					v-if="questionsList"
+					:questions="questionsList"
+				/>
 			</template>
 			<Question
-				v-else-if="question"
-				:answer="question.answer"
-				:image="question.image"
-				:title="question.title"
-				:views="question.views"
-				:date="question.date"
-				:id="question.id"
+				v-else-if="questionDetail"
+				:answer="questionDetail?.detail_text.value?.[0].body"
+				:image="questionDetail?.detail_picture.value?.[0].file"
+				:title="questionDetail?.preview_text?.value"
+				:views="questionDetail?.views?.value"
+				:date="questionDetail?.created_at?.value"
+				:id="questionDetail?.slug?.value.value"
+				:readingTime="questionDetail?.reading_time?.value"
 			/>
 		</div>
 	</div>
@@ -42,31 +46,29 @@
 	import { useQuestionsStore } from "~/stores/questionsStore";
 	import AppNav from "~/components/AppNav/AppNav.vue";
 	import Question from "~/components/Templates/Common/QuestionFull/QuestionFull.vue";
-	import questions from "./questions.json";
+	// import questions from "./questions.json";
 
 	const route = useRoute();
 
-	const question = computed(() => questions.find(i => i.id == route.params.id));
-
-	// const { answer, date, image, title, views, meta, id } = question?.value;
-
 	const questionsStore = useQuestionsStore();
-	const { categories, questionsList } = storeToRefs(questionsStore);
-	console.log(questionsList);
-
-	await questionsStore.loadQuestions();
-	console.log(questionsList.value);
+	const { categories, questionsList, questionDetail } = storeToRefs(questionsStore);
 
 	const questionId = computed(() => route.params.id);
+	const loadData = async () => {
+		questionDetail.value = null;
+		questionId.value ? await questionsStore.loadQuestion(route.params.id) : 0;
+		!questionsList.value.length ? await questionsStore.loadQuestions() : 0;
+	};
+	loadData();
 
 	watchEffect(() => {
 		if (questionId.value) {
 			useHead({
-				title: question.value.meta.title + " | Compas.pro",
+				title: questionDetail.value?.seo_title.value?.value + " | Compas.pro",
 				meta: [
 					{
 						name: "description",
-						content: question.value.meta.description,
+						content: questionDetail.value?.seo_description.value?.value,
 					},
 				],
 			});
@@ -94,7 +96,7 @@
 		},
 		questionId.value
 			? {
-					title: question.value.title,
+					title: questionDetail.value?.preview_text.value.value,
 					link: `/questions/${questionId.value}`,
 			  }
 			: null,

@@ -63,7 +63,7 @@
 	const route = useRoute();
 
 	const articlesStore = useArticlesStore();
-	const { categories, currentTitle, articlesList, articleDetail } = storeToRefs(articlesStore);
+	const { articlesList, articleDetail } = storeToRefs(articlesStore);
 
 	const $articleWrapper = ref(null);
 	const $articleContent = ref(null);

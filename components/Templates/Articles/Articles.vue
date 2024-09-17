@@ -6,7 +6,7 @@
 			<AppNav
 				title="Статьи"
 				:categories="categories"
-				path="articles"
+				path="articles-category"
 			/>
 		</div>
 		<div class="articles__right">

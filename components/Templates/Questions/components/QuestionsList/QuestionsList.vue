@@ -1,13 +1,13 @@
 <template>
 	<div class="questions__list">
 		<QuestionItem
-			:date
-			:title
-			:answer
-			:image
+			:date="created_at"
+			:title="preview_text"
+			:answer="detail_text[0]?.body"
+			:image="detail_picture?.[0].file"
 			:views
-			:id
-			v-for="{ date, id, image, answer, title, views } in questions"
+			:id="slug?.value"
+			v-for="{ created_at, slug, detail_picture, detail_text, preview_text, views } in questions"
 		/>
 	</div>
 	<AppPagination

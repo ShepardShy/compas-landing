@@ -1,22 +1,23 @@
 <template>
 	<div class="questions-slider">
 		<AppSlider
+			v-if="questionsList"
 			:class="countSlides == 1 ? 'swiper-slider_only' : ''"
 			:options="{ VisibleSlides: countSlides, centeredSlidesBounds: true, spaceBetween: 20, pagination: { clickable: true, dynamicBullets: true } }"
 		>
 			<template #slide>
 				<SwiperSlide
-					v-for="{ date, id, image, answer, title, views } in slides"
+					v-for="{ created_at, slug, detail_picture, detail_text, preview_text, views } in questionsList"
 					:key="id"
 					:virtual-index="id"
 				>
 					<QuestionItem
-						:image
-						:title
-						:answer
+						:image="detail_picture?.[0].file"
+						:title="preview_text"
+						:answer="detail_text?.[0].body"
 						:views
-						:date
-						:id
+						:date="created_at"
+						:id="slug.value"
 					/>
 				</SwiperSlide>
 			</template>
@@ -31,11 +32,21 @@
 
 	import questions from "@/components/Templates/Questions/questions.json";
 
+	import { storeToRefs } from "pinia";
+	import { useQuestionsStore } from "~/stores/questionsStore";
+
+	const route = useRoute();
+
+	const questionsStore = useQuestionsStore();
+	const { categories, questionsList, questionDetail } = storeToRefs(questionsStore);
+
+	!questionsList.value.length ? await questionsStore.loadQuestions() : 0;
+
+	console.log(questionsList.value);
+
 	let countSlides = ref(3);
-	let slides = ref(questions);
 
 	onMounted(() => {
-		slides.value = questions;
 		window.addEventListener("resize", checkingWindowWidth);
 		checkingWindowWidth();
 	});

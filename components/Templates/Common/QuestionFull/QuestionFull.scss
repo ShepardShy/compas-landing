@@ -57,6 +57,26 @@
 				}
 			}
 		}
+		table {
+			margin-bottom: var(1.5em);
+		}
+
+		th,
+		td {
+			height: calc(4px * 2 + 1.5em);
+			min-width: calc(8px * 2);
+			padding: 4px 8px;
+			border: 1px solid #e7eaec;
+		}
+
+		a {
+			cursor: pointer;
+			color: #1253a2;
+			text-decoration: underline;
+			&:hover {
+				text-decoration: none;
+			}
+		}
 	}
 
 	&__more {

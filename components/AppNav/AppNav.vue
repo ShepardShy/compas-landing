@@ -7,7 +7,7 @@
 				:key="category.value"
 			>
 				<div
-					@click="() => (category.value == 'all' ? navigateTo(`/${path}`) : navigateTo(`/${path}?category=${category.value}`))"
+					@click="() => (category.value == 'all' ? navigateTo(`/${path}`) : navigateTo(`/${path}/${category.value}`))"
 					class="nav__item"
 					:class="{ nav__item_active: category.value == activeNav, nav__item_main: category.isMain }"
 				>
@@ -19,7 +19,7 @@
 					/>
 				</div>
 				<div
-					@click="() => navigateTo(`/${path}?category=${child.value}`)"
+					@click="() => navigateTo(`/${path}/${child.value}`)"
 					v-if="category.isOpen"
 					v-for="child in category.children"
 					:key="child.value"
@@ -39,7 +39,7 @@
 	const props = defineProps({
 		title: { type: String, required: true },
 		categories: { type: Array, required: true },
-		navParam: { type: String, default: "category" },
+		navParam: { type: String, default: "id" },
 		path: { type: String, default: "" },
 	});
 
@@ -52,7 +52,7 @@
 
 	const route = useRoute();
 
-	let activeNav = computed(() => (route.query[navParam.value] ? route.query[navParam.value] : "all"));
+	let activeNav = computed(() => (route.params[navParam.value] ? route.params[navParam.value] : "all"));
 </script>
 
 <style>

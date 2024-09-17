@@ -36,10 +36,14 @@ export const useQuestionsStore = defineStore("questionsStore", {
 	},
 	actions: {
 		async loadQuestions() {
+			console.log(123);
+
 			this.questions = await api.callMethod("GET", "faq", {});
 		},
 		async loadQuestion(slug) {
-			this.questionDetail = await api.callMethod("GET", `faq/${slug}`, {});
+			if (slug) {
+				this.questionDetail = await api.callMethod("GET", `faq/${slug}`, {});
+			}
 		},
 	},
 });

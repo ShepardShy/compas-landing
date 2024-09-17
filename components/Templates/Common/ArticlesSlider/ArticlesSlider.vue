@@ -41,8 +41,6 @@
 
 	articlesList.value.length == 0 ? await articlesStore.loadArticles() : 0;
 
-	console.log(articlesList.value);
-
 	const route = useRoute();
 
 	let countSlides = ref(3);

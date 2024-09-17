@@ -22,10 +22,12 @@
 				<p class="question__views views">
 					<IconPasswordEye class="header__views-eye" />
 					<span>
-						{{ views }}
+						{{ views ? views : 0 }}
 					</span>
 				</p>
-				<div class="header__duration duration">Читать вопрос-ответ: <span class="duration_black">2 мин</span></div>
+				<div class="header__duration duration">
+					Читать вопрос-ответ: <span class="duration_black">{{ readingTime }} мин</span>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -44,8 +46,9 @@
 		date: { type: String },
 		views: { type: Number },
 		isShowMore: { type: Boolean, default: false },
+		readingTime: { type: Number },
 	});
-	const { image, answer, title, isShowMore, date, id, views } = toRefs(props);
+	const { image, answer, title, isShowMore, date, id, views, readingTime } = toRefs(props);
 </script>
 
 <style>
