@@ -26,6 +26,7 @@
 		position: relative;
 		user-select: none;
 		transition: 0.2s;
+		overflow: hidden;
 		// font-size: 14px;
 		&:hover {
 			background: variables.$color-hover;

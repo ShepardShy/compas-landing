@@ -8,9 +8,10 @@
 		<div class="questions__left">
 			<Search />
 			<AppNav
+				v-if="questionsCategories"
 				class="questions__nav"
 				title="Вопрос-ответ"
-				:categories
+				:categories="questionsCategories"
 				path="questions"
 			/>
 			<AskQuestion />
@@ -51,7 +52,7 @@
 	const route = useRoute();
 
 	const questionsStore = useQuestionsStore();
-	const { categories, questionsList, questionDetail } = storeToRefs(questionsStore);
+	const { questionsCategories, questionsList, questionDetail } = storeToRefs(questionsStore);
 
 	const questionId = computed(() => route.params.id);
 	const loadData = async () => {
@@ -64,11 +65,11 @@
 	watchEffect(() => {
 		if (questionId.value) {
 			useHead({
-				title: questionDetail.value?.seo_title.value?.value + " | Compas.pro",
+				title: questionDetail.value?.seo_title?.value?.value + " | Compas.pro",
 				meta: [
 					{
 						name: "description",
-						content: questionDetail.value?.seo_description.value?.value,
+						content: questionDetail.value?.seo_description?.value?.value,
 					},
 				],
 			});
@@ -96,7 +97,7 @@
 		},
 		questionId.value
 			? {
-					title: questionDetail.value?.preview_text.value.value,
+					title: questionDetail.value?.preview_text.value,
 					link: `/questions/${questionId.value}`,
 			  }
 			: null,

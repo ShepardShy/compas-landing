@@ -20,6 +20,27 @@
 		display: flex;
 		flex-direction: column;
 		gap: 25px;
+		& .table {
+			overflow: auto;
+			table {
+				@media (max-width: 1024px) {
+					min-width: 660px;
+				}
+			}
+		}
+		& .table-swipe {
+			@media (max-width: 768px) {
+				&::before {
+					content: "";
+					display: block;
+					width: 100%;
+					height: 75px;
+					background-image: url("/public/icons/swipe.svg");
+					background-repeat: no-repeat;
+					background-position: center;
+				}
+			}
+		}
 		& .bold {
 			font-weight: 600;
 		}
@@ -56,9 +77,6 @@
 					background-color: #000;
 				}
 			}
-		}
-		table {
-			margin-bottom: var(1.5em);
 		}
 
 		th,

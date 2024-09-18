@@ -4,8 +4,9 @@
 		<div class="articles__left">
 			<Search />
 			<AppNav
+				v-if="articlesCategories"
 				title="Статьи"
-				:categories="categories"
+				:categories="articlesCategories"
 				path="articles-category"
 			/>
 		</div>
@@ -25,7 +26,11 @@
 	import AppNav from "~/components/AppNav/AppNav.vue";
 
 	const articlesStore = useArticlesStore();
-	const { categories, currentTitle, articlesList } = storeToRefs(articlesStore);
+
+	await articlesStore.loadArticles();
+
+	const { categories, articlesCategories, currentTitle, articlesList, articles } = storeToRefs(articlesStore);
+	console.log(articlesCategories.value);
 
 	let breadcrumbs = [
 		{
@@ -37,8 +42,6 @@
 			link: "/products/fines",
 		},
 	];
-
-	articlesStore.loadArticles();
 </script>
 
 <style scoped>

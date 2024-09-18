@@ -9,13 +9,13 @@
 				<div
 					@click="() => (category.value == 'all' ? navigateTo(`/${path}`) : navigateTo(`/${path}/${category.value}`))"
 					class="nav__item"
-					:class="{ nav__item_active: category.value == activeNav, nav__item_main: category.isMain }"
+					:class="{ nav__item_active: category.value == activeNav, nav__item_main: category?.isMain }"
 				>
 					{{ category.title }}
 					<Triangle
 						@click.stop="category.isOpen = !category.isOpen"
 						class="nav__item-triangle"
-						v-if="category.children"
+						v-if="category.children.length > 0"
 					/>
 				</div>
 				<div

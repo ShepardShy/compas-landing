@@ -8,10 +8,11 @@ export const useArticlesStore = defineStore("articlesStore", {
 	state: () => ({
 		articles: null,
 		articleDetail: null,
-		categories: categories,
+		categories: null,
 	}),
 	getters: {
 		currentTitle() {
+			if (!this?.categories) return null;
 			const activeChild = this.activeChild;
 			if (activeChild) {
 				return activeChild.mainTitle;
@@ -21,6 +22,7 @@ export const useArticlesStore = defineStore("articlesStore", {
 		},
 
 		activeChild: state => {
+			if (!state?.categories) return null;
 			for (const category of state.categories) {
 				const child = category.children?.find(child => route.fullPath.includes(child.value));
 				if (child) {
@@ -33,10 +35,23 @@ export const useArticlesStore = defineStore("articlesStore", {
 		articlesList() {
 			return this.articles?.list?.data || [];
 		},
+
+		articlesCategories() {
+			return this.categories?.map(category => ({
+				value: category.slug,
+				title: category.name,
+				isOpen: false,
+				children: category.children?.map(child => ({
+					value: child.slug,
+					title: child.name,
+				})),
+			}));
+		},
 	},
 	actions: {
 		async loadArticles() {
 			this.articles = await api.callMethod("GET", "blog", {});
+			this.categories = this.articles.categories;
 		},
 		async loadArticle(slug) {
 			this.articleDetail = await api.callMethod("GET", `blog/${slug}`, {});

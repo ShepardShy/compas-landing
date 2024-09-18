@@ -9,7 +9,7 @@
 		<div class="question__body">
 			<h1 class="question__title">{{ title }}</h1>
 			<p
-				v-html="answer"
+				ref="questionText"
 				class="question__text"
 			></p>
 			<NuxtLink
@@ -49,6 +49,39 @@
 		readingTime: { type: Number },
 	});
 	const { image, answer, title, isShowMore, date, id, views, readingTime } = toRefs(props);
+
+	const questionText = ref(null);
+
+	onMounted(() => {
+		// Вставляем HTML контент
+		if (questionText.value) {
+			questionText.value.innerHTML = answer.value;
+
+			// Ищем все элементы <table>
+			const tables = questionText.value.querySelectorAll("table");
+			tables.forEach(table => {
+				// Создаем div с классом "table__wrapper"
+				const wrapper = document.createElement("div");
+				wrapper.classList.add("table__wrapper");
+
+				// Создаем div с классом "table-swipe"
+				const swipeWrapper = document.createElement("div");
+				swipeWrapper.classList.add("table-swipe");
+
+				// Создаем div с классом "table"
+				const tableWrapper = document.createElement("div");
+				tableWrapper.classList.add("table");
+
+				// Вставляем таблицу в table-wrapper
+				table.parentNode.insertBefore(wrapper, table); // Вставляем wrapper перед таблицей
+				tableWrapper.appendChild(table); // Вставляем таблицу внутрь div.table
+
+				// Вставляем table-swipe и table внутрь table__wrapper
+				wrapper.appendChild(swipeWrapper);
+				wrapper.appendChild(tableWrapper);
+			});
+		}
+	});
 </script>
 
 <style>
