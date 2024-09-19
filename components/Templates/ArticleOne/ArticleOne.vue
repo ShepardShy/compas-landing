@@ -8,7 +8,7 @@
 		<div class="article__left">
 			<Header
 				:title="preview_text?.value"
-				:image="detail_picture.value?.[0].file"
+				:image="detail_picture.value?.[0]?.file"
 				:authorAvatar="author?.avatar"
 				:authorName="author?.name"
 				:authorDesc="author?.desc"

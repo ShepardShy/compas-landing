@@ -6,20 +6,22 @@
 			:options="{ VisibleSlides: countSlides, centeredSlidesBounds: true, spaceBetween: 20, pagination: { clickable: true, dynamicBullets: true } }"
 		>
 			<template #slide>
-				<SwiperSlide
-					v-for="{ created_at, slug, detail_picture, detail_text, preview_text, views } in questionsList"
-					:key="id"
-					:virtual-index="id"
-				>
-					<QuestionItem
-						:image="detail_picture?.[0].file"
-						:title="preview_text"
-						:answer="detail_text?.[0].body"
-						:views
-						:date="created_at"
-						:id="slug.value"
-					/>
-				</SwiperSlide>
+				<template v-for="{ created_at, slug, detail_picture, detail_text, preview_text, views } in questionsList">
+					<SwiperSlide
+						v-if="detail_text"
+						:key="id"
+						:virtual-index="id"
+					>
+						<QuestionItem
+							:image="detail_picture?.[0]?.file"
+							:title="preview_text"
+							:answer="detail_text?.[0]?.body"
+							:views
+							:date="created_at"
+							:id="slug.value"
+						/>
+					</SwiperSlide>
+				</template>
 			</template>
 		</AppSlider>
 	</div>

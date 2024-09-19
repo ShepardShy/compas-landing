@@ -1,14 +1,16 @@
 <template>
 	{{ articles }}
 	<div class="articles__list">
-		<ArticleItem
-			:date="created_at"
-			:id="slug.value"
-			:image="preview_picture[0]?.file"
-			:title="preview_text"
-			:views
-			v-for="{ preview_text, views, slug, preview_picture, created_at } in articlesList"
-		/>
+		<template v-for="{ preview_text, views, slug, preview_picture, created_at } in articlesList">
+			<ArticleItem
+				v-if="preview_text"
+				:date="created_at"
+				:id="slug.value"
+				:image="preview_picture[0]?.file"
+				:title="preview_text"
+				:views
+			/>
+		</template>
 	</div>
 	<AppPagination
 		:totalPages

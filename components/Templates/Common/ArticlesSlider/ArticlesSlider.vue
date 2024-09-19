@@ -10,12 +10,12 @@
 					v-for="{ created_at, preview_picture, preview_text, slug, views } in articlesList"
 				>
 					<SwiperSlide
-						v-if="!route.fullPath?.includes(id)"
+						v-if="!route.fullPath?.includes(id) && preview_text"
 						:virtual-index="id"
 					>
 						<ArticleItem
 							:id="slug.value"
-							:image="preview_picture[0].file"
+							:image="preview_picture?.[0]?.file"
 							:title="preview_text"
 							:views
 							:date="created_at"

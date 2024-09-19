@@ -12,7 +12,7 @@
 				class="questions__nav"
 				title="Вопрос-ответ"
 				:categories="questionsCategories"
-				path="questions"
+				path="questions-category"
 			/>
 			<AskQuestion />
 		</div>
@@ -27,7 +27,7 @@
 			<Question
 				v-else-if="questionDetail"
 				:answer="questionDetail?.detail_text.value?.[0].body"
-				:image="questionDetail?.detail_picture.value?.[0].file"
+				:image="questionDetail?.detail_picture.value?.[0]?.file"
 				:title="questionDetail?.preview_text?.value"
 				:views="questionDetail?.views?.value"
 				:date="questionDetail?.created_at?.value"
