@@ -59,6 +59,7 @@
 		questionDetail.value = null;
 		questionId.value ? await questionsStore.loadQuestion(route.params.id) : 0;
 		!questionsList.value.length ? await questionsStore.loadQuestions() : 0;
+		console.log(questionsCategories.value);
 	};
 	loadData();
 
