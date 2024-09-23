@@ -1,5 +1,4 @@
 <template>
-	{{ articles }}
 	<div class="articles__list">
 		<template v-for="{ preview_text, views, slug, preview_picture, created_at } in articlesList">
 			<ArticleItem
@@ -13,8 +12,8 @@
 		</template>
 	</div>
 	<AppPagination
-		:totalPages
-		v-model="activePage"
+		:totalPages="countPages"
+		v-model="page"
 		class="articles__list-pagination"
 	/>
 </template>
@@ -23,6 +22,12 @@
 	import ArticleItem from "~/components/Templates/Common/ArticleItem/ArticleItem.vue";
 	import AppPagination from "~/components/AppPagination/AppPagination.vue";
 	import articlesJson from "../../articles.js";
+	import { storeToRefs } from "pinia";
+	import { useArticlesStore } from "~/stores/articlesStore";
+
+	const articlesStore = useArticlesStore();
+
+	const { page, perPage, countPages } = storeToRefs(articlesStore);
 
 	const totalPages = ref(66);
 	const activePage = ref(1);

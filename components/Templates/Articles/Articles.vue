@@ -2,7 +2,10 @@
 	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
 	<div class="articles">
 		<div class="articles__left">
-			<Search />
+			<Search
+				@changeValue="changeValueSearch"
+				placeholder="Поиск по статьям"
+			/>
 			<AppNav
 				v-if="articlesCategories"
 				title="Статьи"
@@ -29,8 +32,20 @@
 
 	await articlesStore.loadArticles();
 
-	const { categories, articlesCategories, currentTitle, articlesList, articles } = storeToRefs(articlesStore);
-	console.log(articlesCategories.value);
+	const { categories, articlesCategories, currentTitle, articlesList, articles, currentCategoryId } = storeToRefs(articlesStore);
+
+	watch(
+		() => currentCategoryId.value,
+		async () => {
+			await articlesStore.loadArticles();
+			console.log(articles.value);
+		}
+	);
+
+	const changeValueSearch = async search => {
+		const res = await articlesStore.searchOptions(search);
+		console.log(res);
+	};
 
 	let breadcrumbs = [
 		{

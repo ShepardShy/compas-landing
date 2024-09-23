@@ -125,12 +125,12 @@
 					>
 						Статьи
 					</NuxtLink>
-					<NuxtLink
+					<!-- <NuxtLink
 						to="/knowledge-base"
 						class="footer-link__href"
 					>
 						База знаний
-					</NuxtLink>
+					</NuxtLink> -->
 					<NuxtLink
 						to="/docs"
 						class="footer-link__href"

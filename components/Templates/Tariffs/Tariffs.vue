@@ -59,7 +59,7 @@
 				id: 1,
 				title: "",
 				key: "module",
-				width: "300px",
+				width: "200px",
 				enabled: true,
 				sort_order: null,
 				type: "text",
