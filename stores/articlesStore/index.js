@@ -65,9 +65,10 @@ export const useArticlesStore = defineStore("articlesStore", {
 	},
 	actions: {
 		async loadArticles() {
-			this.categories = (await api.callMethod("GET", `blog`, {})).categories;
+			const { categories } = await api.callMethod("GET", `blog`, {});
+			this.categories = categories;
 			const categoryId = this.categories?.find(category => category.slug == route.params.id)?.id;
-			this.articles = await api.callMethod("GET", `blog?q=&filter[category_id]=${categoryId}`, {});
+			this.articles = await api.callMethod("GET", `blog?q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
 		},
 		async loadArticle(slug) {
 			this.articleDetail = await api.callMethod("GET", `blog/${slug}`, {});
