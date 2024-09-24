@@ -23,16 +23,14 @@
 <script setup>
 	import AppAutocomplete from "@/components/AppAutocomplete/Input.vue";
 
-	const emits = defineEmits(["changeValue"]);
+	const emit = defineEmits(["changeValue"]);
 
 	const changeValue = data => {
 		const search = data.search;
-		emits("changeValue", search);
+		emit("changeValue", search);
 	};
 
-	const searchOptions = data => {
-		console.log(data);
-	};
+	const searchOptions = data => {};
 
 	const props = defineProps({
 		item: {

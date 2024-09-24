@@ -11,6 +11,8 @@ export default {
 					headers: Object.assign({ "Content-Type": "application/json" }, headers),
 					//withCredentials: true,
 				}).catch(error => {
+					console.log(error);
+					
 					const { response } = error;
 					// if (response.status == 401) {
 					// 	window.location.href = "/auth/entry";

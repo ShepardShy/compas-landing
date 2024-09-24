@@ -38,13 +38,12 @@
 		() => currentCategoryId.value,
 		async () => {
 			await articlesStore.loadArticles();
-			console.log(articles.value);
 		}
 	);
 
 	const changeValueSearch = async search => {
-		const res = await articlesStore.searchOptions(search);
-		console.log(res);
+		const res = articlesStore.searchOptions(search);
+		console.log(await res);
 	};
 
 	let breadcrumbs = [

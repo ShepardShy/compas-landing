@@ -4,7 +4,7 @@
 			<ArticleItem
 				v-if="preview_text"
 				:date="created_at"
-				:id="slug.value"
+				:id="slug.value ? slug.value : slug"
 				:image="preview_picture[0]?.file"
 				:title="preview_text"
 				:views

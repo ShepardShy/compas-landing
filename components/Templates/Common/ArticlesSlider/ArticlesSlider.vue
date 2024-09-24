@@ -14,7 +14,7 @@
 						:virtual-index="id"
 					>
 						<ArticleItem
-							:id="slug.value"
+							:id="slug.value ? slug.value : slug"
 							:image="preview_picture?.[0]?.file"
 							:title="preview_text"
 							:views

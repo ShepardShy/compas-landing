@@ -69,12 +69,16 @@ export const useArticlesStore = defineStore("articlesStore", {
 			this.categories = categories;
 			const categoryId = this.categories?.find(category => category.slug == route.params.id)?.id;
 			this.articles = await api.callMethod("GET", `blog?q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
+			console.log(this.articles);
 		},
 		async loadArticle(slug) {
 			this.articleDetail = await api.callMethod("GET", `blog/${slug}`, {});
 		},
 		async searchOptions(search) {
-			return await fetch(`blog/search?q=${search}&entity=articles`, { method: "GET" });
+			console.log(search, "search");
+			const res = await api.callMethod("GET", `blog/search?q=${search}&entity=articles`, {});
+			console.log(res);
+			return res;
 		},
 	},
 });
