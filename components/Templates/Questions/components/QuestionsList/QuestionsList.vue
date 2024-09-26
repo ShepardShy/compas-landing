@@ -1,6 +1,6 @@
 <template>
 	<div class="questions__list">
-		<template v-for="{ created_at, slug, detail_picture, detail_text, preview_text, views } in questions">
+		<template v-for="{ created_at, slug, detail_picture, detail_text, preview_text, views } in questionsList">
 			<QuestionItem
 				v-if="detail_text"
 				:date="created_at"
@@ -13,8 +13,12 @@
 		</template>
 	</div>
 	<AppPagination
-		:totalPages
-		v-model="activePage"
+		:totalPages="countPages"
+		:perPageOptions
+		:perPage
+		v-model="page"
+		v-model:perPage="perPage"
+		@showMore="showMore"
 		class="questions__list-pagination"
 	/>
 </template>
@@ -23,12 +27,31 @@
 	import QuestionItem from "@/components/Templates/Common/QuestionItem/QuestionItem.vue";
 	import AppPagination from "~/components/AppPagination/AppPagination.vue";
 
-	const props = defineProps({
-		questions: { type: Array, required: true },
-	});
+	import { storeToRefs } from "pinia";
+	import { useQuestionsStore } from "~/stores/questionsStore";
 
-	const totalPages = ref(66);
-	const activePage = ref(1);
+	const questionsStore = useQuestionsStore();
+
+	const { page, perPage, countPages, questionsList } = storeToRefs(questionsStore);
+
+	const showMore = () => {
+		questionsStore.showMore();
+	};
+
+	const perPageOptions = [
+		{
+			label: "12",
+			value: 12,
+		},
+		{
+			label: "24",
+			value: 24,
+		},
+		{
+			label: "36",
+			value: 36,
+		},
+	];
 </script>
 
 <style>

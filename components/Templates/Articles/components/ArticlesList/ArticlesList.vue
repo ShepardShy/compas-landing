@@ -13,7 +13,11 @@
 	</div>
 	<AppPagination
 		:totalPages="countPages"
+		:perPageOptions
+		:perPage
 		v-model="page"
+		v-model:perPage="perPage"
+		@showMore="showMore"
 		class="articles__list-pagination"
 	/>
 </template>
@@ -29,8 +33,24 @@
 
 	const { page, perPage, countPages } = storeToRefs(articlesStore);
 
-	const totalPages = ref(66);
-	const activePage = ref(1);
+	const showMore = () => {
+		articlesStore.showMore();
+	};
+
+	const perPageOptions = [
+		{
+			label: "12",
+			value: 12,
+		},
+		{
+			label: "24",
+			value: 24,
+		},
+		{
+			label: "36",
+			value: 36,
+		},
+	];
 
 	const props = defineProps({
 		articlesList: {

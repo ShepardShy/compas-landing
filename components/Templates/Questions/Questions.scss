@@ -17,6 +17,11 @@
 	@media (max-width: 1024px) {
 		flex-direction: column;
 	}
+	&__search {
+		:deep(.popup__option.popup-option__root .popup-option__text) {
+			white-space: unset !important;
+		}
+	}
 	&__left {
 		max-width: 263px;
 		width: 100%;

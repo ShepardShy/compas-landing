@@ -10,12 +10,11 @@ export const useArticlesStore = defineStore("articlesStore", {
 		articleDetail: null,
 		categories: null,
 		page: 1,
-		perPage: 25,
+		perPage: 12,
+		canUpdate: true,
 	}),
 	getters: {
 		currentTitle() {
-			console.log(this.categories);
-
 			if (!this?.categories) return null;
 			const activeChild = this.activeChild;
 			if (activeChild) {
@@ -65,20 +64,38 @@ export const useArticlesStore = defineStore("articlesStore", {
 	},
 	actions: {
 		async loadArticles() {
-			const { categories } = await api.callMethod("GET", `blog`, {});
-			this.categories = categories;
-			const categoryId = this.categories?.find(category => category.slug == route.params.id)?.id;
-			this.articles = await api.callMethod("GET", `blog?q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
-			console.log(this.articles);
+			if (this.canUpdate) {
+				const { categories } = await api.callMethod("GET", `blog`, {});
+				this.categories = categories;
+				const categoryId = this.categories?.find(category => category.slug == route.params.id)?.id;
+				this.articles = await api.callMethod("GET", `blog?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
+
+				if (this.page > this.countPages) {
+					this.page = 1;
+				}
+			}
 		},
 		async loadArticle(slug) {
 			this.articleDetail = await api.callMethod("GET", `blog/${slug}`, {});
 		},
 		async searchOptions(search) {
-			console.log(search, "search");
-			const res = await api.callMethod("GET", `blog/search?q=${search}&entity=articles`, {});
-			console.log(res);
-			return res;
+			return await api.callMethod("GET", `blog/search?q=${search}&entity=articles`, {});
+		},
+		async showMore() {
+			this.canUpdate = false;
+			console.log(this.page + 1 > this.countPages);
+			if (this.page + 1 > this.countPages) {
+				this.canUpdate = true;
+				return;
+			}
+			this.page++;
+			const categoryId = this.categories?.find(category => category.slug == route.params.id)?.id;
+			const newArticles = await api.callMethod("GET", `blog?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`);
+			console.log(newArticles);
+			if (newArticles?.list?.data?.length > 0) {
+				this.articles.list.data = [...this.articles.list.data, ...newArticles.list.data];
+			}
+			this.canUpdate = true;
 		},
 	},
 });

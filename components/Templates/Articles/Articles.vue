@@ -3,8 +3,10 @@
 	<div class="articles">
 		<div class="articles__left">
 			<Search
+				class="articles__search"
 				@changeValue="changeValueSearch"
 				placeholder="Поиск по статьям"
+				:options="searchOptions"
 			/>
 			<AppNav
 				v-if="articlesCategories"
@@ -32,7 +34,14 @@
 
 	await articlesStore.loadArticles();
 
-	const { categories, articlesCategories, currentTitle, articlesList, articles, currentCategoryId } = storeToRefs(articlesStore);
+	const { categories, page,countPages, perPage, articlesCategories, currentTitle, articlesList, articles, currentCategoryId, options } = storeToRefs(articlesStore);
+
+	watch(
+		() => [page.value, perPage.value],
+		() => {
+			articlesStore.loadArticles();
+		}
+	);
 
 	watch(
 		() => currentCategoryId.value,
@@ -41,9 +50,17 @@
 		}
 	);
 
+	const searchOptions = ref([]);
 	const changeValueSearch = async search => {
-		const res = articlesStore.searchOptions(search);
-		console.log(await res);
+		if (search.value) {
+			await navigateTo(`/articles/${search.value}`);
+			return;
+		}
+
+		searchOptions.value = await articlesStore.searchOptions(search);
+		searchOptions.value = searchOptions.value.map(i => {
+			return { ...i, value: i.label.slug };
+		});
 	};
 
 	let breadcrumbs = [

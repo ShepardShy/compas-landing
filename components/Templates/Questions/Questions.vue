@@ -6,7 +6,12 @@
 		:class="{ question_open: questionId }"
 	>
 		<div class="questions__left">
-			<Search />
+			<Search
+				class="questions__search"
+				@changeValue="changeValueSearch"
+				placeholder="Поиск по статьям"
+				:options="searchOptions"
+			/>
 			<AppNav
 				v-if="questionsCategories"
 				class="questions__nav"
@@ -19,10 +24,7 @@
 		<div class="questions__right">
 			<template v-if="!questionId">
 				<Title />
-				<QuestionsList
-					v-if="questionsList"
-					:questions="questionsList"
-				/>
+				<QuestionsList v-if="questionsList" />
 			</template>
 			<Question
 				v-else-if="questionDetail"
@@ -62,6 +64,19 @@
 		console.log(questionsCategories.value);
 	};
 	loadData();
+
+	const searchOptions = ref([]);
+	const changeValueSearch = async search => {
+		if (search.value) {
+			await navigateTo(`/questions/${search.value}`);
+			return;
+		}
+
+		searchOptions.value = await questionsStore.searchOptions(search);
+		searchOptions.value = searchOptions.value.map(i => {
+			return { ...i, value: i.label.slug };
+		});
+	};
 
 	watchEffect(() => {
 		if (questionId.value) {

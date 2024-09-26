@@ -6,7 +6,18 @@
 	<AppAutocomplete
 		class="search"
 		ref="autocompleteComponent"
-		:item="props.item"
+		:item="{
+			id: 0,
+			required: false,
+			title: 'title',
+			value: '',
+			type: 'address',
+			placeholder: 'Поиск по статьям',
+			focus: false,
+			key: 0,
+			options: options,
+			lockedOptions: [],
+		}"
 		:isReadOnly="props.isReadOnly"
 		:isCanCreate="false"
 		:isLink="false"
@@ -26,6 +37,12 @@
 	const emit = defineEmits(["changeValue"]);
 
 	const changeValue = data => {
+		const value = data.value;
+		if (value) {
+			emit("changeValue", data);
+			return;
+		}
+
 		const search = data.search;
 		emit("changeValue", search);
 	};
@@ -33,22 +50,6 @@
 	const searchOptions = data => {};
 
 	const props = defineProps({
-		item: {
-			type: Object,
-			default: {
-				id: 0,
-				required: false,
-				title: "title",
-				value: "",
-				type: "address",
-				placeholder: "",
-				focus: false,
-				key: 0,
-				options: [],
-				lockedOptions: [],
-			},
-			required: true,
-		},
 		value: {
 			type: String,
 			required: false,
@@ -85,6 +86,7 @@
 			default: [],
 		},
 	});
+	const { options } = toRefs(props);
 </script>
 
 <style scoped>

@@ -1,6 +1,6 @@
 <template>
 	<div class="pagination-full">
-		<ShowMore />
+		<ShowMore @click="emit('showMore')" />
 
 		<div class="pagination-full__wrapper">
 			<Pagination
@@ -13,25 +13,12 @@
 				:item="{
 					id: 0,
 					key: 'visibleElems',
-					value: activeOnPage,
+					value: perPage,
 					focus: false,
 					required: false,
 					title: 'На странице:',
 					lockedOptions: [],
-					options: [
-						{
-							label: '25',
-							value: 25,
-						},
-						{
-							label: '50',
-							value: 50,
-						},
-						{
-							label: '100',
-							value: 100,
-						},
-					],
+					options: perPageOptions,
 				}"
 				:isFiltered="false"
 				:isHaveNullOption="false"
@@ -46,21 +33,41 @@
 	import Pagination from "./components/Pagination/Pagination.vue";
 	import AppSelect from "@/components/AppSelects/Select/Select.vue";
 
+	const emit = defineEmits(["showMore"]);
+
 	const props = defineProps({
 		totalPages: {
 			type: Number,
 			required: true,
 		},
+		perPageOptions: {
+			default: [
+				{
+					label: "25",
+					value: 25,
+				},
+				{
+					label: "50",
+					value: 50,
+				},
+				{
+					label: "100",
+					value: 100,
+				},
+			],
+		},
 	});
-	const { totalPages } = toRefs(props);
+	const { totalPages, perPageOptions } = toRefs(props);
 	const activePage = defineModel();
-
-	// Опции "На странице"
-	const activeOnPage = ref(25);
+	const perPage = defineModel("perPage");
 
 	// Выбор текущей страницы
 	const changePage = data => {
 		activePage.value = data.value;
+	};
+	// Выбор количества элементов на странице
+	const changeOnPage = data => {
+		perPage.value = data.value;
 	};
 </script>
 
