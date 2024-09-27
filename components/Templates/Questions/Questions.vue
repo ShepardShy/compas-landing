@@ -9,7 +9,7 @@
 			<Search
 				class="questions__search"
 				@changeValue="changeValueSearch"
-				placeholder="Поиск по статьям"
+				placeholder="Поиск по вопросам"
 				:options="searchOptions"
 			/>
 			<AppNav
@@ -54,14 +54,20 @@
 	const route = useRoute();
 
 	const questionsStore = useQuestionsStore();
-	const { questionsCategories, questionsList, questionDetail } = storeToRefs(questionsStore);
+	const { questionsCategories, questionsList, questionDetail, page, perPage } = storeToRefs(questionsStore);
+
+	watch(
+		() => [page.value, perPage.value],
+		() => {
+			questionsStore.loadQuestions();
+		}
+	);
 
 	const questionId = computed(() => route.params.id);
 	const loadData = async () => {
 		questionDetail.value = null;
 		questionId.value ? await questionsStore.loadQuestion(route.params.id) : 0;
 		!questionsList.value.length ? await questionsStore.loadQuestions() : 0;
-		console.log(questionsCategories.value);
 	};
 	loadData();
 

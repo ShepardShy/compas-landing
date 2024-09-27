@@ -33,7 +33,7 @@
 						type: 'text',
 						focus: false,
 						key: props.item.key,
-						placeholder: null,
+						placeholder: props.item.placeholder,
 						value: props.isReadOnly ? (activeOption.text == 'Не выбрано' && props.item.type == 'address' ? null : activeOption.text) : search,
 						substring: props.isReadOnly ? null : activeOption.id == null ? ' ' : `ID: ${activeOption.id}`,
 					}"
@@ -69,7 +69,7 @@
 					class="popup__loader"
 					v-if="loaderStatus"
 				/>
-				<PopupOption @click="() => callAction({ action: 'changeValue', value: null })"> Не выбрано </PopupOption>
+				<PopupOption v-if="props.isShowNotSelected" @click="() => callAction({ action: 'changeValue', value: null })"> Не выбрано </PopupOption>
 				<PopupOption
 					class="popup-option__root"
 					v-for="option in options"
@@ -173,6 +173,10 @@
 			default: false,
 			type: Boolean,
 		},
+		isShowNotSelected:{
+			default: true,
+            type: Boolean,
+		}
 	});
 
 	const popupRef = ref(null);

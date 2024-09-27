@@ -1,8 +1,4 @@
 <template>
-	<!-- <Input
-		class="search"
-		placeholder="Поиск по статьям"
-	/> -->
 	<AppAutocomplete
 		class="search"
 		ref="autocompleteComponent"
@@ -15,7 +11,7 @@
 			placeholder: 'Поиск по вопросам',
 			focus: false,
 			key: 0,
-			options: options,
+			options: searchText.length > 0 ? options : [],
 			lockedOptions: [],
 		}"
 		:isReadOnly="props.isReadOnly"
@@ -25,6 +21,7 @@
 		:is-show-label="false"
 		:placeholder="props.placeholder"
 		:isShowSubstring="false"
+		:isShowNotSelected="false"
 		@changeValue="data => changeValue(data)"
 		@searchOptions="data => searchOptions(data)"
 		@clickButton="data => changeValue(data, 'calculate')"
@@ -36,12 +33,15 @@
 
 	const emit = defineEmits(["changeValue"]);
 
+	const searchText = ref("");
+
 	const changeValue = data => {
 		const value = data.value;
 		if (value) {
 			emit("changeValue", data);
 			return;
 		}
+		searchText.value = data.search;
 
 		const search = data.search;
 		emit("changeValue", search);

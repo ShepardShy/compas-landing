@@ -1,65 +1,150 @@
 <template>
-	<AppSection class="fines section_without-background">
-		<AppH1 class="fines__title"> Проверка штрафов ГИБДД {{ titleMap[route.params.type] }} в 1 клик </AppH1>
+	<AppSection class="main-page section_without-background">
+		<AppH1 class="main-page__title"> Быстрая регистрация на портале </AppH1>
 		<form
-			class="fines__form"
+			class="main-page__form"
 			@click.prevent
 		>
-			<AppH1 class="fines__form-title"> Проверка штрафов ГИБДД {{ titleMap[route.params.type] }} в 1 клик </AppH1>
-			<AppInput
-				v-for="item in form"
-				:class="item.class"
-				v-show="(form.find(i => ['sts', 'vu', 'uin', 'gos'].includes(i.key)) && form[0].value != '') || ['number', 'certificate', 'sts', 'vu', 'uin', 'gos', 'inn', 'kpp'].includes(item.key) || (form[0].value != '' && form[1].value != '')"
+			<AppH1 class="main-page__form-title"> Быстрая регистрация на портале </AppH1>
+			<div
+				class="auth__error"
+				v-show="userStore.authError.status"
+			>
+				{{ userStore.authError.text }}
+			</div>
+
+			<div class="main-page__input-wrapper">
+				<AppInput
+					:disabled="userStore.regButtonLoad"
+					class="main-page__input main-page__input_substr"
+					:item="{
+						id: 0,
+						title: 'Название портала',
+						value: regData.domain,
+						placeholder: 'Название портала',
+						type: 'text',
+						key: 'domain',
+						substring: '.compas.pro',
+					}"
+					:mask="null"
+					:enabledAutocomplete="true"
+					@keyup.enter="!disabledButton ? registration() : null"
+					@changeValue="data => changeValue(data)"
+				/>
+				<p
+					v-for="error in regData.domainError"
+					v-if="regData.domainError"
+					class="warning-list__field-error"
+				>
+					{{ error }}
+				</p>
+			</div>
+
+			<div class="main-page__input-wrapper">
+				<AppInput
+					class="main-page__input"
+					:item="{
+						id: 0,
+						title: 'E-mail',
+						value: regData.email,
+						placeholder: 'E-mail',
+						type: 'text',
+						key: 'email',
+					}"
+					:required="true"
+					:mask="null"
+					:disabled="userStore.regButtonLoad"
+					:enabledAutocomplete="true"
+					@keyup.enter="!disabledButton ? registration() : null"
+					@changeValue="data => changeValue(data)"
+				/>
+				<p
+					v-for="error in regData.emailError"
+					v-if="regData.emailError"
+					class="warning-list__field-error"
+				>
+					{{ error }}
+				</p>
+			</div>
+
+			<div class="main-page__input-wrapper">
+				<AppInput
+					class="main-page__input"
+					:item="{
+						id: 1,
+						title: 'Пароль',
+						value: regData.password,
+						placeholder: 'Пароль',
+						type: 'password',
+						key: 'password',
+					}"
+					:mask="null"
+					:required="true"
+					:disabled="userStore.regButtonLoad"
+					:enabledAutocomplete="false"
+					@keyup.enter="!disabledButton ? registration() : null"
+					@changeValue="data => changeValue(data)"
+				/>
+				<p
+					v-for="error in regData.passwordError"
+					v-if="regData.passwordError"
+					class="warning-list__field-error"
+				>
+					{{ error }}
+				</p>
+			</div>
+			<div class="main-page__input-wrapper">
+				<AppInput
+					class="main-page__input"
+					:item="{
+						id: 1,
+						title: 'Подтверждение пароля',
+						value: regData.passwordConfirmation,
+						placeholder: 'Подтверждение пароля',
+						type: 'password',
+						key: 'passwordConfirmation',
+					}"
+					:mask="null"
+					:required="true"
+					:disabled="userStore.regButtonLoad"
+					:enabledAutocomplete="false"
+					@keyup.enter="!disabledButton ? registration() : null"
+					@changeValue="data => changeValue(data)"
+				/>
+				<p
+					v-for="error in regData.passwordConfirmationError"
+					v-if="regData.passwordConfirmationError"
+					class="warning-list__field-error"
+				>
+					{{ error }}
+				</p>
+			</div>
+
+			<AppCheckbox
+				class="auth__checkbox auth__checkbox_long"
 				:item="{
-					focus: false,
-					id: 0,
-					placeholder: item.placeholder,
-					key: item.key,
-					type: item.type,
-					title: item.title,
-					substring: null,
-					required: item.required,
-					external_link: null,
-					value: item.value,
+					id: 2,
+					title: checkboxLink,
+					value: regData.confidence,
+					placeholder: '',
+					type: 'checkbox',
+					key: 'confidence',
+					isHTML: true,
 				}"
-				:disabled="isLoading"
-				:mask="item.mask"
-				:isLink="null"
-				:isReadOnly="false"
-				:enabledAutocomplete="false"
+				:disabled="userStore.regButtonLoad"
 				@changeValue="data => changeValue(data)"
 			/>
-			<div class="fines__actions">
-				<AppButton
-					class="button_blue"
-					@click="saveChanges()"
-					:disabled="isLoading"
-					:class="{ button_loading: isLoading }"
-				>
-					Проверить штрафы
-				</AppButton>
-
-				<FansyBox class="fines__fansy-box">
-					<AppButton
-						class="fines__button"
-						:data-fancybox="`finesBlock`"
-						href=""
-					>
-						<figure class="ibg fines__icon">
-							<img
-								src="/icons/youtube_blue.svg"
-								alt="О сервисе"
-							/>
-						</figure>
-						О сервисе
-						<span class="button-text"> (1 мин 20 сек) </span>
-					</AppButton>
-				</FansyBox>
-			</div>
-			<div class="fines__politics">Нажимая «Проверить штрафы» вы соглашаетесь с политикой обработки персональных данных и принимаете оферту</div>
+			<AppButton
+				:disabledOption="disabledButton"
+				:class="{ button_loading: userStore.regButtonLoad }"
+				class="main-page__button button_blue"
+				@click="registration"
+			>
+				Регистрация
+			</AppButton>
 		</form>
 
-		<figure class="ibg fines__image">
+		<figure class="ibg main-page__image">
 			<img
 				:src="previewImage[route.params?.type] ? previewImage[route.params?.type] : defaultImage"
 				alt="Проверьте штрафы и зарегестрируйтесь в 1 клик"
@@ -79,8 +164,10 @@
 	import AppButton from "@/components/AppButton/AppButton.vue";
 	import FansyBox from "@/components/AppFansyBox/FansyBox.vue";
 	import ValidateField from "@/components/AppTable/Validate.js";
+	import AppCheckbox from "@/components/AppInputs/Checkbox/Checkbox.vue";
 	import api from "@/helpers/api.js";
 	import { useCommonStore } from "@/stores/commonStore.js";
+	import { storeToRefs } from "pinia";
 
 	// Картинки проверки штрафов
 	import vuImage from "/main/fines/preview-vu.png";
@@ -88,10 +175,38 @@
 	import gosImage from "/main/fines/preview-gos.png";
 	import postanovlenieImage from "/main/fines/preview-postanovlenie.png";
 	import innImage from "/main/fines/preview-inn.png";
-	import defaultImage from "/main/fines/preview.webp";
+	import defaultImage from "/main/fines/preview.png";
+
+	import { useUserStore } from "@/stores/userStore.js";
+	const userStore = useUserStore();
+
+	const route = useRoute();
+
+	const { regData } = storeToRefs(userStore);
+
+	const checkboxLink = `<div class="auth__text">
+	       Я понимаю и принимаю <a href="/docs/politics" class="auth__link" target="_blank"> условия и политику конфиденциальности </a> Compas
+	   </div>`;
+
+	const changeValue = data => {
+		regData.value[data.key] = data.value;
+	};
+
+	const disabledButton = computed(() => {
+		let txt = /^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		return !regData.value.confidence || regData.value.password == "" || regData.value.passwordConfirmation == "" || regData.value.email == "";
+	});
+
+	const registration = () => {
+		if (route.query.tariff) {
+			regData.value.tariff = route.query.tariff;
+		}
+		if (!userStore.regButtonLoad) {
+			userStore.registration(regData.value);
+		}
+	};
 
 	const commonStore = useCommonStore();
-	const route = useRoute();
 
 	const previewImage = {
 		"po-sts": stsImage,
@@ -290,10 +405,10 @@
 	let isShow = ref(false);
 	const isLoading = ref(false);
 
-	const changeValue = data => {
-		let findIndex = form.value.findIndex(p => p.key == data.key);
-		form.value[findIndex].value = data.value;
-	};
+	// const changeValue = data => {
+	// 	let findIndex = form.value.findIndex(p => p.key == data.key);
+	// 	form.value[findIndex].value = data.value;
+	// };
 
 	// Сохранение редактируемых полей
 	const saveChanges = () => {

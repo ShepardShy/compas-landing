@@ -88,7 +88,7 @@
 	import gosImage from "/main/fines/preview-gos.png";
 	import postanovlenieImage from "/main/fines/preview-postanovlenie.png";
 	import innImage from "/main/fines/preview-inn.png";
-	import defaultImage from "/main/fines/preview.webp";
+	import defaultImage from "/main/fines/preview.png";
 
 	const commonStore = useCommonStore();
 	const route = useRoute();

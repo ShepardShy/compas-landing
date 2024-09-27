@@ -2,29 +2,22 @@
 	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
 
 	<template v-if="route.params?.type != 'list'">
-		<AppTabs
-			class="main__links"
-			:tabs="tabs"
-			:isShowActions="false"
-			@callAction="tab => changeTab(tab)"
-		></AppTabs>
-		<hr class="main__line" />
 		<MainFines />
 	</template>
 	<FinesList v-else />
 
 	<MainCompanies
 		:list="fines"
-		:title="'Уже 1000 клиентов оплатили более 50 000 штрафов на 50% дешевле чем это делали раньше.'"
+		:title="'Уже более 1000 клиентов пользуются сервисом Compas.'"
 	/>
-	<MainBase />
+	<!-- <MainBase /> -->
 	<!-- <MainSteps /> -->
-	<MainPluses />
-	<CommonProgramm
+	<!-- <MainPluses /> -->
+	<!-- <CommonProgramm
 		class="main__programm"
 		:title="'Проверки абсолютно бесплатны'"
 		desc="Сервис «Compas.pro» собирает данные из официальных источников: ГИБДД, МАДИ, АМПП, ГИС ГМП. После проверки вы получите общее количество и сумму всех штрафов. Отчет также включает историю штрафов и детальную информацию по каждому нарушению ГИБДД."
-	/>
+	/> -->
 	<PlusesFines />
 	<MainTariffs />
 	<!-- <MainAbout :text="route.params?.type in aboutJson ? aboutJson[route.params.type].text : aboutJson.default.text" /> -->

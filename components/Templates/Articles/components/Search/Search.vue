@@ -1,8 +1,4 @@
 <template>
-	<!-- <Input
-		class="search"
-		placeholder="Поиск по статьям"
-	/> -->
 	<AppAutocomplete
 		class="search"
 		ref="autocompleteComponent"
@@ -10,12 +6,12 @@
 			id: 0,
 			required: false,
 			title: 'title',
-			value: '',
+			value: searchText,
 			type: 'address',
 			placeholder: 'Поиск по статьям',
 			focus: false,
 			key: 0,
-			options: options,
+			options: searchText.length > 0 ? options : [],
 			lockedOptions: [],
 		}"
 		:isReadOnly="props.isReadOnly"
@@ -25,6 +21,7 @@
 		:is-show-label="false"
 		:placeholder="props.placeholder"
 		:isShowSubstring="false"
+		:isShowNotSelected="false"
 		@changeValue="data => changeValue(data)"
 		@searchOptions="data => searchOptions(data)"
 		@clickButton="data => changeValue(data, 'calculate')"
@@ -34,6 +31,8 @@
 <script setup>
 	import AppAutocomplete from "@/components/AppAutocomplete/Input.vue";
 
+	const searchText = ref("");
+
 	const emit = defineEmits(["changeValue"]);
 
 	const changeValue = data => {
@@ -42,6 +41,7 @@
 			emit("changeValue", data);
 			return;
 		}
+		searchText.value = data.search;
 
 		const search = data.search;
 		emit("changeValue", search);

@@ -67,6 +67,37 @@
 				}
 			}
 		}
+		& .table {
+			overflow: auto;
+			table {
+				border-collapse: collapse;
+			}
+			table {
+				@media (max-width: 1024px) {
+					min-width: 660px;
+				}
+			}
+		}
+		& .table-swipe {
+			@media (max-width: 768px) {
+				&::before {
+					content: "";
+					display: block;
+					width: 100%;
+					height: 75px;
+					background-image: url("/public/icons/swipe.svg");
+					background-repeat: no-repeat;
+					background-position: center;
+				}
+			}
+		}
+		th,
+		td {
+			height: calc(4px * 2 + 1.5em);
+			min-width: calc(8px * 2);
+			padding: 4px 8px;
+			border: 1px solid #e7eaec;
+		}
 	}
 	&__image {
 		max-height: 206px;
