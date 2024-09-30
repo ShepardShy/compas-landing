@@ -22,7 +22,10 @@
 				</div>
 			</div>
 			<div class="header__info">
-				<div class="header__date date">{{ dayjs(date).locale("ru").format("D MMMM YYYY") }}</div>
+				<div class="header__date date">
+					{{ dayjs(date).locale("ru").format("D MMMM YYYY") }}
+					<div v-if="update && dayjs(update).startOf('date') != dayjs(date).startOf('date')">(<span class="header__date-green">Обновлено</span> {{ dayjs(update).locale("ru").format("DD.MM.YYYY") }})</div>
+				</div>
 				<div class="header__views views">
 					<IconPasswordEye class="header__views-eye" />
 					<span>
@@ -70,6 +73,10 @@
 			type: String,
 			required: true,
 		},
+		update: {
+			type: String,
+			default: false,
+		},
 		views: {
 			type: Number,
 			required: true,
@@ -79,7 +86,7 @@
 			required: true,
 		},
 	});
-	const { authorAvatar, authorDesc, authorName, date, image, title, views, readingTime } = toRefs(props);
+	const { authorAvatar, authorDesc, authorName, date, update, image, title, views, readingTime } = toRefs(props);
 </script>
 
 <style scoped>

@@ -23,6 +23,47 @@
 	}
 }
 
+.main-page__checkbox {
+	&.form-item__checkbox {
+		width: max-content;
+
+		input {
+			pointer-events: none;
+		}
+
+		&.main-page__checkbox_long {
+			align-items: flex-start;
+			width: 100%;
+
+			label {
+				margin-top: 2px;
+			}
+		}
+	}
+}
+
+.main-page__text {
+	font-size: 16px;
+	&.auth__subtext {
+		position: relative;
+		z-index: 2;
+		margin-top: 16px;
+		font-size: 16px;
+	}
+}
+
+.main-page__link {
+	font-size: 16px;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: underline;
+	color: variables.$color-blue-two;
+
+	&:hover {
+		text-decoration: none;
+	}
+}
+
 .main-page__input {
 	input {
 		font-size: 16px;

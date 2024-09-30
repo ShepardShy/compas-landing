@@ -13,6 +13,7 @@
 				:authorName="author?.name"
 				:authorDesc="author?.desc"
 				:date="created_at.value"
+				:update="updated_at.value"
 				:views="views?.value"
 				:readingTime="reading_time.value"
 			/>
@@ -82,7 +83,7 @@
 		interestItems,
 		question,
 	};
-	let { created_at, detail_picture, preview_text, views, detail_text, seo_description, seo_title, reading_time } = articleDetail.value;
+	let { created_at, updated_at, detail_picture, preview_text, views, detail_text, seo_description, seo_title, reading_time } = articleDetail.value;
 
 	const author = {
 		name: "Темур Киселев",

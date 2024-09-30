@@ -121,7 +121,7 @@
 			</div>
 
 			<AppCheckbox
-				class="auth__checkbox auth__checkbox_long"
+				class="main-page__checkbox main-page__checkbox_long"
 				:item="{
 					id: 2,
 					title: checkboxLink,
@@ -175,7 +175,7 @@
 	import gosImage from "/main/fines/preview-gos.png";
 	import postanovlenieImage from "/main/fines/preview-postanovlenie.png";
 	import innImage from "/main/fines/preview-inn.png";
-	import defaultImage from "/main/fines/preview.png";
+	import defaultImage from "/main/fines/main-preview.png";
 
 	import { useUserStore } from "@/stores/userStore.js";
 	const userStore = useUserStore();
@@ -184,8 +184,8 @@
 
 	const { regData } = storeToRefs(userStore);
 
-	const checkboxLink = `<div class="auth__text">
-	       Я понимаю и принимаю <a href="/docs/politics" class="auth__link" target="_blank"> условия и политику конфиденциальности </a> Compas
+	const checkboxLink = `<div class="main-page__text">
+	       Я понимаю и принимаю <a href="/docs/politics" class="main-page__link" target="_blank"> условия и политику конфиденциальности </a> Compas
 	   </div>`;
 
 	const changeValue = data => {
