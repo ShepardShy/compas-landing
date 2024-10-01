@@ -79,7 +79,11 @@ export const useArticlesStore = defineStore("articlesStore", {
 			this.articleDetail = await api.callMethod("GET", `blog/${slug}`, {});
 		},
 		async searchOptions(search) {
-			return await api.callMethod("GET", `blog/search?q=${search}&entity=articles`, {});
+			const res = await api.callMethod("GET", `blog/search?q=${search}&entity=articles`, {});
+			if (res?.length > 0) {
+				return res;
+			}
+			return [{ label: { text: "Не найдено" } }];
 		},
 		async showMore() {
 			this.canUpdate = false;

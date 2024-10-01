@@ -1,10 +1,7 @@
 <template>
 	<AppSection class="main-page section_without-background">
 		<AppH1 class="main-page__title"> Быстрая регистрация на портале </AppH1>
-		<form
-			class="main-page__form"
-			@click.prevent
-		>
+		<form class="main-page__form">
 			<AppH1 class="main-page__form-title"> Быстрая регистрация на портале </AppH1>
 			<div
 				class="auth__error"

@@ -4,7 +4,7 @@
 			<AppMenu />
 			<AppMain>
 				<restrictedPage v-if="error.statusCode === 403 || route.fullPath.split('/').includes('403')" />
-				<undefinedPage v-else-if="error.statusCode === 404" />
+				<undefinedPage v-else-if="error.statusCode === 404 || route.fullPath.split('/').includes('404')" />
 			</AppMain>
 		</div>
 	</div>
@@ -26,7 +26,11 @@
 
 	console.log(route);
 
-	onMounted(() => {
+	if (route.fullPath != "/404" && route.fullPath != "/403") {
+		await navigateTo("/404");
+	}
+
+	onMounted(async () => {
 		console.log(error);
 	});
 </script>

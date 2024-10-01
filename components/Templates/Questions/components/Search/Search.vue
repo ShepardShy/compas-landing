@@ -6,7 +6,7 @@
 			id: 0,
 			required: false,
 			title: 'title',
-			value: '',
+			value: searchText,
 			type: 'address',
 			placeholder: 'Поиск по вопросам',
 			focus: false,

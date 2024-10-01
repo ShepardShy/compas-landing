@@ -21,6 +21,7 @@
 		:is-show-label="false"
 		:placeholder="props.placeholder"
 		:isShowSubstring="false"
+		:isShowNotSelected="false"
 		@changeValue="data => changeValue(data)"
 		@searchOptions="data => searchOptions(data)"
 		@clickButton="data => changeValue(data, 'calculate')"

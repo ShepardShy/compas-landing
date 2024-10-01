@@ -80,7 +80,11 @@ export const useQuestionsStore = defineStore("questionsStore", {
 			}
 		},
 		async searchOptions(search) {
-			return await api.callMethod("GET", `faq/search?q=${search}&entity=faq`, {});
+			const res = await api.callMethod("GET", `faq/search?q=${search}&entity=faq`, {});
+			if (res?.length > 0) {
+				return res;
+			}
+			return [{ label: { text: "Не найдено" } }];
 		},
 		async showMore() {
 			this.canUpdate = false;
