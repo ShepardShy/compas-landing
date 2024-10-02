@@ -81,6 +81,9 @@
 	import ValidateField from "@/components/AppTable/Validate.js";
 	import api from "@/helpers/api.js";
 	import { useCommonStore } from "@/stores/commonStore.js";
+	import { useFinesStore } from "~/stores/finesStore.js";
+
+	const finesStore = useFinesStore();
 
 	// Картинки проверки штрафов
 	import vuImage from "/main/fines/preview-vu.png";
@@ -312,12 +315,13 @@
 				isLoading.value = true;
 
 				try {
-					const { domain, success, token, url } = await api.callMethod("POST", `registration`, { ...formData.value, tariff: 1 });
+					const res = await api.callMethod("GET", `gibdd/check_by_req?` + new URLSearchParams(formData.value).toString(), { ...formData.value, tariff: 1 });
 
-					if (success) {
-						const isInside = commonStore.accounts.find(i => i.toLowerCase() == domain.toLowerCase());
-						!isInside && commonStore.accounts.push(domain.toLowerCase());
-						navigateTo(`https://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });
+					if (Array.isArray(res)) {
+						finesStore.fields = formData.value;
+						finesStore.fines = res;
+						console.log(finesStore.fields);
+						navigateTo("/products/fines/list");
 						for (let elem of form.value) {
 							elem.value = "";
 						}

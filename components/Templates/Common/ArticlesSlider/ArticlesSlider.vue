@@ -7,16 +7,16 @@
 			<template #slide>
 				<template
 					:key="id"
-					v-for="{ created_at, preview_picture, preview_text, slug, views } in articlesList"
+					v-for="{ created_at, preview_picture, name, slug, views } in articlesList"
 				>
 					<SwiperSlide
-						v-if="!route.fullPath?.includes(id) && preview_text"
+						v-if="!route.fullPath?.includes(id) && name"
 						:virtual-index="id"
 					>
 						<ArticleItem
 							:id="slug.value ? slug.value : slug"
 							:image="preview_picture?.[0]?.file"
-							:title="preview_text"
+							:title="name"
 							:views
 							:date="created_at"
 						/>

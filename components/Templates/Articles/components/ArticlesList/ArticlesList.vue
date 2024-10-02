@@ -1,12 +1,12 @@
 <template>
 	<div class="articles__list">
-		<template v-for="{ preview_text, views, slug, preview_picture, created_at } in articlesList">
+		<template v-for="{ name, views, slug, preview_picture, created_at } in articlesList">
 			<ArticleItem
-				v-if="preview_text"
+				v-if="name"
 				:date="created_at"
 				:id="slug.value ? slug.value : slug"
 				:image="preview_picture[0]?.file"
-				:title="preview_text"
+				:title="name"
 				:views
 			/>
 		</template>

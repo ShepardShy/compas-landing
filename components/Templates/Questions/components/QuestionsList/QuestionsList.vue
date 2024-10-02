@@ -1,10 +1,10 @@
 <template>
 	<div class="questions__list">
-		<template v-for="{ created_at, slug, detail_picture, detail_text, preview_text, views } in questionsList">
+		<template v-for="{ created_at, slug, detail_picture, detail_text, name, views } in questionsList">
 			<QuestionItem
 				v-if="detail_text"
 				:date="created_at"
-				:title="preview_text"
+				:title="name"
 				:answer="detail_text?.[0]?.body"
 				:image="detail_picture?.[0]?.file"
 				:views
@@ -33,6 +33,7 @@
 	const questionsStore = useQuestionsStore();
 
 	const { page, perPage, countPages, questionsList } = storeToRefs(questionsStore);
+	console.log(questionsList.value);
 
 	const showMore = () => {
 		questionsStore.showMore();

@@ -6,7 +6,7 @@
 			:options="{ VisibleSlides: countSlides, centeredSlidesBounds: true, spaceBetween: 20, pagination: { clickable: true, dynamicBullets: true } }"
 		>
 			<template #slide>
-				<template v-for="{ created_at, slug, detail_picture, detail_text, preview_text, views } in questionsList">
+				<template v-for="{ created_at, slug, detail_picture, detail_text, name, views } in questionsList">
 					<SwiperSlide
 						v-if="detail_text"
 						:key="id"
@@ -14,7 +14,7 @@
 					>
 						<QuestionItem
 							:image="detail_picture?.[0]?.file"
-							:title="preview_text"
+							:title="name"
 							:answer="detail_text?.[0]?.body"
 							:views
 							:date="created_at"

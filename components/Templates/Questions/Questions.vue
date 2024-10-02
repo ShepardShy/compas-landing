@@ -30,7 +30,7 @@
 				v-else-if="questionDetail"
 				:answer="questionDetail?.detail_text.value?.[0].body"
 				:image="questionDetail?.detail_picture.value?.[0]?.file"
-				:title="questionDetail?.preview_text?.value"
+				:title="questionDetail?.name?.value"
 				:views="questionDetail?.views?.value"
 				:date="questionDetail?.created_at?.value"
 				:id="questionDetail?.slug?.value.value"
@@ -119,7 +119,7 @@
 		},
 		questionId.value
 			? {
-					title: questionDetail.value?.preview_text.value,
+					title: questionDetail.value?.name.value,
 					link: `/questions/${questionId.value}`,
 			  }
 			: null,

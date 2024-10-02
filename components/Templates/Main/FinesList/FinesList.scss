@@ -27,6 +27,7 @@
 		&_link {
 			color: #1253a2;
 			cursor: pointer;
+			user-select: none;
 			text-decoration: underline;
 			&:hover {
 				text-decoration: none;

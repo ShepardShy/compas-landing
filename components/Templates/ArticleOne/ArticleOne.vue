@@ -7,7 +7,7 @@
 	>
 		<div class="article__left">
 			<Header
-				:title="preview_text?.value"
+				:title="name?.value"
 				:image="detail_picture.value?.[0]?.file"
 				:authorAvatar="author?.avatar"
 				:authorName="author?.name"
@@ -83,7 +83,7 @@
 		interestItems,
 		question,
 	};
-	let { created_at, updated_at, detail_picture, preview_text, views, detail_text, seo_description, seo_title, reading_time } = articleDetail.value;
+	let { created_at, updated_at, detail_picture, name, views, detail_text, seo_description, seo_title, reading_time } = articleDetail.value;
 
 	const author = {
 		name: "Темур Киселев",
@@ -101,7 +101,7 @@
 			link: "/articles",
 		},
 		{
-			title: preview_text.value,
+			title: name.value,
 			link: "/articles/za-chto-vypisan-shtraf",
 		},
 	];
