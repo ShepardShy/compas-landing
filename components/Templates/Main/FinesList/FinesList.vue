@@ -1,6 +1,5 @@
 <template>
 	<div class="fines-list">
-		{{ regData }}
 		<AppH1 class="fines-list__title">Быстрая провека штрафов</AppH1>
 		<div class="fines-list__info">
 			<div
@@ -22,6 +21,7 @@
 			<form
 				v-if="isShowRegistraion"
 				class="main-page__form"
+				@submit.prevent
 			>
 				<AppH1 class="main-page__form-title"> Быстрая регистрация на портале </AppH1>
 				<div
@@ -222,7 +222,7 @@
 			regData.value.tariff = route.query.tariff;
 		}
 		if (!userStore.regButtonLoad) {
-			userStore.registration(regData.value);
+			userStore.registration(regData.value, fields.value);
 		}
 	};
 
@@ -263,7 +263,6 @@
 
 		loaderState: "",
 	});
-	console.log(fines.value);
 </script>
 
 <style lang="scss" scoped>

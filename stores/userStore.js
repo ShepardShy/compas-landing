@@ -115,14 +115,14 @@ export const useUserStore = defineStore("userStore", {
 			});
 		},
 
-		async registration(payload) {
+		async registration(payload, numbers) {
 			try {
 				this.regButtonLoad = true;
 				this.regData.emailError = [];
 				this.regData.passwordError = [];
 				this.regData.domainError = [];
 				this.regData.passwordConfirmationError = [];
-				const res = await api.callMethod("POST", "registration", { domain: payload.domain ? payload.domain : undefined, email: payload.email, password: payload.password, password_confirmation: payload.passwordConfirmation, tariff: payload.tariff ? payload.tariff : 1 });
+				const res = await api.callMethod("POST", "registration", { domain: payload.domain ? payload.domain : undefined, email: payload.email, password: payload.password, password_confirmation: payload.passwordConfirmation, tariff: payload.tariff ? payload.tariff : 1, ...numbers });
 
 				const { success, data, token, domain, url } = res;
 
@@ -130,7 +130,8 @@ export const useUserStore = defineStore("userStore", {
 					const commonStore = useCommonStore();
 					const isInside = commonStore.accounts.find(i => i.toLowerCase() == this.regData.domain.toLowerCase());
 					!isInside && commonStore.accounts.push(domain.toLowerCase());
-					navigateTo(`https://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });
+					console.log(success, data, token, domain, url);
+					// navigateTo(`https://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });
 					this.regData.email = "";
 					this.regData.password = "";
 					this.regData.domain = "";
