@@ -8,20 +8,22 @@
 		class="table-template__buttons"
 		:class="`table-template__buttons_${buttonsPos}`"
 	>
-		<div
-			class="scroll-button scroll-button_left"
-			ref="buttonScrollLeftRef"
-			:style="`--buttonPos: ${leftButtonPos}px`"
-			@mouseover="() => actionScroll({ action: 'scrollingBlock', value: 'left' })"
-			@mouseleave="() => (mouseHover = false)"
-		></div>
-		<div
-			class="scroll-button scroll-button_right"
-			ref="buttonScrollRightRef"
-			:style="`--buttonPos: ${rightButtonPos}px`"
-			@mouseover="() => actionScroll({ action: 'scrollingBlock', value: 'right' })"
-			@mouseleave="() => (mouseHover = false)"
-		></div>
+		<div class="scroll-button scroll-button_left"
+            ref="buttonScrollLeftRef"
+            :style="`--buttonPos: ${leftButtonPos}px`"
+            @mousedown ="() => isPad ? null : actionScroll({action: 'scrollingBlock', value: 'left'})"
+            @mouseup="() => isPad ? null : mouseHover = false"
+            @touchstart ="() => isPad ? actionScroll({action: 'scrollingBlock', value: 'left'}) : null"
+            @touchend="() => isPad ? mouseHover = false : null"
+        ></div>
+        <div class="scroll-button scroll-button_right"
+            ref="buttonScrollRightRef"
+            :style="`--buttonPos: ${rightButtonPos}px`"
+            @mousedown ="() => isPad ? null : actionScroll({action: 'scrollingBlock', value: 'right'})"
+            @mouseup="() => isPad ? null : mouseHover = false"
+            @touchstart ="() => isPad ? actionScroll({action: 'scrollingBlock', value: 'right'}) : null"
+            @touchend="() => isPad ? mouseHover = false : null"     
+        ></div>
 	</div>
 
 	<div class="table__empty-block">Нет данных</div>
@@ -34,6 +36,7 @@
 	import { ref, onMounted, inject, onUnmounted, watch } from "vue";
 
 	import AppLoader from "@/components/AppLoader/AppLoader.vue";
+    import commonScripts from '@/commonScripts/commonScripts.js';
 
 	let mouseHover = ref(false);
 
@@ -257,7 +260,10 @@
 			};
 
 			mouseHover.value = true;
-			scrollX(tableRef.value.parentNode, pos);
+			setTimeout(() => {
+				commonScripts.clearSelection()
+				scrollX(tableRef.value.parentNode, pos);
+			}, 0.1);
 		};
 
 		// Отображение видимости кнопок

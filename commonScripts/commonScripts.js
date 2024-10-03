@@ -5,14 +5,11 @@ import { useUserStore } from '@/stores/userStore.js'
 export default {
     // Очистка выделений
     clearSelection() {
-        if (window.getSelection) {
-            if (window.getSelection().empty) {
-                window.getSelection().empty();
-            } else if (window.getSelection().removeAllRanges) {
-                window.getSelection().removeAllRanges();
-            }
-        } else if (document.selection) {
+        if(document.selection && document.selection.empty) {
             document.selection.empty();
+        } else if(window.getSelection) {
+            var sel = window.getSelection();
+            sel.removeAllRanges();
         }
     },
 
