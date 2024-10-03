@@ -32,9 +32,11 @@
 
 	const articlesStore = useArticlesStore();
 
-	await articlesStore.loadArticles();
+	const { categories, page, countPages, perPage, articlesCategories, currentTitle, articlesList, articles, currentCategoryId, options } = storeToRefs(articlesStore);
 
-	const { categories, page,countPages, perPage, articlesCategories, currentTitle, articlesList, articles, currentCategoryId, options } = storeToRefs(articlesStore);
+	page.value = 1;
+	perPage.value = 12;
+	await articlesStore.loadArticles();
 
 	watch(
 		() => [page.value, perPage.value],

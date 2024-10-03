@@ -383,6 +383,7 @@
 
 	// Установка положения кнопок
 	const setButtonPos = () => {
+		if(!tableRef.value?.parentNode) return ;
 		leftButtonPos.value = tableRef.value.parentNode.getBoundingClientRect().left;
 		rightButtonPos.value = tableRef.value.parentNode.getBoundingClientRect().left + tableRef.value.parentNode.offsetWidth - 40;
 		actionScroll({ action: "syncHeaders", value: null });

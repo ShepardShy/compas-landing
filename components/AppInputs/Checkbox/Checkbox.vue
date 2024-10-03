@@ -1,6 +1,7 @@
 <template>
     <FormItem class="form-item__checkbox" :class="props.disabled ? 'form-item__checkbox_disabled' : ''" @click="(event) => props.changeValueLabel ? changeValue(event) : null">
         <CheckboxLabel 
+            @click="e => !props.isTextClickable ? e.stopPropagation() : ''"
             :title="props.item.title"
             :isHTML="props.item.isHTML"
         />
@@ -40,7 +41,12 @@
         changeValueLabel: {
             default: true,
             type: Boolean
+        },
+        isTextClickable:{
+            default: true,
+            type: Boolean
         }
+        
     })
 
     const emit = defineEmits([

@@ -1,0 +1,39 @@
+.fines-list {
+	display: flex;
+	flex-direction: column;
+	gap: 25px;
+	&__title {
+		font-size: 41px;
+		font-weight: bold;
+		line-height: 1;
+	}
+	&__info {
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+	}
+	&__form {
+		max-width: 361px;
+	}
+	&__group {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+		line-height: 1;
+	}
+	&__label {
+		font-size: 12px;
+		color: #8f8f8f;
+	}
+	&__text {
+		&_link {
+			color: #1253a2;
+			cursor: pointer;
+			user-select: none;
+			text-decoration: underline;
+			&:hover {
+				text-decoration: none;
+			}
+		}
+	}
+}

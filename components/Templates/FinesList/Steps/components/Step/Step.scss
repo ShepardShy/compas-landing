@@ -1,0 +1,29 @@
+.step {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	cursor: pointer;
+	&__name {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 85px;
+		height: 31px;
+		border-radius: 5px;
+		background-color: #eef3f8;
+		font-size: 14px;
+		&_active {
+			border: solid 1px #1253a2;
+		}
+	}
+	&__text {
+		font-size: 16px;
+		font-weight: 400;
+		&_active {
+			font-weight: 600;
+		}
+	}
+	&__steps {
+		margin-bottom: 25px;
+	}
+}

@@ -1,0 +1,9 @@
+@use "@/assets/variables.scss" as variables;
+@use "@/assets/mixins.scss" as mixins;
+
+.articles {
+	h2 {
+		text-align: center;
+		margin-bottom: 30px;
+	}
+}

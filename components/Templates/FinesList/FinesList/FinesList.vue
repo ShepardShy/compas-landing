@@ -18,150 +18,152 @@
 					Зарегестрируйте портал для постоянного отслеживания машины
 				</p>
 			</div>
-			<form
-				v-if="isShowRegistraion"
-				class="main-page__form"
-				@submit.prevent
-			>
+			<template v-if="isShowRegistraion">
 				<AppH1 class="main-page__form-title"> Быстрая регистрация на портале </AppH1>
-				<div
-					class="auth__error"
-					v-show="userStore.authError.status"
+				<form
+					class="main-page__form fines-list__form"
+					@submit.prevent
 				>
-					{{ userStore.authError.text }}
-				</div>
+					<div
+						class="auth__error"
+						v-show="userStore.authError.status"
+					>
+						{{ userStore.authError.text }}
+					</div>
 
-				<div class="main-page__input-wrapper">
-					<AppInput
-						:disabled="userStore.regButtonLoad"
-						class="main-page__input main-page__input_substr"
+					<div class="main-page__input-wrapper">
+						<AppInput
+							:disabled="userStore.regButtonLoad"
+							class="main-page__input main-page__input_substr"
+							:item="{
+								id: 0,
+								title: 'Название портала',
+								value: regData.domain,
+								placeholder: 'Название портала',
+								type: 'text',
+								key: 'domain',
+								substring: '.compas.pro',
+							}"
+							:mask="null"
+							:enabledAutocomplete="true"
+							@keyup.enter="!disabledButton ? registration() : null"
+							@changeValue="data => changeValue(data)"
+						/>
+						<p
+							v-for="error in regData.domainError"
+							v-if="regData.domainError"
+							class="warning-list__field-error"
+						>
+							{{ error }}
+						</p>
+					</div>
+
+					<div class="main-page__input-wrapper">
+						<AppInput
+							class="main-page__input"
+							:item="{
+								id: 0,
+								title: 'E-mail',
+								value: regData.email,
+								placeholder: 'E-mail',
+								type: 'text',
+								key: 'email',
+							}"
+							:required="true"
+							:mask="null"
+							:disabled="userStore.regButtonLoad"
+							:enabledAutocomplete="true"
+							@keyup.enter="!disabledButton ? registration() : null"
+							@changeValue="data => changeValue(data)"
+						/>
+						<p
+							v-for="error in regData.emailError"
+							v-if="regData.emailError"
+							class="warning-list__field-error"
+						>
+							{{ error }}
+						</p>
+					</div>
+
+					<div class="main-page__input-wrapper">
+						<AppInput
+							class="main-page__input"
+							:item="{
+								id: 1,
+								title: 'Пароль',
+								value: regData.password,
+								placeholder: 'Пароль',
+								type: 'password',
+								key: 'password',
+							}"
+							:mask="null"
+							:required="true"
+							:disabled="userStore.regButtonLoad"
+							:enabledAutocomplete="false"
+							@keyup.enter="!disabledButton ? registration() : null"
+							@changeValue="data => changeValue(data)"
+						/>
+						<p
+							v-for="error in regData.passwordError"
+							v-if="regData.passwordError"
+							class="warning-list__field-error"
+						>
+							{{ error }}
+						</p>
+					</div>
+					<div class="main-page__input-wrapper">
+						<AppInput
+							class="main-page__input"
+							:item="{
+								id: 1,
+								title: 'Подтверждение пароля',
+								value: regData.passwordConfirmation,
+								placeholder: 'Подтверждение пароля',
+								type: 'password',
+								key: 'passwordConfirmation',
+							}"
+							:mask="null"
+							:required="true"
+							:disabled="userStore.regButtonLoad"
+							:enabledAutocomplete="false"
+							@keyup.enter="!disabledButton ? registration() : null"
+							@changeValue="data => changeValue(data)"
+						/>
+						<p
+							v-for="error in regData.passwordConfirmationError"
+							v-if="regData.passwordConfirmationError"
+							class="warning-list__field-error"
+						>
+							{{ error }}
+						</p>
+					</div>
+
+					<AppCheckbox
+						class="main-page__checkbox main-page__checkbox_long"
 						:item="{
-							id: 0,
-							title: 'Название портала',
-							value: regData.domain,
-							placeholder: 'Название портала',
-							type: 'text',
-							key: 'domain',
-							substring: '.compas.pro',
+							id: 2,
+							title: checkboxLink,
+							value: regData.confidence,
+							placeholder: '',
+							type: 'checkbox',
+							key: 'confidence',
+							isHTML: true,
 						}"
-						:mask="null"
-						:enabledAutocomplete="true"
-						@keyup.enter="!disabledButton ? registration() : null"
+						:disabled="userStore.regButtonLoad"
+						:isTextClickable="false"
 						@changeValue="data => changeValue(data)"
 					/>
-					<p
-						v-for="error in regData.domainError"
-						v-if="regData.domainError"
-						class="warning-list__field-error"
+					<AppButton
+						:disabledOption="disabledButton"
+						:class="{ button_loading: userStore.regButtonLoad }"
+						class="main-page__button button_blue"
+						@click="registration"
 					>
-						{{ error }}
-					</p>
-				</div>
+						Создать портал
+					</AppButton>
+				</form>
+			</template>
 
-				<div class="main-page__input-wrapper">
-					<AppInput
-						class="main-page__input"
-						:item="{
-							id: 0,
-							title: 'E-mail',
-							value: regData.email,
-							placeholder: 'E-mail',
-							type: 'text',
-							key: 'email',
-						}"
-						:required="true"
-						:mask="null"
-						:disabled="userStore.regButtonLoad"
-						:enabledAutocomplete="true"
-						@keyup.enter="!disabledButton ? registration() : null"
-						@changeValue="data => changeValue(data)"
-					/>
-					<p
-						v-for="error in regData.emailError"
-						v-if="regData.emailError"
-						class="warning-list__field-error"
-					>
-						{{ error }}
-					</p>
-				</div>
-
-				<div class="main-page__input-wrapper">
-					<AppInput
-						class="main-page__input"
-						:item="{
-							id: 1,
-							title: 'Пароль',
-							value: regData.password,
-							placeholder: 'Пароль',
-							type: 'password',
-							key: 'password',
-						}"
-						:mask="null"
-						:required="true"
-						:disabled="userStore.regButtonLoad"
-						:enabledAutocomplete="false"
-						@keyup.enter="!disabledButton ? registration() : null"
-						@changeValue="data => changeValue(data)"
-					/>
-					<p
-						v-for="error in regData.passwordError"
-						v-if="regData.passwordError"
-						class="warning-list__field-error"
-					>
-						{{ error }}
-					</p>
-				</div>
-				<div class="main-page__input-wrapper">
-					<AppInput
-						class="main-page__input"
-						:item="{
-							id: 1,
-							title: 'Подтверждение пароля',
-							value: regData.passwordConfirmation,
-							placeholder: 'Подтверждение пароля',
-							type: 'password',
-							key: 'passwordConfirmation',
-						}"
-						:mask="null"
-						:required="true"
-						:disabled="userStore.regButtonLoad"
-						:enabledAutocomplete="false"
-						@keyup.enter="!disabledButton ? registration() : null"
-						@changeValue="data => changeValue(data)"
-					/>
-					<p
-						v-for="error in regData.passwordConfirmationError"
-						v-if="regData.passwordConfirmationError"
-						class="warning-list__field-error"
-					>
-						{{ error }}
-					</p>
-				</div>
-
-				<AppCheckbox
-					class="main-page__checkbox main-page__checkbox_long"
-					:item="{
-						id: 2,
-						title: checkboxLink,
-						value: regData.confidence,
-						placeholder: '',
-						type: 'checkbox',
-						key: 'confidence',
-						isHTML: true,
-					}"
-					:disabled="userStore.regButtonLoad"
-					:isTextClickable="false"
-					@changeValue="data => changeValue(data)"
-				/>
-				<AppButton
-					:disabledOption="disabledButton"
-					:class="{ button_loading: userStore.regButtonLoad }"
-					class="main-page__button button_blue"
-					@click="registration"
-				>
-					Создать портал
-				</AppButton>
-			</form>
 			<AppTable
 				:isTrash="false"
 				:actionType="'views'"
@@ -241,13 +243,14 @@
 
 	const finesStore = useFinesStore();
 	const { fields, fines } = storeToRefs(finesStore);
-	if (fields.value?.length > 0) {
+	if (fields.value) {
 		console.log(fields.value, "fields.value");
 		const res = await api.callMethod("GET", `gibdd/check_by_req?` + new URLSearchParams(fields.value).toString(), {});
 		fines.value = res.map((i, idx) => {
 			return { ...i, id: idx };
 		});
 	} else {
+		console.log(fields.value, 123);
 		navigateTo("/products/fines");
 	}
 
@@ -274,6 +277,8 @@
 
 		loaderState: "",
 	});
+	console.log(table.value, "table");
+	console.log(fines.value, "fines.value");
 </script>
 
 <style lang="scss" scoped>

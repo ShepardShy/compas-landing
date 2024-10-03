@@ -31,6 +31,7 @@
             <TableTop 
                 :tableTitle="props.title"
                 :permissions="props.permissions"
+                :isShowSettings="props.isShowSettings"
                 @callAction="(data) => callAction(data)"
             > 
                 <template #top>
@@ -283,6 +284,10 @@
             type: Number
         },
         isHaveScrollingHeader: {
+            default: true,
+            type: Boolean
+        },
+        isShowSettings:{
             default: true,
             type: Boolean
         },

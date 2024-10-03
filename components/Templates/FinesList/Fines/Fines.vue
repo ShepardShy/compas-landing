@@ -320,6 +320,7 @@
 					if (Array.isArray(res)) {
 						finesStore.fields = formData.value;
 						finesStore.fines = res;
+						console.log(finesStore.fields);
 						navigateTo("/products/fines/list");
 						for (let elem of form.value) {
 							elem.value = "";

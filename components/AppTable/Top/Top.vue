@@ -42,7 +42,7 @@
                     </PopupOption>
                 </template>
             </AppPopup>
-            <AppPopup :isCanSelect="false" class="table-top__item" :closeByClick="false" @clickOutside="() => callAction({action: 'changeTab', value: null})">
+            <AppPopup v-if="props.isShowSettings" :isCanSelect="false" class="table-top__item" :closeByClick="false" @clickOutside="() => callAction({action: 'changeTab', value: null})">
                 <template #summary>
                     <IconSettings />
                 </template>
@@ -144,6 +144,10 @@
         permissions: {
             default: {},
             type: Object
+        },
+        isShowSettings:{
+            default: true,
+            type: Boolean
         }
     })
 

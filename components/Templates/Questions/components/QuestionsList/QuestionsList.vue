@@ -33,7 +33,8 @@
 	const questionsStore = useQuestionsStore();
 
 	const { page, perPage, countPages, questionsList } = storeToRefs(questionsStore);
-	console.log(questionsList.value);
+	page.value = 1;
+	perPage.value = 12;
 
 	const showMore = () => {
 		questionsStore.showMore();

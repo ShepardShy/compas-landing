@@ -4,7 +4,7 @@
 .table-template__buttons {
 	display: flex;
 	z-index: 300;
-	position: fixed;
+	position: absolute;
 	left: 0px;
 	width: var(--sectionWidth);
 
@@ -27,7 +27,8 @@
 	}
 
 	&.scroll-button_left {
-		left: var(--buttonPos);
+		// left: var(--buttonPos);
+		left: 0;
 		position: absolute;
 		transform: translateY(-50%);
 
@@ -37,7 +38,8 @@
 	}
 
 	&.scroll-button_right {
-		left: var(--buttonPos);
+		// left: var(--buttonPos);
+		right: 0;
 		position: absolute;
 		transform: translateY(-50%);
 

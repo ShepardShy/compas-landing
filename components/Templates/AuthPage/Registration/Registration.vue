@@ -127,6 +127,7 @@
 				isHTML: true,
 			}"
 			:disabled="userStore.regButtonLoad"
+			:isTextClickable="false"
 			@changeValue="data => changeValue(data)"
 		/>
 		<AppButton
