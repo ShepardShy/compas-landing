@@ -128,7 +128,7 @@
                                 :permissions="props.permissions"
                                 :userID="userID"
                                 :is_admin="is_admin"
-                                :relationID="row.user_id.value"
+                                :relationID="row.user_id?.value"
                                 @callAction="(data) => callAction({action: data.value, value: row})"
                             />
                             <AppStatus 

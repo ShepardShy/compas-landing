@@ -32,6 +32,7 @@
                 :tableTitle="props.title"
                 :permissions="props.permissions"
                 :isShowSettings="props.isShowSettings"
+                :isCanSort="props.isCanSort"
                 @callAction="(data) => callAction(data)"
             > 
                 <template #top>

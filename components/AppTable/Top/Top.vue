@@ -8,7 +8,7 @@
 
         <div class="table-top__actions">
             <AppSelect 
-                v-if="isMobile"
+                v-if="isMobile && props.isCanSort"
                 class="table-top__item table-top__select"
                 :class="sortItem.order == 'asc' ? 'table-top__select_up' : ''"
                 :item="{
@@ -146,6 +146,10 @@
             type: Object
         },
         isShowSettings:{
+            default: true,
+            type: Boolean
+        },
+        isCanSort:{
             default: true,
             type: Boolean
         }
