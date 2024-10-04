@@ -53,17 +53,34 @@
 @mixin scrollBar() {
     /* scrollbar для Chrome/Edge/Safari */
     &::-webkit-scrollbar {
+        z-index: 100;
         border-radius: 5px;
         @include elemResolutionOptions(4px, 4px);
     }
 
     &::-webkit-scrollbar-track {
-        background: variables.$color-light-grey;
+        z-index: 100;
+        background: transparent;
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color: variables.$color-grey;
-        @include borderOptions(2px, solid, variables.$color-grey, 5px)
+        z-index: 100;
+        transition: all 0.3s;
+        background-color: variables.$color-scroll-default;
+        @include borderOptions(2px, solid, variables.$color-scroll-default, 5px);
+
+        &:hover {
+            background-color: variables.$color-scroll-active;
+            @include borderOptions(2px, solid, variables.$color-scroll-active, 5px)
+        }
+    }
+}
+
+// Скроллбар
+@mixin scrollBarActive() {
+    &::-webkit-scrollbar-thumb {
+        background-color: variables.$color-scroll-active;
+        @include borderOptions(2px, solid, variables.$color-scroll-active, 5px);
     }
 }
 

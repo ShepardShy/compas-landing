@@ -1,119 +1,103 @@
-@use "@/assets/variables.scss" as variables;
-@use "@/assets/mixins.scss" as mixins;
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
 
 .table-template__buttons {
-	display: flex;
-	z-index: 300;
-	position: absolute;
-	left: 0px;
-	width: var(--sectionWidth);
+    display: flex;
+    z-index: 300;
+    position: fixed;
+    left: 0px;
+    width: var(--sectionWidth);
+    top: calc(50%);
+}
 
-	&.table-template__buttons_start {
-		top: calc(50%);
-	}
-
-	&.table-template__buttons_center {
-		top: calc(50% - 90px);
-	}
-
-	&.table-template__buttons_end {
-		top: calc(50%);
-	}
+.table-container {
+    &.table-container_construct {
+        .table-template__buttons {
+            &.table-template__buttons_start,
+            &.table-template__buttons_end {
+                top: var(--startButtons);
+            }
+        }
+    }
 }
 
 .scroll-button {
-	&.scroll-button_disabled {
-		display: none;
-	}
+    &.scroll-button_disabled {
+        display: none;
+    }
 
-	&.scroll-button_left {
-		// left: var(--buttonPos);
-		left: 0;
-		position: absolute;
-		transform: translateY(-50%);
+    &.scroll-button_left {
+        left: var(--buttonPos);
+        position: absolute;
 
-		&::before {
-			content: url("/icons/scrollButtonLeft.svg");
-		}
-	}
+        &::before {
+            content: url('/public/icons/scrollButtonLeft.svg');
+        }
+    }
 
-	&.scroll-button_right {
-		// left: var(--buttonPos);
-		right: 0;
-		position: absolute;
-		transform: translateY(-50%);
+    &.scroll-button_right {
+        left: var(--buttonPos);
+        position: absolute;
 
-		&::before {
-			content: url("/icons/scrollButtonRight.svg");
-		}
-	}
+        &::before {
+            content: url('/public/icons/scrollButtonRight.svg');
+        }
+    }
 }
 
 .table-template__loader {
-	z-index: 2;
-	width: 100%;
-	display: none;
-	position: absolute;
-	height: auto;
-	place-items: center;
-	@include mixins.elemPositionOptions(calc(var(--stickyTop) + 50px), 0px);
+    z-index: 2;
+    width: 100%;
+    display: none;
+    position: absolute;
+    height: auto;
+    place-items: center;
+    @include mixins.elemPositionOptions(calc(var(--stickyTop) + 50px), 0px);
 
-	&::after {
-		margin: 0;
-		position: static;
-		@include mixins.elemResolutionOptions(32px, 32px);
-	}
+    &::after {
+        margin: 0;
+        position: static;
+        @include mixins.elemResolutionOptions(32px, 32px);
+    }
 }
 
 .table-template {
-	&.table-template_loading,
-	&.table-template_filtering {
-		.table-template__loader {
-			display: grid;
-		}
+    &.table-template_loading, &.table-template_filtering {
+        .table-template__loader {
+            display: grid;
+        }
 
-		.table-template__buttons {
-			display: none;
-		}
+        .table-template__buttons {
+            display: none;
+        }        
 
-		.table-template__body {
-			height: 100%;
+        .table-template__body {
+            height: 100%;
 
-			&.table-template__body_empty {
-				.table__empty-block {
-					display: none;
-				}
-			}
-		}
-	}
+            &.table-template__body_empty {
+                .table__empty-block {
+                    display: none;
+                }
+            }
+        }
+    }
 
-	&.table-template_filtering {
-		.table-template__loader {
-			top: calc(var(--stickyTop) + 40px);
-		}
-	}
+    &.table-template_filtering {
+        .table-template__loader {
+            top: calc(var(--stickyTop) + 40px);
+        }
+    }
 }
 
-.table__empty-block {
-	left: 0px;
-	top: 0px;
-	white-space: nowrap;
-	height: 100%;
-	width: var(--sectionWidth);
-	place-items: center;
-	color: variables.$color-blue-grey;
-	position: sticky;
-	display: none;
-}
 
 .table-template__body {
-	&.table-template__body_empty {
-		height: 100%;
-		display: grid;
-		grid-template-rows: auto 1fr;
+    &.table-template__body_empty {
+        height: 100%;
+        display: grid;
+        grid-template-rows: auto 1fr;
 
-		.table__empty-block {
-			display: grid;
-		}
-	}
+        .table__empty-block {
+            display: grid;
+        }
+    }
 }

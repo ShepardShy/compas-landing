@@ -1,5 +1,5 @@
 <template>
-    <div class="table-container" :class="props.isHaveCategories ? 'table-container_categories' : ''">
+    <div class="table-container" :class="props.isHaveCategories ? 'table-container_categories' : '', !props.pageTableOnly ? 'table-container_construct' : ''">
         <TableCategory 
             v-if="props.isHaveCategories"
             :categoryType="props.categoryType"
@@ -219,6 +219,10 @@
                 loaderState: null,
             },
             type: Object
+        },
+        pageTableOnly: {
+            default: true,
+            type: Boolean
         },
         permissions: {
             default: {},

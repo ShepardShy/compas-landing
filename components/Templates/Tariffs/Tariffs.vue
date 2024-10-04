@@ -32,6 +32,7 @@
 			:activeCategory="null"
 			:categories="[]"
 			:isCanSort="false"
+			:pageTableOnly="false"
 			:isHaveCategories="false"
 			:categoryType="'default'"
 		/>

@@ -63,11 +63,25 @@
     overflow: auto;
     overflow-y: hidden;
     outline: none;
+    @include mixins.scrollBar();
+
+    /* scrollbar для Chrome/Edge/Safari */
+    &::-webkit-scrollbar {
+        @include mixins.elemResolutionOptions(8px, 8px);
+    }
+
+    &.element_scrolling {
+        @include mixins.scrollBarActive();
+    }
 
     &.table-template__body_drag {
         .table__empty-block {
             display: none !important;
         }
+    }
+
+    .table__empty-block {
+        display: none;
     }
 }
 

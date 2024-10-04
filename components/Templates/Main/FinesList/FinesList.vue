@@ -170,6 +170,7 @@
 				:table="table"
 				:activeCategory="null"
 				:categories="[]"
+				:pageTableOnly="false"
 				:isCanSort="false"
 				:isShowSettings="false"
 				:isHaveCategories="false"
