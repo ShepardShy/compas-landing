@@ -274,6 +274,12 @@
 		}, 100);
 
 		tableRef.value.parentNode.addEventListener("scroll", scrollTable);
+		let copyHeader = tableRef.value.querySelector('.table__header_copy')
+ 
+		if (copyHeader) {
+			copyHeader.remove()
+		}
+
 		document.addEventListener("mouseup", updateTableHeader);
 		document.addEventListener("mousedown", e => {
 			mouseDown.value = e.target;

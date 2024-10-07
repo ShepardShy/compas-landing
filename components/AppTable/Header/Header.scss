@@ -52,20 +52,19 @@
 		}
 	}
 
-	&.table__header_copy {
-		display: none;
-		position: fixed;
-		top: 0px;
-		max-width: var(--sectionWidth);
-		overflow: hidden;
-		z-index: 100;
-		background: variables.$color-white;
+    &.table__header_copy {
+        position: fixed;
+        top: 0px;
+        max-width: var(--sectionWidth);
+        overflow: hidden;
+        z-index: 100;
+        background: variables.$color-white;
 
-		.table-item__drag-area,
-		.table-item__border {
-			pointer-events: none;
-		}
-	}
+        .table-item__drag-area, 
+        .table-item__border {
+            pointer-events: none;
+        }
+    }
 }
 
 .table_resizing {

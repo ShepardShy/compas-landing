@@ -176,8 +176,10 @@
         // Отображение псевдошапки
         const showCopyHeader = () => {
             let localTableHeader = tableRef.value.querySelector('.table__header')
+            let tableBody = tableRef.value.querySelector('.table__body')
             if (!localTableHeader) return  
-            let tableBodyTop = localTableHeader.getBoundingClientRect().top
+            let tableHeaderTop = localTableHeader.getBoundingClientRect().top
+            let tableBodyTop = tableBody.getBoundingClientRect().bottom - 60
             let copyHeader = tableRef.value.querySelector('.table__header_copy')
 
             const getWidth = () => {
@@ -196,7 +198,7 @@
                 });
             }
 
-            if (tableBodyTop <= 0) {
+            if (tableHeaderTop <= 0 && tableBodyTop >= 0) {
                 if (copyHeader == null) {
                     copyHeader = localTableHeader.cloneNode(true);
                     setWidth()

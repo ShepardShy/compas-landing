@@ -62,7 +62,7 @@
 		<figure class="ibg fines__image">
 			<img
 				:src="previewImage[route.params?.type] ? previewImage[route.params?.type] : defaultImage"
-				alt="Проверьте штрафы и зарегестрируйтесь в 1 клик"
+				alt="Проверьте штрафы и зарегистрируйтесь в 1 клик"
 			/>
 		</figure>
 

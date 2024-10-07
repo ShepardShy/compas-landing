@@ -12,7 +12,7 @@
 			</div>
 			<div class="fines-list__group">
 				<p class="fines-list__label">Создание портала</p>
-				<p class="fines-list__text fines-list__text_link">Зарегестрируйте портал для постоянного отслеживания машины</p>
+				<p class="fines-list__text fines-list__text_link">Зарегистрируйте портал для постоянного отслеживания машины</p>
 			</div>
 			<AppTable 
 				:pageTableOnly="false"

@@ -15,7 +15,7 @@
 					@click="isShowRegistraion = !isShowRegistraion"
 					class="fines-list__text fines-list__text_link"
 				>
-					Зарегестрируйте портал для постоянного отслеживания машины
+					Зарегистрируйте портал для постоянного отслеживания машины
 				</p>
 			</div>
 			<template v-if="isShowRegistraion">

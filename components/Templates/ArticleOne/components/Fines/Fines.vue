@@ -60,7 +60,7 @@
 		<figure class="ibg fines__image">
 			<img
 				src="/articles/registration.png"
-				alt="Проверьте штрафы и зарегестрируйтесь в 1 клик"
+				alt="Проверьте штрафы и зарегистрируйтесь в 1 клик"
 			/>
 		</figure>
 
