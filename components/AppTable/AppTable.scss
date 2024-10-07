@@ -82,6 +82,10 @@
 
     .table__empty-block {
         display: none;
+        align-items: center;
+        justify-content: center;
+        width: calc(100vw - 65px);
+        color: #a6b7d4;
     }
 }
 

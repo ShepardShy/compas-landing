@@ -1,8 +1,29 @@
 <template>
 	<AppSection class="main-page section_without-background">
-		<AppH1 class="main-page__title"> Портал для обслуживания одной машины или автопарка машин </AppH1>
+		<!-- <AppH1 class="main-page__title"> Компас позволяет отслеживать все штрафы ГИБДД по личной или автопарку машин. </AppH1> -->
 		<form class="main-page__form">
-			<AppH1 class="main-page__form-title"> Портал для обслуживания одной машины или автопарка машин </AppH1>
+			<div class="main-page__container">
+				<AppH1 class="main-page__form-title"> Компас позволяет отслеживать все штрафы ГИБДД по личной или автопарку машин. </AppH1>
+
+				<div class="main-page__form-actions main-page__actions">
+					<FansyBox class="main-page__fansy-box">
+						<AppButton
+							class="main-page__button"
+							:data-fancybox="`finesBlock`"
+							href=""
+						>
+							<figure class="ibg main-page__icon">
+								<img
+									src="/icons/youtube_blue.svg"
+									alt="О сервисе"
+								/>
+							</figure>
+							О сервисе
+							<span class="button-text"> (1 мин 20 сек) </span>
+						</AppButton>
+					</FansyBox>
+				</div>
+			</div>
 		</form>
 
 		<figure class="ibg main-page__image">

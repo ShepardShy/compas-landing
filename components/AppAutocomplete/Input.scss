@@ -26,9 +26,9 @@
 
 .autocomplete__popup {
 	&[open] {
-		.autocomplete__active-option {
-			filter: opacity(0.5);
-		}
+		// .autocomplete__active-option {
+		// 	filter: opacity(0.5);
+		// }
 
 		.form-item__substring {
 			&::after {
@@ -97,6 +97,10 @@
 
 	&_countDistance .autocomplete__active-option {
 		height: 45px;
+		display: none;
+		& input::placeholder{
+			display: none;
+		}
 	}
 
 	&_countDistance {
@@ -117,6 +121,7 @@
 }
 
 .autocomplete__active-option {
+	color: rgb(117, 117, 117);
 	top: 0px;
 	overflow: hidden;
 	position: absolute;

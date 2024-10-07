@@ -97,7 +97,7 @@
         grid-template-rows: auto 1fr;
 
         .table__empty-block {
-            display: grid;
+            display: flex;
         }
     }
 }

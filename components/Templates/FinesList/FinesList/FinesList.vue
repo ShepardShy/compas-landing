@@ -252,7 +252,7 @@
 		});
 	} else {
 		console.log(fields.value, 123);
-		navigateTo("/products/fines");
+		// navigateTo("/products/fines");
 	}
 
 	const table = ref({
@@ -278,8 +278,26 @@
 
 		loaderState: "",
 	});
-	console.log(table.value, "table");
-	console.log(fines.value, "fines.value");
+	onMounted(() => {
+		userStore.$patch({
+			authData: {
+				domain: "",
+			},
+			regData: {
+				email: "",
+				emailError: [],
+				password: "",
+				passwordError: [],
+				domain: "",
+				tariff: "",
+				tariffError: "",
+				domainError: [],
+				passwordConfirmation: "",
+				passwordConfirmationError: [],
+				confidence: false,
+			},
+		});
+	});
 </script>
 
 <style lang="scss" scoped>

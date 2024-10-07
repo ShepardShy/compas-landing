@@ -66,7 +66,8 @@ export const useQuestionsStore = defineStore("questionsStore", {
 			if (this.canUpdate) {
 				const { categories } = await api.callMethod("GET", `faq`, {});
 				this.categories = categories;
-				const categoryId = this.categories?.find(category => category.slug == route.params.id)?.id;
+				console.log(this.categories);
+				const categoryId = this.categories?.find(category => category.slug == route.params.category)?.id;
 				this.questions = await api.callMethod("GET", `faq?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
 
 				if (this.page > this.countPages) {
