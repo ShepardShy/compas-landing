@@ -39,7 +39,7 @@
 	const props = defineProps({
 		title: { type: String, required: true },
 		categories: { type: Array, required: true },
-		navParam: { type: String, default: "id" },
+		navParam: { type: String, default: "category" },
 		path: { type: String, default: "" },
 	});
 

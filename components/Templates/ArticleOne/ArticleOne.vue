@@ -106,11 +106,11 @@
 		},
 	];
 	useHead({
-		title: `${seo_title.value ? seo_title.value : seo_title.value.value} | Статьи | Compas.pro`,
+		title: `${seo_title.value.value ? seo_title.value.value : seo_title.value} | Статьи | Compas.pro`,
 		meta: [
 			{
 				name: "description",
-				content: seo_description.value ? seo_description.value : seo_description.value.value,
+				content: seo_description.value.value ? seo_description.value.value : seo_description.value,
 			},
 		],
 	});

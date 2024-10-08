@@ -38,6 +38,7 @@
 			:is-show-label="showInputLabel"
 			:placeholder="props.placeholder"
 			:isShowSubstring="props.isShowSubstring"
+			:isLoading="isRouteLoading"
 			:isShowButton="props.isShowInputButton"
 			:isCountDistance="props.isCountDistance"
 			@changeValue="data => changeValue(data)"
@@ -104,6 +105,7 @@
 	let polygon = shallowRef(null);
 	let multiRoute = shallowRef(null);
 	let positionClick = shallowRef(null);
+	let isRouteLoading = ref(false);
 	let lastRoute = shallowRef(null);
 	let lastPoint = shallowRef(null);
 	let routeLength = ref(null);
@@ -259,6 +261,7 @@
 
 	// Прокладка маршрута
 	const renderRoute = async (positionRoute, data) => {
+		isRouteLoading.value = true;
 		// Данные из инпута
 		if (positionRoute) {
 			positionClick.value = positionRoute;
@@ -312,6 +315,7 @@
 		isInside ? (between = "0") : 0;
 		const historyItem = { address: doneAddress, distance: between, date: dayjs().format("DD.MM.YYYY"), time: dayjs().format("HH:mm") };
 		emit("selectAddress", historyItem);
+		isRouteLoading.value = false;
 	};
 
 	// Удаление маршрута

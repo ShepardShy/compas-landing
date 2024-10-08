@@ -1,4 +1,5 @@
 <template>
+	{{ [route.params.category] }}
 	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
 
 	<div
@@ -56,8 +57,12 @@
 	const questionsStore = useQuestionsStore();
 	const { questionsCategories, questionsList, questionDetail, page, perPage } = storeToRefs(questionsStore);
 
+	watchEffect(() => {
+		route.params.category;
+		questionsStore.loadQuestions();
+	});
 	watch(
-		() => [page.value, perPage.value],
+		() => [page.value, perPage.value, route.params.category],
 		() => {
 			questionsStore.loadQuestions();
 		}

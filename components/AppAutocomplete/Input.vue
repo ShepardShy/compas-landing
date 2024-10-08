@@ -60,6 +60,7 @@
 					@click.stop="clickButton"
 					:disabled="isDisableButton || search?.length === 0"
 					class="autocomplete__button button_blue"
+					:class="{ button_loading: isLoading }"
 					:style="props.isCountDistance ? { height: '45px' } : ''"
 					>Расчитать</AppButton
 				>
@@ -69,7 +70,12 @@
 					class="popup__loader"
 					v-if="loaderStatus"
 				/>
-				<PopupOption v-if="props.isShowNotSelected" @click="() => callAction({ action: 'changeValue', value: null })"> Не выбрано </PopupOption>
+				<PopupOption
+					v-if="props.isShowNotSelected"
+					@click="() => callAction({ action: 'changeValue', value: null })"
+				>
+					Не выбрано
+				</PopupOption>
 				<PopupOption
 					class="popup-option__root"
 					v-for="option in options"
@@ -173,10 +179,14 @@
 			default: false,
 			type: Boolean,
 		},
-		isShowNotSelected:{
+		isLoading: {
+			default: false,
+			type: Boolean,
+		},
+		isShowNotSelected: {
 			default: true,
-            type: Boolean,
-		}
+			type: Boolean,
+		},
 	});
 
 	const popupRef = ref(null);

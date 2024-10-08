@@ -1,170 +1,175 @@
-@use '@/assets/variables.scss' as variables;
-@use '@/assets/mixins.scss' as mixins;
+@use "@/assets/variables.scss" as variables;
+@use "@/assets/mixins.scss" as mixins;
 
 .table-container {
-    margin-bottom: 40px;
-    display: flex;
-    flex-direction: column;
-    
-    &.table-container_categories {
-        display: grid;
-        grid-gap: 20px;
-        grid-template-columns: 320px 1fr;
+	margin-bottom: 40px;
+	display: flex;
+	flex-direction: column;
 
-        .table-template {
-            grid-column: 2/4;
-        }
-    }
+	&.table-container_categories {
+		display: grid;
+		grid-gap: 20px;
+		grid-template-columns: 320px 1fr;
+
+		.table-template {
+			grid-column: 2/4;
+		}
+	}
 }
 
 .table-template {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	display: grid;
+	grid-template-rows: auto 1fr auto;
 
-    &.table-template_updating {
-        grid-template-rows: auto auto 1fr auto;
-    }
+	&.table-template_updating {
+		grid-template-rows: auto auto 1fr auto;
+	}
 
-    &.table-template_loading, &.table-template_filtering {
-        .table {
-            pointer-events: none;
-        }
-    }
+	&.table-template_loading,
+	&.table-template_filtering {
+		.table {
+			pointer-events: none;
+		}
+	}
 
-    &.table-template_loading {
-        overflow: hidden;
+	&.table-template_loading {
+		overflow: hidden;
 
-        .table-template__body {
-            display: grid;
-            grid-template-rows: 1fr;
-        }
-        
-        .table {
-            display: none;
-        }
+		.table-template__body {
+			display: grid;
+			grid-template-rows: 1fr;
+		}
 
-        .table-template__loader {
-            position: static;
-            height: 100%;
-        }
-    }
+		.table {
+			display: none;
+		}
 
-    &.table-template_filtering {
-        .table, .table-mobile {
-            opacity: 0.5;
-        }
-    }
+		.table-template__loader {
+			position: static;
+			height: 100%;
+		}
+	}
+
+	&.table-template_filtering {
+		.table,
+		.table-mobile {
+			opacity: 0.5;
+		}
+	}
 }
 
 .table-template__body {
-    overflow: auto;
-    overflow-y: hidden;
-    outline: none;
-    @include mixins.scrollBar();
+	overflow: auto;
+	overflow-y: hidden;
+	outline: none;
+	@include mixins.scrollBar();
 
-    /* scrollbar для Chrome/Edge/Safari */
-    &::-webkit-scrollbar {
-        @include mixins.elemResolutionOptions(8px, 8px);
-    }
+	/* scrollbar для Chrome/Edge/Safari */
+	&::-webkit-scrollbar {
+		@include mixins.elemResolutionOptions(8px, 8px);
+	}
 
-    &.element_scrolling {
-        @include mixins.scrollBarActive();
-    }
+	&.element_scrolling {
+		@include mixins.scrollBarActive();
+	}
 
-    &.table-template__body_drag {
-        .table__empty-block {
-            display: none !important;
-        }
-    }
+	&.table-template__body_drag {
+		.table__empty-block {
+			display: none !important;
+		}
+	}
 
-    .table__empty-block {
-        display: none;
-        align-items: center;
-        justify-content: center;
-        width: calc(100vw - 65px);
-        color: #a6b7d4;
-    }
+	.table__empty-block {
+		display: none;
+		align-items: center;
+		position: absolute;
+		height: 240px;
+		top: 94px;
+		justify-content: center;
+		width: calc(100vw - 65px);
+		color: #a6b7d4;
+	}
 }
 
 .table__product-actions {
-    padding: 20px 25px;
-    margin-bottom: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+	padding: 20px 25px;
+	margin-bottom: 25px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 
 .table {
-    width: 100%;
-    border-spacing: 0;
+	width: 100%;
+	border-spacing: 0;
 
-    &.table_hidden {
-        z-index: 1;
-        position: absolute;
-        opacity: 0;
-    }
+	&.table_hidden {
+		z-index: 1;
+		position: absolute;
+		opacity: 0;
+	}
 
-    &.table_copy {
-        z-index: 2000;
-        position: relative;
-        top: 0px;
-        left: 0px;
-        background: variables.$color-white;
-    }
+	&.table_copy {
+		z-index: 2000;
+		position: relative;
+		top: 0px;
+		left: 0px;
+		background: variables.$color-white;
+	}
 
-    &.table_empty {
-        width: 100%;
+	&.table_empty {
+		width: 100%;
 
-        .table__body {
-            width: 100%;
-            position: relative;
+		.table__body {
+			width: 100%;
+			position: relative;
 
-            &::before {
-                content: "Нет данных";
-                position: sticky;
-                left: 35vw;
-                top: 35vh;
-                white-space: nowrap;
-                display: flex;
-                height: 60vh;
-                align-items: center;
-                justify-content: center;
-                color:variables.$color-blue-grey;
-            }
-        }
-    }
+			&::before {
+				content: "Нет данных";
+				position: sticky;
+				left: 35vw;
+				top: 35vh;
+				white-space: nowrap;
+				display: flex;
+				height: 60vh;
+				align-items: center;
+				justify-content: center;
+				color: variables.$color-blue-grey;
+			}
+		}
+	}
 
-    &.table_transfer {
-        position: absolute;
-        top: -10000px;
-        left: -10000px;
-        background: variables.$color-white;
-    }
+	&.table_transfer {
+		position: absolute;
+		top: -10000px;
+		left: -10000px;
+		background: variables.$color-white;
+	}
 
-    &.table_resizing {
-        * {
-            .form-item__value {
-                @include mixins.userSelect(none);
-            }
-        }
-    }
+	&.table_resizing {
+		* {
+			.form-item__value {
+				@include mixins.userSelect(none);
+			}
+		}
+	}
 }
 
 @media (max-width: 1320px) {
-    .table-container {
-        &.table-container_categories {
-            display: flex;
-        }
-    }
+	.table-container {
+		&.table-container_categories {
+			display: flex;
+		}
+	}
 }
 
 @media (max-width: 1120px) {
-    .table__product-actions {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 30px;
-    }
+	.table__product-actions {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 30px;
+	}
 }

@@ -3,7 +3,7 @@
 		<!-- <AppH1 class="main-page__title"> Компас позволяет отслеживать все штрафы ГИБДД по личной или автопарку машин. </AppH1> -->
 		<form class="main-page__form">
 			<div class="main-page__container">
-				<AppH1 class="main-page__form-title"> Компас позволяет отслеживать все штрафы ГИБДД по личной или автопарку машин. </AppH1>
+				<AppH1 class="main-page__form-title"> Компас <span class="main-page_gray">позволяет отслеживать все штрафы ГИБДД по личной или автопарку машин.</span> </AppH1>
 
 				<div class="main-page__form-actions main-page__actions">
 					<FansyBox class="main-page__fansy-box">
