@@ -28,6 +28,7 @@
 </template>
 
 <script setup>
+	import "./QuestionsSlider.scss";
 	import { SwiperSlide } from "swiper/vue";
 	import AppSlider from "@/components/AppSlider/Slider.vue";
 	import QuestionItem from "@/components/Templates/Common/QuestionItem/QuestionItem.vue";
@@ -65,7 +66,3 @@
 		}
 	};
 </script>
-
-<style scoped>
-	@import url("./QuestionsSlider.scss");
-</style>

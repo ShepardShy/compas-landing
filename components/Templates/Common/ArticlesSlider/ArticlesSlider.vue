@@ -28,6 +28,8 @@
 </template>
 
 <script setup>
+	import './ArticlesSlider.scss'
+
 	import { SwiperSlide } from "swiper/vue";
 	import AppSlider from "@/components/AppSlider/Slider.vue";
 	import ArticleItem from "@/components/Templates/Common/ArticleItem/ArticleItem.vue";
@@ -64,7 +66,3 @@
 		}
 	};
 </script>
-
-<style scoped>
-	@import url("./ArticlesSlider.scss");
-</style>

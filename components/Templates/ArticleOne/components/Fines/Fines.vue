@@ -257,7 +257,7 @@
 	};
 
 	// Сохранение редактируемых полей
-	const saveChanges = () => {
+	const saveChanges = async () => {
 		// Инициализация сохранения строк
 		const initSave = async () => {
 			if (invalidFields.value.length > 0) {
@@ -270,28 +270,21 @@
 					state: false,
 					type: null,
 				};
-				isLoading.value = true;
+				const { domain, success, token, url } = await api.callMethod("POST", `registration`, { ...formData.value, tariff: 1 });
 
-				try {
-					const { domain, success, token, url } = await api.callMethod("POST", `registration`, { ...formData.value, tariff: 1 });
-
-					if (success) {
-						const isInside = commonStore.accounts.find(i => i.toLowerCase() == domain.toLowerCase());
-						!isInside && commonStore.accounts.push(domain.toLowerCase());
-						navigateTo(`https://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });
-						for (let elem of form.value) {
-							elem.value = "";
-						}
+				if (success) {
+					const isInside = commonStore.accounts.find(i => i.toLowerCase() == domain.toLowerCase());
+					!isInside && commonStore.accounts.push(domain.toLowerCase());
+					navigateTo(`https://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });
+					for (let elem of form.value) {
+						elem.value = "";
 					}
-				} catch (error) {
-				} finally {
-					isLoading.value = false;
 				}
 			}
 		};
 
 		// Проверка полей на валидацию
-		const checkingFields = () => {
+		const checkingFields = async () => {
 			// Валидация полей
 			const validateField = field => {
 				let error = ValidateField(field, field.value);
@@ -323,9 +316,16 @@
 			}
 		};
 
-		invalidFields.value = [];
-		checkingFields();
-		initSave();
+		try {
+			isLoading.value = true
+			invalidFields.value = [];
+			await checkingFields();
+			await initSave();
+		} catch (error) {
+			console.log(error);
+		} finally {
+			isLoading.value = false
+		}
 	};
 
 	provide("form", form);

@@ -366,9 +366,10 @@
 			}
 		};
 
-		invalidFields.value = [];
-		checkingFields();
-		initSave();
+		console.log('asdasd');
+		// invalidFields.value = [];
+		// checkingFields();
+		// initSave();
 	};
 
 	provide("form", form);

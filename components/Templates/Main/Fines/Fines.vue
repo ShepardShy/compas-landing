@@ -299,7 +299,7 @@
 	};
 
 	// Сохранение редактируемых полей
-	const saveChanges = () => {
+	const saveChanges = async () => {
 		// Инициализация сохранения строк
 		const initSave = async () => {
 			if (invalidFields.value.length > 0) {
@@ -312,28 +312,22 @@
 					state: false,
 					type: null,
 				};
-				isLoading.value = true;
 
-				try {
-					const res = await api.callMethod("GET", `gibdd/check_by_req?` + new URLSearchParams(formData.value).toString(), { ...formData.value, tariff: 1 });
+				const res = await api.callMethod("GET", `gibdd/check_by_req?` + new URLSearchParams(formData.value).toString(), { ...formData.value, tariff: 1 });
 
-					if (Array.isArray(res)) {
-						finesStore.fields = formData.value;
-						finesStore.fines = res;
-						navigateTo("/products/fines/list");
-						for (let elem of form.value) {
-							elem.value = "";
-						}
+				if (Array.isArray(res)) {
+					finesStore.fields = formData.value;
+					finesStore.fines = res;
+					navigateTo("/products/fines/list");
+					for (let elem of form.value) {
+						elem.value = "";
 					}
-				} catch (error) {
-				} finally {
-					isLoading.value = false;
 				}
 			}
 		};
 
 		// Проверка полей на валидацию
-		const checkingFields = () => {
+		const checkingFields = async () => {
 			// Валидация полей
 			const validateField = field => {
 				let error = ValidateField(field, field.value);
@@ -365,9 +359,16 @@
 			}
 		};
 
-		invalidFields.value = [];
-		checkingFields();
-		initSave();
+		try {
+			isLoading.value = true
+			invalidFields.value = [];
+			await checkingFields();
+			await initSave();
+		} catch (error) {
+			console.log(error);
+		} finally {
+			// isLoading.value = false
+		}
 	};
 
 	provide("form", form);

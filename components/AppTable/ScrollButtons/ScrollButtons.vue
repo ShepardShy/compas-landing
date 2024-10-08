@@ -149,10 +149,10 @@
                 buttonsPos.value = 'start'
 
                 if (isFullyVisible) {
-                    buttonStartRect.value = sectionRef.value.sectionRef.getBoundingClientRect().top + 82
+                    buttonStartRect.value = sectionRef.value.sectionRef.getBoundingClientRect().top + 240
                     return (sectionRef.value.sectionRef.offsetHeight - 82) / 2 - 27
                 } else {
-                    buttonStartRect.value = sectionRef.value.sectionRef.getBoundingClientRect().top + 82
+                    buttonStartRect.value = sectionRef.value.sectionRef.getBoundingClientRect().top + 240
                     return (window.innerHeight - sectionRef.value.sectionRef.getBoundingClientRect().top - 82) / 2 - 17
                 }
             // конец таблицы
@@ -423,6 +423,8 @@
     }, 5)
 
     const resizeTable = () => {
+        console.log('asdasda');
+
         if (tableRef.value) {
             actionScroll({action: 'setButtonsVisible', value: tableRef.value.parentNode})
         }
