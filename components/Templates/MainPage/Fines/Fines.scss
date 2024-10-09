@@ -151,9 +151,9 @@
 	display: flex;
 	flex-direction: column;
 	gap: 15px;
-	@media (max-width: 1120px) {
-		align-items: center;
-	}
+	// @media (max-width: 1120px) {
+	// 	align-items: center;
+	// }
 }
 
 .main-page__actions {

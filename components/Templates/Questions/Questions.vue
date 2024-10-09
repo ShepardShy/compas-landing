@@ -1,5 +1,4 @@
 <template>
-	{{ [route.params.category] }}
 	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
 
 	<div
