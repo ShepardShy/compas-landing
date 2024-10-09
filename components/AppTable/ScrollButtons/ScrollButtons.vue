@@ -68,6 +68,9 @@
         isHaveScrollingHeader: {
             default: true,
             type: Boolean
+        },
+        updateScrollButton: {
+            default: null
         }
     })
 
@@ -143,8 +146,6 @@
             if (sectionRef.value && sectionRef.value.sectionRef.getBoundingClientRect().top > 0) {
                 const rect = sectionRef.value.sectionRef.getBoundingClientRect();
 
-                // console.log(rect.top);
-                
                 const isFullyVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
                 buttonsPos.value = 'start'
 
@@ -166,6 +167,7 @@
                     }
                     // середина таблицы
                     else {
+                        buttonStartRect.value = sectionRef.value.sectionRef.getBoundingClientRect().top + 240
                         buttonsPos.value = 'center'
                         return window.innerHeight / 2 + window.scrollY - startPosScrollBlock - 41
                     }
@@ -423,12 +425,17 @@
     }, 5)
 
     const resizeTable = () => {
-        console.log('asdasda');
-
         if (tableRef.value) {
             actionScroll({action: 'setButtonsVisible', value: tableRef.value.parentNode})
         }
         scrollPosition.value = actionScroll({action: 'setPosition', value: null})
         setButtonPos()
     }
+
+    watch(() => props.updateScrollButton, () => {
+        if (tableRef.value) {
+            actionScroll({action: 'setButtonsVisible', value: tableRef.value.parentNode})
+            scrollPosition.value = actionScroll({action: 'setPosition', value: null})
+        }
+    })
 </script>

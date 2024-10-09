@@ -78,6 +78,7 @@
                 <ScrollButtons 
                     v-if="tableRef != null"
                     :tableRef="tableRef" 
+                    :updateScrollButton="props.updateScrollButton"
                     :isHaveScrollingHeader="props.isHaveScrollingHeader"
                     @callAction="(data) => callAction(data)"
                 />
@@ -279,6 +280,9 @@
         isCanSort : {
             default: true,
             type: Boolean
+        },
+        updateScrollButton: {
+            default: null
         },
         is_admin: {
             default: false,

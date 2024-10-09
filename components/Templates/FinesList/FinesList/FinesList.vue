@@ -12,7 +12,7 @@
 			<div class="fines-list__group">
 				<p class="fines-list__label">Создание портала</p>
 				<p
-					@click="isShowRegistraion = !isShowRegistraion"
+					@click="() => setRegistrationState()"
 					class="fines-list__text fines-list__text_link"
 				>
 					Зарегистрируйте портал для постоянного отслеживания машины
@@ -170,6 +170,7 @@
 				:slug="'equal'"
 				:isPermanentEdit="false"
 				:table="table"
+				:updateScrollButton="tableRole"
 				:activeCategory="null"
 				:categories="[]"
 				:pageTableOnly="false"
@@ -207,6 +208,8 @@
 
 	const userStore = useUserStore();
 
+	const tableRole = ref(0)
+
 	const { regData } = storeToRefs(userStore);
 
 	const checkboxLink = `<div class="main-page__text">
@@ -231,6 +234,10 @@
 		}
 	};
 
+	const setRegistrationState = () => {
+		tableRole.value++
+		isShowRegistraion.value = !isShowRegistraion.value
+	}
 	const commonStore = useCommonStore();
 
 	const fieldLabelsMap = {
