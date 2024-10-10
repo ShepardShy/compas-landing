@@ -150,8 +150,8 @@
 						title: "Номер постановления",
 						key: "uin",
 						name: "num_post",
-						type: "number",
-						mask: "####################",
+						type: "text",
+						mask: "#########################",
 						value: "",
 						required: true,
 						placeholder: "00000000000000000000",
@@ -360,14 +360,14 @@
 		};
 
 		try {
-			isLoading.value = true
+			isLoading.value = true;
 			invalidFields.value = [];
 			await checkingFields();
 			await initSave();
 		} catch (error) {
 			console.log(error);
 		} finally {
-			// isLoading.value = false
+			isLoading.value = false;
 		}
 	};
 

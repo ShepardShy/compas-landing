@@ -1,6 +1,6 @@
 <template>
 	<AppSection class="fines section_without-background">
-		<AppH2 class="fines__title fines__title_show"> Проверка штрафов ГИБДД в 1 клик </AppH2>
+		<AppH2 class="fines__title fines__title_show"> Проверка штрафов ГИБДД {{ titleMap[route.params.type] }} в 1 клик </AppH2>
 		<form
 			class="fines__form"
 			@click.prevent
@@ -8,7 +8,7 @@
 			<AppInput
 				v-for="item in form"
 				:class="item.class"
-				v-show="(form.find(i => ['sts', 'vu', 'uin', 'gos', 'inn'].includes(i.key)) && form[0].value != '') || ['number', 'certificate', 'sts', 'vu', 'uin', 'gos', 'inn'].includes(item.key) || (form[0].value != '' && form[1].value != '')"
+				v-show="(form.find(i => ['sts', 'vu', 'uin', 'gos'].includes(i.key)) && form[0].value != '') || ['number', 'certificate', 'sts', 'vu', 'uin', 'gos', 'inn', 'kpp'].includes(item.key) || (form[0].value != '' && form[1].value != '')"
 				:item="{
 					focus: false,
 					id: 0,
@@ -51,6 +51,7 @@
 							/>
 						</figure>
 						О сервисе
+						<span class="button-text"> (1 мин 20 сек) </span>
 					</AppButton>
 				</FansyBox>
 			</div>
@@ -79,6 +80,9 @@
 	import ValidateField from "@/components/AppTable/Validate.js";
 	import api from "@/helpers/api.js";
 	import { useCommonStore } from "@/stores/commonStore.js";
+	import { useFinesStore } from "~/stores/finesStore.js";
+
+	const finesStore = useFinesStore();
 
 	const commonStore = useCommonStore();
 
@@ -101,7 +105,7 @@
 						key: "sts",
 						name: "sts_number",
 						type: "text",
-						mask: "## AA ######",
+						mask: "## XX ######",
 						value: "",
 						required: true,
 						placeholder: "00 AA 000000",
@@ -130,11 +134,11 @@
 						title: "Номер постановления",
 						key: "uin",
 						name: "num_post",
-						type: "number",
-						mask: "####################",
+						type: "text",
+						mask: "#########################",
 						value: "",
 						required: true,
-						placeholder: "00000000000000000000",
+						placeholder: "0000000000000000000000",
 						class: "input_line",
 					},
 				];
@@ -152,16 +156,38 @@
 						placeholder: "A 000 AA 777",
 						class: "input_line",
 					},
+					{
+						title: "Номер СТС",
+						key: "sts",
+						name: "sts_number",
+						type: "text",
+						mask: "## XX ######",
+						value: "",
+						required: true,
+						placeholder: "00 AA 000000",
+						class: "input_line",
+					},
 				];
 			}
 			case "po-inn": {
 				return [
 					{
-						title: "Номер ИНН",
+						title: "ИНН компании",
 						key: "inn",
 						name: "inn",
 						type: "text",
 						mask: "############",
+						value: "",
+						required: true,
+						placeholder: "000000000000",
+						class: "input_line",
+					},
+					{
+						title: "КПП компании",
+						key: "kpp",
+						name: "kpp",
+						type: "text",
+						mask: "#########",
 						value: "",
 						required: true,
 						placeholder: "000000000000",
@@ -183,11 +209,11 @@
 						class: "input_line",
 					},
 					{
-						title: "Свидетельство о регистрации ТС",
+						title: "Номер СТС",
 						key: "certificate",
 						name: "sts_number",
 						type: "text",
-						mask: "## AA ######",
+						mask: "## XX ######",
 						value: "",
 						required: true,
 						placeholder: "00 AA 000000",
@@ -202,39 +228,39 @@
 	watchEffect(() => {
 		form.value = [
 			...fields.value,
-			{
-				title: "Электронная почта для входа",
-				key: "email",
-				name: "email",
-				type: "email",
-				mask: null,
-				value: "",
-				required: true,
-				placeholder: "mail@compas.pro",
-				class: "input_line",
-			},
-			{
-				title: "Пароль для входа",
-				key: "password",
-				name: "password",
-				type: "password",
-				mask: null,
-				value: "",
-				required: true,
-				placeholder: null,
-				class: "input_line",
-			},
-			{
-				title: "Повторить пароль для входа",
-				key: "repeatPassword",
-				name: "password_confirmation",
-				type: "password",
-				mask: null,
-				value: "",
-				required: true,
-				placeholder: null,
-				class: "input_line",
-			},
+			// {
+			// 	title: "Электронная почта для входа",
+			// 	key: "email",
+			// 	name: "email",
+			// 	type: "email",
+			// 	mask: null,
+			// 	value: "",
+			// 	required: true,
+			// 	placeholder: "mail@compas.pro",
+			// 	class: "input_line",
+			// },
+			// {
+			// 	title: "Пароль для входа",
+			// 	key: "password",
+			// 	name: "password",
+			// 	type: "password",
+			// 	mask: null,
+			// 	value: "",
+			// 	required: true,
+			// 	placeholder: null,
+			// 	class: "input_line",
+			// },
+			// {
+			// 	title: "Повторить пароль для входа",
+			// 	key: "repeatPassword",
+			// 	name: "password_confirmation",
+			// 	type: "password",
+			// 	mask: null,
+			// 	value: "",
+			// 	required: true,
+			// 	placeholder: null,
+			// 	class: "input_line",
+			// },
 		];
 	});
 
@@ -270,12 +296,13 @@
 					state: false,
 					type: null,
 				};
-				const { domain, success, token, url } = await api.callMethod("POST", `registration`, { ...formData.value, tariff: 1 });
 
-				if (success) {
-					const isInside = commonStore.accounts.find(i => i.toLowerCase() == domain.toLowerCase());
-					!isInside && commonStore.accounts.push(domain.toLowerCase());
-					navigateTo(`https://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });
+				const res = await api.callMethod("GET", `gibdd/check_by_req?` + new URLSearchParams(formData.value).toString(), { ...formData.value, tariff: 1 });
+
+				if (Array.isArray(res)) {
+					finesStore.fields = formData.value;
+					finesStore.fines = res;
+					navigateTo("/products/fines/list");
 					for (let elem of form.value) {
 						elem.value = "";
 					}
@@ -317,14 +344,14 @@
 		};
 
 		try {
-			isLoading.value = true
+			isLoading.value = true;
 			invalidFields.value = [];
 			await checkingFields();
 			await initSave();
 		} catch (error) {
 			console.log(error);
 		} finally {
-			isLoading.value = false
+			isLoading.value = false;
 		}
 	};
 

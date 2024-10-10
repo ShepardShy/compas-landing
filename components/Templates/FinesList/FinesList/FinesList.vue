@@ -208,7 +208,7 @@
 
 	const userStore = useUserStore();
 
-	const tableRole = ref(0)
+	const tableRole = ref(0);
 
 	const { regData } = storeToRefs(userStore);
 
@@ -235,9 +235,9 @@
 	};
 
 	const setRegistrationState = () => {
-		tableRole.value++
-		isShowRegistraion.value = !isShowRegistraion.value
-	}
+		tableRole.value++;
+		isShowRegistraion.value = !isShowRegistraion.value;
+	};
 	const commonStore = useCommonStore();
 
 	const fieldLabelsMap = {
@@ -251,6 +251,7 @@
 
 	const finesStore = useFinesStore();
 	const { fields, fines } = storeToRefs(finesStore);
+
 	if (fields.value) {
 		console.log(fields.value, "fields.value");
 		const res = await api.callMethod("GET", `gibdd/check_by_req?` + new URLSearchParams(fields.value).toString(), {});
@@ -262,8 +263,11 @@
 		// navigateTo("/products/fines");
 	}
 
+	const tableSettings = await api.callMethod("GET", `table/fines`, {});
+	console.log(tableSettings, "tableSettings");
+
 	const table = ref({
-		tableKeys: tableKeysJson,
+		tableKeys: tableSettings?.fields,
 		tableData: fines.value,
 
 		socketRows: {
@@ -273,8 +277,8 @@
 
 		// Сортировка по ключу
 		sortItem: {
-			key: null,
-			order: null,
+			key: tableSettings?.sort_field,
+			order: tableSettings?.sort_order,
 		},
 
 		tableFooter: {
