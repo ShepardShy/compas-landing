@@ -150,10 +150,10 @@
                 buttonsPos.value = 'start'
 
                 if (isFullyVisible) {
-                    buttonStartRect.value = sectionRef.value.sectionRef.getBoundingClientRect().top + 240
+                    buttonStartRect.value = sectionRef.value.sectionRef.getBoundingClientRect().top + 160
                     return (sectionRef.value.sectionRef.offsetHeight - 82) / 2 - 27
                 } else {
-                    buttonStartRect.value = sectionRef.value.sectionRef.getBoundingClientRect().top + 240
+                    buttonStartRect.value = sectionRef.value.sectionRef.getBoundingClientRect().top + 160
                     return (window.innerHeight - sectionRef.value.sectionRef.getBoundingClientRect().top - 82) / 2 - 17
                 }
             // конец таблицы
@@ -167,7 +167,7 @@
                     }
                     // середина таблицы
                     else {
-                        buttonStartRect.value = sectionRef.value.sectionRef.getBoundingClientRect().top + 240
+                        buttonStartRect.value = sectionRef.value.sectionRef.getBoundingClientRect().top + 160
                         buttonsPos.value = 'center'
                         return window.innerHeight / 2 + window.scrollY - startPosScrollBlock - 41
                     }
