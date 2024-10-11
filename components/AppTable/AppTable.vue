@@ -78,6 +78,7 @@
                 <ScrollButtons 
                     v-if="tableRef != null"
                     :tableRef="tableRef" 
+                    :pageTableOnly="props.pageTableOnly"
                     :updateScrollButton="props.updateScrollButton"
                     :isHaveScrollingHeader="props.isHaveScrollingHeader"
                     @callAction="(data) => callAction(data)"

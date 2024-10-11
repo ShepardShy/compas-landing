@@ -1,7 +1,7 @@
 <template>
     <AppLoader class="table-template__loader" ref="loaderRef"/>
     
-    <div class="table-template__buttons" ref="buttonsRef" :style="`--startButtons: ${buttonStartRect}px`" :class="`table-template__buttons_${buttonsPos}`">
+    <div class="table-template__buttons" ref="buttonsRef" :style="`--startButtons: ${buttonStartRect}px`" :class="[`table-template__buttons_${buttonsPos}`, buttonStartRect == null ? 'table-template__buttons_none' : '']">
         <div class="scroll-button scroll-button_left"
             ref="buttonScrollLeftRef"
             :style="`--buttonPos: ${leftButtonPos}px`"
@@ -71,6 +71,10 @@
         },
         updateScrollButton: {
             default: null
+        },
+        pageTableOnly: {
+            default: false,
+            type: Boolean
         }
     })
 
@@ -153,7 +157,7 @@
                     buttonStartRect.value = sectionRef.value.sectionRef.getBoundingClientRect().top + 160
                     return (sectionRef.value.sectionRef.offsetHeight - 82) / 2 - 27
                 } else {
-                    buttonStartRect.value = sectionRef.value.sectionRef.getBoundingClientRect().top + 160
+                    buttonStartRect.value = null
                     return (window.innerHeight - sectionRef.value.sectionRef.getBoundingClientRect().top - 82) / 2 - 17
                 }
             // конец таблицы
@@ -162,7 +166,13 @@
                     let startPosScrollBlock = sectionRef.value.sectionRef.getBoundingClientRect().top +  window.pageYOffset - document.body.clientTop
                     if (sectionRef.value.sectionRef.getBoundingClientRect().height + startPosScrollBlock < window.scrollY + window.innerHeight) {
                         buttonsPos.value = 'end'
-                        buttonStartRect.value = sectionRef.value.sectionRef.getBoundingClientRect().top + 160
+
+                        if (!props.pageTableOnly && (window.innerHeight < sectionRef.value.sectionRef.offsetHeight)) {
+                            buttonStartRect.value = sectionRef.value.sectionRef.getBoundingClientRect().top + 1000
+                        } else {
+                            buttonStartRect.value = sectionRef.value.sectionRef.getBoundingClientRect().top + 160
+                        }
+
                         return window.innerHeight / 2 + (window.scrollY - startPosScrollBlock - startPosScrollBlock + 5)
                     }
                     // середина таблицы

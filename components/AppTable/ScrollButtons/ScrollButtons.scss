@@ -13,6 +13,12 @@
 .table-container {
     &.table-container_construct {
         .table-template__buttons {
+            &.table-template__buttons_none {
+                &.table-template__buttons_start {
+                    top: 50%;
+                }
+            }
+
             &.table-template__buttons_start,
             &.table-template__buttons_end {
                 top: var(--startButtons);
