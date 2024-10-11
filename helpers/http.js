@@ -1,4 +1,6 @@
 import axios from "axios";
+import { useUserStore } from "~/stores/userStore";
+import { useCommonStore } from "~/stores/commonStore";
 
 export default {
 	call(type, url, params, headers) {
@@ -11,18 +13,52 @@ export default {
 					headers: Object.assign({ "Content-Type": "application/json" }, headers),
 					//withCredentials: true,
 				}).catch(error => {
-					console.log(error);
-					
-					const { response } = error;
-					// if (response.status == 401) {
-					// 	window.location.href = "/auth/entry";
-					// }
+					const router = useRouter();
+					const userStore = useUserStore();
+					const commonStore = useCommonStore();
+					let lastModal = userStore.modals[userStore.modals.length - 1];
+					if (error.response.status == 401) {
+						// userStore.userToken = null
+						window.location.href = "/auth";
+					} else if (error.response.status == 404) {
+						if (lastModal) {
+							lastModal.errorCode = 404;
+							window.history.pushState("", "Title", "/404");
+						} else {
+							resolve(error.response);
+							router.push({ path: "/404" });
+						}
+					} else if (type.toUpperCase() == "GET" && error.response.status == 403) {
+						commonStore.errorPage = {
+							code: 403,
+							reason: error.response.data.message,
+						};
 
-					reject(response);
+						if (lastModal) {
+							lastModal.errorCode = 403;
+							window.history.pushState("", "Title", "/403");
+						} else {
+							router.push({ path: "/403" });
+						}
+					} else if (error.response.status == 409) {
+						commonScripts.showNotification(
+							{
+								title: "Ошибка при сохранении",
+								description: error.response.data.message,
+							},
+							"error"
+						);
+					} else {
+						commonScripts.showNotification(
+							{
+								title: "Ошибка при сохранении",
+								description: error.response.data.message,
+							},
+							"error"
+						);
+					}
 
-					// if (error.response.status == 404) {
-					//     window.location.href = '/404';
-					// }
+					resolve(error.response);
 				});
 				resolve(response.data);
 			} catch (e) {

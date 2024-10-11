@@ -91,6 +91,21 @@
 		avatar: "",
 	};
 
+	// if (route.params?.id) {
+	// 	const item = articlesList.value?.find(i => i?.slug?.value == route.params?.id);
+	// 	if (!item) {
+	// 		await navigateTo("/404");
+	// 	}
+	// }
+	// watchEffect(async () => {
+	// 	if (route.params?.id) {
+	// 		const item = articlesList.value?.find(i => i?.slug?.value == route.params?.id);
+	// 		if (!item) {
+	// 			await navigateTo("/404");
+	// 		}
+	// 	}
+	// });
+
 	let breadcrumbs = [
 		{
 			title: "Главная страница",
@@ -101,7 +116,7 @@
 			link: "/articles",
 		},
 		{
-			title: name.value,
+			title: name?.value,
 			link: "/articles/za-chto-vypisan-shtraf",
 		},
 	];

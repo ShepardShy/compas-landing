@@ -54,14 +54,14 @@
 	const route = useRoute();
 
 	const questionsStore = useQuestionsStore();
-	const { questionsCategories, questionsList, questionDetail, page, perPage } = storeToRefs(questionsStore);
+	const { questionsCategories, questionsList, questionDetail, page, perPage, currentCategory } = storeToRefs(questionsStore);
 
-	watchEffect(() => {
+	watchEffect(async () => {
 		route.params.category;
-		questionsStore.loadQuestions();
+		await questionsStore.loadQuestions();
 	});
 	watch(
-		() => [page.value, perPage.value, route.params.category],
+		() => [page.value, perPage.value],
 		() => {
 			questionsStore.loadQuestions();
 		}
@@ -74,6 +74,33 @@
 		!questionsList.value.length ? await questionsStore.loadQuestions() : 0;
 	};
 	loadData();
+
+	// console.log(route.params, "route.params");
+	// console.log(route.params?.id, "route.params?.id");
+	// console.log(route.params?.category, "route.params?.category");
+
+	// onMounted(() => {
+	// 	console.log(route.params, "route.params");
+	// 	console.log(route.params?.id, "route.params?.id");
+	// 	console.log(route.params?.category, "route.params?.category");
+
+	// 	watch(
+	// 		() => [route.params?.id, route.params?.category],
+	// 		async () => {
+	// 			if (route.params?.id || route.params?.category) {
+	// 				const item = questionsList.value?.find(i => i?.slug?.value == route.params?.id);
+	// 				const category = questionsCategories.value?.find(category => category.slug == route.params.category);
+	// 				console.log(item, "item");
+	// 				console.log(category, "category");
+	// 				if (!item && !category) {
+	// 					console.log(123);
+	// 					await navigateTo("/404");
+	// 				}
+	// 			}
+	// 		},
+	// 		{ immediate: true }
+	// 	);
+	// });
 
 	const searchOptions = ref([]);
 	const changeValueSearch = async search => {
@@ -96,6 +123,19 @@
 					{
 						name: "description",
 						content: questionDetail.value?.seo_description?.value?.value,
+					},
+				],
+			});
+			return;
+		}
+		const category = questionsCategories.value?.find(category => category.slug == route.params.category);
+		if (category) {
+			useHead({
+				title: category?.seo_title + " | Вопрос-ответ | Compas.pro",
+				meta: [
+					{
+						name: "description",
+						content: category?.seo_description,
 					},
 				],
 			});

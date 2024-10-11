@@ -40,9 +40,8 @@ export const useQuestionsStore = defineStore("questionsStore", {
 		},
 
 		questionsCategories() {
-			console.log(this.categories);
-
 			return this.categories?.map(category => ({
+				...category,
 				value: category.slug,
 				title: category.name,
 				isOpen: false,
@@ -51,6 +50,10 @@ export const useQuestionsStore = defineStore("questionsStore", {
 					title: child.name,
 				})),
 			}));
+		},
+
+		currentCategory() {
+			return slug => this.categories?.find(category => category.value === slug);
 		},
 
 		currentCategoryId() {
@@ -66,7 +69,6 @@ export const useQuestionsStore = defineStore("questionsStore", {
 			if (this.canUpdate) {
 				const { categories } = await api.callMethod("GET", `faq`, {});
 				this.categories = categories;
-				console.log(this.categories);
 				const categoryId = this.categories?.find(category => category.slug == route.params.category)?.id;
 				this.questions = await api.callMethod("GET", `faq?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
 

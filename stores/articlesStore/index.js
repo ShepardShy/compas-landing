@@ -42,6 +42,7 @@ export const useArticlesStore = defineStore("articlesStore", {
 
 		articlesCategories() {
 			return this.categories?.map(category => ({
+				...category,
 				id: category.id,
 				value: category.slug,
 				title: category.name,
@@ -52,6 +53,10 @@ export const useArticlesStore = defineStore("articlesStore", {
 					title: child.name,
 				})),
 			}));
+		},
+
+		currentCategory() {
+			return this.categories?.find(category => category.value === route.params.category);
 		},
 
 		currentCategoryId() {

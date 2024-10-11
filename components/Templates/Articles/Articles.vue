@@ -30,13 +30,20 @@
 	import { useArticlesStore } from "~/stores/articlesStore";
 	import AppNav from "~/components/AppNav/AppNav.vue";
 
+	const route = useRoute();
+
 	const articlesStore = useArticlesStore();
 
-	const { categories, page, countPages, perPage, articlesCategories, currentTitle, articlesList, articles, currentCategoryId, options } = storeToRefs(articlesStore);
+	const { categories, page, countPages, currentCategory, perPage, articlesCategories, currentTitle, articlesList, articles, currentCategoryId, options } = storeToRefs(articlesStore);
 
 	page.value = 1;
 	perPage.value = 12;
 	await articlesStore.loadArticles();
+
+	watchEffect(async () => {
+		route.params.category;
+		await articlesStore.loadArticles();
+	});
 
 	watch(
 		() => [page.value, perPage.value],
@@ -52,6 +59,21 @@
 		}
 	);
 
+	// if (route.params?.category) {
+	// 	const category = articlesCategories.value?.find(category => category.slug == route.params.category);
+	// 	if (!category) {
+	// 		await navigateTo("/404");
+	// 	}
+	// }
+	// watchEffect(async () => {
+	// 	if (route.params?.category) {
+	// 		const category = articlesCategories.value?.find(category => category.slug == route.params.category);
+	// 		if (!category) {
+	// 			await navigateTo("/404");
+	// 		}
+	// 	}
+	// });
+
 	const searchOptions = ref([]);
 	const changeValueSearch = async search => {
 		if (search.value) {
@@ -64,6 +86,32 @@
 			return { ...i, value: i.label.slug };
 		});
 	};
+
+	watchEffect(() => {
+		const category = articlesCategories.value.find(category => category.slug == route.params.category);
+		if (category) {
+			useHead({
+				title: category?.seo_title + " | Статьи | Compas.pro",
+				meta: [
+					{
+						name: "description",
+						content: category?.seo_description,
+					},
+				],
+			});
+			return;
+		}
+		// Мета теги
+		useHead({
+			title: "Полезные статьи об эффективном управлении автопарком | Compas.pro",
+			meta: [
+				{
+					name: "description",
+					content: "Читайте наш блог на Compas.pro — здесь собраны полезные статьи и советы для эффективного управления автопарком. Как контролировать водителей и автомобили и экономить на управлении.",
+				},
+			],
+		});
+	});
 
 	let breadcrumbs = [
 		{
