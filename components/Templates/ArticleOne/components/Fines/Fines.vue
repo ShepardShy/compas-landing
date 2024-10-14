@@ -297,12 +297,17 @@
 					type: null,
 				};
 
+				isLoading.value = true;
 				const res = await api.callMethod("GET", `gibdd/check_by_req?` + new URLSearchParams(formData.value).toString(), { ...formData.value, tariff: 1 });
 
 				if (Array.isArray(res)) {
 					finesStore.fields = formData.value;
 					finesStore.fines = res;
-					navigateTo("/products/fines/list");
+					new Promise(res => {
+						return navigateTo("/products/fines/list");
+					}).then(() => {
+						isLoading.value = false;
+					});
 					for (let elem of form.value) {
 						elem.value = "";
 					}
@@ -344,14 +349,12 @@
 		};
 
 		try {
-			isLoading.value = true;
 			invalidFields.value = [];
 			await checkingFields();
 			await initSave();
 		} catch (error) {
 			console.log(error);
 		} finally {
-			isLoading.value = false;
 		}
 	};
 

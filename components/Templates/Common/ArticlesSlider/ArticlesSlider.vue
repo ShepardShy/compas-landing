@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-	import './ArticlesSlider.scss'
+	import "./ArticlesSlider.scss";
 
 	import { SwiperSlide } from "swiper/vue";
 	import AppSlider from "@/components/AppSlider/Slider.vue";

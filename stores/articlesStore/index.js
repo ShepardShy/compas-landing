@@ -37,6 +37,9 @@ export const useArticlesStore = defineStore("articlesStore", {
 		},
 
 		articlesList() {
+			if (route.params?.id) {
+				return this.articles?.list?.data.filter(i => i.slug != route.params.id && i?.slug?.value != route.params.id) || [];
+			}
 			return this.articles?.list?.data || [];
 		},
 

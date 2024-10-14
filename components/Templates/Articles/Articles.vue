@@ -87,31 +87,36 @@
 		});
 	};
 
-	watchEffect(() => {
-		const category = articlesCategories.value.find(category => category.slug == route.params.category);
-		if (category) {
+	const category = computed(() => articlesCategories.value.find(category => category.slug == route.params.category));
+
+	watch(
+		() => category.value,
+		() => {
+			if (category.value) {
+				useHead({
+					title: category.value?.seo_title + " | Статьи | Compas.pro",
+					meta: [
+						{
+							name: "description",
+							content: category.value?.seo_description,
+						},
+					],
+				});
+				return;
+			}
+			// Мета теги
 			useHead({
-				title: category?.seo_title + " | Статьи | Compas.pro",
+				title: "Полезные статьи об эффективном управлении автопарком | Compas.pro",
 				meta: [
 					{
 						name: "description",
-						content: category?.seo_description,
+						content: "Читайте наш блог на Compas.pro — здесь собраны полезные статьи и советы для эффективного управления автопарком. Как контролировать водителей и автомобили и экономить на управлении.",
 					},
 				],
 			});
-			return;
-		}
-		// Мета теги
-		useHead({
-			title: "Полезные статьи об эффективном управлении автопарком | Compas.pro",
-			meta: [
-				{
-					name: "description",
-					content: "Читайте наш блог на Compas.pro — здесь собраны полезные статьи и советы для эффективного управления автопарком. Как контролировать водителей и автомобили и экономить на управлении.",
-				},
-			],
-		});
-	});
+		},
+		{ immediate: true, deep: true }
+	);
 
 	let breadcrumbs = [
 		{

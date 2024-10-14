@@ -12,10 +12,17 @@
 		<div class="header__bottom">
 			<div class="header__author">
 				<img
+					v-if="authorAvatar"
 					:src="authorAvatar ? authorAvatar : defaultAvatar"
 					:alt="authorName"
 					class="header__author-avatar"
 				/>
+				<div
+					:style="`background:${authorColor};`"
+					class="header__author-avatar"
+				>
+					{{ authorName[0] }}
+				</div>
 				<div class="header__author-info">
 					<div class="header__author-name">{{ authorName }}</div>
 					<div class="header__author-desc">{{ authorDesc }}</div>
@@ -69,6 +76,10 @@
 			type: String,
 			required: true,
 		},
+		authorColor: {
+			type: String,
+			required: true,
+		},
 		date: {
 			type: String,
 			required: true,
@@ -86,7 +97,7 @@
 			required: true,
 		},
 	});
-	const { authorAvatar, authorDesc, authorName, date, update, image, title, views, readingTime } = toRefs(props);
+	const { authorAvatar, authorDesc, authorName, authorColor, date, update, image, title, views, readingTime } = toRefs(props);
 </script>
 
 <style scoped>

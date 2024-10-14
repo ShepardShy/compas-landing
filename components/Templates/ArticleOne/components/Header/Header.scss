@@ -55,6 +55,12 @@
 			max-height: 34px;
 			min-height: 34px;
 			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			line-height: 1;
+			text-transform: uppercase;
+			color: #fff;
 		}
 		&-name {
 			font-size: 16px;

@@ -12,6 +12,7 @@
 				:authorAvatar="author?.avatar"
 				:authorName="author?.name"
 				:authorDesc="author?.desc"
+				:authorColor="author?.color"
 				:date="created_at.value"
 				:update="updated_at.value"
 				:views="views?.value"
@@ -83,12 +84,15 @@
 		interestItems,
 		question,
 	};
-	let { created_at, updated_at, detail_picture, name, views, detail_text, seo_description, seo_title, reading_time } = articleDetail.value;
+	console.log(articleDetail.value, 123);
+
+	let { created_at, user_id, updated_at, detail_picture, name, views, detail_text, seo_description, seo_title, reading_time } = articleDetail.value;
 
 	const author = {
-		name: "Темур Киселев",
+		name: user_id?.value?.localOptions?.[0]?.label?.text ?? "Темур Киселев",
 		desc: "Эксперт компании Компас Дайнамикс",
-		avatar: "",
+		avatar: user_id?.value?.localOptions?.[0]?.label?.file?.[0]?.value ?? "",
+		color: user_id?.value?.localOptions?.[0]?.label?.color ?? "",
 	};
 
 	// if (route.params?.id) {
