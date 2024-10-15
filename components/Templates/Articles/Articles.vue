@@ -125,8 +125,14 @@
 		},
 		{
 			title: "Статьи",
-			link: "/products/fines",
+			link: "/articles",
 		},
+		category.value
+			? {
+					title: category.value?.title,
+					link: `/questions-category/${category.value?.slug}`,
+			  }
+			: null,
 	];
 </script>
 

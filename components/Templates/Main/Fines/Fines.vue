@@ -124,7 +124,7 @@
 						mask: "## XX ######",
 						value: "",
 						required: true,
-						placeholder: "00 AA 000000",
+						placeholder: "00 XX 000000",
 						class: "input_line",
 					},
 				];
@@ -335,6 +335,8 @@
 		const checkingFields = async () => {
 			// Валидация полей
 			const validateField = field => {
+				console.log(field, "field");
+
 				let error = ValidateField(field, field.value);
 
 				if (error.state) {

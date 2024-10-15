@@ -152,22 +152,32 @@
 		});
 	});
 
-	let breadcrumbs = computed(() => [
-		{
-			title: "Главная страница",
-			link: "/",
-		},
-		{
-			title: "Вопрос-ответ",
-			link: "/questions",
-		},
-		questionId.value
-			? {
-					title: questionDetail.value?.name.value,
-					link: `/questions/${questionId.value}`,
-			  }
-			: null,
-	]);
+	let breadcrumbs = computed(() => {
+		const category = questionsCategories.value?.find(category => category.slug == route.params.category);
+		console.log(category, "category");
+		return [
+			{
+				title: "Главная страница",
+				link: "/",
+			},
+			{
+				title: "Вопрос-ответ",
+				link: "/questions",
+			},
+			category
+				? {
+						title: category.title,
+						link: `/questions-category/${category.slug}`,
+				  }
+				: null,
+			questionId.value
+				? {
+						title: questionDetail.value?.name.value,
+						link: `/questions/${questionId.value}`,
+				  }
+				: null,
+		];
+	});
 </script>
 
 <style scoped>

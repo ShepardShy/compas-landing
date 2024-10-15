@@ -12,6 +12,11 @@ export default function (field, value) {
 				if (checkTextValue(field, value)) {
 					return createError(error, "Поле обязательно к заполнению");
 				}
+				if (field.mask) {
+					if (!checkMaskValue(field)) {
+						return createError(error, "Неверный формат");
+					}
+				}
 				break;
 			// Проверка relation
 			case "relation":
@@ -96,6 +101,14 @@ const createError = (error, text) => {
 // Проверка значения на пустоту
 const checkEmptyValue = value => {
 	return value == "" || [null, undefined, "Invalid Date"].includes(value);
+};
+
+// Проверка регулярки
+const checkMaskValue = ({ mask, key, value, name }) => {
+	if (name == "num_post") {
+		return new RegExp(`^\\d{20,25}$`).test(value);
+	}
+	return new RegExp(mask.replaceAll("A", "[a-zA-Zа-яА-Я]").replaceAll("#", `\\d`).replaceAll("X", "[0-9a-zA-Zа-яА-Я]").replaceAll(" ", `\\s`)).test(value);
 };
 
 // Проверка поля text на пустоту

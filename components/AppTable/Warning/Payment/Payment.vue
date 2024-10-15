@@ -5,29 +5,17 @@
         </template>
 
         <template #body>
-            <div class="warning__text_error" v-if="activePayment.value > props.balance">
-                Недостаточно средств
-            </div>
+            <CommonForm 
+                v-if="state == 'common'"
+                :balance="props.balance"
+                @callAction="(data) => callAction(data)"
+            />
 
-            <div class="warning__text" v-if="activePayment.value > props.balance">
-                На счету недостаточно средств. Для того, чтобы оплатить штраф, необходимо пополнить счет на сумму в размере <b> {{ activePayment.value }} </b> рублей.
-            </div>
-            <div class="warning__text" v-else>
-                Будет оплачен штраф в размере <b> {{ activePayment.value }} </b> рублей. Продолжить?
-            </div>
-            <div class="warning__actions">
-                <NuxtLink to="/settings/?tab=tariffs"  v-if="activePayment.value > props.balance">
-                    <AppButton class="button_blue">
-                        Пополнить счет
-                    </AppButton>
-                </NuxtLink>
-                <AppButton v-else class="button_blue" @click="() => emit('callAction', {action: 'payment', value: true})">
-                    Оплатить
-                </AppButton>
-                <AppButton @click="() => showWarning(false)">
-                    Отмена
-                </AppButton>
-            </div>
+            <PaymentForm 
+                v-if="state == 'payment'"
+                :balance="props.balance"
+                @callAction="(data) => callAction(data)"
+            />
         </template>
     </AppWarning>
 </template>
@@ -35,13 +23,12 @@
 <script setup>
     import './Payment.scss';
     
-    import { inject } from 'vue'
-
-    import AppButton from '@/components/AppButton/AppButton.vue';
     import AppWarning from '@/components/AppWarning/AppWarning.vue';
+    import CommonForm from './Common/Common.vue';
+    import PaymentForm from './Form/Form.vue';
 
     const isShow = inject('isShow')
-    const activePayment = inject('activePayment')
+    const state = ref('common')
 
     const props = defineProps({
         balance: {
@@ -54,8 +41,22 @@
         'callAction'
     ])
 
+    const callAction = (action) => {
+        if (action.action == 'payment') {
+            if (action.value.slug == 'payment') {
+                state.value = 'payment'
+            } else {
+                emit('callAction', action)
+            }
+        } else {
+            emit('callAction', action)
+        }
+    } 
+
     // Показать окно предупреждения
     const showWarning = (state) => {
         isShow.value.state = state
     }    
+
+    provide('state', state)
 </script>

@@ -18,6 +18,7 @@
 					class="header__author-avatar"
 				/>
 				<div
+					v-else
 					:style="`background:${authorColor};`"
 					class="header__author-avatar"
 				>

@@ -91,7 +91,7 @@
 	const author = {
 		name: user_id?.value?.localOptions?.[0]?.label?.text ?? "Темур Киселев",
 		desc: "Эксперт компании Компас Дайнамикс",
-		avatar: user_id?.value?.localOptions?.[0]?.label?.file?.[0]?.value ?? "",
+		avatar: user_id?.value?.localOptions?.[0]?.label?.file ?? "",
 		color: user_id?.value?.localOptions?.[0]?.label?.color ?? "",
 	};
 
