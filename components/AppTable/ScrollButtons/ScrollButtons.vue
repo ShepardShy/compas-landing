@@ -157,7 +157,11 @@
                     buttonStartRect.value = sectionRef.value.sectionRef.getBoundingClientRect().top + 160
                     return (sectionRef.value.sectionRef.offsetHeight - 82) / 2 - 27
                 } else {
-                    buttonStartRect.value = null
+                    if (window.innerHeight - rect.top >= 500) {
+                        buttonStartRect.value = null
+                    } else {
+                        buttonStartRect.value = sectionRef.value.sectionRef.getBoundingClientRect().top + 160
+                    }
                     return (window.innerHeight - sectionRef.value.sectionRef.getBoundingClientRect().top - 82) / 2 - 17
                 }
             // конец таблицы
