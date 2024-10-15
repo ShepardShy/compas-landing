@@ -65,17 +65,18 @@
 
     const isShow = inject('isShow')
     const activePayment = inject('activePayment')
-    const activeOption = ref({
-        name: 'Compas Pay',
-        slug: 'compas_pay',
-        slugIDForm: null
-    })
+    const activeOption = ref(        {
+            name: 'СБП (+1%)',
+            slug: 'payment',
+            slugIDForm: '12299232',
+            percent: 1,
+        },)
     const options = [
-        {
-            name: 'Compas Pay',
-            slug: 'compas_pay',
-            percent: 0,
-        },
+        // {
+        //     name: 'Compas Pay',
+        //     slug: 'compas_pay',
+        //     percent: 0,
+        // },
         {
             name: 'СБП (+1%)',
             slug: 'payment',
@@ -103,7 +104,11 @@
     }
 
     const setValue = computed(() => {
-        if (activeOption.value.percent > 0) {
+        console.log(activeOption.value,'activeOption.value');
+        console.log(activePayment.value,'activePayment.value');
+        
+        
+        if (activeOption.value?.percent > 0) {
             return (activePayment.value.value + Number(activePayment.value.value * (activeOption.value.percent > 0 ? Number(activeOption.value.percent / 100) : 1))).toFixed(2)
         } else {
             return activePayment.value.value

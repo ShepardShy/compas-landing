@@ -1,5 +1,6 @@
 <template>
-    <div class="button-details">
+    <div class="button-detailsP
+    ">
         <AppButton class="button_blue button_add" :class="props.loaderButton ? 'button_loading' : ''" @click="() => emit('mainAction', true)">
             <slot></slot>
         </AppButton>
@@ -40,3 +41,7 @@
         'callAction'
     ])
 </script>
+
+<style lang="scss" scoped>
+@import url('./ButtonDetails.scss');
+</style>
