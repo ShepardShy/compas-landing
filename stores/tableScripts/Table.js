@@ -6,7 +6,6 @@ import storeFilter from "./Filter";
 import { useUserStore } from '@/stores/userStore.js'
 import { useCommonStore } from '~/stores/commonStore'
 import { useTableStore } from '~/stores/tableStore'
-import { useTrashStore } from '~/stores/trashStore'
 
 export default {
     // Создание строки
@@ -284,26 +283,6 @@ export default {
             console.log(error);
         } finally {
             tableStore.objects[slug].table.loaderState = null
-        }
-    },
-
-    // Восстановление строк
-    async restoreRows(data, slug) {
-        const trashStore = useTrashStore()
-
-        try {
-            trashStore.table.loaderState = 'actionLoad'
-            await api.callMethod("POST", `objects/${slug}/restore`, {
-                ids: data
-            });
-        } catch (error) {
-            commonScripts.showNotification({
-                title: 'Ошибка при сохранении',
-                description: `Во время сохранения произошла ошибка. Пожалуйста, попробуйте ещё раз.`
-            }, 'error')
-            console.log(error);
-        } finally {
-            trashStore.table.loaderState = null
         }
     },
 
