@@ -8,7 +8,7 @@
 				>
 					<IconLogo />
 				</NuxtLink>
-				<div class="footer__desc">Compas - Проверка и оплата штрафов в 1 клик</div>
+				<div class="footer__desc">Компас Про - удобное управление транспортом</div>
 
 				<div class="footer__link footer-link">
 					<a

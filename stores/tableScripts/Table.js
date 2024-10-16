@@ -408,7 +408,7 @@ export default {
 
     // Получение данных для монеты
     async getMonetaPayID(payment) {
-        await api.callMethod("POST", `gibdd/moneta_pay/${payment.id}`, {
+        await api.callMethod("POST", `gibdd/moneta_pay`, {
             transaction_id: payment.transaction_id,
             amount: payment.value
         });

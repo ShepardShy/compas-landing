@@ -192,10 +192,10 @@
 						key: "inn",
 						name: "inn",
 						type: "text",
-						mask: "############",
+						mask: "##########",
 						value: "",
 						required: true,
-						placeholder: "000000000000",
+						placeholder: "0000000000",
 						class: "input_line",
 					},
 					{
@@ -206,7 +206,7 @@
 						mask: "#########",
 						value: "",
 						required: true,
-						placeholder: "000000000000",
+						placeholder: "000000000",
 						class: "input_line",
 					},
 				];
@@ -335,8 +335,6 @@
 		const checkingFields = async () => {
 			// Валидация полей
 			const validateField = field => {
-				console.log(field, "field");
-
 				let error = ValidateField(field, field.value);
 
 				if (error.state) {

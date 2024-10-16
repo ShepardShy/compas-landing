@@ -31,7 +31,7 @@
 
 	<AppSection class="section_without-background contacts__requisites contacts-requisites">
 		<AppH2>
-			Реквизиты компании Compas (Компас)
+			Реквизиты Compas Pro (Компас Про)
 
 			<a
 				:href="requisitesPdf"

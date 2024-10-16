@@ -1,6 +1,6 @@
 <template>
 	<AppSection class="pluses section_without-background">
-		<AppH2> Плюсы использования сервиса «Компас» для поиска штрафов </AppH2>
+		<AppH2> Плюсы использования сервиса «Компас Про» для поиска штрафов </AppH2>
 
 		<div class="pluses__list">
 			<div

@@ -1,5 +1,5 @@
 <template>
-    <div class="button-detailsP
+    <div class="button-details
     ">
         <AppButton class="button_blue button_add" :class="props.loaderButton ? 'button_loading' : ''" @click="() => emit('mainAction', true)">
             <slot></slot>
