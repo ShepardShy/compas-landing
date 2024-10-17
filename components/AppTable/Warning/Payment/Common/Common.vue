@@ -7,11 +7,11 @@
     </div>
     <div class="warning__actions">
         <div class="button-details">
-            <AppButton class="button_blue" :disabledOption="(userStore.activePaymentOption && userStore.activePaymentOption.slug == 'compas_pay') && (activePayment.value > props.balance )" :class="props.loaderButton ? 'button_loading' : ''" @click="() => emit('callAction', {action: 'payment', value: activeOption})">
+            <AppButton class="button_blue" :disabledOption="(userStore.activePaymentOption && userStore.activePaymentOption.slug == 'compas_pay') && (activePayment.value > props.balance)" :class="props.loaderButton ? 'button_loading' : ''" @click="() => emit('callAction', {action: 'payment', value: activeOption})">
                     <span class="warning__text">
-                        {{ activeOption?.name }} 
+                        {{ activeOption.name }} 
                         
-                        <template v-if="activeOption?.slug == 'compas_pay'">
+                        <template v-if="activeOption.slug == 'compas_pay'">
                             <span class="warning__text_green"> {{ props.balance }} </span> руб.
                         </template>
                     </span> 
@@ -54,8 +54,6 @@
     import { useUserStore } from '@/stores/userStore.js'
     const userStore = useUserStore()
 
-
-    const state = inject('state')
     const props = defineProps({
         balance: {
             default: 0,
@@ -66,17 +64,16 @@
     const isShow = inject('isShow')
     const activePayment = inject('activePayment')
     const activeOption = ref({
-            name: 'СБП (+1%)',
-            slug: 'payment',
-            slugIDForm: '12299232',
-            percent: 1,
-        },)
+        name: 'Compas Pay',
+        slug: 'compas_pay',
+        slugIDForm: null
+    })
     const options = [
-        // {
-        //     name: 'Compas Pay',
-        //     slug: 'compas_pay',
-        //     percent: 0,
-        // },
+        {
+            name: 'Compas Pay',
+            slug: 'compas_pay',
+            percent: 0,
+        },
         {
             name: 'СБП (+1%)',
             slug: 'payment',
@@ -100,11 +97,11 @@
         activePayment.value.slugIDForm = option.slugIDForm
         activePayment.value.name = option.name
         activeOption.value = option
-        activePayment.value.percentValue = setValue.value
+        activePayment.value.percentValue = setValue.value 
     }
 
     const setValue = computed(() => {
-        if (activeOption.value?.percent > 0) {
+        if (activeOption.value.percent > 0) {
             return (activePayment.value.value + Number(activePayment.value.value * (activeOption.value.percent > 0 ? Number(activeOption.value.percent / 100) : 1))).toFixed(2)
         } else {
             return activePayment.value.value
@@ -117,9 +114,7 @@
     }  
 
     onMounted(() => {
-        activeOption.value = userStore.activePaymentOption ?? activeOption.value;
-        setOption(options[0])
-        // activePayment.value.name = activeOption.value?.name;
-        // activePayment.value.percentValue = setValue.value 
+        activeOption.value = userStore.activePaymentOption
+        activePayment.value.percentValue = setValue.value 
     })
 </script>

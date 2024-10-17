@@ -34,8 +34,29 @@
             }
         }
     }
+
+    &.table__item_actions  {
+        &.table__item_clicked {
+            z-index: 35;
+            overflow: visible;
+        }
+    }
 }
 
 .form__item .popup_actions .popup__content .popup__option.action_red {
     color: variables.$color-red;
+}
+
+.section__table_uncopy {
+    .popup-option {
+        &.popup-option__sublink {
+            &.action_copy {
+                display: none;
+            }
+        }
+    }
+
+    .action-button_restore {
+        display: none;
+    }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="table-container" :class="props.isHaveCategories ? 'table-container_categories' : '', !props.pageTableOnly ? 'table-container_construct' : ''">
+    <RenderCacheable class="table-container" :class="props.isHaveCategories ? 'table-container_categories' : '', isMobileCategory || !props.pageTableOnly ? 'table-container_construct' : ''" cache-key="table" :max-age="3600"> 
         <TableCategory 
             v-if="props.isHaveCategories"
             :categoryType="props.categoryType"
@@ -8,10 +8,12 @@
         />
 
         <AppSection class="table__product-actions" v-if="props.isDinamyc" :isCanResize="false">
-            <AppButton class="button_add button_blue" @click="() => callAction({
-                action: 'addRow',
-                value: null
-            })">
+            <AppButton 
+                class="button_add button_blue"
+                @click="() => callAction({
+                    action: 'addRow',
+                    value: null
+                })">
                 Добавить строку
             </AppButton>
 
@@ -24,15 +26,15 @@
             :style="`--stickyTop: ${scrollPosition}px; --sectionWidth: ${sectionWidth}px`" 
             :isCanResize="false"
             :class="
+                props.table.restrictions && props.table.restrictions.count != null && props.table.restrictions.count <= bodyData.length ? 'section__table_uncopy' : '',
                 socketRows.header.length > 0 || socketRows.body.length > 0 ? 'table-template_updating' : '', 
-                props.table.loaderState == 'loading' ? 'table-template_loading' : props.table.loaderState == 'filtering' ? 'table-template_filtering' : ''
+                props.table.loaderState == 'loading' ? 'table-template_loading' : props.table.loaderState == 'filtering' ? 'table-template_filtering' : '',
+                fields.length == 0 || bodyData.length == 0 ? 'table-template_empty' : ''
             "
         >
             <TableTop 
                 :tableTitle="props.title"
                 :permissions="props.permissions"
-                :isShowSettings="props.isShowSettings"
-                :isCanSort="props.isCanSort"
                 @callAction="(data) => callAction(data)"
             > 
                 <template #top>
@@ -46,43 +48,55 @@
                 @callAction="(data) => callAction(data)"
             />
 
-            <TableMobile 
-                v-if="isMobile"
-                :slug="props.slug"
-                :isTrash="props.isTrash"
-                :actionType="props.actionType"
-                :permissions="props.permissions"
-                :loaderState="props.table.loaderState"
-                :isPermanentEdit="props.isPermanentEdit"
+            
+                <TableMobile 
+                    v-if="isMobile"
+                    :slug="props.slug"
+                    :isTrash="props.isTrash"
+                    :actionType="props.actionType"
+                    :isCanOpenCount="props.table.restrictions ? props.table.restrictions.count : 0"
+                    :permissions="props.permissions"
+                    :loaderState="props.table.loaderState"
+                    :isPermanentEdit="props.isPermanentEdit"
+                    @callAction="(data) => callAction(data)"
+                    @changeValue="data => emit('changeValue', data)"
+                />
+
+            <ScrollButtons 
+                v-if="tableRef != null"
+                :tableRef="tableRef" 
+                :isMobileCategory="isMobileCategory"
+                :isHaveScrollingHeader="props.isHaveScrollingHeader"
                 @callAction="(data) => callAction(data)"
             />
-            
-            <div ref="scrollAreaRef" v-else class="table-template__body section__scroll-area" :class="[fields.length == 0 || bodyData.length == 0 ? 'table-template__body_empty' : '']">
+
+            <div ref="scrollAreaRef" v-if="!isMobile" class="table-template__body section__scroll-area">
                 <table class="table" ref="tableRef" :class="[props.isPermanentEdit ? 'table_permanent-edit' : '']">
                     <TableHeader
                         v-if="props.table.loaderState != 'loading'"
                         :isTrash="props.isTrash"
+                        :role="`table_${roleRef}`"
+                        :key="roleRef"
                         @callAction="(data) => callAction(data)"
                     />
                     <TableBody 
                         :actionType="props.actionType"
                         :slug="props.slug"
+                        :role="`table_${roleRef}`"
+                        :key="roleRef"
+                        :isCanOpenCount="props.table.restrictions ? props.table.restrictions.count : 0"
                         :isTrash="props.isTrash"
                         :groupBody="props.groupBody"
                         :isDraggableRow="props.isDraggableRow"
                         :permissions="props.permissions"
                         :isPermanentEdit="props.isPermanentEdit"
                         @callAction="(data) => callAction(data)"
+                        @changeValue="data => emit('changeValue', data)"
                     />
                 </table>
-                <ScrollButtons 
-                    v-if="tableRef != null"
-                    :tableRef="tableRef" 
-                    :pageTableOnly="props.pageTableOnly"
-                    :updateScrollButton="props.updateScrollButton"
-                    :isHaveScrollingHeader="props.isHaveScrollingHeader"
-                    @callAction="(data) => callAction(data)"
-                />
+                <div class="table__empty-block">
+                    Нет данных
+                </div>
             </div>
 
             <TableFooter 
@@ -105,15 +119,13 @@
                 @callAction="(data) => callAction(data)"
             />
         </AppSection>
-    </div>
+    </RenderCacheable>
 </template>
 
 <script setup>
     import './AppTable.scss';
     
-    import { ref, onMounted, provide, watch, toRaw } from 'vue'
-
-    import _ from 'lodash'
+    import isEqual from 'lodash/isEqual'
     import TableTop from './Top/Top.vue'
     import TableBody from './Body/Body.vue'
     import ValidateField from './Validate.js'
@@ -163,50 +175,75 @@
         type: null
     })
 
-    let menu = ref({
-        tabs: [
-            {
-                tab: 'enabled',
-                title: 'Отображение',
-            },
-            {
-                tab: 'fixed',
-                title: 'Фиксирование',
-            },
-            {
-                tab: 'order',
-                title: 'Порядок',
-            }
-        ],
-        saves: {
-            isShow: false,
-            activeTab: null,
-            tabs: [
+    const menu = ref(null)
+
+    class Menu {
+        constructor() {
+            this.tabs = [
                 {
-                    tab: 'myself',
-                    key: 'myself',
-                    title: 'Применить для себя',
+                    tab: 'enabled',
+                    action: null,
+                    isAction: false,
+                    title: 'Отображение',
                 },
                 {
-                    tab: 'roles',
-                    key: 'roles',
-                    title: 'Применить для роли',
+                    tab: 'fixed',
+                    action: null,
+                    isAction: false,
+                    title: 'Фиксирование',
                 },
                 {
-                    tab: 'all',
-                    key: 'all',
-                    title: 'Применить для всех',
+                    tab: 'order',
+                    action: null,
+                    isAction: false,
+                    title: 'Порядок',
+                },
+                {
+                    tab: 'reset',
+                    isAction: true,
+                    action: 'resetTableSettings',
+                    title: 'Вернуть значения по умолчанию',
                 }
             ],
-            options: [],
-        },
-        activeTab: null
-    })
+            this.saves = {
+                isShow: false,
+                activeTab: null,
+                tabs: [
+                    {
+                        tab: 'myself',
+                        key: 'myself',
+                        title: 'Применить для себя',
+                    },
+                    {
+                        tab: 'roles',
+                        key: 'roles',
+                        title: 'Применить для роли',
+                    },
+                    {
+                        tab: 'all',
+                        key: 'all',
+                        title: 'Применить для всех',
+                    }
+                ],
+                options: [],
+            },
+            this.activeTab = null
+        }
+
+        changeTab(tab) {
+            this.activeTab = tab
+        }
+
+        showSaves(state) {
+            this.saves.isShow = state
+        }
+    }
 
     let skipChecking = ref(false)
     let updatedCategory = ref(null)
     let categories = ref([])
     let sectionWidth = ref(0)
+    const roleRef = ref(0)
 
     const props = defineProps({
         table: {
@@ -221,10 +258,6 @@
                 loaderState: null,
             },
             type: Object
-        },
-        pageTableOnly: {
-            default: true,
-            type: Boolean
         },
         permissions: {
             default: {},
@@ -282,9 +315,6 @@
             default: true,
             type: Boolean
         },
-        updateScrollButton: {
-            default: null
-        },
         is_admin: {
             default: false,
             type: Boolean
@@ -294,10 +324,6 @@
             type: Number
         },
         isHaveScrollingHeader: {
-            default: true,
-            type: Boolean
-        },
-        isShowSettings:{
             default: true,
             type: Boolean
         },
@@ -312,12 +338,19 @@
         title: {
             default: null,
             type: String
+        },
+        pageTableOnly: {
+            default: true,
+            type: Boolean
         }
     })
 
     const emit = defineEmits([
-        'callAction'
+        'callAction',
+        'changeValue'
     ])
+
+    const isMobileCategory = ref(false)
 
     provide('menu', menu)
     provide('fields', fields)
@@ -345,6 +378,7 @@
     provide('userID', props.userID)
     provide('isMobile', isMobile)
     provide('activePayment', activePayment)
+    provide('roleRef', roleRef)
     
     onMounted(async () => {
         isMobile.value = window.innerWidth <= 660
@@ -354,6 +388,7 @@
         bodyData.value = callAction({action: 'setPropsValues', value: props.table.tableData})
         socketRows.value = JSON.parse(JSON.stringify(props.table.socketRows))
         categories.value = JSON.parse(JSON.stringify(props.categories))
+        menu.value = new Menu()
         if (props.isPermanentEdit) {
             bodyData.value.forEach(row => {
                 backupValues.value.push(JSON.parse(JSON.stringify(row)))
@@ -365,11 +400,16 @@
         if (sectionRef.value) {
             new ResizeObserver(changeWidth).observe(sectionRef.value.sectionRef)
         }
+
+        setTimeout(() => {
+            sectionWidth.value = scrollAreaRef.value.offsetWidth
+        }, 100);
     })
 
     const changeWidth = () => {
+        isMobileCategory.value = props.isHaveCategories && window.innerWidth <= 1320
         isMobile.value = window.innerWidth <= 660
-        sectionWidth.value = scrollAreaRef.value ? scrollAreaRef.value.offsetWidth : 0
+        sectionWidth.value = scrollAreaRef.value?.offsetWidth
     }
 
     // Вызов действия в таблице
@@ -445,14 +485,14 @@
                     if (findedField && !['isEdit', 'isChoose'].includes(key)) {
                         switch (findedField.type) {
                             case 'status':
-                                if (!_.isEqual(String(row[key]), String(backupRow[key]))) {
+                                if (!isEqual(String(row[key]), String(backupRow[key]))) {
                                     flag = true
                                     updatedRow[key] = row[key]
                                 }
                                 break;
                         
                             default:
-                                if (!_.isEqual(row[key], backupRow[key])) {
+                                if (!isEqual(row[key], backupRow[key])) {
                                     flag = true
                                     updatedRow[key] = row[key]
                                 }
@@ -475,8 +515,12 @@
                     if (field.type == 'status') {
                         row[field.key] = setStatusValue(field, row[field.key])
                     }
-
-                    error = ValidateField(field, row[field.key])
+                    
+                    if (field.type == 'relation') {
+                        error = ValidateField(field, row[field.key].value)
+                    } else {
+                        error = ValidateField(field, row[field.key])
+                    }
                     
                     if (error.state) {
                         flag = true
@@ -584,7 +628,7 @@
                         backupValues.value = JSON.parse(JSON.stringify(bodyData.value))
                     }
 
-                    if (updatedRows.value.length == 0) {
+                    if (updatedRows.value.length == 0 && !props.isPermanentEdit) {
                         return
                     } else {
                         emit('callAction', {
@@ -759,6 +803,10 @@
                             fields.value.unshift(socketColumn)
                     } else if (socketColumn.isDeleted) {
                             fields.value = fields.value.filter(column => column.id != socketColumn.id)
+                            emit('callAction', {
+                                action: 'updateTableHeader',
+                                value: fields.value
+                            })
                     } else {
                         updateFieldValue(fields.value[findedIndex], socketColumn)
                         setUpdatedStatus(socketColumn.id)
@@ -773,9 +821,9 @@
         }
 
         // Получить данные таблицы
-        const getTableData = () => {
+        const getTableData = (value) => {
             emit('callAction', {action: 'getTableData', value: {
-                sortItem: sortItem.value,
+                sortItem: value,
                 footerData: footerData.value
             }})
         }
@@ -785,7 +833,8 @@
             if (props.isDraggableRow) {
                 emit('callAction', {
                     action: 'moveRow',
-                    value: event.item.__draggable_context.element
+                    value: JSON.parse(JSON.stringify(event.item.__draggable_context.element)),
+                    rows: event.to.__draggable_component__.modelValue
                 })
             } else {
                 actionState.value = 'saving'
@@ -1014,7 +1063,7 @@
 
             // Получение информации для тела таблицы
             case 'getTableData':
-                getTableData()
+                getTableData(data.value)
                 break;
 
             // Перемещение строк
@@ -1133,7 +1182,9 @@
     })
 
     watch(() => props.table.tableKeys, () => {
+        console.log('table');
         fields.value = callAction({action: 'setPropsValues', value: props.table.tableKeys})
+        roleRef.value++
     }, {
         deep: true
     })

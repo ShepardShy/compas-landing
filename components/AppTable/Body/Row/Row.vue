@@ -4,7 +4,7 @@
         class="table__row" 
         @click="() => clickRow(true)"
         v-click-out-side="(event) => clickRow(false)" 
-        :class="props.row.isEdit ? 'table__row_edit' : props.row.isChoose ? 'table__row_choosed' : '', props.row.isUpdated ? 'table__row_updated' : ''"
+        :class="setClasses"
     >
         <TableItem 
             v-for="item in fields"
@@ -16,10 +16,12 @@
             :actionType="props.actionType"
             :permissions="props.permissions"
             :isPermanentEdit="props.isPermanentEdit"
+            :isCanOpenCount="props.isCanOpenCount"
             @clickRow="() => clickRow(true)"
             @dragRowStart="(event) => setDragImage(event)"
             @dragRowEnd="(event) => dragRowEnd(event)"
             @callAction="(data) => emit('callAction', data)"
+            @changeValue="data=> emit('changeValue', data)"
         />
     </tr>
 </template>
@@ -45,6 +47,10 @@
             default: 0,
             type: Number
         },
+        rowsIds: {
+            default: [],
+            type: Array
+        },
         slug: {
             default: '',
             type: String
@@ -60,11 +66,16 @@
         permissions: {
             default: {},
             type: Object
+        },
+        isCanOpenCount: {
+            default: 0,
+            type: Number
         }
     })
 
     const emit = defineEmits([
-        'callAction'
+        'callAction',
+        'changeValue'
     ])
 
     // Добавление классов приоритета при клике на строку
@@ -72,6 +83,10 @@
         if (rowRef.value != null) {
             if (state) {
                 rowRef.value.classList.add('table_row_clicked')
+                emit('callAction', {
+                    action: 'chooseRow',
+                    value: props.row
+                })
             } else {
                 rowRef.value.classList.remove('table_row_clicked')
             }
@@ -104,4 +119,26 @@
             removingItem.remove()
         }
     }
+
+    const setClasses = computed(() => {
+        let classes = []
+
+        if (props.isCanOpenCount != 0) {
+            if (!props.rowsIds.sort((prev, next) => Number(prev) - Number(next)).slice(0, props.isCanOpenCount).includes(props.row.id)) {
+                classes.push('table__row_disabled')
+            }
+        }
+
+        if (props.row.isEdit) {
+            classes.push('table__row_edit')
+        } else if (props.row.isChoose) {
+            classes.push('table__row_choosed')
+        }
+
+        if (props.row.isUpdated) {
+            classes.push('table__row_updated')
+        }
+
+        return classes
+    })
 </script>

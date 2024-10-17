@@ -1,89 +1,140 @@
-@use '@/assets/variables.scss' as variables;
-@use '@/assets/mixins.scss' as mixins;
+@use "@/assets/variables.scss" as variables;
+@use "@/assets/mixins.scss" as mixins;
 
 .table-top {
-    padding: 10px;
-    border-bottom: 1px solid variables.$color-light-grey;
-    @include mixins.flexBlock($vertical: center, $horizontal: space-between, $gap: 10px);
+	padding: 10px;
+	border-bottom: 1px solid variables.$color-light-grey;
+	@include mixins.flexBlock($vertical: center, $horizontal: space-between, $gap: 10px);
 }
 
 .table-top__actions {
-    @include mixins.flexBlock($vertical: center, $gap: 10px);
+	width: 100%;
+	@include mixins.flexBlock($vertical: center, $horizontal: end, $gap: 10px);
 }
 
 .table__title {
-    font-weight: 600;
+	font-weight: 600;
+	white-space: nowrap;
 }
 
 .table-top__item {
-    .popup__summary {
-        padding: 0px 5px;
+	.popup__summary {
+		padding: 0px 5px;
 
-        figure {
-            display: flex;
-        }
-    }
+		figure {
+			display: flex;
+		}
+	}
 
-    .popup__content {
-        left: auto;
-        right: 0px;
-        width: 200px;
-    }
+	.popup__content {
+		left: auto;
+		right: 0px;
+		width: 200px;
+	}
 
-    &.table-top__select {
-        display: none;
+	&.table-top__select {
+		display: none;
 
-        .select__popup {
-            * {
-                @include mixins.userSelect($value: none);
-            }
+		.select__popup {
+			&[open] {
+				.select__active-option {
+					color: variables.$color-blue-two;
+					filter: opacity(1);
+				}
+			}
 
-            .popup__summary {
-                .form-item__substring {
-                    top: 3px;
+			* {
+				@include mixins.userSelect($value: none);
+			}
 
-                    &::after {
-                        content: url('/icons/arrowBlue.svg');
-                        transform: rotate(0deg);
-                    }
-                }
+			.popup__summary {
+				.form-item__substring {
+					top: 3px;
 
-                .form-item__input {
-                    & > input {
-                        height: auto;
-                        min-height: auto;
-                        padding: 5px 30px 5px 15px;
-                        border: none;
-                    }
-                }
-            }
+					&::after {
+						content: url("/public/icons/arrowBlue.svg");
+						transform: rotate(0deg);
+					}
+				}
 
-            .select__active-option {
-                top: 1px;
-                height: auto;
-                padding: 5px 10px;
-                justify-content: flex-end;
-            }
-        }
+				.form-item__input {
+					& > input {
+						height: auto;
+						min-height: auto;
+						padding: 5px 30px 5px 15px;
+						border: none;
+					}
+				}
+			}
 
-        &.table-top__select_up {
-            .select__popup {
-                .form-item__substring {
-                    top: 6px;
-                    
-                    &::after {
-                        transform: rotate(180deg);
-                    }
-                }
-            }
-        }
-    }
+			.select__active-option {
+				top: 1px;
+				height: auto;
+				color: variables.$color-blue-grey;
+				padding: 5px 5px 5px 0px;
+				justify-content: flex-end;
+			}
+
+			.popup__content {
+				bottom: auto;
+			}
+		}
+
+		&.table-top__select_up {
+			.select__popup {
+				.form-item__substring {
+					top: 6px;
+
+					&::after {
+						transform: rotate(180deg);
+					}
+				}
+			}
+		}
+
+		.select__active-option {
+			width: max-content;
+		}
+	}
+
+	.form-item__checkbox {
+		.form-item__title {
+			word-break: break-word;
+		}
+
+		label {
+			margin-top: 5px;
+		}
+	}
 }
 
 @media (max-width: 660px) {
-    .table-top__item {
-        &.table-top__select {
-            display: block;
-        }
-    }    
+	.table-top__item {
+		&.table-top__select {
+			display: block;
+			width: max-content;
+
+			.form-item__input {
+				height: 25px;
+				width: max-content;
+				display: flex;
+				justify-content: flex-end;
+				min-width: auto;
+				gap: 10px;
+				flex-direction: row-reverse;
+
+				input {
+					display: none;
+				}
+
+				.form-item__substring {
+					position: static;
+				}
+
+				.select__active-option  {
+					position: static;
+				}
+			}
+		}
+	}
 }

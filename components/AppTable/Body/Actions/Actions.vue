@@ -12,8 +12,7 @@
             ref="popupRef" 
             :isCanSelect="false"
             :closeByClick="false" 
-            @click="(e) => props.disabled ? e.preventDefault() : openPopup(true)" 
-            @clickOutside="() => openPopup(false)"
+            @click="(e) => props.disabled ? e.preventDefault() : null" 
         >
             <template #summary>
                 <IconDots />
@@ -24,14 +23,9 @@
                         class="popup-option__sublink" 
                         v-for="tab in setOptions" 
                         :class="tab.class"
-                        @click="() => tab.children.length > 0 ? 
-                            callAction({action: 'changeTab', value: tab}) : 
-                            callAction({action: 'callAction', value: tab.action})"
-                        >
+                        @click="() => callAction({action: 'callAction', value: tab.action})">
 
                         {{ tab.title }} 
-
-                        <IconArrow v-show="tab.children.length > 0" />
                     </PopupOption>
                 </template>
 
@@ -90,6 +84,10 @@
             default: false,
             type: Boolean
         },
+        objId: {
+            default: null,
+            type: Number
+        },
         permissions: {
             default: {},
             type: Object
@@ -103,11 +101,10 @@
             type: Boolean
         },
         relationID: {
-            default: null,
-            type: Number
+            default: null
         }
     })
-
+    
     const emit = defineEmits([
         'callAction'
     ])
@@ -130,6 +127,10 @@
 
     const setOptions = computed(() => {
         let localOptions = actions[props.item.slug]
+
+        if (props.objId == props.userID) {
+            localOptions = localOptions.filter(p => p.action != 'authUser')
+        }
 
         if (props.is_admin) {
             return localOptions
@@ -164,14 +165,4 @@
             return localOptions
         }
     })
-
-    // Открыть попап
-    const openPopup = (state) => {
-        if (state) {
-            popupRef.value != null ? popupRef.value.popupRef.closest('.table__item').classList.add('table__item_clicked') : ''
-        } else {
-            menu.value.activeTab = null
-            popupRef.value != null ? popupRef.value.popupRef.closest('.table__item').classList.remove('table__item_clicked') : ''
-        }
-    }
 </script>

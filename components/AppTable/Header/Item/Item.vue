@@ -7,6 +7,7 @@
 		<div
 			class="table-item__content"
 			v-if="props.item.key == 'isChoose'"
+			@click="(event) => doubleClick(event)"
 		>
 			<AppCheckbox
 				:item="{
@@ -31,10 +32,13 @@
 				:disabled="actionState == 'saving'"
 				@changeValue="data => selectAllRows(data)"
 			/>
-
+			<IconSort
+				v-if="sortItem.key == props.item.key"
+				:class="sortItem.order == 'asc' ? 'icon__sort_up' : ''"
+			/>
 			<div
 				class="table-item__drag-area"
-				:draggable="props.item.isHeaderDraggable"
+				:draggable="true"
 				@dragover.prevent
 				@dragenter.prevent
 				@dragstart="event => $emit('dragStart', event)"
@@ -45,7 +49,7 @@
 
 		<div
 			class="table-item__content"
-			@click="() => doubleClick()"
+			@click="(event) => doubleClick(event)"
 			v-else
 		>
 			<span class="table-item__title">
@@ -58,12 +62,11 @@
 
 			<div
 				class="table-item__drag-area"
-				:draggable="props.item.isHeaderDraggable && props.headerRef != null && !props.headerRef.parentNode.classList.contains('table_resizing') && tableItemRef != null && !tableItemRef.classList.contains('table__item_sticky')"
+				:draggable="props.headerRef != null && !props.headerRef.parentNode.classList.contains('table_resizing') && tableItemRef != null && !tableItemRef.classList.contains('table__item_sticky')"
 				@dragover.prevent
 				@dragenter.prevent
 				@dragstart="event => $emit('dragStart', event)"
 				@dragend="event => $emit('dragEnd', event)"
-				:style="!props.item.isHeaderDraggable ? 'display:none' : ''"
 			></div>
 
 			<div class="table-item__border"></div>
@@ -107,7 +110,6 @@
 				fixed: false,
 				enabled: true,
 				sort_order: null,
-				isHeaderDraggable: true,
 			},
 			type: Object,
 		},
@@ -123,25 +125,44 @@
 	const emit = defineEmits(["callAction", "dragStart", "dragEnd"]);
 
 	// Симуляция двойного клика
-	const doubleClick = item => {
+	const doubleClick = (event) => {
 		clickSetting.value.clicks++;
 		if (clickSetting.value.clicks === 1) {
 			clickSetting.value.timer = setTimeout(() => {
 				clickSetting.value.clicks = 0;
 			}, clickSetting.value.delay);
 		} else {
-			if (isCanSort && props.item.key != "isChoose" && props.item.key != "actions") {
-				sortItem.value = {
-					key: props.item.key,
-					order: sortItem.value.key == props.item.key ? (sortItem.value.order == "desc" ? "asc" : "desc") : "desc",
-				};
-				menu.value.saves.isShow = true;
-				footerData.value.activePage = 1;
-
-				emit("callAction", {
-					action: "getTableData",
-					value: null,
-				});
+			if (event.target.tagName != 'INPUT') {
+				if (isCanSort && props.item.key != "actions") {
+					sortItem.value = {
+						key: props.item.key,
+						order: sortItem.value.key == props.item.key ? (sortItem.value.order == "desc" ? "asc" : "desc") : "desc",
+					};
+					menu.value.showSaves(true)
+					footerData.value.activePage = 1;
+	
+	
+					if (props.item.key == "isChoose") {
+						for (let row of bodyData.value) {
+							if (row.isChoose == undefined) {
+								row.isChoose = 0
+							} else {
+								row.isChoose = row.isChoose ? 1 : 0
+							}
+						}
+	
+						if (sortItem.value.order == "desc") {
+							bodyData.value = bodyData.value.sort((prev, next) => Boolean(next.isChoose) - Boolean(prev.isChoose))
+						} else {
+							bodyData.value = bodyData.value.sort((prev, next) => Boolean(prev.isChoose) - Boolean(next.isChoose))
+						}
+					} else {
+						emit("callAction", {
+							action: "getTableData",
+							value: sortItem.value,
+						});
+					}
+				}
 			}
 			window.getSelection().empty();
 			clearTimeout(clickSetting.value.timer);

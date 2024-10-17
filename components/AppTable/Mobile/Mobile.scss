@@ -33,6 +33,10 @@
         overflow: visible;
         @include mixins.userSelect(auto);
 
+        &::before {
+            content: none !important;
+        }
+
         .form-item__checkbox {
             flex-direction: column;
             align-items: flex-start;
@@ -42,9 +46,21 @@
             }
         }
 
+        &.table__item_hidden, 
+        &.table__item_unvisible {
+            display: none;
+        }
+
         .form-item__file {
             .file__list {
                 width: 40px;
+            }
+
+            
+            .form-item__value_empty {
+                .file__list  {
+                    width: auto;
+                }
             }
         }
 
@@ -78,10 +94,31 @@
         .relation__actions {
             display: flex;
         }
+
+        .table__item_unvisible {
+            display: block;
+
+            &.table__item_hidden {
+                display: none;
+            }
+        }
     }
 
     &.table__row_choosed {
         background: #eef3f8;
+    }
+
+    &.table__row_updated {
+        background: #fffbe2;
+    }
+
+    &.table__row_disabled {
+        background: variables.$color-light-grey !important;
+        filter: opacity(0.6);
+
+        .table__item {
+            background: variables.$color-light-grey !important;
+        }
     }
 }
 
@@ -117,6 +154,10 @@
                 }
             }
         }
+    }
+
+    .form-item__value {
+        word-break: break-word;
     }
 }
 

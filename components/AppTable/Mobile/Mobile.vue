@@ -17,13 +17,17 @@
                         class="table-mobile__row table__row" 
                         :class="
                             row.isEdit ? 'table__row_edit' : row.isChoose ? 'table__row_choosed' : '', 
-                            row.isUpdated ? 'table__row_updated' : ''
+                            row.isUpdated ? 'table__row_updated' : '',
+                            props.isCanOpenCount != 0 && row.id > props.isCanOpenCount ? 'table__row_disabled' : ''
                         "
                     >
                         <div 
                             v-for="item in fields" 
                             class="table-mobile__field table__item" 
-                            :class="!item.enabled ? 'table__item_hidden' : ''"
+                            :class="[
+                                !item.enabled ? 'table__item_hidden' : '',
+                                !['checkbox', 'payment', 'actions', 'iconDrag', 'iconDelete'].includes(item.type) && (!item.visible_always && isEmpty(item.type == 'relation' ? row[item.key].value : row[item.key] != null ? String(row[item.key]) : row[item.key])) ? 'table__item_unvisible' : ''
+                                ]"
                             :style="`--colorItem: ${item.color}`"
                             @click="(event) => doubleClick(event, row, item)" 
                         >
@@ -42,8 +46,15 @@
                             />
                             <ButtonPayment 
                                 v-else-if="item.type == 'payment'"
-                                :item="row[item.key]"
-                                @click="callAction({
+                                :item="{
+                                    id: row.id,
+                                    key: item.key,
+                                    title: item.title,
+                                    value: row[item.key] ? row[item.key].value : null,
+                                    state: row[item.key] ? row[item.key].state : null,
+                                    isCanClick: item.can_edit
+                                }"
+                                @initPayment="callAction({
                                     action: 'initPayment',
                                     value: row[item.key]
                                 })"
@@ -128,7 +139,7 @@
                                 :permissions="props.permissions"
                                 :userID="userID"
                                 :is_admin="is_admin"
-                                :relationID="row.user_id?.value"
+                                :relationID="row.user_id.value"
                                 @callAction="(data) => callAction({action: data.value, value: row})"
                             />
                             <AppStatus 
@@ -263,6 +274,7 @@
     import IconDrag from '@/components/AppIcons/Drag/Drag.vue'
     import IconDelete from '@/components/AppIcons/Delete/Delete.vue'    
     import ButtonPayment from '@/components/AppButton/ButtonPayment/ButtonPayment.vue';
+    import isEmpty from 'lodash/isEmpty'
 
     const fields = inject('fields')
     const bodyData = inject('bodyData')
@@ -307,15 +319,21 @@
         permissions: {
             default: {},
             type: Object
+        },
+        isCanOpenCount: {
+            default: 0,
+            type: Number
         }
     })
 
     const emit = defineEmits([
-        'callAction'
+        'callAction','changeValue'
     ])
 
     // Изменение значения в поле
     const changeValue = (id, data) => {
+        emit('changeValue', {value:{...data,id}})
+        
         let findedRow = bodyData.value.find(row => row.id == id)
         findedRow[data.key] = data.value
 
@@ -377,6 +395,8 @@
 
     // Вызов действия в ячейке
     const callAction = (data) => {
+        console.log(data);
+
         // Открытие ссылок
         const openLink = (value) => {
             emit('callAction', {
@@ -402,7 +422,7 @@
             // Открытие модального окна
             case 'showModal':
                 openLink({
-                    id: data.value,
+                    id: data.value.id ?? data.value,
                     slug: props.slug,
                     tab: null
                 })

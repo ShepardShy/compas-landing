@@ -1,54 +1,53 @@
-@use "@/assets/variables.scss" as variables;
-@use "@/assets/mixins.scss" as mixins;
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
 
 .warning__text_error {
-	text-align: center;
-	color: variables.$color-red;
+    text-align: center;
+    color: variables.$color-red;
 }
 
 .warning__actions {
-	.button-details {
-		min-width: 200px;
+    .button-details {
+        min-width: 200px;
 
-		.button-details__popup {
-			height: 45px;
+        .button-details__popup {
+            height: 45px;
 
-			.popup__content {
-				top: 50px;
-				bottom: auto;
-			}
-		}
+            .popup__content {
+                top: 50px;
+                bottom: auto;
+            }
+        }
+        
+        .button_blue {
+            width: 100%;
+        }
 
-		.button_blue {
-			width: 100%;
-		}
+        .warning__text {
+            margin-bottom: 0px;
 
-		.warning__text {
-			margin-bottom: 0px;
-
-			.warning__text_green {
-				color: #8ed699;
-			}
-		}
-	}
+            .warning__text_green {
+                color: #8ed699;
+            }
+        }
+    }
 }
 
 @media (max-width: 940px) {
-	.warning__actions {
-		display: flex;
-		flex-direction: column;
+    .warning__actions {
+        display: flex;
+        flex-direction: column;
 
-		a,
-		button {
-			width: 100%;
-		}
+        a, button {
+            width: 100%;
+        }
 
-		.button-details {
-			width: 100%;
+        .button-details {
+            width: 100%;
 
-			.button_blue {
-				width: 100%;
-			}
-		}
-	}
+            .button_blue {
+                width: 100%;
+            }
+        }
+    }
 }

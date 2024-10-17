@@ -30,10 +30,10 @@
                             label: '50',
                             value: 50
                         },
-                        {
-                            label: '100',
-                            value: 100
-                        }
+                        // {
+                        //     label: '100',
+                        //     value: 100
+                        // }
                     ]
                 }"
                 :isFiltered="false"
@@ -52,6 +52,7 @@
     import AppPagination from './Pagination/Pagination.vue'
     import AppSelect from '@/components/AppSelects/Select/Select.vue'
 
+    const sortItem = inject('sortItem')
     const bodyData = inject('bodyData')
     const footerData = inject('footerData')
 
@@ -65,14 +66,15 @@
         const changeVisibleElems = (value) => {
             footerData.value.activePage = 1
             footerData.value.count = value
-            emit('callAction', {action: 'getTableData', value: null})
+            emit('callAction', {action: 'getTableData', value: sortItem.value})
             emit('callAction', {action: 'setVisibleElems', value: value})
         }
 
         // Изменение активной страницы
         const changePage = (value) => {
+            window.scrollTo(0, 0);
             footerData.value.activePage = value
-            emit('callAction', {action: 'getTableData', value: null})
+            emit('callAction', {action: 'getTableData', value: sortItem.value})
         }
 
         switch (data.action) {

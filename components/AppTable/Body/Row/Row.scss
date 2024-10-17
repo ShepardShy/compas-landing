@@ -17,6 +17,10 @@
             
             .table__item {
                 background: variables.$color-light-blue;
+
+                &::before {
+                    background: variables.$color-light-blue;
+                }
             }
         }
 
@@ -29,6 +33,10 @@
                 &.table__item_sticky {
                     background: #fffbe2 !important;
                 }
+
+                &::before {
+                    background: #fffbe2;
+                }
             }
         }
     
@@ -37,6 +45,10 @@
     
             .table__item {
                 background: #eef3f8;
+
+                &::before {
+                    background: #eef3f8;
+                }
 
                 &.table__item_sticky {
                     background: #eef3f8 !important;
@@ -49,7 +61,15 @@
     
             .table__item {
                 background: #d9e4f0;
-    
+
+                .table-item__content {
+                    padding: 10px;
+                }
+
+                &::before {
+                    background: #d9e4f0;
+                }
+
                 &.table__item_sticky {
                     background: #d9e4f0 !important;
                 }
@@ -79,12 +99,38 @@
                         }
                     }
                 }
-    
+
+                &.table__item_clicked {
+                    z-index: 35;
+                    overflow: visible;
+
+                    .status {
+                        .popup__summary {
+                            max-width: var(--defaultWidth);
+                            overflow: hidden;
+
+                            .status-option__rect {
+                                min-width: 36px;
+                            }
+                        }
+                    }
+                }
             }
         }
     
+        &.table__row_disabled {
+            background: #f5f5f7;
+            .table__item {
+                background: #f5f5f7;
+
+                &::before {
+                    background: #f5f5f7;
+                }
+            }
+        }
+
         &.table_row_clicked {
-            z-index: 30;
+            z-index: 31;
             position: relative;
             
             .table__item {
@@ -127,7 +173,12 @@ tbody {
 					.table__item {
 						background: transparent;
 
+                        &::before {
+                            background: transparent !important;
+                        }
+
                         &.table__item_sticky {
+                            z-index: 40;
                             background: #f9f9fa !important;
                         }
 					}

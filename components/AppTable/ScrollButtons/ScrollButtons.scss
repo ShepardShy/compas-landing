@@ -4,27 +4,9 @@
 .table-template__buttons {
     display: flex;
     z-index: 300;
-    position: fixed;
-    left: 0px;
+    position: absolute;
     width: var(--sectionWidth);
-    top: calc(50%);
-}
-
-.table-container {
-    &.table-container_construct {
-        .table-template__buttons {
-            &.table-template__buttons_none {
-                &.table-template__buttons_start {
-                    top: 50%;
-                }
-            }
-
-            &.table-template__buttons_start,
-            &.table-template__buttons_end {
-                top: var(--startButtons);
-            }
-        }
-    }
+    top: var(--startButtons);
 }
 
 .scroll-button {
@@ -33,7 +15,7 @@
     }
 
     &.scroll-button_left {
-        left: var(--buttonPos);
+        left: 0px;
         position: absolute;
 
         &::before {
@@ -42,7 +24,7 @@
     }
 
     &.scroll-button_right {
-        left: var(--buttonPos);
+        right: 0px;
         position: absolute;
 
         &::before {
@@ -80,7 +62,7 @@
         .table-template__body {
             height: 100%;
 
-            &.table-template__body_empty {
+            &.table-template_empty {
                 .table__empty-block {
                     display: none;
                 }
@@ -96,14 +78,15 @@
 }
 
 
-.table-template__body {
-    &.table-template__body_empty {
+.table-template {
+    &.table-template_empty {
         height: 100%;
-        display: grid;
+        // display: grid;
+        // place-items: center;
         grid-template-rows: auto 1fr;
 
         .table__empty-block {
-            display: flex;
+            display: grid;
         }
     }
 }

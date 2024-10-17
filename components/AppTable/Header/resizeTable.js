@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import throttle from 'lodash/throttle'
 
 export default {
     // Ресайз таблицы
@@ -94,7 +94,7 @@ export default {
                         }, 10);
                     }
                 }
-                
+
                 clearCell()
             });
     
@@ -112,11 +112,10 @@ export default {
             let cols = row ? row.children : undefined;
             if (!cols) return;
         
-            setFixedCellsWidth(table)
             this.setDefaultWidth(cols, fields)
             this.setCellsWidth(table)
-        
-            if (localTableHeader.offsetWidth <= sectionBody.offsetWidth - 10) {
+
+            if (localTableHeader.offsetWidth <= sectionBody.offsetWidth) {
                 setCellsWidthDefference(localTableHeader, sectionBody)    
             }
     
@@ -129,7 +128,6 @@ export default {
 
     // Установка изначального положения ячеек если ширина таблицы меньше секции
     setCellsWidth(table) {
-        setFixedCellsWidth(table)
         this.setStickyClass(table)
     },
 
@@ -142,16 +140,12 @@ export default {
         if (rows.length == 0) return
 
         let scrolledArea = table.parentNode.scrollLeft
-        // fixedFields = rows[0].querySelectorAll('.table__item_fixed:not(.table__item_hidden)')
 
         for (let row of rows) {
             fixedFields = row.querySelectorAll('.table__item_fixed:not(.table__item_hidden)')
 
             for (let cell of fixedFields) {
                 fieldPos = cell.getBoundingClientRect().left - table.parentNode.getBoundingClientRect().left
-                if ([null, undefined].includes(cell.style.getPropertyValue("--fixTarget")) || cell.style.getPropertyValue("--fixTarget") == '') {
-                    setFixedCellsWidth(table);
-                }
 
                 if (scrolledArea != 0 && fieldPos == cell.style.getPropertyValue("--fixTarget").replace('px', '')) {
                     cell.classList.add('table__item_sticky')
@@ -177,13 +171,9 @@ export default {
 }
 
 // Тротлинг для получения отступа фиксированной ячейки
-const onMouseMoveThrottle = _.throttle(async function (table, tableHeader, sectionBody, cell, width, info) {
+const onMouseMoveThrottle = throttle(async function (table, tableHeader, sectionBody, cell, width, info) {
     setCellWidth(cell, width)
     setVisibleTitle(cell)
-
-    if (cell.classList.contains('table__item_fixed')) {
-        setFixedCellsWidth(table)
-    }
 
     let data = table.querySelectorAll('tbody .table__row')
     let rowFields = []
@@ -191,10 +181,6 @@ const onMouseMoveThrottle = _.throttle(async function (table, tableHeader, secti
         rowFields = row.querySelectorAll('.table__item')
         setCellWidth([...rowFields][info.index], width)
     });
-
-    if (table.offsetWidth <= sectionBody.offsetWidth + 1) {
-        setCellsWidthDefference(tableHeader, sectionBody)
-    }
 
     if (!cell.classList.contains('changeWidth')) {
         cell.classList.add('changeWidth')
@@ -205,18 +191,33 @@ const onMouseMoveThrottle = _.throttle(async function (table, tableHeader, secti
 // Установка видимости заголовка у ячейки
 const setVisibleTitle = (cell) => {
     let span = cell.querySelector('span') ?? cell.querySelector('.form-item__title')
+    let parentItem = span.closest('.table-item__content')
 
-    if (cell.offsetWidth <= 55) {
-        span.style.display = 'none'
-    } else {
-        span.style.display = 'flex'
+    if (!cell.classList.contains('table__item_hidden')) {
+        if (cell.offsetWidth <= 55) {
+            span.style.display = 'none'
+            if (cell.querySelector('.form-item__checkbox')) {
+                parentItem.style.setProperty("justify-content", 'space-between')
+            } else {
+                parentItem.style.setProperty("justify-content", 'end')
+            }
+        } else {
+    
+            if (cell.closest('.table__item_required')) {
+                span.style.display = 'inline'
+            } else {
+                span.style.display = 'flex'
+            }
+    
+            parentItem.style.setProperty("justify-content", 'space-between')
+        }
     }
 }
 
 // Установка изначального положения ячеек если ширина таблицы меньше секции
 const setCellsWidthDefference = (tableHeader, sectionBody) => {
     let changingCell = tableHeader.querySelector('th.changeWidth')
-    let cells = tableHeader.querySelectorAll('th:not(.changeWidth)')
+    let cells = tableHeader.querySelectorAll('th:not(.changeWidth):not(.table__item_hidden)')
     let widthData = null
 
     // Получение ширин для клеток
@@ -227,6 +228,7 @@ const setCellsWidthDefference = (tableHeader, sectionBody) => {
             let width = getPartWidth(part.toFixed(2))
             widthData.push(width)
         }
+
 
         return widthData
 
@@ -256,6 +258,7 @@ const setCellsWidthDefference = (tableHeader, sectionBody) => {
     }
 
     widthData = getProportionalСells(cells, tableHeader, sectionBody)
+
     widthData = updateWidth(changingCell, widthData, sectionBody)
 
     for (let i = 0; i <= cells.length - 1; i++) {
@@ -272,24 +275,4 @@ const setCellWidth = (cell, width) => {
         width = Number(width.replace('px', ''))
     }
     cell.style.setProperty("--defaultWidth", `${width.toFixed(2)}px`)
-}
-
-// Устанвока ширины у фикисрованных столбцов
-const setFixedCellsWidth = (table) => {
-    let rows = table.querySelectorAll('.table__row')
-    let fixedFields = []
-    let summaryWidth = 0
-
-    for (let row of rows) {
-        summaryWidth = 0
-        fixedFields = row.querySelectorAll('.table__item_fixed:not(.table__item_hidden)')
-
-        for (let index = 0; index < fixedFields.length; index++) {
-            if (index > 0) {
-                summaryWidth += fixedFields[index - 1].offsetWidth
-            }
-
-            fixedFields[index].style.setProperty("--fixTarget", `${summaryWidth}px`)
-        }
-    }
 }

@@ -4,29 +4,57 @@
             "id": 0,
             "title": "Открыть",
             "class": "",
-            "action": "showModal",
-            "children": []
+            "action": "showModal"
         },
         {
             "id": 1,
             "title": "Редактировать",
             "class": "",
-            "action": "edit",
-            "children": []
+            "action": "edit"
         },
         {
             "id": 3,
             "title": "Скопировать",
-            "class": "",
-            "action": "copyRow",
-            "children": []
+            "class": "action_copy",
+            "action": "copyRow"
         },
         {
             "id": 2,
             "title": "Удалить",
             "class": "action_red",
-            "action": "initDelete",
-            "children": []
+            "action": "initDelete"
+        }
+    ],
+    "portal": [
+        {
+            "id": 0,
+            "title": "Открыть",
+            "class": "",
+            "action": "showModal"
+        },
+        {
+            "id": 1,
+            "title": "Редактировать",
+            "class": "",
+            "action": "edit"
+        },
+        {
+            "id": 3,
+            "title": "Скопировать",
+            "class": "action_copy",
+            "action": "copyRow"
+        },
+        {
+            "id": 3,
+            "title": "Авторизироваться как администратор",
+            "class": "action_auth",
+            "action": "authPortal"
+        },
+        {
+            "id": 2,
+            "title": "Удалить",
+            "class": "action_red",
+            "action": "initDelete"
         }
     ],
     "viewUsers": [
@@ -34,36 +62,31 @@
             "id": 0,
             "title": "Открыть",
             "class": "",
-            "action": "showModal",
-            "children": []
+            "action": "showModal"
         },
         {
             "id": 1,
             "title": "Редактировать",
             "class": "",
-            "action": "edit",
-            "children": []
+            "action": "edit"
         },
         {
             "id": 3,
             "title": "Скопировать",
-            "class": "",
-            "action": "copyRow",
-            "children": []
+            "class": "action_copy",
+            "action": "copyRow"
         },
         {
             "id": 3,
             "title": "Зайти под пользователем",
             "class": "",
-            "action": "authUser",
-            "children": []
+            "action": "authUser"
         },
         {
             "id": 2,
             "title": "Удалить",
             "class": "action_red",
-            "action": "initDelete",
-            "children": []
+            "action": "initDelete"
         }
     ],
     "module": [
@@ -71,29 +94,25 @@
             "id": 0,
             "title": "Открыть",
             "class": "",
-            "action": "showModal",
-            "children": []
+            "action": "showModal"
         },
         {
             "id": 1,
             "title": "Редактировать",
             "class": "",
-            "action": "edit",
-            "children": []
+            "action": "edit"
         },
         {
             "id": 3,
             "title": "Скопировать",
-            "class": "",
-            "action": "copyRow",
-            "children": []
+            "class": "action_copy",
+            "action": "copyRow"
         },
         {
             "id": 2,
             "title": "Отвязать",
             "class": "",
-            "action": "untieRow",
-            "children": []
+            "action": "untieRow"
         }
     ],
     "restore": [
@@ -101,16 +120,14 @@
             "id": 0,
             "title": "Открыть",
             "class": "",
-            "action": "showModal",
-            "children": []
+            "action": "showModal"
         },
 
         {
             "id": 1,
             "title": "Восстановить",
-            "class": "",
-            "action": "initRestore",
-            "children": []
+            "class": "action_copy",
+            "action": "initRestore"
         }
     ],
     "edit": [
@@ -118,22 +135,19 @@
             "id": 0,
             "title": "Сохранить",
             "class": "",
-            "action": "save",
-            "children": []
+            "action": "save"
         },
         {
             "id": 1,
             "title": "Отмена",
             "class": "",
-            "action": "cancel",
-            "children": []
+            "action": "cancel"
         },
         {
             "id": 2,
             "title": "Удалить",
             "class": "action_red",
-            "action": "initDelete",
-            "children": []
+            "action": "initDelete"
         }
     ],
     "routes": [
@@ -141,43 +155,31 @@
             "id": 0,
             "title": "Открыть",
             "class": "",
-            "action": "showModal",
-            "children": []
+            "action": "showModal"
         },
         {
             "id": 1,
             "title": "Сменить машину",
             "class": "",
-            "action": "changeCar",
-            "children": []
+            "action": "changeCar"
         },
         {
             "id": 2,
             "title": "Внешняя ссылка",
             "class": "",
-            "action": "copyRow",
-            "children": [
-                {
-                    "id": 20,
-                    "title": "Ссылка на маршрут",
-                    "class": "",
-                    "action": "copyRow"
-                }
-            ]
+            "action": "copyRow"
         },
         {
             "id": 4,
             "title": "Редактировать",
             "class": "",
-            "action": "edit",
-            "children": []
+            "action": "edit"
         },
         {
             "id": 5,
             "title": "Удалить",
             "class": "action_red",
-            "action": "initDelete",
-            "children": []
+            "action": "initDelete"
         }
     ],
     "tasksOfRoutes": [
@@ -185,43 +187,37 @@
             "id": 0,
             "title": "Синхронизировать заказ",
             "class": "",
-            "action": "syncOrder",
-            "children": []
+            "action": "syncOrder"
         },
         {
             "id": 1,
             "title": "Разделить заказ",
             "class": "",
-            "action": "shareOrder",
-            "children": []
+            "action": "shareOrder"
         },
         {
             "id": 2,
             "title": "Открыть",
             "class": "",
-            "action": "showModal",
-            "children": []
+            "action": "showModal"
         },
         {
             "id": 3,
             "title": "Скопировать",
-            "class": "",
-            "action": "copyRow",
-            "children": []
+            "class": "action_copy",
+            "action": "copyRow"
         },
         {
             "id": 4,
             "title": "Редактировать",
             "class": "",
-            "action": "edit",
-            "children": []
+            "action": "edit"
         },
         {
             "id": 5,
             "title": "Удалить",
             "class": "action_red",
-            "action": "initDelete",
-            "children": []
+            "action": "initDelete"
         }
     ]
 }

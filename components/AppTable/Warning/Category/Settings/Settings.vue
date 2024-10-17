@@ -6,25 +6,30 @@
 
         <template #body>
             <div class="warning__list">
-                <AppInput 
-                    class="warning-list__field"
-                    :item="{
-                        id: 2,
-                        required: false,
-                        substring: null,
-                        type: 'text',
-                        title: 'Название категории',
-                        placeholder: null,
-                        value: category.name,
-                        key: 'name',
-                        focus: false
-                    }"
-                    :isReadOnly="false"
-                    :mask="null"
-                    :disabled="false"
-                    :enabledAutocomplete="false"
-                    @changeValue="(data) => changeValue(data)"
-                />
+                <div class="warning-list__field">
+                    <AppInput 
+                        :item="{
+                            id: 2,
+                            required: false,
+                            substring: null,
+                            type: 'text',
+                            title: 'Название категории',
+                            placeholder: null,
+                            value: category.name,
+                            key: 'name',
+                            focus: false
+                        }"
+                        :inputLength="50"
+                        :isReadOnly="false"
+                        :mask="null"
+                        :disabled="false"
+                        :enabledAutocomplete="false"
+                        @changeValue="(data) => changeValue(data)"
+                    />
+                    <div class="warning-list__field-error" v-if="error.state">
+                        {{ error.text }}
+                    </div>
+                </div>
 
                 <AppSelect 
                     class="warning-list__field"
@@ -74,6 +79,11 @@
     
     const localCategories = ref([])
 
+    let error = ref({
+        state: false,
+        text: ''
+    })
+
     let category = ref({
         name: 'Новая категория',
         children: [],
@@ -115,6 +125,14 @@
     
     // Сохранение настроек
     const saveSettings = () => {
+        if (category.value.name == null || category.value.name.trim() == '') {
+            error.value = {
+                state: true,
+                text: 'Название роли не может быть пустым'
+            }
+            return
+        }
+
         if (isShow.value.type == 'createCategory' || isShow.value.type == 'createSubCategory') {
             emit('callAction', {
                 action: 'createCategory',

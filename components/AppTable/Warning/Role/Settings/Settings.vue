@@ -6,25 +6,30 @@
 
         <template #body>
             <div class="warning__list">
-                <AppInput 
-                    class="warning-list__field"
-                    :item="{
-                        id: 2,
-                        required: false,
-                        substring: null,
-                        type: 'text',
-                        title: 'Имя роли',
-                        placeholder: null,
-                        value: role.label,
-                        key: 'label',
-                        focus: false
-                    }"
-                    :isReadOnly="false"
-                    :mask="null"
-                    :disabled="false"
-                    :enabledAutocomplete="false"
-                    @changeValue="(data) => changeValue(data)"
-                />
+                <div class="warning-list__field">
+                    <AppInput 
+                        :item="{
+                            id: 2,
+                            required: false,
+                            substring: null,
+                            type: 'text',
+                            title: 'Имя роли',
+                            placeholder: null,
+                            value: role.label,
+                            key: 'label',
+                            focus: false
+                        }"
+                        :inputLength="50"
+                        :isReadOnly="false"
+                        :mask="null"
+                        :disabled="false"
+                        :enabledAutocomplete="false"
+                        @changeValue="(data) => changeValue(data)"
+                    />
+                    <div class="warning-list__field-error" v-if="error.state">
+                        {{ error.text }}
+                    </div>
+                </div>
             </div>
 
             <div class="warning__actions">
@@ -56,6 +61,11 @@
         label: null    
     })
 
+    let error = ref({
+        state: false,
+        text: ''
+    })
+
     const emit = defineEmits([
         'callAction'
     ])
@@ -72,6 +82,17 @@
 
     // Сохранение настроек
     const saveSettings = () => {
+        error.value.state = false 
+
+        if (role.value.label == null || role.value.label.trim() == '') {
+            error.value = {
+                state: true,
+                text: 'Название роли не может быть пустым'
+            }
+            return
+        }
+
+
         if (isShow.value.type == 'createRole') {
             emit('callAction', {
                 action: 'createRole',

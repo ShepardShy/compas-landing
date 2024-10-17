@@ -195,8 +195,6 @@
 <script setup>
     import './Validation.scss';
     
-    import { ref, inject, onMounted, watch } from 'vue'
-
     import AppButton from '@/components/AppButton/AppButton.vue';
     import AppWarning from '@/components/AppWarning/AppWarning.vue';
 

@@ -73,6 +73,7 @@
 	gap: 5px;
 	width: 100%;
 	padding: 10px 15px 10px calc(15px * var(--itemIndex));
+    word-break: break-all;
 
 	&.table-categories__title_admin {
 		&::after {

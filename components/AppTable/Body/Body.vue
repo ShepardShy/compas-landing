@@ -13,12 +13,15 @@
             <TableRow 
                 :row="row"
                 :rowId="index + 1"
+                :rowsIds="bodyData.map(p => p.id)"
                 :slug="props.slug"
                 :isTrash="props.isTrash"
                 :actionType="props.actionType"
                 :permissions="props.permissions"
+                :isCanOpenCount="props.isCanOpenCount"
                 :isPermanentEdit="props.isPermanentEdit"
                 @callAction="(data) => emit('callAction', data)"
+                @changeValue="data=> emit('changeValue', data)"
             />
         </template>
     </draggable>
@@ -64,6 +67,10 @@
         isDraggableRow: {
             default: false,
             type: Boolean
+        },
+        isCanOpenCount: {
+            default: 0,
+            type: Number
         }
     })
 
@@ -74,6 +81,7 @@
     }
 
     const emit = defineEmits([
-        'callAction'
+        'callAction',
+        'changeValue'
     ])
 </script>
