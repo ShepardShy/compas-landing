@@ -167,6 +167,10 @@
 	display: flex;
 	gap: 20px;
 
+	@media (max-width: 1120px) {
+		justify-content: center;
+	}
+
 	button {
 		height: 45px;
 		width: max-content;

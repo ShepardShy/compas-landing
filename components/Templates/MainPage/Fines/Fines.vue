@@ -5,7 +5,7 @@
 			<div class="main-page__container">
 				<AppH1 class="main-page__form-title"
 					>Компас Про - удобное управление транспортом
-					<p class="main-page__form-subtitle">Позволяет отслеживать все штрафы ГИБДД по личной или автопарку машин.</p>
+					<p class="main-page__form-subtitle">Позволяет отслеживать и оплачивать все штрафы ГИБДД по личной машине или автопарку машин.</p>
 				</AppH1>
 
 				<div class="main-page__form-actions main-page__actions">

@@ -1,10 +1,7 @@
 <template>
 	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
 
-	<template v-if="route.params?.type != 'list'">
-		<MainFines />
-	</template>
-	<FinesList v-else />
+	<MainFines />
 
 	<MainCompanies
 		:list="fines"
