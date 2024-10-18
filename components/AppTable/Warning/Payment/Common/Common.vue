@@ -64,16 +64,12 @@
     const isShow = inject('isShow')
     const activePayment = inject('activePayment')
     const activeOption = ref({
-        name: 'Compas Pay',
-        slug: 'compas_pay',
-        slugIDForm: null
+            name: 'СБП (+1%)',
+            slug: 'payment',
+            slugIDForm: '12299232',
+            percent: 1,
     })
     const options = [
-        {
-            name: 'Compas Pay',
-            slug: 'compas_pay',
-            percent: 0,
-        },
         {
             name: 'СБП (+1%)',
             slug: 'payment',
@@ -115,6 +111,7 @@
 
     onMounted(() => {
         activeOption.value = userStore.activePaymentOption
-        activePayment.value.percentValue = setValue.value 
+        // activePayment.value.percentValue = setValue.value 
+        setOption(options[0])
     })
 </script>

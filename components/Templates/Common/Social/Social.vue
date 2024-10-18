@@ -2,7 +2,7 @@
 	<AppSection class="social section_without-background">
 		<AppH2> Присоединяйтесь к Compas Pro в соцсетях </AppH2>
 
-		<div class="social__description">Публикуем обучающие материалы Compas, анонсы мероприятий, рассказываем об обновлениях платформы Compas</div>
+		<div class="social__description">Публикуем обучающие материалы Компас Про, анонсы мероприятий, рассказываем об обновлениях платформы Compas</div>
 
 		<div class="social__icons">
 			<a

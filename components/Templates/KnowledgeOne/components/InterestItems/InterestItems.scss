@@ -1,0 +1,15 @@
+.items {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 35px;
+	@media (max-width: 1024px) {
+		flex-direction: column;
+	}
+	&__title {
+		font-size: 26px;
+		margin-bottom: 25px;
+	}
+	&__wrapper {
+		grid-column: 1;
+	}
+}

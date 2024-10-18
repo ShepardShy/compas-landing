@@ -49,7 +49,12 @@
 
 		.table-item__content,
 		.form__item {
-			justify-content: center;
+			justify-content: center !important;
+		}
+		.table__row {
+			& .table__item:first-child .form__item {
+				justify-content: flex-start !important;
+			}
 		}
 		.table-item__title {
 			color: #1253a2;

@@ -1,5 +1,7 @@
 <template>
-    <span class="form-item__value" @click="() => openLink()" :class="setClasses" v-if="props.isHTML" v-html="props.value"></span>
+    <img src="/icons/success.svg" class="form-item__value form-item__value_checkmark" v-if="props.value == 'true'" />
+    <img src="/icons/unsuccess.svg" class="form-item__value form-item__value_unsuccess" v-else-if="props.value == 'false'" />
+    <span class="form-item__value" @click="() => openLink()" :class="setClasses" v-else-if="props.isHTML" v-html="props.value"></span>
     <span 
         v-else
         class="form-item__value" 
@@ -16,6 +18,7 @@
 
 <script setup>
     import './FormValue.scss';
+    import CheckMark from '~/components/AppIcons/CheckMark/CheckMark.vue';
 
     import { computed } from 'vue';
     

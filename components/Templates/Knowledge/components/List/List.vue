@@ -1,13 +1,13 @@
 <template>
 	<div class="articles__list">
-		<template v-for="{ name, views, slug, preview_picture, created_at } in articlesList">
-			<ArticleItem
+		<template v-for="{ name, views, slug, preview_picture, created_at, detail_text } in articlesList">
+			<KnowledgeItem
 				v-if="name"
 				:date="created_at"
 				:id="slug.value ? slug.value : slug"
-				:image="preview_picture[0]?.file"
 				:title="name"
 				:views
+				:text="detail_text[0].body"
 			/>
 		</template>
 	</div>
@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-	import ArticleItem from "~/components/Templates/Common/ArticleItem/ArticleItem.vue";
+	import KnowledgeItem from "~/components/Templates/Common/KnowledgeItem/KnowledgeItem.vue";
 	import AppPagination from "~/components/AppPagination/AppPagination.vue";
 	import { storeToRefs } from "pinia";
 	import { useArticlesStore } from "~/stores/articlesStore";
@@ -62,5 +62,5 @@
 </script>
 
 <style>
-	@import url("./ArticlesList.scss");
+	@import url("./List.scss");
 </style>

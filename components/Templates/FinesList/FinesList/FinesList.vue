@@ -165,12 +165,14 @@
 			</template>
 
 			<AppTable
+				class="fines-list__table"
 				:isTrash="false"
 				:actionType="'views'"
 				:slug="'equal'"
 				:isPermanentEdit="false"
 				:table="table"
 				:updateScrollButton="tableRole"
+				:isDraggableRow="false"
 				:activeCategory="null"
 				:categories="[]"
 				:pageTableOnly="false"
@@ -311,6 +313,6 @@
 	});
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	@import url(./FinesList.scss);
 </style>

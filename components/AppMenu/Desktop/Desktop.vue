@@ -46,7 +46,7 @@
 				<div class="menu__buttons">
 					<NuxtLink
 						class="button-text"
-						to="/auth"
+						to="/auth/accounts"
 					>
 						Войти
 					</NuxtLink>

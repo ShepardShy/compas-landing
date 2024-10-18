@@ -1,18 +1,23 @@
 <template>
 	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
-
 	<div class="articles">
 		<div class="articles__left">
-			<Search />
+			<Search
+				class="articles__search"
+				@changeValue="changeValueSearch"
+				placeholder="Поиск по базе знаний"
+				:options="searchOptions"
+			/>
 			<AppNav
-				title="Статьи"
-				:categories="categories"
-				path="articles"
+				v-if="articlesCategories"
+				title="База знаний"
+				:categories="articlesCategories"
+				path="knowledge-category"
 			/>
 		</div>
 		<div class="articles__right">
 			<Title :title="currentTitle" />
-			<articlesList />
+			<List :articlesList />
 		</div>
 	</div>
 </template>
@@ -20,13 +25,83 @@
 <script setup>
 	import Search from "./components/Search/Search.vue";
 	import Title from "./components/Title/Title.vue";
-	import articlesList from "./components/KnowledgeList/KnowledgeList.vue";
+	import List from "./components/List/List.vue";
 	import { storeToRefs } from "pinia";
-	import { useArticlesStore } from "~/stores/articlesStore";
+	import { useKnowledgeStore } from "~/stores/knowledgeStore";
 	import AppNav from "~/components/AppNav/AppNav.vue";
 
-	const articlesStore = useArticlesStore();
-	const { categories, currentTitle } = storeToRefs(articlesStore);
+	const route = useRoute();
+
+	const articlesStore = useKnowledgeStore();
+
+	const { categories, page, countPages, currentCategory, perPage, articlesCategories, currentTitle, articlesList, articles, currentCategoryId, options } = storeToRefs(articlesStore);
+
+	page.value = 1;
+	perPage.value = 12;
+	await articlesStore.loadArticles();
+
+	watchEffect(async () => {
+		route.params.category;
+		await articlesStore.loadArticles();
+	});
+
+	watch(
+		() => [page.value, perPage.value],
+		() => {
+			articlesStore.loadArticles();
+		}
+	);
+
+	watch(
+		() => currentCategoryId.value,
+		async () => {
+			await articlesStore.loadArticles();
+		}
+	);
+
+	const searchOptions = ref([]);
+	const changeValueSearch = async search => {
+		if (search.value) {
+			await navigateTo(`/articles/${search.value}`);
+			return;
+		}
+
+		searchOptions.value = await articlesStore.searchOptions(search);
+		searchOptions.value = searchOptions.value.map(i => {
+			return { ...i, value: i.label.slug };
+		});
+	};
+
+	const category = computed(() => articlesCategories.value.find(category => category.slug == route.params.category));
+
+	watch(
+		() => category.value,
+		() => {
+			if (category.value) {
+				useHead({
+					title: category.value?.seo_title + " | База знаний | Compas.pro",
+					meta: [
+						{
+							name: "description",
+							content: category.value?.seo_description,
+						},
+					],
+				});
+				return;
+			}
+			// Мета теги
+			useHead({
+				title: "Полезные статьи об эффективном управлении автопарком | Compas.pro",
+				meta: [
+					{
+						name: "description",
+						content: "Читайте наш блог на Compas.pro — здесь собраны полезные статьи и советы для эффективного управления автопарком. Как контролировать водителей и автомобили и экономить на управлении.",
+					},
+				],
+			});
+		},
+		{ immediate: true, deep: true }
+	);
 
 	let breadcrumbs = [
 		{
@@ -35,8 +110,14 @@
 		},
 		{
 			title: "База знаний",
-			link: "/knowledge-base",
+			link: "/knowledge",
 		},
+		category.value
+			? {
+					title: category.value?.title,
+					link: `/knowledge-category/${category.value?.slug}`,
+			  }
+			: null,
 	];
 </script>
 

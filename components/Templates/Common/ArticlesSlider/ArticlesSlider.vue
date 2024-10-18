@@ -36,8 +36,6 @@
 	import { useArticlesStore } from "~/stores/articlesStore";
 	import { storeToRefs } from "pinia";
 
-	import articles from "@/components/Templates/Articles/articles.js";
-
 	const articlesStore = useArticlesStore();
 	const { categories, currentTitle, articlesList } = storeToRefs(articlesStore);
 
@@ -46,10 +44,8 @@
 	const route = useRoute();
 
 	let countSlides = ref(3);
-	let slides = ref(articles);
 
 	onMounted(() => {
-		slides.value = articles;
 		window.addEventListener("resize", checkingWindowWidth);
 		checkingWindowWidth();
 	});

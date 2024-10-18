@@ -42,7 +42,7 @@
 			<Nav v-if="detail_text" />
 		</div>
 	</div>
-	<Articles />
+	<!-- <Articles /> -->
 	<Social class="article__social" />
 </template>
 
@@ -52,7 +52,7 @@
 	import Header from "./components/Header/Header.vue";
 	// import article from "./article";
 	import Nav from "./components/Nav/Nav.vue";
-	import { useArticlesStore } from "~/stores/articlesStore";
+	import { useKnowledgeStore } from "~/stores/knowledgeStore";
 	import { storeToRefs } from "pinia";
 
 	// Компоненты конструктора
@@ -63,7 +63,7 @@
 
 	const route = useRoute();
 
-	const articlesStore = useArticlesStore();
+	const articlesStore = useKnowledgeStore();
 	const { articlesList, articleDetail } = storeToRefs(articlesStore);
 
 	const $articleWrapper = ref(null);
@@ -115,16 +115,16 @@
 			link: "/",
 		},
 		{
-			title: "Статьи",
-			link: "/articles",
+			title: "База знаний",
+			link: "/knowledge",
 		},
 		{
 			title: name?.value,
-			link: "/articles/za-chto-vypisan-shtraf",
+			link: "/knowledge/za-chto-vypisan-shtraf",
 		},
 	];
 	useHead({
-		title: `${seo_title.value.value ? seo_title.value.value : seo_title.value} | Статьи | Compas.pro`,
+		title: `${seo_title.value.value ? seo_title.value.value : seo_title.value} | База знаний | Compas.pro`,
 		meta: [
 			{
 				name: "description",
@@ -135,5 +135,5 @@
 </script>
 
 <style>
-	@import url(./ArticleOne.scss);
+	@import url(./KnowledgeOne.scss);
 </style>

@@ -78,7 +78,7 @@
                                 @start="(event) => draggableRef.targetDomElement.classList.add('popup-option__draggable_dragging')" 
                             >
                                 <template #item="{ element: option }">
-                                    <PopupOption class="popup-option__sublink" v-show="option.enabled" @dragstart="(event) => commonScripts.cloningDraggableComponent(event, ['popup-option__draggable'])">
+                                    <PopupOption class="popup-option__sublink" v-show="option.enabled" @dragstart="(event) => commonScripts?.cloningDraggableComponent(event, ['popup-option__draggable'])">
                                         <IconDrag /> 
                                         {{ option.title }}
                                     </PopupOption>

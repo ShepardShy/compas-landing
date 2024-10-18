@@ -36,6 +36,17 @@
 			}
 		}
 	}
+	&__table {
+		& .popup_save {
+			display: none;
+		}
+		& .table-item__border {
+			pointer-events: none;
+		}
+		& .table-item__drag-area {
+			pointer-events: none;
+		}
+	}
 }
 
 .table-template__body_empty {

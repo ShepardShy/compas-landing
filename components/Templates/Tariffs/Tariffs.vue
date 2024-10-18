@@ -255,6 +255,13 @@
 				prof: "100 гб.",
 			},
 			{
+				module: "Мягкое удаление",
+				free: false,
+				base: true,
+				business: true,
+				prof: true,
+			},
+			{
 				module: '<div class="table__cell-group"> Штрафы ГИБДД <span class="table-cell__desc">Комиссия за оплату</span> </div>',
 				free: "3%",
 				base: "2.7%",
