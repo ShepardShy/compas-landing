@@ -8,7 +8,7 @@
     white-space: nowrap;
     text-decoration: underline;
     @include mixins.userSelect(none);
-    color: variables.$color-blue;
+    color: variables.$color-blue-two;
     @include mixins.textOptions(15px, 400, normal);
 
     &:hover {
@@ -20,5 +20,14 @@
         cursor: text;
         text-decoration: none;
         pointer-events: none;
+    }
+}
+
+.form-item__payment {
+    &.form-item__payment_disabled {
+        .button-payment {
+            filter: opacity(0.6);
+            cursor: not-allowed;
+        }
     }
 }
