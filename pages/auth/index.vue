@@ -14,5 +14,11 @@
 				content: "Описание.",
 			},
 		],
+		link: [
+			{
+				rel: "canonical",
+				href: `https://compas.pro/auth`,
+			},
+		],
 	});
 </script>

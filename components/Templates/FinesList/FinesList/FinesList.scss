@@ -46,6 +46,9 @@
 		& .table-item__drag-area {
 			pointer-events: none;
 		}
+		& .table-top__item_settings {
+			display: none;
+		}
 	}
 }
 

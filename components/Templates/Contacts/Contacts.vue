@@ -5,15 +5,9 @@
 	<CompositeBlock class="contacts__map contacts-map">
 		<template #content>
 			<div class="contacts-map__list">
-				<div
-					class="contacts-map__item"
-					v-for="contact in contacts"
-				>
+				<div class="contacts-map__item" v-for="contact in contacts">
 					<div class="contacts-map__title">{{ contact.title }}:</div>
-					<a
-						:href="contact.link"
-						class="contacts-map__desc"
-					>
+					<a :href="contact.link" class="contacts-map__desc">
 						{{ contact.text }}
 					</a>
 				</div>
@@ -33,27 +27,16 @@
 		<AppH2>
 			Реквизиты Compas Pro (Компас Про)
 
-			<a
-				:href="requisitesPdf"
-				download
-				target="_blank"
-				class="contacts-requisites__link"
-			>
+			<a :href="requisitesPdf" download target="_blank" class="contacts-requisites__link">
 				<figure class="ibg contacts-requisites__document">
-					<img
-						src="/icons/document.svg"
-						alt="Скачать реквизиты"
-					/>
+					<img src="/icons/document.svg" alt="Скачать реквизиты" />
 					<figcaption class="contacts-requisites__document-text">Скачать</figcaption>
 				</figure>
 			</a>
 		</AppH2>
 
 		<ul class="contacts-requisites__list">
-			<li
-				class="contacts-requisites__item"
-				v-for="requisite in requisites"
-			>
+			<li class="contacts-requisites__item" v-for="requisite in requisites">
 				<div class="contacts-requisites__title">
 					{{ requisite.title }}
 				</div>
@@ -87,8 +70,8 @@
 		},
 		{
 			title: "Email",
-			text: "manager@compas.pro",
-			link: "mailto:manager@compas.pro",
+			text: "info@compas.pro",
+			link: "mailto:info@compas.pro",
 		},
 		{
 			title: "Email бухгалтерии",

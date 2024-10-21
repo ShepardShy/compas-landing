@@ -1,24 +1,10 @@
 <template>
 	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
 
-	<div
-		class="questions"
-		:class="{ question_open: questionId }"
-	>
+	<div class="questions" :class="{ question_open: questionId }">
 		<div class="questions__left">
-			<Search
-				class="questions__search"
-				@changeValue="changeValueSearch"
-				placeholder="Поиск по вопросам"
-				:options="searchOptions"
-			/>
-			<AppNav
-				v-if="questionsCategories"
-				class="questions__nav"
-				title="Вопрос-ответ"
-				:categories="questionsCategories"
-				path="questions-category"
-			/>
+			<Search class="questions__search" @changeValue="changeValueSearch" placeholder="Поиск по вопросам" :options="searchOptions" />
+			<AppNav v-if="questionsCategories" class="questions__nav" title="Вопрос-ответ" :categories="questionsCategories" path="questions-category" />
 			<AskQuestion />
 		</div>
 		<div class="questions__right">
@@ -56,10 +42,10 @@
 	const questionsStore = useQuestionsStore();
 	const { questionsCategories, questionsList, questionDetail, page, perPage, currentCategory } = storeToRefs(questionsStore);
 
-	watchEffect(async () => {
-		route.params.category;
-		await questionsStore.loadQuestions();
-	});
+	// watchEffect(async () => {
+	// 	route.params.category;
+	// 	await questionsStore.loadQuestions();
+	// });
 	watch(
 		() => [page.value, perPage.value],
 		() => {
@@ -103,14 +89,14 @@
 	// });
 
 	const searchOptions = ref([]);
-	const changeValueSearch = async search => {
+	const changeValueSearch = async (search) => {
 		if (search.value) {
 			await navigateTo(`/questions/${search.value}`);
 			return;
 		}
 
 		searchOptions.value = await questionsStore.searchOptions(search);
-		searchOptions.value = searchOptions.value.map(i => {
+		searchOptions.value = searchOptions.value.map((i) => {
 			return { ...i, value: i.label.slug };
 		});
 	};
@@ -128,7 +114,7 @@
 			});
 			return;
 		}
-		const category = questionsCategories.value?.find(category => category.slug == route.params.category);
+		const category = questionsCategories.value?.find((category) => category.slug == route.params.category);
 		if (category) {
 			useHead({
 				title: category?.seo_title + " | Вопрос-ответ | Compas.pro",
@@ -146,15 +132,15 @@
 			meta: [
 				{
 					name: "description",
-					content: "Найдите ответы на самые частые вопросы о штрафах, правилах дорожного движения и правах водителей на странице 'Вопросы и ответы' Compas.pro. Мы поможем разобраться в сложных ситуациях и избежать ошибок.",
+					content:
+						"Найдите ответы на самые частые вопросы о штрафах, правилах дорожного движения и правах водителей на странице 'Вопросы и ответы' Compas.pro. Мы поможем разобраться в сложных ситуациях и избежать ошибок.",
 				},
 			],
 		});
 	});
 
 	let breadcrumbs = computed(() => {
-		const category = questionsCategories.value?.find(category => category.slug == route.params.category);
-		console.log(category, "category");
+		const category = questionsCategories.value?.find((category) => category.slug == route.params.category);
 		return [
 			{
 				title: "Главная страница",

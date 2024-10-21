@@ -17,5 +17,11 @@
 				content: `${meta[route.params.tab].description}`,
 			},
 		],
+		link: [
+			{
+				rel: "canonical",
+				href: `https://compas.pro/products/distance/${route.params.tab}`,
+			},
+		],
 	});
 </script>

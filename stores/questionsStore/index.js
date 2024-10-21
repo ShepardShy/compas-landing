@@ -20,14 +20,14 @@ export const useQuestionsStore = defineStore("questionsStore", {
 			if (activeChild) {
 				return activeChild.mainTitle;
 			}
-			const category = this.categories.find(category => (route.fullPath.includes(category.value) ? category : null));
+			const category = this.categories.find((category) => (route.fullPath.includes(category.value) ? category : null));
 			return category ? category.mainTitle : this.categories[0].mainTitle;
 		},
 
-		activeChild: state => {
+		activeChild: (state) => {
 			if (!state.categories) return null;
 			for (const category of state.categories) {
-				const child = category.children?.find(child => route.fullPath.includes(child.value));
+				const child = category.children?.find((child) => route.fullPath.includes(child.value));
 				if (child) {
 					return child;
 				}
@@ -40,12 +40,12 @@ export const useQuestionsStore = defineStore("questionsStore", {
 		},
 
 		questionsCategories() {
-			return this.categories?.map(category => ({
+			return this.categories?.map((category) => ({
 				...category,
 				value: category.slug,
 				title: category.name,
 				isOpen: false,
-				children: category.children?.map(child => ({
+				children: category.children?.map((child) => ({
 					value: child.slug,
 					title: child.name,
 				})),
@@ -53,11 +53,11 @@ export const useQuestionsStore = defineStore("questionsStore", {
 		},
 
 		currentCategory() {
-			return slug => this.categories?.find(category => category.value === slug);
+			return (slug) => this.categories?.find((category) => category.value === slug);
 		},
 
 		currentCategoryId() {
-			return this.categories?.find(category => category.slug == route.params.id)?.id;
+			return this.categories?.find((category) => category.slug == route.params.id)?.id;
 		},
 
 		countPages() {
@@ -69,7 +69,7 @@ export const useQuestionsStore = defineStore("questionsStore", {
 			if (this.canUpdate) {
 				const { categories } = await api.callMethod("GET", `faq`, {});
 				this.categories = categories;
-				const categoryId = this.categories?.find(category => category.slug == route.params.category)?.id;
+				const categoryId = this.categories?.find((category) => category.slug == route.params.category)?.id;
 				this.questions = await api.callMethod("GET", `faq?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
 
 				if (this.page > this.countPages) {
@@ -96,7 +96,7 @@ export const useQuestionsStore = defineStore("questionsStore", {
 				return;
 			}
 			this.page++;
-			const categoryId = this.categories?.find(category => category.slug == route.params.id)?.id;
+			const categoryId = this.categories?.find((category) => category.slug == route.params.id)?.id;
 			const newQuestions = await api.callMethod("GET", `faq?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`);
 			if (newQuestions?.list?.data?.length > 0) {
 				this.questions.list.data = [...this.questions.list.data, ...newQuestions.list.data];
