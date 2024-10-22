@@ -7,12 +7,13 @@
 			<template #slide>
 				<template
 					:key="id"
-					v-for="{ created_at, preview_picture, name, slug, views } in articlesList"
+					v-for="{ created_at, preview_picture, name, slug, views } in articles"
 				>
 					<SwiperSlide
-						v-if="!route.fullPath?.includes(id) && name"
+						v-if="name"
 						:virtual-index="id"
 					>
+						{{ id }}
 						<ArticleItem
 							:id="slug.value ? slug.value : slug"
 							:image="preview_picture?.[0]?.file"
@@ -39,9 +40,10 @@
 	const articlesStore = useArticlesStore();
 	const { categories, currentTitle, articlesList } = storeToRefs(articlesStore);
 
-	articlesList.value.length == 0 ? await articlesStore.loadArticles() : 0;
-
 	const route = useRoute();
+
+	articlesList.value.length == 0 ? await articlesStore.loadArticles() : 0;
+	const articles = ref(articlesList.value.filter((i) => i.slug != route.params.id));
 
 	let countSlides = ref(3);
 

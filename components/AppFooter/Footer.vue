@@ -7,9 +7,9 @@
 				</NuxtLink>
 				<div class="footer__desc">Компас Про - удобное управление транспортом</div>
 
-				<div class="footer__link footer-link">
+				<!-- <div class="footer__link footer-link">
 					<a href="tel:74951184422" class="footer-link__href footer-link__href_bold"> +7(495)118-44-22 </a>
-				</div>
+				</div> -->
 				<div class="footer__link footer-link">
 					<a href="mailto:info@compas.pro" class="footer-link__href footer-link__href_bold"> info@compas.pro </a>
 				</div>

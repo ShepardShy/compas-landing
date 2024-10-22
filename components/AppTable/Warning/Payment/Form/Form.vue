@@ -7,6 +7,7 @@
         <div class="warning__actions">
             <form  target="_blank" class="button" method="get" action="https://www.payanyway.ru/assistant.htm?version=v3">
                 <input type="hidden" name="MNT_ID" value="70116321">
+                <input type="hidden" name="MNT_SUCCESS_URL" value="https://compas.pro/payment">
                 <input type="hidden" name="MNT_CURRENCY_CODE" value="RUB">
                 <input type="hidden" name="MNT_AMOUNT" :value="activePayment.percentValue">
                 <input type="hidden" name="MNT_TRANSACTION_ID" :value="activePayment.transaction_id">

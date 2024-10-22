@@ -13,13 +13,12 @@
 	watch(
 		() => route.params.category,
 		async () => {
-			console.log(1231232);
-			questionsStore.loadQuestions();
+			await questionsStore.loadQuestions();
 		},
 		{ deep: true, immediate: true }
 	);
-	onUnmounted(() => {
-		questionsStore.loadQuestions();
+	onUnmounted(async () => {
+		await questionsStore.loadQuestions();
 	});
 
 	useHead({

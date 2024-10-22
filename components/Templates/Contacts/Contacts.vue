@@ -63,11 +63,11 @@
 	import requisitesPdf from "/pages/contacts/requisites.pdf";
 
 	let contacts = [
-		{
-			title: "Телефон",
-			text: "+7 495 118-00-12",
-			link: "tel:74951184422",
-		},
+		// {
+		// 	title: "Телефон",
+		// 	text: "+7 495 118-00-12",
+		// 	link: "tel:74951184422",
+		// },
 		{
 			title: "Email",
 			text: "info@compas.pro",

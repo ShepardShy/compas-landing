@@ -13,12 +13,12 @@
 	watch(
 		() => route.params.category,
 		async () => {
-			articlesStore.loadArticles();
+			await articlesStore.loadArticles();
 		},
 		{ deep: true, immediate: true }
 	);
-	onUnmounted(() => {
-		articlesStore.loadArticles();
+	onUnmounted(async () => {
+		await articlesStore.loadArticles();
 	});
 
 	// Мета теги

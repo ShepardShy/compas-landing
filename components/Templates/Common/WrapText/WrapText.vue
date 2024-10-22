@@ -23,15 +23,13 @@
 	const $text = ref(null);
 
 	onMounted(() => {
-		console.log($text.value);
-
 		// Вставляем HTML контент
 		if ($text.value) {
 			$text.value.innerHTML = text.value;
 
 			// Ищем все элементы <table>
 			const tables = $text.value.querySelectorAll("table");
-			tables.forEach(table => {
+			tables.forEach((table) => {
 				// Создаем div с классом "table__wrapper"
 				const wrapper = document.createElement("div");
 				wrapper.classList.add("table__wrapper");

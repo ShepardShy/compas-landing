@@ -1,6 +1,6 @@
 <template>
 	<AppSection class="fines section_without-background">
-		<AppH2 class="fines__title fines__title_show"> Проверка штрафов ГИБДД {{ titleMap[route.params.type] }} в 1 клик </AppH2>
+		<AppH2 class="fines__title fines__title_show"> Проверка штрафов ГИБДД {{ titleMap[type] }} в 1 клик </AppH2>
 		<form
 			class="fines__form"
 			@click.prevent
@@ -8,7 +8,11 @@
 			<AppInput
 				v-for="item in form"
 				:class="item.class"
-				v-show="(form.find(i => ['sts', 'vu', 'uin', 'gos'].includes(i.key)) && form[0].value != '') || ['number', 'certificate', 'sts', 'vu', 'uin', 'gos', 'inn', 'kpp'].includes(item.key) || (form[0].value != '' && form[1].value != '')"
+				v-show="
+					(form.find((i) => ['sts', 'vu', 'uin', 'gos'].includes(i.key)) && form[0].value != '') ||
+					['number', 'certificate', 'sts', 'vu', 'uin', 'gos', 'inn', 'kpp'].includes(item.key) ||
+					(form[0].value != '' && form[1].value != '')
+				"
 				:item="{
 					focus: false,
 					id: 0,
@@ -26,7 +30,7 @@
 				:isLink="null"
 				:isReadOnly="false"
 				:enabledAutocomplete="false"
-				@changeValue="data => changeValue(data)"
+				@changeValue="(data) => changeValue(data)"
 			/>
 			<div class="fines__actions">
 				<AppButton
@@ -60,12 +64,12 @@
 
 		<figure class="ibg fines__image">
 			<img
-				src="/articles/registration.png"
+				:src="previewImage?.[type]"
 				alt="Проверьте штрафы и зарегистрируйтесь в 1 клик"
 			/>
 		</figure>
 
-		<FinesWarning @callAction="data => saveChanges()" />
+		<FinesWarning @callAction="(data) => saveChanges()" />
 	</AppSection>
 </template>
 
@@ -82,23 +86,43 @@
 	import { useCommonStore } from "@/stores/commonStore.js";
 	import { useFinesStore } from "~/stores/finesStore.js";
 
+	// Картинки проверки штрафов
+	import vuImage from "/main/fines/preview-vu.png";
+	import stsImage from "/main/fines/preview-sts.png";
+	import gosImage from "/main/fines/preview-gos.png";
+	import postanovlenieImage from "/main/fines/preview-postanovlenie.png";
+	import innImage from "/main/fines/preview-inn.png";
+
 	const finesStore = useFinesStore();
 
-	const commonStore = useCommonStore();
+	const props = defineProps({
+		type: {
+			type: String,
+		},
+	});
+	const { type } = toRefs(props);
 
-	const route = useRoute();
+	const previewImage = {
+		"check-sts": stsImage,
+		"check-vu": vuImage,
+		"check-num_post": postanovlenieImage,
+		"check-gos": gosImage,
+		registration: gosImage,
+		"check-inn": innImage,
+	};
 
 	const titleMap = {
-		"po-sts": "по СТС",
-		"po-voditelskomu-udostovereniyu": "по водительскому удостоверению",
-		"po-nomeru-postanovleniya": "по номеру постановления",
-		"po-nomeru-avto": "по гос. номеру",
-		"po-inn": "по ИНН",
+		"check-sts": "по СТС",
+		"check-vu": "по водительскому удостоверению",
+		"check-num_post": "по номеру постановления",
+		"check-gos": "по гос. номеру",
+		registration: "по гос. номеру",
+		"check-inn": "по ИНН",
 	};
 
 	let fields = computed(() => {
-		switch (route.params.type) {
-			case "po-sts": {
+		switch (type.value) {
+			case "check-sts": {
 				return [
 					{
 						title: "Номер СТС",
@@ -108,12 +132,12 @@
 						mask: "## XX ######",
 						value: "",
 						required: true,
-						placeholder: "00 AA 000000",
+						placeholder: "00 XX 000000",
 						class: "input_line",
 					},
 				];
 			}
-			case "po-voditelskomu-udostovereniyu": {
+			case "check-vu": {
 				return [
 					{
 						title: "Номер ВУ",
@@ -128,7 +152,7 @@
 					},
 				];
 			}
-			case "po-nomeru-postanovleniya": {
+			case "check-num_post": {
 				return [
 					{
 						title: "Номер постановления",
@@ -138,12 +162,13 @@
 						mask: "#########################",
 						value: "",
 						required: true,
-						placeholder: "0000000000000000000000",
+						placeholder: "00000000000000000000",
 						class: "input_line",
 					},
 				];
 			}
-			case "po-nomeru-avto": {
+			case "registration":
+			case "check-gos": {
 				return [
 					{
 						title: "Гос. номер автомобиля",
@@ -169,17 +194,17 @@
 					},
 				];
 			}
-			case "po-inn": {
+			case "check-inn": {
 				return [
 					{
 						title: "ИНН компании",
 						key: "inn",
 						name: "inn",
 						type: "text",
-						mask: "############",
+						mask: "##########",
 						value: "",
 						required: true,
-						placeholder: "000000000000",
+						placeholder: "0000000000",
 						class: "input_line",
 					},
 					{
@@ -190,7 +215,7 @@
 						mask: "#########",
 						value: "",
 						required: true,
-						placeholder: "000000000000",
+						placeholder: "000000000",
 						class: "input_line",
 					},
 				];
@@ -226,42 +251,7 @@
 
 	let form = ref([]);
 	watchEffect(() => {
-		form.value = [
-			...fields.value,
-			// {
-			// 	title: "Электронная почта для входа",
-			// 	key: "email",
-			// 	name: "email",
-			// 	type: "email",
-			// 	mask: null,
-			// 	value: "",
-			// 	required: true,
-			// 	placeholder: "mail@compas.pro",
-			// 	class: "input_line",
-			// },
-			// {
-			// 	title: "Пароль для входа",
-			// 	key: "password",
-			// 	name: "password",
-			// 	type: "password",
-			// 	mask: null,
-			// 	value: "",
-			// 	required: true,
-			// 	placeholder: null,
-			// 	class: "input_line",
-			// },
-			// {
-			// 	title: "Повторить пароль для входа",
-			// 	key: "repeatPassword",
-			// 	name: "password_confirmation",
-			// 	type: "password",
-			// 	mask: null,
-			// 	value: "",
-			// 	required: true,
-			// 	placeholder: null,
-			// 	class: "input_line",
-			// },
-		];
+		form.value = [...fields.value];
 	});
 
 	const formData = computed(() => {
@@ -277,8 +267,8 @@
 	let isShow = ref(false);
 	const isLoading = ref(false);
 
-	const changeValue = data => {
-		let findIndex = form.value.findIndex(p => p.key == data.key);
+	const changeValue = (data) => {
+		let findIndex = form.value.findIndex((p) => p.key == data.key);
 		form.value[findIndex].value = data.value;
 	};
 
@@ -303,7 +293,7 @@
 				if (Array.isArray(res)) {
 					finesStore.fields = formData.value;
 					finesStore.fines = res;
-					new Promise(res => {
+					new Promise((res) => {
 						return navigateTo("/products/fines/list");
 					}).then(() => {
 						isLoading.value = false;
@@ -318,7 +308,7 @@
 		// Проверка полей на валидацию
 		const checkingFields = async () => {
 			// Валидация полей
-			const validateField = field => {
+			const validateField = (field) => {
 				let error = ValidateField(field, field.value);
 
 				if (error.state) {
@@ -336,8 +326,8 @@
 						error: error,
 					});
 				} else {
-					let repeatPassword = form.value.find(p => p.key == "repeatPassword");
-					let password = form.value.find(p => p.key == "password");
+					let repeatPassword = form.value.find((p) => p.key == "repeatPassword");
+					let password = form.value.find((p) => p.key == "password");
 					if ((field.type == "password" || field.type == "repeatPassword") && password.value != repeatPassword.value) {
 						invalidFields.value.push({
 							field: field,

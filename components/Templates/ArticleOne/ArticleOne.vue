@@ -32,6 +32,7 @@
 					:views
 					:id
 					:date
+					:type
 					:isShowMore="true"
 					v-for="{ type, body, image, title, items, answer, views, id, date } in detail_text.value"
 				/>
@@ -80,10 +81,14 @@
 	const conmponentsMap = {
 		wrap,
 		registration,
+		"check-sts": registration,
+		"check-vu": registration,
+		"check-num_post": registration,
+		"check-gos": registration,
+		"check-inn": registration,
 		interestItems,
 		question,
 	};
-	console.log(articleDetail.value, 123);
 
 	let { created_at, user_id, updated_at, detail_picture, name, views, detail_text, seo_description, seo_title, reading_time } = articleDetail.value;
 

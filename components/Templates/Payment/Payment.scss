@@ -1,0 +1,35 @@
+.payment {
+	display: inline-flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	margin: 0 auto;
+	text-align: center;
+	margin-top: 50px;
+	height: 40vh;
+	&__img {
+		max-width: 120px;
+		width: 100%;
+		margin-bottom: 25px;
+	}
+	&__text {
+		font-weight: 600;
+		margin-bottom: 10px;
+		text-align: center;
+		font-family: PT Sans;
+		font-size: 26px;
+	}
+	&__link {
+		color: #1253a2;
+		font-size: 16px;
+		text-decoration: underline;
+		font-family: PT Sans;
+	}
+}
+
+.container:has(.payment) {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+}

@@ -2,18 +2,8 @@
 	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
 	<div class="articles">
 		<div class="articles__left">
-			<Search
-				class="articles__search"
-				@changeValue="changeValueSearch"
-				placeholder="Поиск по базе знаний"
-				:options="searchOptions"
-			/>
-			<AppNav
-				v-if="articlesCategories"
-				title="База знаний"
-				:categories="articlesCategories"
-				path="knowledge-category"
-			/>
+			<Search class="articles__search" @changeValue="changeValueSearch" placeholder="Поиск по базе знаний" :options="searchOptions" />
+			<AppNav v-if="articlesCategories" title="База знаний" :categories="articlesCategories" path="knowledge-category" />
 		</div>
 		<div class="articles__right">
 			<Title :title="currentTitle" />
@@ -47,8 +37,8 @@
 
 	watch(
 		() => [page.value, perPage.value],
-		() => {
-			articlesStore.loadArticles();
+		async () => {
+			await articlesStore.loadArticles();
 		}
 	);
 
@@ -60,19 +50,19 @@
 	);
 
 	const searchOptions = ref([]);
-	const changeValueSearch = async search => {
+	const changeValueSearch = async (search) => {
 		if (search.value) {
 			await navigateTo(`/articles/${search.value}`);
 			return;
 		}
 
 		searchOptions.value = await articlesStore.searchOptions(search);
-		searchOptions.value = searchOptions.value.map(i => {
+		searchOptions.value = searchOptions.value.map((i) => {
 			return { ...i, value: i.label.slug };
 		});
 	};
 
-	const category = computed(() => articlesCategories.value.find(category => category.slug == route.params.category));
+	const category = computed(() => articlesCategories.value.find((category) => category.slug == route.params.category));
 
 	watch(
 		() => category.value,
@@ -95,7 +85,8 @@
 				meta: [
 					{
 						name: "description",
-						content: "Читайте наш блог на Compas.pro — здесь собраны полезные статьи и советы для эффективного управления автопарком. Как контролировать водителей и автомобили и экономить на управлении.",
+						content:
+							"Читайте наш блог на Compas.pro — здесь собраны полезные статьи и советы для эффективного управления автопарком. Как контролировать водителей и автомобили и экономить на управлении.",
 					},
 				],
 			});

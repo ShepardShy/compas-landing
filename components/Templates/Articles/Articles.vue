@@ -1,5 +1,4 @@
 <template>
-	{{ route.params.category }}
 	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
 	<div class="articles">
 		<div class="articles__left">
@@ -38,8 +37,8 @@
 
 	watch(
 		() => [page.value, perPage.value],
-		() => {
-			articlesStore.loadArticles();
+		async () => {
+			await articlesStore.loadArticles();
 		}
 	);
 

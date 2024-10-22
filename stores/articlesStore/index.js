@@ -37,9 +37,9 @@ export const useArticlesStore = defineStore("articlesStore", {
 		},
 
 		articlesList() {
-			if (route.params?.id) {
-				return this.articles?.list?.data.filter((i) => i.slug != route.params.id && i?.slug?.value != route.params.id) || [];
-			}
+			// if (route.params?.id) {
+			// 	return this.articles?.list?.data.filter((i) => i.slug != route.params.id && i?.slug?.value != route.params.id) || [];
+			// }
 			return this.articles?.list?.data || [];
 		},
 
@@ -67,18 +67,24 @@ export const useArticlesStore = defineStore("articlesStore", {
 		},
 
 		countPages() {
-			return this.articles?.list.last_page;
+			return this.articles?.list?.last_page;
 		},
 	},
 	actions: {
 		async loadArticles() {
-			console.log(1);
 			if (this.canUpdate) {
-				console.log(this.canUpdate, "this.canUpdate");
-				const { categories } = await api.callMethod("GET", `blog`, {});
+				const { data: categoriesData, pending, error, refresh } = await useAsyncData("categories", async () => await api.callMethod("GET", `blog`, {}));
+				const { categories } = categoriesData.value;
+
 				this.categories = categories;
 				const categoryId = this.categories?.find((category) => category.slug == route.params.id)?.id;
-				this.articles = await api.callMethod("GET", `blog?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
+				const { data: articlesData, error: articlesError } = await useAsyncData(
+					"articles",
+					async () => await api.callMethod("GET", `blog?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {})
+				);
+				if (!articlesError.value) {
+					this.articles = articlesData.value;
+				}
 
 				if (this.page > this.countPages) {
 					this.page = 1;
@@ -86,7 +92,9 @@ export const useArticlesStore = defineStore("articlesStore", {
 			}
 		},
 		async loadArticle(slug) {
-			this.articleDetail = await api.callMethod("GET", `blog/${slug}`, {});
+			const { data: articleDetail } = await useAsyncData("article", async () => await api.callMethod("GET", `blog/${slug}`, {}));
+			this.articleDetail = articleDetail.value;
+			// this.articleDetail = await api.callMethod("GET", `blog/${slug}`, {});
 		},
 		async searchOptions(search) {
 			const res = await api.callMethod("GET", `blog/search?q=${search}&entity=articles`, {});

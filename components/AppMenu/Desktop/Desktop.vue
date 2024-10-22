@@ -37,12 +37,12 @@
 				v-if="!route.fullPath.includes('/auth')"
 				class="menu__actions"
 			>
-				<a
+				<!-- <a
 					href="tel:74951180012"
 					class="menu__link"
 				>
 					+7 495 118-00-12
-				</a>
+				</a> -->
 				<div class="menu__buttons">
 					<NuxtLink
 						class="button-text"

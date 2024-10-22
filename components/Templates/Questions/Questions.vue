@@ -48,8 +48,8 @@
 	// });
 	watch(
 		() => [page.value, perPage.value],
-		() => {
-			questionsStore.loadQuestions();
+		async () => {
+			await questionsStore.loadQuestions();
 		}
 	);
 
@@ -59,34 +59,7 @@
 		questionId.value ? await questionsStore.loadQuestion(route.params.id) : 0;
 		!questionsList.value.length ? await questionsStore.loadQuestions() : 0;
 	};
-	loadData();
-
-	// console.log(route.params, "route.params");
-	// console.log(route.params?.id, "route.params?.id");
-	// console.log(route.params?.category, "route.params?.category");
-
-	// onMounted(() => {
-	// 	console.log(route.params, "route.params");
-	// 	console.log(route.params?.id, "route.params?.id");
-	// 	console.log(route.params?.category, "route.params?.category");
-
-	// 	watch(
-	// 		() => [route.params?.id, route.params?.category],
-	// 		async () => {
-	// 			if (route.params?.id || route.params?.category) {
-	// 				const item = questionsList.value?.find(i => i?.slug?.value == route.params?.id);
-	// 				const category = questionsCategories.value?.find(category => category.slug == route.params.category);
-	// 				console.log(item, "item");
-	// 				console.log(category, "category");
-	// 				if (!item && !category) {
-	// 					console.log(123);
-	// 					await navigateTo("/404");
-	// 				}
-	// 			}
-	// 		},
-	// 		{ immediate: true }
-	// 	);
-	// });
+	await loadData();
 
 	const searchOptions = ref([]);
 	const changeValueSearch = async (search) => {
