@@ -1,10 +1,24 @@
 <template>
 	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
 
-	<div class="questions" :class="{ question_open: questionId }">
+	<div
+		class="questions"
+		:class="{ question_open: questionId }"
+	>
 		<div class="questions__left">
-			<Search class="questions__search" @changeValue="changeValueSearch" placeholder="Поиск по вопросам" :options="searchOptions" />
-			<AppNav v-if="questionsCategories" class="questions__nav" title="Вопрос-ответ" :categories="questionsCategories" path="questions-category" />
+			<Search
+				class="questions__search"
+				@changeValue="changeValueSearch"
+				placeholder="Поиск по вопросам"
+				:options="searchOptions"
+			/>
+			<AppNav
+				v-if="questionsCategories"
+				class="questions__nav"
+				title="Вопрос-ответ"
+				:categories="questionsCategories"
+				path="questions-category"
+			/>
 			<AskQuestion />
 		</div>
 		<div class="questions__right">
@@ -54,12 +68,9 @@
 	);
 
 	const questionId = computed(() => route.params.id);
-	const loadData = async () => {
-		questionDetail.value = null;
-		questionId.value ? await questionsStore.loadQuestion(route.params.id) : 0;
-		!questionsList.value.length ? await questionsStore.loadQuestions() : 0;
-	};
-	await loadData();
+	questionDetail.value = null;
+	await useAsyncData("question", async () => (questionId.value ? await questionsStore.loadQuestion(route.params.id) : 0));
+	await useAsyncData("questions", async () => (!questionsList.value.length ? await questionsStore.loadQuestions() : 0));
 
 	const searchOptions = ref([]);
 	const changeValueSearch = async (search) => {
@@ -82,19 +93,6 @@
 					{
 						name: "description",
 						content: questionDetail.value?.seo_description?.value?.value,
-					},
-				],
-			});
-			return;
-		}
-		const category = questionsCategories.value?.find((category) => category.slug == route.params.category);
-		if (category) {
-			useHead({
-				title: category?.seo_title + " | Вопрос-ответ | Compas.pro",
-				meta: [
-					{
-						name: "description",
-						content: category?.seo_description,
 					},
 				],
 			});

@@ -2,8 +2,18 @@
 	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
 	<div class="articles">
 		<div class="articles__left">
-			<Search class="articles__search" @changeValue="changeValueSearch" placeholder="Поиск по базе знаний" :options="searchOptions" />
-			<AppNav v-if="articlesCategories" title="База знаний" :categories="articlesCategories" path="knowledge-category" />
+			<Search
+				class="articles__search"
+				@changeValue="changeValueSearch"
+				placeholder="Поиск по базе знаний"
+				:options="searchOptions"
+			/>
+			<AppNav
+				v-if="articlesCategories"
+				title="База знаний"
+				:categories="articlesCategories"
+				path="knowledge-category"
+			/>
 		</div>
 		<div class="articles__right">
 			<Title :title="currentTitle" />
@@ -28,7 +38,7 @@
 
 	page.value = 1;
 	perPage.value = 12;
-	await articlesStore.loadArticles();
+	await useAsyncData("knowledges", async () => await articlesStore.loadArticles());
 
 	watchEffect(async () => {
 		route.params.category;

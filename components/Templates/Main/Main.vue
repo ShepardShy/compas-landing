@@ -5,7 +5,7 @@
 		class="main__links"
 		:tabs="tabs"
 		:isShowActions="false"
-		@callAction="tab => changeTab(tab)"
+		@callAction="(tab) => changeTab(tab)"
 	></AppTabs>
 	<hr class="main__line" />
 	<MainFines />
@@ -76,7 +76,7 @@
 	};
 
 	// Смена вкладки
-	const changeTab = async tab => {
+	const changeTab = async (tab) => {
 		activeTab.value.tab = tab.value;
 		await navigateTo(`/products/fines${activeTab.value.tab ? `/${activeTab.value.tab}` : ""}`);
 	};

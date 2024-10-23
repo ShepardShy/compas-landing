@@ -7,6 +7,19 @@ export default defineNuxtConfig({
 		},
 	},
 
+	nitro: {
+		prerender: {
+			crawlLinks: true,
+			routes: ["/sitemap.xml", "/sitemap_articles.xml", "/robots.txt"],
+		},
+	},
+
+	hooks: {
+		async "prerender:routes"(ctx) {
+			ctx.routes.add(`/articles/poriadok-obzhalovnia-shtrafov-gidbdd`);
+		},
+	},
+
 	app: {
 		cdnURL: "https://compas.pro/landing/",
 		head: {
@@ -14,8 +27,12 @@ export default defineNuxtConfig({
 			link: [{ rel: "icon", type: "image/svg+xml", href: "/landing/favicon.svg" }],
 		},
 	},
-	spaLoadingTemplate: false,
-	ssr: false,
+	spaLoadingTemplate: true,
+	ssr: true,
+	experimental: {
+		asyncContext: true,
+		inlineRouteRules: true,
+	},
 	modules: ["nuxt-yandex-metrika", "@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt", "nuxt-lodash", "dayjs-nuxt"],
 	yandexMetrika: {
 		id: "98290837",

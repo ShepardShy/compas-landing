@@ -71,8 +71,8 @@
 	provide("$articleWrapper", $articleWrapper);
 	provide("$articleContent", $articleContent);
 
-	articlesList.value.length == 0 ? await articlesStore.loadArticles() : 0;
-	await articlesStore.loadArticle(route.params.id);
+	await useAsyncData("articles", async () => (articlesList.value.length == 0 ? await articlesStore.loadArticles() : 0));
+	await useAsyncData("article", async () => await articlesStore.loadArticle(route.params.id));
 
 	// const article = computed(() => articleDetail.value);
 	// console.log(article.value);

@@ -67,19 +67,11 @@ export const useQuestionsStore = defineStore("questionsStore", {
 	actions: {
 		async loadQuestions() {
 			if (this.canUpdate) {
-				const { data: categoriesData, pending, error, refresh } = await useAsyncData("categories", async () => await api.callMethod("GET", `faq`, {}));
-				const { categories } = categoriesData.value;
+				const { categories } = await api.callMethod("GET", `faq`, {});
 				this.categories = categories;
 				const categoryId = this.categories?.find((category) => category.slug == route.params.category)?.id;
 
-				const { data: questionsData, error: questionsError } = await useAsyncData(
-					"questions",
-					async () => await api.callMethod("GET", `faq?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {})
-				);
-				if (!questionsError.value) {
-					console.log(questionsData.value, "questionsData");
-					this.questions = questionsData.value;
-				}
+				this.questions = await api.callMethod("GET", `faq?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
 
 				if (this.page > this.countPages) {
 					this.page = 1;
@@ -87,10 +79,7 @@ export const useQuestionsStore = defineStore("questionsStore", {
 			}
 		},
 		async loadQuestion(slug) {
-			if (slug) {
-				const { data: questionDetail } = await useAsyncData("question", async () => await api.callMethod("GET", `faq/${slug}`, {}));
-				this.questionDetail = questionDetail.value;
-			}
+			this.questionDetail = await api.callMethod("GET", `faq/${slug}`, {});
 		},
 		async searchOptions(search) {
 			const res = await api.callMethod("GET", `faq/search?q=${search}&entity=faq`, {});

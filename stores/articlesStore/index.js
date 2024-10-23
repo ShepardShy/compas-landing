@@ -73,18 +73,11 @@ export const useArticlesStore = defineStore("articlesStore", {
 	actions: {
 		async loadArticles() {
 			if (this.canUpdate) {
-				const { data: categoriesData, pending, error, refresh } = await useAsyncData("categories", async () => await api.callMethod("GET", `blog`, {}));
-				const { categories } = categoriesData.value;
-
+				const { categories } = await api.callMethod("GET", `blog`, {});
 				this.categories = categories;
 				const categoryId = this.categories?.find((category) => category.slug == route.params.id)?.id;
-				const { data: articlesData, error: articlesError } = await useAsyncData(
-					"articles",
-					async () => await api.callMethod("GET", `blog?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {})
-				);
-				if (!articlesError.value) {
-					this.articles = articlesData.value;
-				}
+
+				this.articles = await api.callMethod("GET", `blog?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
 
 				if (this.page > this.countPages) {
 					this.page = 1;
@@ -92,8 +85,7 @@ export const useArticlesStore = defineStore("articlesStore", {
 			}
 		},
 		async loadArticle(slug) {
-			const { data: articleDetail } = await useAsyncData("article", async () => await api.callMethod("GET", `blog/${slug}`, {}));
-			this.articleDetail = articleDetail.value;
+			this.articleDetail = await api.callMethod("GET", `blog/${slug}`, {});
 			// this.articleDetail = await api.callMethod("GET", `blog/${slug}`, {});
 		},
 		async searchOptions(search) {
