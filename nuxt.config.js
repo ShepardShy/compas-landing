@@ -7,17 +7,20 @@ export default defineNuxtConfig({
 		},
 	},
 
-	nitro: {
-		prerender: {
-			crawlLinks: true,
-			routes: ["/sitemap.xml", "/sitemap_articles.xml", "/robots.txt"],
-		},
-	},
-
 	hooks: {
 		async "prerender:routes"(ctx) {
-			ctx.routes.add(`/articles/poriadok-obzhalovnia-shtrafov-gidbdd`);
+			const res = await fetch("https://compas.pro/api/pages");
+			let pages = await res.json();
+			pages = pages.map((i) => i.replace("https://compas.pro", "")).filter((i) => i);
+
+			// Добавляем маршруты на основе данных из API
+			pages.forEach((page) => {
+				ctx.routes.add(page);
+			});
 		},
+	},
+	generate: {
+		fallback: true,
 	},
 
 	app: {
