@@ -1,27 +1,44 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 export default defineNuxtConfig({
+	// nitro: {
+	// 	runtimeConfig: {
+	// 		app: {
+	// 			// cdnURL: "https://compas.pro/landing/",
+	// 			// baseURL: "/landing",
+	// 			// buildAssetsDir: "/landing/_nuxt/",
+	// 		},
+	// 		public: {
+	// 			baseURL: "https://compas.pro/",
+	// 		},
+	// 	},
+	// },
 	runtimeConfig: {
 		public: {
 			baseURL: "https://compas.pro/",
 		},
 	},
 
-	hooks: {
-		async "prerender:routes"(ctx) {
-			const res = await fetch("https://compas.pro/api/pages");
-			let pages = await res.json();
-			pages = pages.map((i) => i.replace("https://compas.pro", "")).filter((i) => i);
+	// hooks: {
+	// 	async "prerender:routes"(ctx) {
+	// 		const res = await fetch("https://compas.pro/api/pages");
+	// 		let pages = await res.json();
+	// 		pages = pages.map((i) => i.replace("https://compas.pro", "")).filter((i) => i);
 
-			// Добавляем маршруты на основе данных из API
-			pages.forEach((page) => {
-				ctx.routes.add(page);
-			});
-		},
-	},
-	generate: {
-		fallback: true,
-	},
+	// 		// Добавляем маршруты на основе данных из API
+	// 		pages.forEach((page) => {
+	// 			ctx.routes.add(page);
+	// 		});
+	// 	},
+	// },
+	// router: {
+	// 	base: "/",
+	// },
+
+	// generate: {
+	// 	dir: "dist/landing", // Указываем путь для генерации файлов
+	// 	fallback: true,
+	// },
 
 	app: {
 		cdnURL: "https://compas.pro/landing/",
@@ -30,11 +47,10 @@ export default defineNuxtConfig({
 			link: [{ rel: "icon", type: "image/svg+xml", href: "/landing/favicon.svg" }],
 		},
 	},
-	spaLoadingTemplate: true,
-	ssr: true,
+	spaLoadingTemplate: false,
+	ssr: false,
 	experimental: {
 		asyncContext: true,
-		inlineRouteRules: true,
 	},
 	modules: ["nuxt-yandex-metrika", "@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt", "nuxt-lodash", "dayjs-nuxt"],
 	yandexMetrika: {
