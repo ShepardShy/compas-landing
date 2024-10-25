@@ -22,9 +22,9 @@
 		:placeholder="props.placeholder"
 		:isShowSubstring="false"
 		:isShowNotSelected="false"
-		@changeValue="data => changeValue(data)"
-		@searchOptions="data => searchOptions(data)"
-		@clickButton="data => changeValue(data, 'calculate')"
+		@changeValue="(data) => changeValue(data)"
+		@searchOptions="(data) => searchOptions(data)"
+		@clickButton="(data) => changeValue(data, 'calculate')"
 	/>
 </template>
 
@@ -35,7 +35,9 @@
 
 	const emit = defineEmits(["changeValue"]);
 
-	const changeValue = data => {
+	const changeValue = (data) => {
+		console.log(data, "data");
+
 		const value = data.value;
 		if (value) {
 			emit("changeValue", data);
@@ -47,7 +49,7 @@
 		emit("changeValue", search);
 	};
 
-	const searchOptions = data => {};
+	const searchOptions = (data) => {};
 
 	const props = defineProps({
 		value: {

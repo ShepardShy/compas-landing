@@ -18,7 +18,7 @@
 							:answer="detail_text?.[0]?.body"
 							:views
 							:date="created_at"
-							:id="slug.value"
+							:id="slug.value ?? slug"
 						/>
 					</SwiperSlide>
 				</template>

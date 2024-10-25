@@ -36,7 +36,7 @@
 			/>
 		</figure>
 
-		<FinesWarning @callAction="data => saveChanges()" />
+		<FinesWarning @callAction="(data) => saveChanges()" />
 	</AppSection>
 </template>
 
@@ -73,7 +73,7 @@
 	       Я понимаю и принимаю <a href="/docs/politics" class="main-page__link" target="_blank"> условия и политику конфиденциальности </a> Compas
 	   </div>`;
 
-	const changeValue = data => {
+	const changeValue = (data) => {
 		regData.value[data.key] = data.value;
 	};
 
@@ -239,42 +239,7 @@
 
 	let form = ref([]);
 	watchEffect(() => {
-		form.value = [
-			...fields.value,
-			// {
-			// 	title: "Электронная почта для входа",
-			// 	key: "email",
-			// 	name: "email",
-			// 	type: "email",
-			// 	mask: null,
-			// 	value: "",
-			// 	required: true,
-			// 	placeholder: "mail@compas.pro",
-			// 	class: "input_line",
-			// },
-			// {
-			// 	title: "Пароль для входа",
-			// 	key: "password",
-			// 	name: "password",
-			// 	type: "password",
-			// 	mask: null,
-			// 	value: "",
-			// 	required: true,
-			// 	placeholder: null,
-			// 	class: "input_line",
-			// },
-			// {
-			// 	title: "Повторить пароль для входа",
-			// 	key: "repeatPassword",
-			// 	name: "password_confirmation",
-			// 	type: "password",
-			// 	mask: null,
-			// 	value: "",
-			// 	required: true,
-			// 	placeholder: null,
-			// 	class: "input_line",
-			// },
-		];
+		form.value = [...fields.value];
 	});
 
 	const formData = computed(() => {
@@ -315,7 +280,7 @@
 					const { domain, success, token, url } = await api.callMethod("POST", `registration`, { ...formData.value, tariff: 1 });
 
 					if (success) {
-						const isInside = commonStore.accounts.find(i => i.toLowerCase() == domain.toLowerCase());
+						const isInside = commonStore.accounts.find((i) => i.toLowerCase() == domain.toLowerCase());
 						!isInside && commonStore.accounts.push(domain.toLowerCase());
 						navigateTo(`https://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });
 						for (let elem of form.value) {
@@ -332,7 +297,7 @@
 		// Проверка полей на валидацию
 		const checkingFields = () => {
 			// Валидация полей
-			const validateField = field => {
+			const validateField = (field) => {
 				let error = ValidateField(field, field.value);
 
 				if (error.state) {
@@ -350,8 +315,8 @@
 						error: error,
 					});
 				} else {
-					let repeatPassword = form.value.find(p => p.key == "repeatPassword");
-					let password = form.value.find(p => p.key == "password");
+					let repeatPassword = form.value.find((p) => p.key == "repeatPassword");
+					let password = form.value.find((p) => p.key == "password");
 					if ((field.type == "password" || field.type == "repeatPassword") && password.value != repeatPassword.value) {
 						invalidFields.value.push({
 							field: field,

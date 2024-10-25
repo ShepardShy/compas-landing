@@ -244,39 +244,6 @@
 	watchEffect(() => {
 		form.value = [
 			...fields.value,
-			// {
-			// 	title: "Электронная почта для входа",
-			// 	key: "email",
-			// 	name: "email",
-			// 	type: "email",
-			// 	mask: null,
-			// 	value: "",
-			// 	required: true,
-			// 	placeholder: "mail@compas.pro",
-			// 	class: "input_line",
-			// },
-			// {
-			// 	title: "Пароль для входа",
-			// 	key: "password",
-			// 	name: "password",
-			// 	type: "password",
-			// 	mask: null,
-			// 	value: "",
-			// 	required: true,
-			// 	placeholder: null,
-			// 	class: "input_line",
-			// },
-			// {
-			// 	title: "Повторить пароль для входа",
-			// 	key: "repeatPassword",
-			// 	name: "password_confirmation",
-			// 	type: "password",
-			// 	mask: null,
-			// 	value: "",
-			// 	required: true,
-			// 	placeholder: null,
-			// 	class: "input_line",
-			// },
 		];
 	});
 

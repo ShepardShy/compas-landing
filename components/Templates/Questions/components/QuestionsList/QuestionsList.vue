@@ -8,7 +8,7 @@
 				:answer="detail_text?.[0]?.body"
 				:image="detail_picture?.[0]?.file"
 				:views
-				:id="slug?.value"
+				:id="slug?.value ?? slug"
 			/>
 		</template>
 	</div>

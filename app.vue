@@ -1,4 +1,5 @@
 <template>
+	<NuxtLoadingIndicator />
 	<div class="wrapper">
 		<div
 			class="page"

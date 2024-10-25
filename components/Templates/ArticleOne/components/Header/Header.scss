@@ -11,6 +11,10 @@
 		&-green {
 			color: #318b3e;
 		}
+		@media (max-width: 600px) {
+			align-items: end;
+			flex-direction: column;
+		}
 	}
 	&__top {
 		height: 100%;
