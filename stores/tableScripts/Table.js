@@ -408,9 +408,12 @@ export default {
 
     // Получение данных для монеты
     async getMonetaPayID(payment) {
+        console.log(payment,'payment');
+        
         await api.callMethod("POST", `gibdd/moneta_pay`, {
             transaction_id: payment.transaction_id,
-            amount: payment.value
+            amount: payment.value,
+            fine: payment.fine
         });
     },
 

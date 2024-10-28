@@ -8,7 +8,11 @@
 			<AppInput
 				v-for="item in form"
 				:class="item.class"
-				v-show="(form.find(i => ['sts', 'vu', 'uin', 'gos'].includes(i.key)) && form[0].value != '') || ['number', 'certificate', 'sts', 'vu', 'uin', 'gos', 'inn', 'kpp'].includes(item.key) || (form[0].value != '' && form[1].value != '')"
+				v-show="
+					(form.find((i) => ['sts', 'vu', 'uin', 'gos'].includes(i.key)) && form[0].value != '') ||
+					['number', 'certificate', 'sts', 'vu', 'uin', 'gos', 'inn', 'kpp'].includes(item.key) ||
+					(form[0].value != '' && form[1].value != '')
+				"
 				:item="{
 					focus: false,
 					id: 0,
@@ -26,7 +30,7 @@
 				:isLink="null"
 				:isReadOnly="false"
 				:enabledAutocomplete="false"
-				@changeValue="data => changeValue(data)"
+				@changeValue="(data) => changeValue(data)"
 			/>
 			<div class="fines__actions">
 				<AppButton
@@ -42,8 +46,19 @@
 					<AppButton
 						class="fines__button"
 						:data-fancybox="`finesBlock`"
-						href=""
+						data-src="#video"
 					>
+						<iframe
+							id="video"
+							width="720"
+							height="405"
+							src="https://rutube.ru/play/embed/07d0473704735c6266920f9d89c011ca/"
+							frameBorder="0"
+							allow="clipboard-write; autoplay"
+							webkitAllowFullScreen
+							mozallowfullscreen
+							allowFullScreen
+						></iframe>
 						<figure class="ibg fines__icon">
 							<img
 								src="/icons/youtube_blue.svg"
@@ -65,7 +80,7 @@
 			/>
 		</figure>
 
-		<FinesWarning @callAction="data => saveChanges()" />
+		<FinesWarning @callAction="(data) => saveChanges()" />
 	</AppSection>
 </template>
 
@@ -277,8 +292,8 @@
 	let isShow = ref(false);
 	const isLoading = ref(false);
 
-	const changeValue = data => {
-		let findIndex = form.value.findIndex(p => p.key == data.key);
+	const changeValue = (data) => {
+		let findIndex = form.value.findIndex((p) => p.key == data.key);
 		form.value[findIndex].value = data.value;
 	};
 
@@ -303,7 +318,7 @@
 				if (Array.isArray(res)) {
 					finesStore.fields = formData.value;
 					finesStore.fines = res;
-					new Promise(res => {
+					new Promise((res) => {
 						return navigateTo("/products/fines/list");
 					}).then(() => {
 						isLoading.value = false;
@@ -318,7 +333,7 @@
 		// Проверка полей на валидацию
 		const checkingFields = async () => {
 			// Валидация полей
-			const validateField = field => {
+			const validateField = (field) => {
 				let error = ValidateField(field, field.value);
 
 				if (error.state) {
@@ -336,8 +351,8 @@
 						error: error,
 					});
 				} else {
-					let repeatPassword = form.value.find(p => p.key == "repeatPassword");
-					let password = form.value.find(p => p.key == "password");
+					let repeatPassword = form.value.find((p) => p.key == "repeatPassword");
+					let password = form.value.find((p) => p.key == "password");
 					if ((field.type == "password" || field.type == "repeatPassword") && password.value != repeatPassword.value) {
 						invalidFields.value.push({
 							field: field,

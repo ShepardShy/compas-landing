@@ -63,6 +63,8 @@
 
     const isShow = inject('isShow')
     const activePayment = inject('activePayment')
+    console.log(activePayment.value);
+    
     const activeOption = ref({
             name: 'СБП (+1%)',
             slug: 'payment',

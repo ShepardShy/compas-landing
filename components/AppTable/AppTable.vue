@@ -414,6 +414,8 @@
 
     // Вызов действия в таблице
     const callAction = (data) => {
+        console.log(data,'data');
+        
         // Установка значений по умолчанию
         const setPropsValues = (data) => {
             if ([null, undefined].includes(data) || !Array.isArray(data)) {
@@ -983,13 +985,16 @@
 
         // Инициализация оплаты
         const initPayment = (data) => {
+            const fine = bodyData.value.find(i=>i.id == data.id)
+            
             isShow.value = {
                 state: true,
                 type: 'payment'
             }
             activePayment.value = {
                 id: data.id,
-                value: data.value
+                value: data.value,
+                fine
             }
         }
 

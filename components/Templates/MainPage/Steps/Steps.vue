@@ -20,13 +20,26 @@
 			</p>
 			<p class="steps__text">При проверке по гос номеру вы найдете штрафы с камер видеофиксации, по номеру водительского удостоверения - выписанные инспекторами ГИБДД.</p>
 		</div>
-		<FansyBox>
+		<FansyBox class="steps__video-wrapper">
 			<div
 				href="https://www.youtube.com/watch?v=jhFDyDgMVUI"
 				data-fancybox
+				data-src="#video"
 				class="steps__video"
 			>
 				<YoutubeWhite class="steps__video-play" />
+				<iframe
+					id="video"
+					data-fancybox
+					width="720"
+					height="405"
+					src="https://rutube.ru/play/embed/07d0473704735c6266920f9d89c011ca/"
+					frameBorder="0"
+					allow="clipboard-write; autoplay"
+					webkitAllowFullScreen
+					mozallowfullscreen
+					allowFullScreen
+				></iframe>
 			</div>
 		</FansyBox>
 	</AppSection>

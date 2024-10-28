@@ -46,8 +46,19 @@
 					<AppButton
 						class="fines__button"
 						:data-fancybox="`finesBlock`"
-						href=""
+						data-src="#video"
 					>
+						<iframe
+							id="video"
+							width="720"
+							height="405"
+							src="https://rutube.ru/play/embed/07d0473704735c6266920f9d89c011ca/"
+							frameBorder="0"
+							allow="clipboard-write; autoplay"
+							webkitAllowFullScreen
+							mozallowfullscreen
+							allowFullScreen
+						></iframe>
 						<figure class="ibg fines__icon">
 							<img
 								src="/icons/youtube_blue.svg"

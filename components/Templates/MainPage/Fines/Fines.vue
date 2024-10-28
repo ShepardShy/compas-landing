@@ -11,11 +11,22 @@
 				<div class="main-page__form-actions main-page__actions">
 					<FansyBox class="main-page__fansy-box">
 						<AppButton
-							class="main-page__button"
+							class="fines__button"
 							:data-fancybox="`finesBlock`"
-							href=""
+							data-src="#video"
 						>
-							<figure class="ibg main-page__icon">
+							<iframe
+								id="video"
+								width="720"
+								height="405"
+								src="https://rutube.ru/play/embed/07d0473704735c6266920f9d89c011ca/"
+								frameBorder="0"
+								allow="clipboard-write; autoplay"
+								webkitAllowFullScreen
+								mozallowfullscreen
+								allowFullScreen
+							></iframe>
+							<figure class="ibg fines__icon">
 								<img
 									src="/icons/youtube_blue.svg"
 									alt="О сервисе"
