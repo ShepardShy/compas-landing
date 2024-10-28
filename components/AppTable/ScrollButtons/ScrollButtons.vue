@@ -141,7 +141,7 @@
     // Отображение Фиксированного заголовка
     const checkHeaderCopy = () => {           
         const tableBody = tableRef.value?.querySelector('.table__body')
-        if (tableBody?.getBoundingClientRect().top < 0) {
+        if (tableBody?.getBoundingClientRect().top < 0 && tableBody?.getBoundingClientRect().bottom - 80 > 0) {
             tableRef.value?.querySelector('.table__header_copy')?.classList.remove('table__header_hidden')
         } else {
             tableRef.value?.querySelector('.table__header_copy')?.classList.add('table__header_hidden')
