@@ -170,62 +170,61 @@
 	@media (max-width: 1120px) {
 		justify-content: center;
 	}
+}
+button {
+	height: 45px;
+	width: max-content;
+	font-size: 16px;
+	padding: 10px 20px;
 
-	button {
-		height: 45px;
-		width: max-content;
-		font-size: 16px;
-		padding: 10px 20px;
+	&.button_blue {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		white-space: nowrap;
 
-		&.button_blue {
-			display: flex;
-			align-items: center;
-			gap: 10px;
-			white-space: nowrap;
+		&::after {
+			content: url("/icons/arrow-right.svg");
+			height: 16px;
+			transition: 0.4s all;
+		}
 
-			&::after {
-				content: url("/icons/arrow-right.svg");
-				height: 16px;
-				transition: 0.4s all;
-			}
+		&:not([disabled]) {
+			&:hover {
+				filter: brightness(0.95);
 
-			&:not([disabled]) {
-				&:hover {
-					filter: brightness(0.95);
-
-					&::after {
-						transform: translateX(5px);
-					}
+				&::after {
+					transform: translateX(5px);
 				}
 			}
 		}
+	}
 
-		&.main-page__button {
-			width: 100%;
+	&.fines__button {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		background: #fff;
+		border: 1px solid #2f8cff;
+
+		span {
 			display: flex;
 			align-items: center;
 			gap: 5px;
-			background: #fff;
-			border: 1px solid #2f8cff;
+			white-space: nowrap;
+		}
 
-			span {
-				display: flex;
-				align-items: center;
-				gap: 5px;
-				white-space: nowrap;
-			}
+		.button-text {
+			color: #1253a2;
+		}
 
-			.button-text {
-				color: #1253a2;
-			}
+		.fines__icon {
+			width: 32px;
+			height: 24px;
 
-			.main-page__icon {
-				width: 32px;
-				height: 24px;
-
-				img {
-					object-fit: contain;
-				}
+			img {
+				object-fit: contain;
 			}
 		}
 	}

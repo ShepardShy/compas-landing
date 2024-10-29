@@ -359,6 +359,6 @@
 	provide("invalidFields", invalidFields);
 </script>
 
-<style>
+<style lang="scss">
 	@import url(./Fines.scss);
 </style>
