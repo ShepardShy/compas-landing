@@ -30,7 +30,7 @@
 
 	import telegram from "/social/telegram.svg";
 	import vk from "/social/vk.svg";
-	import youtube from "/social/youtube.svg";
+	import rutube from "/social/rutube.png";
 
 	let icons = [
 		{
@@ -44,9 +44,9 @@
 			icon: vk,
 		},
 		{
-			name: "YouTube",
-			link: "https://www.youtube.com/@cmps-pro",
-			icon: youtube,
+			name: "Rutube",
+			link: "https://rutube.ru/channel/47374099/",
+			icon: rutube,
 		},
 	];
 </script>

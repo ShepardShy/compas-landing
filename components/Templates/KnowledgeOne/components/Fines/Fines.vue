@@ -66,7 +66,7 @@
 							/>
 						</figure>
 						О сервисе
-						<span class="button-text"> (1 мин 20 сек) </span>
+						<span class="button-text"> (7 мин 1 сек) </span>
 					</AppButton>
 				</FansyBox>
 			</div>

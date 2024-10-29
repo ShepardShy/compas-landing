@@ -27,7 +27,12 @@
 				data-src="#video"
 				class="steps__video"
 			>
-				<YoutubeWhite class="steps__video-play" />
+				<div class="steps__video-play">
+					<img
+						src="/icons/play-rutube.svg"
+						alt=""
+					/>
+				</div>
 				<iframe
 					id="video"
 					data-fancybox
