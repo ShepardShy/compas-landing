@@ -30,7 +30,7 @@
 
 	import telegram from "/social/telegram.svg";
 	import vk from "/social/vk.svg";
-	import rutube from "/social/rutube.png";
+	import rutube from "/social/rutube.svg";
 
 	let icons = [
 		{

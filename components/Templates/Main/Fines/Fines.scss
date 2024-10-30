@@ -78,14 +78,14 @@
 			background: #fff;
 			border: 1px solid #2f8cff;
 
-			:deep(span) {
+			span {
 				display: flex;
 				align-items: center;
 				gap: 5px;
 				white-space: nowrap;
 			}
 
-			:deep(.button-text) {
+			.button-text {
 				color: #1253a2;
 			}
 
