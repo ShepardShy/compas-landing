@@ -12,7 +12,7 @@
 		<div class="header__bottom">
 			<div class="header__author">
 				<img
-					v-if="authorAvatar"
+					v-if="!Array.isArray(authorAvatar) && authorAvatar"
 					:src="authorAvatar ? authorAvatar : defaultAvatar"
 					:alt="authorName"
 					class="header__author-avatar"
@@ -32,7 +32,9 @@
 			<div class="header__info">
 				<div class="header__date date">
 					{{ dayjs(date).locale("ru").format("D MMMM YYYY") }}
-					<div v-if="update && dayjs(update).startOf('date') != dayjs(date).startOf('date')">(<span class="header__date-green">Обновлено</span> {{ dayjs(update).locale("ru").format("DD.MM.YYYY") }})</div>
+					<div v-if="update && dayjs(update).startOf('date') != dayjs(date).startOf('date')">
+						(<span class="header__date-green">Обновлено</span> {{ dayjs(update).locale("ru").format("DD.MM.YYYY") }})
+					</div>
 				</div>
 				<div class="header__views views">
 					<IconPasswordEye class="header__views-eye" />
