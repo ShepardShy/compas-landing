@@ -38,7 +38,6 @@
 
 	page.value = 1;
 	perPage.value = 12;
-	await useAsyncData("knowledges", async () => await articlesStore.loadArticles());
 
 	watchEffect(async () => {
 		route.params.category;
@@ -73,6 +72,10 @@
 	};
 
 	const category = computed(() => articlesCategories.value.find((category) => category.slug == route.params.category));
+
+	onMounted(async () => {
+		await useAsyncData("knowledges", async () => await articlesStore.loadArticles());
+	})
 
 	watch(
 		() => category.value,

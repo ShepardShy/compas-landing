@@ -43,15 +43,15 @@
 	const questionsStore = useQuestionsStore();
 	const { categories, questionsList, questionDetail } = storeToRefs(questionsStore);
 
-	!questionsList.value.length ? await questionsStore.loadQuestions() : 0;
 
 	console.log(questionsList.value);
 
 	let countSlides = ref(3);
 
-	onMounted(() => {
+	onMounted(async () => {
 		window.addEventListener("resize", checkingWindowWidth);
 		checkingWindowWidth();
+		!questionsList.value.length ? await questionsStore.loadQuestions() : 0;
 	});
 
 	const checkingWindowWidth = () => {

@@ -42,12 +42,12 @@
 
 	const route = useRoute();
 
-	articlesList.value.length == 0 ? await articlesStore.loadArticles() : 0;
 	const articles = ref(articlesList.value.filter((i) => i.slug != route.params.id));
 
 	let countSlides = ref(3);
 
-	onMounted(() => {
+	onMounted(async () => {
+		articlesList.value.length == 0 ? await articlesStore.loadArticles() : 0;
 		window.addEventListener("resize", checkingWindowWidth);
 		checkingWindowWidth();
 	});

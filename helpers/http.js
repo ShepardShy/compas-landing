@@ -57,7 +57,6 @@ export default {
 							"error"
 						);
 					}
-
 					resolve(error.response);
 				});
 				resolve(response.data);
