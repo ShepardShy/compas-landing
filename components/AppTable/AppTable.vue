@@ -994,7 +994,8 @@
             activePayment.value = {
                 id: data.id,
                 value: data.value,
-                fine
+                fine,
+                bodyData
             }
         }
 

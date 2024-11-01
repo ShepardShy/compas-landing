@@ -410,11 +410,12 @@ export default {
     async getMonetaPayID(payment) {
         console.log(payment,'payment');
         
-        await api.callMethod("POST", `gibdd/moneta_pay`, {
+        return await api.callMethod("POST", `gibdd/moneta_pay`, {
             transaction_id: payment.transaction_id,
             amount: payment.value,
             fine: payment.fine
         });
+        
     },
 
     // Получение табов в корзине

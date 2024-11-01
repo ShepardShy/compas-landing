@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useUserStore } from "~/stores/userStore";
 import { useCommonStore } from "~/stores/commonStore";
+import commonScripts from '~/commonScripts/commonScripts'
 
 export default {
 	call(type, url, params, headers) {

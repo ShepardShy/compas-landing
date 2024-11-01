@@ -60,6 +60,7 @@ export default defineNuxtConfig({
 			trackLinks: true,
 			accurateTrackBounce: true,
 			webvisor: true,
+			defer: true,
 		},
 	},
 	vite: {

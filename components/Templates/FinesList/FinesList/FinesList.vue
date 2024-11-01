@@ -255,7 +255,6 @@
 	const { fields, fines } = storeToRefs(finesStore);
 
 	if (fields.value) {
-		console.log(fields.value, "fields.value");
 		const res = await api.callMethod("GET", `gibdd/check_by_req?` + new URLSearchParams(fields.value).toString(), {});
 		fines.value = res.map((i, idx) => {
 			return { ...i, id: idx + 1 };
@@ -291,6 +290,8 @@
 
 		loaderState: "",
 	});
+	console.log(table.value.tableData,'table');
+	
 	onMounted(() => {
 		userStore.$patch({
 			authData: {
