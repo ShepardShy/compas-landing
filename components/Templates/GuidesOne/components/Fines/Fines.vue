@@ -1,11 +1,10 @@
 <template>
 	<AppSection class="fines section_without-background">
-		<AppH1 class="fines__title"> Проверка штрафов ГИБДД {{ titleMap[route.params.type] }} в 1 клик </AppH1>
+		<AppH2 class="fines__title fines__title_show"> Проверка штрафов ГИБДД {{ titleMap[type] }} в 1 клик </AppH2>
 		<form
 			class="fines__form"
 			@click.prevent
 		>
-			<AppH1 class="fines__form-title"> Проверка штрафов ГИБДД {{ titleMap[route.params.type] }} в 1 клик </AppH1>
 			<AppInput
 				v-for="item in form"
 				:class="item.class"
@@ -53,7 +52,7 @@
 							id="video"
 							width="720"
 							height="405"
-							:src="videoMap[route.params?.type ?? 'default'].link"
+							src="https://rutube.ru/play/embed/07d0473704735c6266920f9d89c011ca/"
 							frameBorder="0"
 							allow="clipboard-write; autoplay"
 							webkitAllowFullScreen
@@ -67,7 +66,7 @@
 							/>
 						</figure>
 						О сервисе
-						<span class="button-text"> ({{ videoMap[route.params?.type ?? "default"].duration }}) </span>
+						<span class="button-text"> (7 мин 1 сек) </span>
 					</AppButton>
 				</FansyBox>
 			</div>
@@ -76,7 +75,7 @@
 
 		<figure class="ibg fines__image">
 			<img
-				:src="previewImage[route.params?.type] ? previewImage[route.params?.type] : defaultImage"
+				:src="previewImage?.[type]"
 				alt="Проверьте штрафы и зарегистрируйтесь в 1 клик"
 			/>
 		</figure>
@@ -89,7 +88,7 @@
 	import _ from "lodash";
 	import FinesWarning from "./Warning/Warning.vue";
 	import AppSection from "@/components/AppSection/AppSection.vue";
-	import AppH1 from "@/components/AppHeaders/H1/H1.vue";
+	import AppH2 from "@/components/AppHeaders/H2/H2.vue";
 	import AppInput from "@/components/AppInputs/Input/Input.vue";
 	import AppButton from "@/components/AppButton/AppButton.vue";
 	import FansyBox from "@/components/AppFansyBox/FansyBox.vue";
@@ -98,65 +97,43 @@
 	import { useCommonStore } from "@/stores/commonStore.js";
 	import { useFinesStore } from "~/stores/finesStore.js";
 
-	const finesStore = useFinesStore();
-
 	// Картинки проверки штрафов
 	import vuImage from "/main/fines/preview-vu.png";
 	import stsImage from "/main/fines/preview-sts.png";
 	import gosImage from "/main/fines/preview-gos.png";
 	import postanovlenieImage from "/main/fines/preview-postanovlenie.png";
 	import innImage from "/main/fines/preview-inn.png";
-	import defaultImage from "/main/fines/preview.png";
 
-	const commonStore = useCommonStore();
-	const route = useRoute();
+	const finesStore = useFinesStore();
+
+	const props = defineProps({
+		type: {
+			type: String,
+		},
+	});
+	const { type } = toRefs(props);
 
 	const previewImage = {
-		"po-sts": stsImage,
-		"po-voditelskomu-udostovereniyu": vuImage,
-		"po-nomeru-postanovleniya": postanovlenieImage,
-		"po-nomeru-avto": gosImage,
-		"po-inn": innImage,
+		"check-sts": stsImage,
+		"check-vu": vuImage,
+		"check-num_post": postanovlenieImage,
+		"check-gos": gosImage,
+		registration: gosImage,
+		"check-inn": innImage,
 	};
 
 	const titleMap = {
-		"po-sts": "по СТС",
-		"po-voditelskomu-udostovereniyu": "по водительскому удостоверению",
-		"po-nomeru-postanovleniya": "по номеру постановления",
-		"po-nomeru-avto": "по гос. номеру",
-		"po-inn": "по ИНН",
-	};
-
-	const videoMap = {
-		"po-sts": {
-			link: "https://rutube.ru/play/embed/07d0473704735c6266920f9d89c011ca/",
-			duration: "7 мин 1 сек",
-		},
-		"po-voditelskomu-udostovereniyu": {
-			link: "https://rutube.ru/play/embed/873651c2fbcea2f7936eaa96d4e537f3/?p=fBqzfWQSsZgkfK_z-GKWhA",
-			duration: "3 мин 1 сек",
-		},
-		"po-nomeru-postanovleniya": {
-			link: "https://rutube.ru/play/embed/07d0473704735c6266920f9d89c011ca/",
-			duration: "7 мин 1 сек",
-		},
-		"po-nomeru-avto": {
-			link: "https://rutube.ru/play/embed/07d0473704735c6266920f9d89c011ca/",
-			duration: "7 мин 1 сек",
-		},
-		"po-inn": {
-			link: "https://rutube.ru/play/embed/07d0473704735c6266920f9d89c011ca/",
-			duration: "7 мин 1 сек",
-		},
-		default: {
-			link: "https://rutube.ru/play/embed/07d0473704735c6266920f9d89c011ca/",
-			duration: "7 мин 1 сек",
-		},
+		"check-sts": "по СТС",
+		"check-vu": "по водительскому удостоверению",
+		"check-num_post": "по номеру постановления",
+		"check-gos": "по гос. номеру",
+		registration: "по гос. номеру",
+		"check-inn": "по ИНН",
 	};
 
 	let fields = computed(() => {
-		switch (route.params.type) {
-			case "po-sts": {
+		switch (type.value) {
+			case "check-sts": {
 				return [
 					{
 						title: "Номер СТС",
@@ -171,7 +148,7 @@
 					},
 				];
 			}
-			case "po-voditelskomu-udostovereniyu": {
+			case "check-vu": {
 				return [
 					{
 						title: "Номер ВУ",
@@ -186,7 +163,7 @@
 					},
 				];
 			}
-			case "po-nomeru-postanovleniya": {
+			case "check-num_post": {
 				return [
 					{
 						title: "Номер постановления",
@@ -201,7 +178,8 @@
 					},
 				];
 			}
-			case "po-nomeru-avto": {
+			case "registration":
+			case "check-gos": {
 				return [
 					{
 						title: "Гос. номер автомобиля",
@@ -227,7 +205,7 @@
 					},
 				];
 			}
-			case "po-inn": {
+			case "check-inn": {
 				return [
 					{
 						title: "ИНН компании",
@@ -386,6 +364,6 @@
 	provide("invalidFields", invalidFields);
 </script>
 
-<style lang="scss">
+<style scoped>
 	@import url(./Fines.scss);
 </style>

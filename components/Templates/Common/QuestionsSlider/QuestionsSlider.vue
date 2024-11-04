@@ -43,9 +43,6 @@
 	const questionsStore = useQuestionsStore();
 	const { categories, questionsList, questionDetail } = storeToRefs(questionsStore);
 
-
-	console.log(questionsList.value);
-
 	let countSlides = ref(3);
 
 	onMounted(async () => {

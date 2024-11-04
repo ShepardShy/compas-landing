@@ -42,12 +42,12 @@
 
 	const route = useRoute();
 
-	const articles = ref(articlesList.value.filter((i) => i.slug != route.params.id));
+	const articles = computed(() => articlesList.value.filter((i) => i.slug != route.params.id));
 
 	let countSlides = ref(3);
 
 	onMounted(async () => {
-		articlesList.value.length == 0 ? await articlesStore.loadArticles() : 0;
+		articlesList.value.length == 0 ? await useAsyncData("articles", async () => await articlesStore.loadArticles()) : 0;
 		window.addEventListener("resize", checkingWindowWidth);
 		checkingWindowWidth();
 	});

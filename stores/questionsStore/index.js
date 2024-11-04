@@ -66,6 +66,7 @@ export const useQuestionsStore = defineStore("questionsStore", {
 	},
 	actions: {
 		async loadQuestions() {
+			console.log(123);
 			if (this.canUpdate) {
 				const { categories } = await api.callMethod("GET", `faq`, {});
 				this.categories = categories;

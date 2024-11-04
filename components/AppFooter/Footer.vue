@@ -126,6 +126,12 @@
 					>
 						База знаний
 					</NuxtLink>
+					<!-- <NuxtLink
+						to="/guides"
+						class="footer-link__href"
+					>
+						Гайды
+					</NuxtLink> -->
 					<NuxtLink
 						to="/docs"
 						class="footer-link__href"
@@ -169,7 +175,7 @@
 		{
 			name: "Youtube",
 			icon: youtube,
-			link: "https://www.youtube.com/@cmps-pro",
+			link: "https://www.youtube.com/@CmpsPr",
 		},
 	];
 </script>

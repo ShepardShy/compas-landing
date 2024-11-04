@@ -74,7 +74,7 @@
 		() => {
 			if (category.value) {
 				useHead({
-					title: category.value?.seo_title + " | Статьи | Compas.pro",
+					title: category.value?.seo_title + " | Гайды | Compas.pro",
 					meta: [
 						{
 							name: "description",
@@ -105,8 +105,8 @@
 			link: "/",
 		},
 		{
-			title: "Статьи",
-			link: "/articles",
+			title: "Гайды",
+			link: "/guides",
 		},
 		category.value
 			? {
