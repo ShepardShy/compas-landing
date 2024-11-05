@@ -129,28 +129,28 @@
 
 	const videoMap = {
 		"po-sts": {
-			link: "https://rutube.ru/play/embed/07d0473704735c6266920f9d89c011ca/",
-			duration: "7 мин 1 сек",
+			link: "https://rutube.ru/play/embed/15f4b3bced1a43b00648295076c493fa/?p=MVJiI4Bm08aXsKK95L2_4A",
+			duration: "3 мин 3 сек",
 		},
 		"po-voditelskomu-udostovereniyu": {
 			link: "https://rutube.ru/play/embed/873651c2fbcea2f7936eaa96d4e537f3/?p=fBqzfWQSsZgkfK_z-GKWhA",
 			duration: "3 мин 1 сек",
 		},
 		"po-nomeru-postanovleniya": {
-			link: "https://rutube.ru/play/embed/07d0473704735c6266920f9d89c011ca/",
-			duration: "7 мин 1 сек",
+			link: "https://rutube.ru/play/embed/6857b8a657ff4ec260b2a6ac2b3c4f6c/?p=b8uwGHql8LHP421gBmBFTA",
+			duration: "3 мин 1 сек",
 		},
 		"po-nomeru-avto": {
-			link: "https://rutube.ru/play/embed/07d0473704735c6266920f9d89c011ca/",
-			duration: "7 мин 1 сек",
+			link: "https://rutube.ru/play/embed/15f4b3bced1a43b00648295076c493fa/?p=MVJiI4Bm08aXsKK95L2_4A",
+			duration: "3 мин 3 сек",
 		},
 		"po-inn": {
-			link: "https://rutube.ru/play/embed/07d0473704735c6266920f9d89c011ca/",
-			duration: "7 мин 1 сек",
+			link: "https://rutube.ru/play/embed/a7264a4686a95aaf930521e381d11611/?p=7SL3jEghPu6g5hDJIj5bMA",
+			duration: "3 мин 7 сек",
 		},
 		default: {
-			link: "https://rutube.ru/play/embed/07d0473704735c6266920f9d89c011ca/",
-			duration: "7 мин 1 сек",
+			link: "https://rutube.ru/play/embed/15f4b3bced1a43b00648295076c493fa/?p=MVJiI4Bm08aXsKK95L2_4A",
+			duration: "3 мин 3 сек",
 		},
 	};
 
