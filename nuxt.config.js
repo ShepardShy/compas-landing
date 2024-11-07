@@ -19,18 +19,18 @@ export default defineNuxtConfig({
 		},
 	},
 
-	// hooks: {
-	// 	async "prerender:routes"(ctx) {
-	// 		const res = await fetch("https://compas.pro/api/pages");
-	// 		let pages = await res.json();
-	// 		pages = pages.map((i) => i.replace("https://compas.pro", "")).filter((i) => i);
+	hooks: {
+		async "prerender:routes"(ctx) {
+			const res = await fetch("https://compas.pro/api/pages");
+			let pages = await res.json();
+			pages = pages.map((i) => i.replace("https://compas.pro", "")).filter((i) => i);
 
-	// 		// Добавляем маршруты на основе данных из API
-	// 		pages.forEach((page) => {
-	// 			ctx.routes.add(page);
-	// 		});
-	// 	},
-	// },
+			// Добавляем маршруты на основе данных из API
+			pages.forEach((page) => {
+				ctx.routes.add(page);
+			});
+		},
+	},
 	// router: {
 	// 	base: "/",
 	// },
