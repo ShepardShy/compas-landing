@@ -3,10 +3,10 @@ import api from "~/helpers/api.js";
 
 const route = useRoute();
 
-export const useArticlesStore = defineStore("articlesStore", {
+export const useGuidesStore = defineStore("guidesStore", {
 	state: () => ({
-		articles: null,
-		articleDetail: null,
+		guides: null,
+		guideDetail: null,
 		categories: null,
 		page: 1,
 		perPage: 12,
@@ -35,14 +35,14 @@ export const useArticlesStore = defineStore("articlesStore", {
 			return null;
 		},
 
-		articlesList() {
+		guidesList() {
 			// if (route.params?.id) {
-			// 	return this.articles?.list?.data.filter((i) => i.slug != route.params.id && i?.slug?.value != route.params.id) || [];
+			// 	return this.guides?.list?.data.filter((i) => i.slug != route.params.id && i?.slug?.value != route.params.id) || [];
 			// }
-			return this.articles?.list?.data || [];
+			return this.guides?.list?.data || [];
 		},
 
-		articlesCategories() {
+		guidesCategories() {
 			return this.categories?.map((category) => ({
 				...category,
 				id: category.id,
@@ -62,33 +62,34 @@ export const useArticlesStore = defineStore("articlesStore", {
 		},
 
 		currentCategoryId() {
-			return this.categories?.find((category) => category.slug == route.params.id)?.id;
+			return this.categories?.find((category) => category.slug == route.params.category)?.id;
 		},
 
 		countPages() {
-			return this.articles?.list?.last_page;
+			return this.guides?.list?.last_page;
 		},
 	},
 	actions: {
-		async loadArticles() {
+		async loadGuides() {
 			if (this.canUpdate) {
-				const { categories } = await api.callMethod("GET", `blog`, {});
+				const { categories } = await api.callMethod("GET", `guides`, {});
 				this.categories = categories;
 				const categoryId = this.categories?.find((category) => category.slug == route.params.category)?.id;
 
-				this.articles = await api.callMethod("GET", `blog?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
+				this.guides = await api.callMethod("GET", `guides?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
+				console.log(this.guides, "this.guides");
 
 				if (this.page > this.countPages) {
 					this.page = 1;
 				}
 			}
 		},
-		async loadArticle(slug) {
-			this.articleDetail = await api.callMethod("GET", `blog/${slug}`, {});
-			// this.articleDetail = await api.callMethod("GET", `blog/${slug}`, {});
+		async loadGuide(slug) {
+			this.guideDetail = await api.callMethod("GET", `guides/${slug}`, {});
+			// this.guideDetail = await api.callMethod("GET", `guides/${slug}`, {});
 		},
 		async searchOptions(search) {
-			const res = await api.callMethod("GET", `blog/search?q=${search}&entity=articles`, {});
+			const res = await api.callMethod("GET", `guides/search?q=${search}&entity=guides`, {});
 			if (res?.length > 0) {
 				return res;
 			}
@@ -102,10 +103,10 @@ export const useArticlesStore = defineStore("articlesStore", {
 				return;
 			}
 			this.page++;
-			const categoryId = this.categories?.find((category) => category.slug == route.params.id)?.id;
-			const newArticles = await api.callMethod("GET", `blog?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`);
-			if (newArticles?.list?.data?.length > 0) {
-				this.articles.list.data = [...this.articles.list.data, ...newArticles.list.data];
+			const categoryId = this.categories?.find((category) => category.slug == route.params.category)?.id;
+			const newGuides = await api.callMethod("GET", `guides?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`);
+			if (newGuides?.list?.data?.length > 0) {
+				this.guides.list.data = [...this.guides.list.data, ...newGuides.list.data];
 			}
 			console.log("showMore end");
 			this.canUpdate = true;

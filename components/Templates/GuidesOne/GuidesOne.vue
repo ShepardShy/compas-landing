@@ -1,11 +1,15 @@
 <template>
 	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
 	<div
-		v-if="articleDetail"
-		class="article"
-		ref="$articleWrapper"
+		v-if="guideDetail"
+		class="guide"
+		ref="$guideWrapper"
 	>
-		<div class="article__left">
+		<div
+			ref="$guideContent"
+			class="guide__left"
+		>
+			<AppH1 class="guide__left-title video-guide">{{ name?.value }}</AppH1>
 			<Header
 				:title="name?.value"
 				:image="detail_picture.value?.[0]?.file"
@@ -16,12 +20,10 @@
 				:date="created_at.value"
 				:update="updated_at.value"
 				:views="views?.value"
+				:video="video?.value"
 				:readingTime="reading_time.value"
 			/>
-			<div
-				class="article__content"
-				ref="$articleContent"
-			>
+			<div class="guide__content">
 				<component
 					:is="conmponentsMap?.[type]"
 					:text="body"
@@ -39,12 +41,12 @@
 			</div>
 		</div>
 
-		<div class="article__right">
+		<div class="guide__right">
 			<Nav v-if="detail_text" />
 		</div>
 	</div>
 	<Articles />
-	<Social class="article__social" />
+	<Social class="guide__social" />
 </template>
 
 <script setup>
@@ -53,8 +55,9 @@
 	import Header from "./components/Header/Header.vue";
 	// import article from "./article";
 	import Nav from "./components/Nav/Nav.vue";
-	import { useArticlesStore } from "~/stores/articlesStore";
+	import { useGuidesStore } from "~/stores/guidesStore";
 	import { storeToRefs } from "pinia";
+	import AppH1 from "~/components/AppHeaders/H1/H1.vue";
 
 	// Компоненты конструктора
 	import wrap from "~/components/Templates/Common/WrapText/WrapText.vue";
@@ -64,16 +67,16 @@
 
 	const route = useRoute();
 
-	const articlesStore = useArticlesStore();
-	const { articlesList, articleDetail } = storeToRefs(articlesStore);
+	const guidesStore = useGuidesStore();
+	const { guidesList, guideDetail } = storeToRefs(guidesStore);
 
-	const $articleWrapper = ref(null);
-	const $articleContent = ref(null);
-	provide("$articleWrapper", $articleWrapper);
-	provide("$articleContent", $articleContent);
+	const $guideWrapper = ref(null);
+	const $guideContent = ref(null);
+	provide("$guideWrapper", $guideWrapper);
+	provide("$guideContent", $guideContent);
 
-	await useAsyncData("articles", async () => (articlesList.value.length == 0 ? await articlesStore.loadArticles() : 0));
-	await useAsyncData("article", async () => await articlesStore.loadArticle(route.params.id));
+	await useAsyncData("guides", async () => (guidesList.value.length == 0 ? await guidesStore.loadGuides() : 0));
+	await useAsyncData("guide", async () => await guidesStore.loadGuide(route.params.id));
 
 	// const article = computed(() => articleDetail.value);
 	// console.log(article.value);
@@ -90,7 +93,8 @@
 		question,
 	};
 
-	let { created_at, user_id, updated_at, detail_picture, name, views, detail_text, seo_description, seo_title, reading_time } = articleDetail.value;
+	let { created_at, user_id, updated_at, detail_picture, name, views, video, detail_text, seo_description, seo_title, reading_time } = guideDetail.value;
+	console.log(guideDetail.value, "guideDetail.value");
 
 	const author = {
 		name: user_id?.value?.localOptions?.[0]?.label?.text ?? "Темур Киселев",
@@ -121,11 +125,11 @@
 		},
 		{
 			title: "Гайды",
-			link: "/Guides",
+			link: "/guides",
 		},
 		{
 			title: name?.value,
-			link: "/articles/za-chto-vypisan-shtraf",
+			link: "/guides/za-chto-vypisan-shtraf",
 		},
 	];
 	useHead({
@@ -140,5 +144,5 @@
 </script>
 
 <style>
-	@import url(./ArticleOne.scss);
+	@import url(./GuidesOne.scss);
 </style>

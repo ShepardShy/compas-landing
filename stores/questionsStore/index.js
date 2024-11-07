@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import categories from "./data/categories.json";
 import api from "~/helpers/api.js";
 
 const route = useRoute();

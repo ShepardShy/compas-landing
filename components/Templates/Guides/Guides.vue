@@ -1,23 +1,23 @@
 <template>
 	<AppBreadcrambs :breadcrumbs="breadcrumbs" />
-	<div class="articles">
-		<div class="articles__left">
+	<div class="guides">
+		<div class="guides__left">
 			<Search
-				class="articles__search"
+				class="guides__search"
 				@changeValue="changeValueSearch"
 				placeholder="Поиск по статьям"
 				:options="searchOptions"
 			/>
 			<AppNav
-				v-if="articlesCategories"
-				title="Статьи"
-				:categories="articlesCategories"
-				path="articles-category"
+				v-if="guidesCategories"
+				title="Гайды"
+				:categories="guidesCategories"
+				path="guides-category"
 			/>
 		</div>
-		<div class="articles__right">
+		<div class="guides__right">
 			<Title :title="currentTitle" />
-			<ArticlesList :articlesList />
+			<List :list="guidesList" />
 		</div>
 	</div>
 </template>
@@ -25,49 +25,49 @@
 <script setup>
 	import Search from "./components/Search/Search.vue";
 	import Title from "./components/Title/Title.vue";
-	import ArticlesList from "./components/ArticlesList/ArticlesList.vue";
+	import List from "./components/List/List.vue";
 	import { storeToRefs } from "pinia";
-	import { useArticlesStore } from "~/stores/articlesStore";
+	import { useGuidesStore } from "~/stores/guidesStore";
 	import AppNav from "~/components/AppNav/AppNav.vue";
 
 	const route = useRoute();
 
-	const articlesStore = useArticlesStore();
+	const guidesStore = useGuidesStore();
 
-	const { categories, page, countPages, currentCategory, perPage, articlesCategories, currentTitle, articlesList, articles, currentCategoryId, options } = storeToRefs(articlesStore);
+	const { categories, page, countPages, currentCategory, perPage, guidesCategories, currentTitle, guidesList, guides, currentCategoryId, options } = storeToRefs(guidesStore);
 
 	page.value = 1;
 	perPage.value = 12;
-	await useAsyncData("articles", async () => await articlesStore.loadArticles());
+	await useAsyncData("guides", async () => await guidesStore.loadGuides());
 
 	watch(
 		() => [page.value, perPage.value],
 		async () => {
-			await articlesStore.loadArticles();
+			await guidesStore.loadGuides();
 		}
 	);
 
 	watch(
 		() => currentCategoryId.value,
 		async () => {
-			await articlesStore.loadArticles();
+			await guidesStore.loadGuides();
 		}
 	);
 
 	const searchOptions = ref([]);
 	const changeValueSearch = async (search) => {
 		if (search.value) {
-			await navigateTo(`/articles/${search.value}`);
+			await navigateTo(`/guides/${search.value}`);
 			return;
 		}
 
-		searchOptions.value = await articlesStore.searchOptions(search);
+		searchOptions.value = await guidesStore.searchOptions(search);
 		searchOptions.value = searchOptions.value.map((i) => {
 			return { ...i, value: i.label.slug };
 		});
 	};
 
-	const category = computed(() => articlesCategories.value.find((category) => category.slug == route.params.category));
+	const category = computed(() => guidesCategories.value?.find((category) => category.slug == route.params.category));
 
 	watch(
 		() => category.value,
@@ -118,5 +118,5 @@
 </script>
 
 <style scoped>
-	@import url("./Articles.scss");
+	@import url("./Guides.scss");
 </style>

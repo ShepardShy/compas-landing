@@ -141,8 +141,8 @@
 			duration: "3 мин 1 сек",
 		},
 		"po-nomeru-avto": {
-			link: "https://rutube.ru/play/embed/15f4b3bced1a43b00648295076c493fa/?p=MVJiI4Bm08aXsKK95L2_4A",
-			duration: "3 мин 3 сек",
+			link: "https://rutube.ru/play/embed/f60b87d3bdcc566587c317de991e55b7/",
+			duration: "3 мин 4 сек",
 		},
 		"po-inn": {
 			link: "https://rutube.ru/play/embed/a7264a4686a95aaf930521e381d11611/?p=7SL3jEghPu6g5hDJIj5bMA",

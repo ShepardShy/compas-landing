@@ -1,13 +1,14 @@
 <template>
-	<div class="articles__list">
-		<template v-for="{ name, views, slug, preview_picture, created_at } in articlesList">
-			<ArticleItem
+	<div class="guides__list">
+		<template v-for="{ name, views, slug, preview_picture, created_at, video } in list">
+			<GuideItem
 				v-if="name"
 				:date="created_at"
 				:id="slug.value ? slug.value : slug"
 				:image="preview_picture[0]?.file"
 				:title="name"
 				:views
+				:video
 			/>
 		</template>
 	</div>
@@ -18,12 +19,12 @@
 		v-model="page"
 		v-model:perPage="perPage"
 		@showMore="showMore"
-		class="articles__list-pagination"
+		class="guides__list-pagination"
 	/>
 </template>
 
 <script setup>
-	import ArticleItem from "~/components/Templates/Common/ArticleItem/ArticleItem.vue";
+	import GuideItem from "~/components/Templates/Common/GuideItem/GuideItem.vue";
 	import AppPagination from "~/components/AppPagination/AppPagination.vue";
 	import { storeToRefs } from "pinia";
 	import { useArticlesStore } from "~/stores/articlesStore";
@@ -52,15 +53,15 @@
 	];
 
 	const props = defineProps({
-		articlesList: {
+		list: {
 			type: Array,
 			required: true,
 			default: [],
 		},
 	});
-	const { articlesList } = toRefs(props);
+	const { list } = toRefs(props);
 </script>
 
 <style>
-	@import url("./ArticlesList.scss");
+	@import url("./List.scss");
 </style>

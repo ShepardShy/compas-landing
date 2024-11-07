@@ -1,13 +1,10 @@
 <template>
 	<div class="header">
 		<div class="header__top">
-			<h1 class="header__title">{{ title }}</h1>
-			<figure class="ibg header__image">
-				<img
-					:src="image ? image : defaultImage"
-					:alt="title"
-				/>
-			</figure>
+			<Video
+				class="header__video"
+				:src="video"
+			/>
 		</div>
 		<div class="header__bottom">
 			<div class="header__author">
@@ -54,6 +51,7 @@
 	import IconPasswordEye from "@/components/AppIcons/PasswordEye/PasswordEye.vue";
 	import defaultImage from "/articles/defaultBg.png";
 	import defaultAvatar from "/articles/defaultAvatar.png";
+	import Video from "../Video/Video.vue";
 	import "dayjs/locale/ru";
 
 	const dayjs = useDayjs();
@@ -95,12 +93,16 @@
 			type: Number,
 			required: true,
 		},
+		video: {
+			type: String,
+			required: true,
+		},
 		readingTime: {
 			type: Number,
 			required: true,
 		},
 	});
-	const { authorAvatar, authorDesc, authorName, authorColor, date, update, image, title, views, readingTime } = toRefs(props);
+	const { authorAvatar, authorDesc, video, authorName, authorColor, date, update, image, title, views, readingTime } = toRefs(props);
 </script>
 
 <style scoped>

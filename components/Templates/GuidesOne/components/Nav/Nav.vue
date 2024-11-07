@@ -19,8 +19,8 @@
 </template>
 
 <script setup>
-	const $articleContent = inject("$articleContent");
-	const $articleWrapper = inject("$articleWrapper");
+	const $guideContent = inject("$guideContent");
+	const $guideWrapper = inject("$guideWrapper");
 
 	let docsNav = ref([]);
 	const docsNavRef = ref(null);
@@ -28,11 +28,19 @@
 
 	const scroll = (link, tag) => {
 		const item = document.getElementById(link.replace("#", ""));
+
 		if (tag) {
-			item.parentNode.classList.add("active-bg");
-			setTimeout(() => {
-				item.parentNode.classList.remove("active-bg");
-			}, 2000);
+			if (link == "#0") {
+				item.nextElementSibling.classList.add("active-bg");
+				setTimeout(() => {
+					item.nextElementSibling.classList.remove("active-bg");
+				}, 2000);
+			} else {
+				item.parentNode.classList.add("active-bg");
+				setTimeout(() => {
+					item.parentNode.classList.remove("active-bg");
+				}, 2000);
+			}
 		}
 
 		item.scrollIntoView();
@@ -41,21 +49,24 @@
 
 	onMounted(() => {
 		setTimeout(() => {
-			const titles = $articleContent.value.querySelectorAll("h2,h3");
+			const titles = $guideContent.value.querySelectorAll("h1,h2,h3");
 			for (let i = 0; i < titles.length; i++) {
 				if (["H1", "H2", "H3", "H4", "H5", "H6"].includes(titles[i].nodeName)) {
 					titles[i].id = i;
 					titles[i].classList.add("header-link");
+
+					const isVideoGuide = titles[i].classList.contains("video-guide");
+
 					docsNav.value.push({
 						id: i,
 						isActive: docsNav.value.length == 0,
 						link: `#${titles[i].id}`,
-						text: titles[i].textContent,
+						text: isVideoGuide ? "Видео гайд" : titles[i].textContent,
 						nodeName: titles[i].nodeName,
 					});
 				}
 			}
-			headers.value = $articleContent.value.querySelectorAll(".header-link");
+			headers.value = $guideContent.value.querySelectorAll(".header-link");
 		}, 100);
 
 		window.addEventListener("scroll", throt_funScroll);
@@ -71,14 +82,14 @@
 		for (let i = 0; i < headers.value.length; i++) {
 			if (headers.value[i].getBoundingClientRect().top < 300) {
 				data.push(headers.value[i]);
-				docsNav.value.find(element => element.id == headers.value[i].id).isScrolled = true;
+				docsNav.value.find((element) => element.id == headers.value[i].id).isScrolled = true;
 			} else {
-				docsNav.value.find(element => element.id == headers.value[i].id).isScrolled = false;
+				docsNav.value.find((element) => element.id == headers.value[i].id).isScrolled = false;
 			}
 		}
 
 		if (data.length > 0) {
-			docsNav.value.forEach(element => {
+			docsNav.value.forEach((element) => {
 				if (element.id == data[data.length - 1].id) {
 					element.isActive = true;
 				} else {
@@ -87,7 +98,7 @@
 			});
 		}
 
-		if ($articleWrapper.value.getBoundingClientRect().top - 20 < 0) {
+		if ($guideWrapper.value.getBoundingClientRect().top - 20 < 0) {
 			docsNavRef.value.classList.add("nav_fixed");
 		} else {
 			docsNavRef.value.classList.remove("docs-nav_fixed");

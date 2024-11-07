@@ -1,4 +1,4 @@
-.article {
+.guide {
 	display: flex;
 	gap: 15px;
 	width: 100%;
@@ -33,6 +33,10 @@
 		width: calc(100% - 263px - 15px);
 		@media (max-width: 768px) {
 			width: 100%;
+		}
+		&-title {
+			margin-bottom: 35px;
+			font-size: 35px;
 		}
 	}
 

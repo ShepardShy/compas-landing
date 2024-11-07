@@ -8,7 +8,7 @@
 			title: 'title',
 			value: searchText,
 			type: 'address',
-			placeholder: 'Поиск по статьям',
+			placeholder: 'Поиск по гайдам',
 			focus: false,
 			key: 0,
 			options: searchText.length > 0 ? options : [],

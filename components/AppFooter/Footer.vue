@@ -126,12 +126,12 @@
 					>
 						База знаний
 					</NuxtLink>
-					<!-- <NuxtLink
+					<NuxtLink
 						to="/guides"
 						class="footer-link__href"
 					>
 						Гайды
-					</NuxtLink> -->
+					</NuxtLink>
 					<NuxtLink
 						to="/docs"
 						class="footer-link__href"

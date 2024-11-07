@@ -18,6 +18,20 @@
 	}
 }
 
+#raichuContainerWithPlayer {
+	display: none !important;
+}
+
+.fancybox__content {
+	width: 90%;
+	max-width: 1000px !important;
+	height: 500px;
+	#video {
+		width: 100%;
+		height: 100%;
+	}
+}
+
 .fines__button #video {
 	display: none;
 }
