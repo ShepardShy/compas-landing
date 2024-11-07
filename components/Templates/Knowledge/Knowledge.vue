@@ -39,10 +39,7 @@
 	page.value = 1;
 	perPage.value = 12;
 
-	watchEffect(async () => {
-		route.params.category;
-		await articlesStore.loadArticles();
-	});
+	await useAsyncData("knowledges", async () => await articlesStore.loadArticles());
 
 	watch(
 		() => [page.value, perPage.value],
@@ -71,11 +68,11 @@
 		});
 	};
 
-	const category = computed(() => articlesCategories.value.find((category) => category.slug == route.params.category));
+	const category = computed(() => articlesCategories.value?.find((category) => category.slug == route.params.category));
 
 	onMounted(async () => {
 		await useAsyncData("knowledges", async () => await articlesStore.loadArticles());
-	})
+	});
 
 	watch(
 		() => category.value,

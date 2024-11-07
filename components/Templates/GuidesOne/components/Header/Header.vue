@@ -1,10 +1,39 @@
 <template>
 	<div class="header">
 		<div class="header__top">
-			<Video
+			<!-- <Video
 				class="header__video"
 				:src="video"
-			/>
+				ref="videoRef"
+			/> -->
+			<iframe
+				class="header__video"
+				ref="videoRef"
+				width="720"
+				height="405"
+				:src="video"
+				frameBorder="0"
+				allow="clipboard-write; autoplay"
+				webkitAllowFullScreen
+				mozallowfullscreen
+				allowFullScreen
+			></iframe>
+			<div
+				v-if="!isVideoStarted"
+				@click="startVideo"
+				class="header__video-cover"
+			>
+				<img
+					:src="`https://rutube.ru/api/video/${videoId}/thumbnail/?redirect=1`"
+					alt=""
+				/>
+				<div class="guide__video-play play-video">
+					<img
+						src="/icons/play-rutube.svg"
+						alt=""
+					/>
+				</div>
+			</div>
 		</div>
 		<div class="header__bottom">
 			<div class="header__author">
@@ -27,12 +56,6 @@
 				</div>
 			</div>
 			<div class="header__info">
-				<div class="header__date date">
-					{{ dayjs(date).locale("ru").format("D MMMM YYYY") }}
-					<div v-if="update && dayjs(update).startOf('date') != dayjs(date).startOf('date')">
-						(<span class="header__date-green">Обновлено</span> {{ dayjs(update).locale("ru").format("DD.MM.YYYY") }})
-					</div>
-				</div>
 				<div class="header__views views">
 					<IconPasswordEye class="header__views-eye" />
 					<span>
@@ -40,7 +63,7 @@
 					</span>
 				</div>
 				<div class="header__duration duration">
-					Читать статью: <span class="duration_black">{{ readingTime }} мин</span>
+					Читать гайд: <span class="duration_black">{{ readingTime }} мин</span>
 				</div>
 			</div>
 		</div>
@@ -54,7 +77,47 @@
 	import Video from "../Video/Video.vue";
 	import "dayjs/locale/ru";
 
-	const dayjs = useDayjs();
+	const isVideoStarted = ref(false);
+	const videoRef = ref(null);
+
+	let timeoutLoadVideo = false;
+	onMounted(() => {
+		setTimeout(() => {
+			timeoutLoadVideo = true;
+		}, 1500);
+	});
+
+	function play() {
+		if (!timeoutLoadVideo) {
+			setTimeout(() => {
+				var player = videoRef.value;
+				player.contentWindow.postMessage(
+					JSON.stringify({
+						type: "player:play",
+
+						data: {},
+					}),
+					"*"
+				);
+			}, 1500);
+			return;
+		}
+		var player = videoRef.value;
+		player.contentWindow.postMessage(
+			JSON.stringify({
+				type: "player:play",
+
+				data: {},
+			}),
+			"*"
+		);
+	}
+
+	const startVideo = async () => {
+		isVideoStarted.value = true;
+		await nextTick();
+		play();
+	};
 
 	const props = defineProps({
 		title: {
@@ -103,6 +166,14 @@
 		},
 	});
 	const { authorAvatar, authorDesc, video, authorName, authorColor, date, update, image, title, views, readingTime } = toRefs(props);
+
+	const videoLinkArr = video.value.split("/");
+	// id Видео
+	let videoId = videoLinkArr[videoLinkArr.length - 1];
+	if (videoLinkArr[videoLinkArr.length - 1] == "") {
+		videoLinkArr.splice(videoLinkArr.length - 1, 1);
+		videoId = videoLinkArr[videoLinkArr.length - 1];
+	}
 </script>
 
 <style scoped>

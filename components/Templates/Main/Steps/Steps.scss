@@ -25,7 +25,6 @@
 		margin-top: 25px;
 		position: relative;
 		cursor: pointer;
-		background-image: image-set(url("https://pic.rutube.ru/video/2024-10-26/16/d2/16d21bc2c077e4b0ae3a2041d9b987f4.jpg?width=980"));
 		background-size: cover;
 		width: 263px;
 		height: 148px;
@@ -47,6 +46,13 @@
 				height: calc(48px / 2) !important;
 				width: calc(48px / 2) !important;
 			}
+		}
+		&-img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
 		}
 		&-wrapper {
 			& #video {

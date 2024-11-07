@@ -27,12 +27,18 @@
 				data-src="#video"
 				class="steps__video"
 			>
+				<img
+					class="steps__video-img"
+					src="https://rutube.ru/api/video/15f4b3bced1a43b00648295076c493fa/thumbnail/?redirect=1"
+					alt="background-img"
+				/>
 				<div class="steps__video-play">
 					<img
 						src="/icons/play-rutube.svg"
 						alt=""
 					/>
 				</div>
+
 				<iframe
 					id="video"
 					data-fancybox

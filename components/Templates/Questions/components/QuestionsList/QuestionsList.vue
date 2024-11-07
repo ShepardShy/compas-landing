@@ -13,6 +13,7 @@
 		</template>
 	</div>
 	<AppPagination
+		v-if="countPages > 1"
 		:totalPages="countPages"
 		:perPageOptions
 		:perPage

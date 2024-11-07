@@ -62,7 +62,7 @@ export const useArticlesStore = defineStore("articlesStore", {
 		},
 
 		currentCategoryId() {
-			return this.categories?.find((category) => category.slug == route.params.id)?.id;
+			return this.categories?.find((category) => category.slug == route.params.category)?.id;
 		},
 
 		countPages() {
@@ -102,12 +102,11 @@ export const useArticlesStore = defineStore("articlesStore", {
 				return;
 			}
 			this.page++;
-			const categoryId = this.categories?.find((category) => category.slug == route.params.id)?.id;
+			const categoryId = this.categories?.find((category) => category.slug == route.params.category)?.id;
 			const newArticles = await api.callMethod("GET", `blog?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`);
 			if (newArticles?.list?.data?.length > 0) {
 				this.articles.list.data = [...this.articles.list.data, ...newArticles.list.data];
 			}
-			console.log("showMore end");
 			this.canUpdate = true;
 		},
 	},

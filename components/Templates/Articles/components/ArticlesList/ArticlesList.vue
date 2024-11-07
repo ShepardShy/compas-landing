@@ -12,6 +12,7 @@
 		</template>
 	</div>
 	<AppPagination
+		v-if="countPages > 1"
 		:totalPages="countPages"
 		:perPageOptions
 		:perPage
@@ -30,7 +31,7 @@
 
 	const articlesStore = useArticlesStore();
 
-	const { page, perPage, countPages } = storeToRefs(articlesStore);
+	const { page, perPage, countPages, total } = storeToRefs(articlesStore);
 
 	const showMore = () => {
 		articlesStore.showMore();

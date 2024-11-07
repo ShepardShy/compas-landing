@@ -12,6 +12,7 @@
 		</template>
 	</div>
 	<AppPagination
+		v-if="countPages > 1"
 		:totalPages="countPages"
 		:perPageOptions
 		:perPage
@@ -26,14 +27,14 @@
 	import KnowledgeItem from "~/components/Templates/Common/KnowledgeItem/KnowledgeItem.vue";
 	import AppPagination from "~/components/AppPagination/AppPagination.vue";
 	import { storeToRefs } from "pinia";
-	import { useArticlesStore } from "~/stores/articlesStore";
+	import { useKnowledgeStore } from "~/stores/knowledgeStore";
 
-	const articlesStore = useArticlesStore();
+	const knowledgeStore = useKnowledgeStore();
 
-	const { page, perPage, countPages } = storeToRefs(articlesStore);
+	const { page, perPage, countPages } = storeToRefs(knowledgeStore);
 
 	const showMore = () => {
-		articlesStore.showMore();
+		knowledgeStore.showMore();
 	};
 
 	const perPageOptions = [

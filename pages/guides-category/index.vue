@@ -1,9 +1,9 @@
 <template>
-	<TemplateArticles />
+	<TemplateGuides />
 </template>
 
 <script setup>
-	import TemplateArticles from "@/components/Templates/Articles/Articles.vue";
+	import TemplateGuides from "@/components/Templates/Guides/Guides.vue";
 
 	// Мета теги
 	useHead({
@@ -17,7 +17,7 @@
 		link: [
 			{
 				rel: "canonical",
-				href: `https://compas.pro/articles-category`,
+				href: `https://compas.pro/guides-category`,
 			},
 		],
 	});

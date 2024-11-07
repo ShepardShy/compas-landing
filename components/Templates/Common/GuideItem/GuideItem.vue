@@ -4,18 +4,22 @@
 		:to="`/guides/${id}`"
 	>
 		<div class="guide__top">
-			<iframe
-				class="guide__video"
+			<div
 				v-if="video"
-				width="720"
-				height="405"
-				src="https://rutube.ru/play/embed/07d0473704735c6266920f9d89c011ca/"
-				frameBorder="0"
-				allow="clipboard-write; autoplay"
-				webkitAllowFullScreen
-				mozallowfullscreen
-				allowFullScreen
-			></iframe>
+				class="guide__video"
+			>
+				<img
+					class="guide__video"
+					:src="`https://rutube.ru/api/video/${videoId}/thumbnail/?redirect=1`"
+					alt=""
+				/>
+				<div class="guide__video-play">
+					<img
+						src="/icons/play-rutube.svg"
+						alt=""
+					/>
+				</div>
+			</div>
 			<img
 				v-else
 				class="guide__icon"
@@ -61,6 +65,14 @@
 		},
 	});
 	const { title, views, image, video, date, id } = toRefs(props);
+
+	const videoLinkArr = video.value.split("/");
+	// id Видео
+	let videoId = videoLinkArr[videoLinkArr.length - 1];
+	if (videoLinkArr[videoLinkArr.length - 1] == "") {
+		videoLinkArr.splice(videoLinkArr.length - 1, 1);
+		videoId = videoLinkArr[videoLinkArr.length - 1];
+	}
 </script>
 
 <style lang="scss">

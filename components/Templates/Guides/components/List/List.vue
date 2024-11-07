@@ -13,6 +13,7 @@
 		</template>
 	</div>
 	<AppPagination
+		v-if="countPages > 1"
 		:totalPages="countPages"
 		:perPageOptions
 		:perPage
@@ -27,9 +28,9 @@
 	import GuideItem from "~/components/Templates/Common/GuideItem/GuideItem.vue";
 	import AppPagination from "~/components/AppPagination/AppPagination.vue";
 	import { storeToRefs } from "pinia";
-	import { useArticlesStore } from "~/stores/articlesStore";
+	import { useGuidesStore } from "~/stores/guidesStore";
 
-	const articlesStore = useArticlesStore();
+	const articlesStore = useGuidesStore();
 
 	const { page, perPage, countPages } = storeToRefs(articlesStore);
 

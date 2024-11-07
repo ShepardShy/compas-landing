@@ -2,8 +2,22 @@
 
 <script setup>
 	import TemplateKnowledge from "@/components/Templates/Knowledge/Knowledge.vue";
+	import { useKnowledgeStore } from "~/stores/knowledgeStore";
+
+	const knowledgeStore = useKnowledgeStore();
 
 	const route = useRoute();
+
+	watch(
+		() => route.params.category,
+		async () => {
+			await knowledgeStore.loadArticles();
+		},
+		{ deep: true, immediate: true }
+	);
+	onUnmounted(async () => {
+		await knowledgeStore.loadArticles();
+	});
 
 	// Мета теги
 	useHead({

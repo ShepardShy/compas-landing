@@ -42,7 +42,6 @@
 				>
 					Проверить штрафы
 				</AppButton>
-
 				<FansyBox class="fines__fansy-box">
 					<AppButton
 						class="fines__button"
@@ -53,7 +52,7 @@
 							id="video"
 							width="720"
 							height="405"
-							:src="videoMap[route.params?.type ?? 'default'].link"
+							:src="`${videoMap[route.params?.type ?? 'default'].link}?getPlayOptions=thumbnail_url`"
 							frameBorder="0"
 							allow="clipboard-write; autoplay"
 							webkitAllowFullScreen
@@ -108,6 +107,8 @@
 	import innImage from "/main/fines/preview-inn.png";
 	import defaultImage from "/main/fines/preview.png";
 
+	// console.log(await fetch("https://rutube.ru/api/video/15f4b3bced1a43b00648295076c493fa"));
+
 	const commonStore = useCommonStore();
 	const route = useRoute();
 
@@ -141,7 +142,7 @@
 			duration: "3 мин 1 сек",
 		},
 		"po-nomeru-avto": {
-			link: "https://rutube.ru/play/embed/f60b87d3bdcc566587c317de991e55b7/",
+			link: "https://rutube.ru/play/embed/f60b87d3bdcc566587c317de991e55b7",
 			duration: "3 мин 4 сек",
 		},
 		"po-inn": {

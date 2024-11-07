@@ -19,15 +19,15 @@ export const useKnowledgeStore = defineStore("knowledgeStore", {
 			if (activeChild) {
 				return activeChild.mainTitle;
 			}
-			const category = this.categories.find(category => (route.fullPath.includes(category.slug) ? category : null));
+			const category = this.categories.find((category) => (route.fullPath.includes(category.slug) ? category : null));
 
 			return category ? category.name : this.categories[0].name;
 		},
 
-		activeChild: state => {
+		activeChild: (state) => {
 			if (!state?.categories) return null;
 			for (const category of state.categories) {
-				const child = category.children?.find(child => route.fullPath.includes(child.value));
+				const child = category.children?.find((child) => route.fullPath.includes(child.value));
 				if (child) {
 					return child;
 				}
@@ -37,19 +37,19 @@ export const useKnowledgeStore = defineStore("knowledgeStore", {
 
 		articlesList() {
 			if (route.params?.id) {
-				return this.articles?.list?.data.filter(i => i.slug != route.params.id && i?.slug?.value != route.params.id) || [];
+				return this.articles?.list?.data.filter((i) => i.slug != route.params.id && i?.slug?.value != route.params.id) || [];
 			}
 			return this.articles?.list?.data || [];
 		},
 
 		articlesCategories() {
-			return this.categories?.map(category => ({
+			return this.categories?.map((category) => ({
 				...category,
 				id: category.id,
 				value: category.slug,
 				title: category.name,
 				isOpen: false,
-				children: category.children?.map(child => ({
+				children: category.children?.map((child) => ({
 					id: child.id,
 					value: child.slug,
 					title: child.name,
@@ -58,11 +58,11 @@ export const useKnowledgeStore = defineStore("knowledgeStore", {
 		},
 
 		currentCategory() {
-			return this.categories?.find(category => category.value === route.params.category);
+			return this.categories?.find((category) => category.value === route.params.category);
 		},
 
 		currentCategoryId() {
-			return this.categories?.find(category => category.slug == route.params.id)?.id;
+			return this.categories?.find((category) => category.slug == route.params.category)?.id;
 		},
 
 		countPages() {
@@ -74,7 +74,7 @@ export const useKnowledgeStore = defineStore("knowledgeStore", {
 			if (this.canUpdate) {
 				const { categories } = await api.callMethod("GET", `knowledge`, {});
 				this.categories = categories;
-				const categoryId = this.categories?.find(category => category.slug == route.params.id)?.id;
+				const categoryId = this.categories?.find((category) => category.slug == route.params.category)?.id;
 				this.articles = await api.callMethod("GET", `knowledge?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
 
 				if (this.page > this.countPages) {
@@ -100,9 +100,8 @@ export const useKnowledgeStore = defineStore("knowledgeStore", {
 				return;
 			}
 			this.page++;
-			const categoryId = this.categories?.find(category => category.slug == route.params.id)?.id;
+			const categoryId = this.categories?.find((category) => category.slug == route.params.category)?.id;
 			const newArticles = await api.callMethod("GET", `blog?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`);
-			console.log(newArticles);
 			if (newArticles?.list?.data?.length > 0) {
 				this.articles.list.data = [...this.articles.list.data, ...newArticles.list.data];
 			}

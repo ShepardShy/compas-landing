@@ -64,7 +64,7 @@
 						to="/products/fines"
 						class="footer-link__href"
 					>
-						Отслеживание штрафов
+						Проверка штрафов
 					</NuxtLink>
 					<NuxtLink
 						to="/products/distance"
