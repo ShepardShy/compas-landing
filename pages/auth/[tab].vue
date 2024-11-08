@@ -3,6 +3,8 @@
 </template>
 
 <script setup>
+	import './Auth.scss'
+
 	import AuthPage from "~/components/Templates/AuthPage/AuthPage.vue";
 
 	const route = useRoute();
@@ -23,4 +25,14 @@
 			},
 		],
 	});
+
+	onMounted(() => {
+		nextTick(() => {
+			document.querySelector('.page').classList.add('page_auth')
+		})
+	})
+
+	onUnmounted(() => {
+		document.querySelector('.page').classList.remove('page_auth')
+	})
 </script>

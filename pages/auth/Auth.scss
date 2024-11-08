@@ -1,0 +1,28 @@
+@use '@/assets/variables.scss' as variables;
+@use '@/assets/mixins.scss' as mixins;
+
+.page {
+    &.page_auth {
+        .menu {
+            display: none;
+        }
+
+        main {
+            min-height: 100vh;
+
+            & > .container {
+                height: 100%;
+                padding: 0px 20px;
+            }
+        }
+
+        .auth, 
+        .auth__main,
+        .auth__background {
+            top: 0px;
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+        }
+    }
+}

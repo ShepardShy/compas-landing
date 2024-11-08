@@ -34,6 +34,17 @@
 					alt=""
 				/>
 			</figure>
+
+
+			<div class="auth__text auth__subtext">
+				Вернуться на 
+				<NuxtLink
+					class="auth__link"
+					to="/"
+				>
+					основной сайт
+				</NuxtLink>
+			</div>
 		</div>
 	</div>
 </template>
