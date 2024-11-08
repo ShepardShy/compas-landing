@@ -34,4 +34,36 @@
 			display: none;
 		}
 	}
+	.fines__fansy-box {
+		display: inline-block;
+		margin-top: 10px;
+	}
+	.fines__button {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		background: #fff;
+		border: 1px solid #2f8cff;
+
+		:deep(span) {
+			display: flex;
+			align-items: center;
+			gap: 5px;
+			white-space: nowrap;
+		}
+
+		.button-text {
+			color: #1253a2;
+		}
+
+		.fines__icon {
+			width: 32px;
+			height: 24px;
+
+			img {
+				object-fit: contain;
+			}
+		}
+	}
 }

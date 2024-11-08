@@ -81,6 +81,8 @@
 		}
 		& .table {
 			overflow: auto;
+			border-radius: 10px;
+
 			table {
 				border-collapse: collapse;
 				width: 100%;
@@ -108,8 +110,16 @@
 		td {
 			height: calc(4px * 2 + 1.5em);
 			min-width: calc(8px * 2);
-			padding: 4px 8px;
+			padding: 15px 20px;
 			border: 1px solid #e7eaec;
+		}
+		tr:first-child td {
+			background: rgb(35, 47, 63);
+			color: rgb(255, 255, 255);
+			font-weight: 400;
+		}
+		tr:not(:first-child) td:first-child {
+			background: rgb(223, 220, 215);
 		}
 	}
 	&__image {

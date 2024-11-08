@@ -130,8 +130,6 @@
 	import innImage from "/main/fines/preview-inn.png";
 	import defaultImage from "/main/fines/preview.png";
 
-	// console.log(await fetch("https://rutube.ru/api/video/15f4b3bced1a43b00648295076c493fa"));
-
 	const commonStore = useCommonStore();
 	const route = useRoute();
 

@@ -35,9 +35,8 @@
 				/>
 			</figure>
 
-
 			<div class="auth__text auth__subtext">
-				Вернуться на 
+				Вернуться на
 				<NuxtLink
 					class="auth__link"
 					to="/"
@@ -46,15 +45,6 @@
 				</NuxtLink>
 			</div>
 		</div>
-	</div>
-	<div class="auth__text auth__bottomtext">
-		Перейти на сайт
-		<NuxtLink
-			class="auth__link"
-			to="https://compas.pro/"
-		>
-			Compas.pro
-		</NuxtLink>
 	</div>
 </template>
 
