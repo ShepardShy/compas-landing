@@ -34,21 +34,15 @@
 
 	const articlesStore = useArticlesStore();
 
-	const { categories, page, countPages, currentCategory, perPage, articlesCategories, currentTitle, articlesList, articles, currentCategoryId, options } = storeToRefs(articlesStore);
+	const { categories, isLoading, page, countPages, currentCategory, perPage, articlesCategories, currentTitle, articlesList, articles, currentCategoryId, options } = storeToRefs(articlesStore);
 
 	page.value = 1;
 	perPage.value = 12;
-	await useAsyncData("articles", async () => await articlesStore.loadArticles());
+	console.log(currentCategoryId.value, "currentCategoryId");
+	!currentCategoryId.value ? await useAsyncData("articles", async () => await articlesStore.loadArticles()) : 0;
 
 	watch(
 		() => [page.value, perPage.value],
-		async () => {
-			await articlesStore.loadArticles();
-		}
-	);
-
-	watch(
-		() => currentCategoryId.value,
 		async () => {
 			await articlesStore.loadArticles();
 		}

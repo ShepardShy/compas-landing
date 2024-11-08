@@ -23,7 +23,7 @@
 		</div>
 		<div class="questions__right">
 			<template v-if="!questionId">
-				<Title />
+				<Title :title="currentTitle" />
 				<QuestionsList v-if="questionsList" />
 			</template>
 			<Question

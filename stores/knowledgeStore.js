@@ -21,7 +21,7 @@ export const useKnowledgeStore = defineStore("knowledgeStore", {
 			}
 			const category = this.categories.find((category) => (route.fullPath.includes(category.slug) ? category : null));
 
-			return category ? category.name : this.categories[0].name;
+			return category ? category.name : "База знаний";
 		},
 
 		activeChild: (state) => {

@@ -21,7 +21,7 @@ export const useGuidesStore = defineStore("guidesStore", {
 			}
 			const category = this.categories.find((category) => (route.fullPath.includes(category.slug) ? category : null));
 
-			return category ? category.name : this.categories[0].name;
+			return category ? category.name : "Гайды";
 		},
 
 		activeChild: (state) => {

@@ -1,5 +1,5 @@
 <template>
-	<AuthPage />
+	<AuthPage v-if="!(route.params?.tab == 'accounts' && accounts.length <= 0)" />
 </template>
 
 <script setup>
@@ -8,6 +8,25 @@
 	import AuthPage from "~/components/Templates/AuthPage/AuthPage.vue";
 
 	const route = useRoute();
+
+	import { useCommonStore } from "@/stores/commonStore.js";
+	import { storeToRefs } from "pinia";
+	const commonStore = useCommonStore();
+	const { accounts } = storeToRefs(commonStore);
+
+	onMounted(async () => {
+		if (route.params?.tab == "accounts") {
+			watch(
+				() => accounts.value,
+				async () => {
+					if (accounts.value.length <= 0) {
+						await navigateTo("/auth/entry");
+					}
+				},
+				{ immediate: true }
+			);
+		}
+	});
 
 	// Мета теги
 	useHead({

@@ -14,18 +14,40 @@
 							class="fines__button"
 							:data-fancybox="`finesBlock`"
 							data-src="#video"
+							@click="openFancy"
 						>
-							<iframe
+							<div
 								id="video"
-								width="720"
-								height="405"
-								src="https://rutube.ru/play/embed/07d0473704735c6266920f9d89c011ca/"
-								frameBorder="0"
-								allow="clipboard-write; autoplay"
-								webkitAllowFullScreen
-								mozallowfullscreen
-								allowFullScreen
-							></iframe>
+								class="fines-video__top"
+							>
+								<iframe
+									ref="videoRef"
+									width="720"
+									height="405"
+									src="https://rutube.ru/play/embed/15f4b3bced1a43b00648295076c493fa/"
+									frameBorder="0"
+									allow="clipboard-write; autoplay"
+									webkitAllowFullScreen
+									mozallowfullscreen
+									allowFullScreen
+								></iframe>
+								<div
+									v-if="!isVideoStarted"
+									@click="startVideo"
+									class="fines-video__cover"
+								>
+									<img
+										:src="`https://rutube.ru/api/video/15f4b3bced1a43b00648295076c493fa/thumbnail/?redirect=1`"
+										alt=""
+									/>
+									<div class="guide__video-play play-video">
+										<img
+											src="/icons/play-rutube.svg"
+											alt=""
+										/>
+									</div>
+								</div>
+							</div>
 							<figure class="ibg fines__icon">
 								<img
 									src="/icons/youtube_blue.svg"
@@ -33,7 +55,7 @@
 								/>
 							</figure>
 							О сервисе
-							<span class="button-text"> (7 мин 1 сек) </span>
+							<span class="button-text"> (3 мин 3 сек) </span>
 						</AppButton>
 					</FansyBox>
 				</div>
@@ -42,12 +64,10 @@
 
 		<figure class="ibg main-page__image">
 			<img
-				:src="previewImage[route.params?.type] ? previewImage[route.params?.type] : defaultImage"
+				:src="defaultImage"
 				alt="Проверьте штрафы и зарегистрируйтесь в 1 клик"
 			/>
 		</figure>
-
-		<FinesWarning @callAction="(data) => saveChanges()" />
 	</AppSection>
 </template>
 
@@ -73,279 +93,53 @@
 	import innImage from "/main/fines/preview-inn.png";
 	import defaultImage from "/main/fines/main-preview.png";
 
-	import { useUserStore } from "@/stores/userStore.js";
-	const userStore = useUserStore();
-
-	const route = useRoute();
-
-	const { regData } = storeToRefs(userStore);
-
-	const checkboxLink = `<div class="main-page__text">
-	       Я понимаю и принимаю <a href="/docs/politics" class="main-page__link" target="_blank"> условия и политику конфиденциальности </a> Compas
-	   </div>`;
-
-	const changeValue = (data) => {
-		regData.value[data.key] = data.value;
-	};
-
-	const disabledButton = computed(() => {
-		let txt = /^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-		return !regData.value.confidence || regData.value.password == "" || regData.value.passwordConfirmation == "" || regData.value.email == "";
-	});
-
-	const registration = () => {
-		if (route.query.tariff) {
-			regData.value.tariff = route.query.tariff;
-		}
-		if (!userStore.regButtonLoad) {
-			userStore.registration(regData.value);
-		}
-	};
-
-	const commonStore = useCommonStore();
-
-	const previewImage = {
-		"po-sts": stsImage,
-		"po-voditelskomu-udostovereniyu": vuImage,
-		"po-nomeru-postanovleniya": postanovlenieImage,
-		"po-nomeru-avto": gosImage,
-		"po-inn": innImage,
-	};
-
-	const titleMap = {
-		"po-sts": "по СТС",
-		"po-voditelskomu-udostovereniyu": "по водительскому удостоверению",
-		"po-nomeru-postanovleniya": "по номеру постановления",
-		"po-nomeru-avto": "по гос. номеру",
-		"po-inn": "по ИНН",
-	};
-
-	let fields = computed(() => {
-		switch (route.params.type) {
-			case "po-sts": {
-				return [
-					{
-						title: "Номер СТС",
-						key: "sts",
-						name: "sts_number",
-						type: "text",
-						mask: "## XX ######",
-						value: "",
-						required: true,
-						placeholder: "00 AA 000000",
-						class: "input_line",
-					},
-				];
-			}
-			case "po-voditelskomu-udostovereniyu": {
-				return [
-					{
-						title: "Номер ВУ",
-						key: "vu",
-						name: "driver_license",
-						type: "text",
-						mask: "## ## ######",
-						value: "",
-						required: true,
-						placeholder: "00 00 000000",
-						class: "input_line",
-					},
-				];
-			}
-			case "po-nomeru-postanovleniya": {
-				return [
-					{
-						title: "Номер постановления",
-						key: "uin",
-						name: "num_post",
-						type: "number",
-						mask: "####################",
-						value: "",
-						required: true,
-						placeholder: "00000000000000000000",
-						class: "input_line",
-					},
-				];
-			}
-			case "po-nomeru-avto": {
-				return [
-					{
-						title: "Гос. номер автомобиля",
-						key: "gos",
-						name: "number",
-						type: "text",
-						mask: "A ### AA ###",
-						value: "",
-						required: true,
-						placeholder: "A 000 AA 777",
-						class: "input_line",
-					},
-					{
-						title: "Номер СТС",
-						key: "sts",
-						name: "sts_number",
-						type: "text",
-						mask: "## XX ######",
-						value: "",
-						required: true,
-						placeholder: "00 AA 000000",
-						class: "input_line",
-					},
-				];
-			}
-			case "po-inn": {
-				return [
-					{
-						title: "ИНН компании",
-						key: "inn",
-						name: "inn",
-						type: "text",
-						mask: "############",
-						value: "",
-						required: true,
-						placeholder: "000000000000",
-						class: "input_line",
-					},
-					{
-						title: "КПП компании",
-						key: "kpp",
-						name: "kpp",
-						type: "text",
-						mask: "#########",
-						value: "",
-						required: true,
-						placeholder: "000000000000",
-						class: "input_line",
-					},
-				];
-			}
-			default: {
-				return [
-					{
-						title: "Гос. номер автомобиля",
-						key: "number",
-						name: "number",
-						type: "text",
-						mask: "A ### AA ###",
-						value: "",
-						required: true,
-						placeholder: "A 000 AA 777",
-						class: "input_line",
-					},
-					{
-						title: "Номер СТС",
-						key: "certificate",
-						name: "sts_number",
-						type: "text",
-						mask: "## XX ######",
-						value: "",
-						required: true,
-						placeholder: "00 AA 000000",
-						class: "input_line",
-					},
-				];
-			}
-		}
-	});
-
-	let form = ref([]);
-	watchEffect(() => {
-		form.value = [...fields.value];
-	});
-
-	const formData = computed(() => {
-		const data = {};
-		for (let item of form.value) {
-			const trimmedValue = item.value.replace(/\s+/g, "");
-			data[item.name] = trimmedValue;
-		}
-		return data;
-	});
-
-	let invalidFields = ref([]);
-	let isShow = ref(false);
-	const isLoading = ref(false);
-
-	// const changeValue = data => {
-	// 	let findIndex = form.value.findIndex(p => p.key == data.key);
-	// 	form.value[findIndex].value = data.value;
-	// };
-
-	// Сохранение редактируемых полей
-	const saveChanges = () => {
-		// Инициализация сохранения строк
-		const initSave = async () => {
-			if (invalidFields.value.length > 0) {
-				isShow.value = {
-					state: true,
-					type: "validation",
-				};
-			} else {
-				isShow.value = {
-					state: false,
-					type: null,
-				};
-				isLoading.value = true;
-
-				try {
-					const { domain, success, token, url } = await api.callMethod("POST", `registration`, { ...formData.value, tariff: 1 });
-
-					if (success) {
-						const isInside = commonStore.accounts.find((i) => i.toLowerCase() == domain.toLowerCase());
-						!isInside && commonStore.accounts.push(domain.toLowerCase());
-						navigateTo(`https://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });
-						for (let elem of form.value) {
-							elem.value = "";
-						}
-					}
-				} catch (error) {
-				} finally {
-					isLoading.value = false;
-				}
+	let timeoutLoadVideo = false;
+	const openFancy = () => {
+		setTimeout(() => {
+			timeoutLoadVideo = true;
+		}, 1500);
+		const checkIsIframeOpen = (e) => {
+			if (!e.target.closest("#video")) {
+				document.removeEventListener("pointerdown", checkIsIframeOpen);
+				isVideoStarted.value = false;
 			}
 		};
-
-		// Проверка полей на валидацию
-		const checkingFields = () => {
-			// Валидация полей
-			const validateField = (field) => {
-				let error = ValidateField(field, field.value);
-
-				if (error.state) {
-					return error.text;
-				} else {
-					return false;
-				}
-			};
-
-			for (let field of form.value) {
-				let error = validateField(field);
-				if (error) {
-					invalidFields.value.push({
-						field: field,
-						error: error,
-					});
-				} else {
-					let repeatPassword = form.value.find((p) => p.key == "repeatPassword");
-					let password = form.value.find((p) => p.key == "password");
-					if ((field.type == "password" || field.type == "repeatPassword") && password.value != repeatPassword.value) {
-						invalidFields.value.push({
-							field: field,
-							error: "Пароли должны совпадать",
-						});
-					}
-				}
-			}
-		};
-
-		invalidFields.value = [];
-		checkingFields();
-		initSave();
+		document.addEventListener("pointerdown", checkIsIframeOpen);
 	};
+	const isVideoStarted = ref(false);
+	const videoRef = ref(null);
 
-	provide("form", form);
-	provide("isShow", isShow);
-	provide("invalidFields", invalidFields);
+	function play() {
+		if (!timeoutLoadVideo) {
+			setTimeout(() => {
+				var player = videoRef.value;
+				player.contentWindow.postMessage(
+					JSON.stringify({
+						type: "player:play",
+
+						data: {},
+					}),
+					"*"
+				);
+			}, 1500);
+			return;
+		}
+		var player = videoRef.value;
+		player.contentWindow.postMessage(
+			JSON.stringify({
+				type: "player:play",
+
+				data: {},
+			}),
+			"*"
+		);
+	}
+
+	const startVideo = async () => {
+		isVideoStarted.value = true;
+		await nextTick();
+		play();
+	};
 </script>
 
 <style>

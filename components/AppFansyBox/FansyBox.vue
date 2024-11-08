@@ -25,4 +25,7 @@
             ...(options || {}),
         });
     });
+    onUnmounted(()=>{
+        console.log('Unmounted');
+    })
 </script>

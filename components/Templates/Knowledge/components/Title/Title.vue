@@ -1,10 +1,9 @@
 <template>
-	<AppH2 class="title">{{ props.title }}</AppH2>
+	<AppH1 class="title">{{ props.title }}</AppH1>
 </template>
 
 <script setup>
-	import { storeToRefs } from "pinia";
-	import AppH2 from "@/components/AppHeaders/H2/H2.vue";
+	import AppH1 from "@/components/AppHeaders/H1/H1.vue";
 
 	const props = defineProps({
 		title: { type: String, required: true },

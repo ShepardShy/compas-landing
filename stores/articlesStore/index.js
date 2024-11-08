@@ -11,6 +11,7 @@ export const useArticlesStore = defineStore("articlesStore", {
 		page: 1,
 		perPage: 12,
 		canUpdate: true,
+		isLoading: false,
 	}),
 	getters: {
 		currentTitle() {
@@ -21,7 +22,7 @@ export const useArticlesStore = defineStore("articlesStore", {
 			}
 			const category = this.categories.find((category) => (route.fullPath.includes(category.slug) ? category : null));
 
-			return category ? category.name : this.categories[0].name;
+			return category ? category.name : "Статьи";
 		},
 
 		activeChild: (state) => {
@@ -72,6 +73,7 @@ export const useArticlesStore = defineStore("articlesStore", {
 	actions: {
 		async loadArticles() {
 			if (this.canUpdate) {
+				this.isLoading = true;
 				const { categories } = await api.callMethod("GET", `blog`, {});
 				this.categories = categories;
 				const categoryId = this.categories?.find((category) => category.slug == route.params.category)?.id;
@@ -81,6 +83,7 @@ export const useArticlesStore = defineStore("articlesStore", {
 				if (this.page > this.countPages) {
 					this.page = 1;
 				}
+				this.isLoading = false;
 			}
 		},
 		async loadArticle(slug) {

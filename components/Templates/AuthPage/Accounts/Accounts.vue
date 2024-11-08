@@ -39,15 +39,9 @@
 	const commonStore = useCommonStore();
 	const { accounts } = storeToRefs(commonStore);
 
-	const deleteAccount = accToDelete => {
-		accounts.value = accounts.value.filter(acc => acc != accToDelete);
+	const deleteAccount = (accToDelete) => {
+		accounts.value = accounts.value.filter((acc) => acc != accToDelete);
 	};
-
-	watchEffect(() => {
-		if (accounts.value.length <= 0) {
-			navigateTo("/auth/entry");
-		}
-	});
 
 	const props = defineProps({
 		authRef: {

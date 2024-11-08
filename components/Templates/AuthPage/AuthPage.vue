@@ -8,13 +8,13 @@
 				<AuthAccounts
 					v-if="activeTab == 'accounts'"
 					:authRef="authRef"
-					@changeActiveTab="tab => changeActiveTab(tab)"
+					@changeActiveTab="(tab) => changeActiveTab(tab)"
 				/>
 
 				<AuthEntry
 					v-else-if="activeTab == 'entry'"
 					:authRef="authRef"
-					@changeActiveTab="tab => changeActiveTab(tab)"
+					@changeActiveTab="(tab) => changeActiveTab(tab)"
 				/>
 
 				<!-- <AuthForget
@@ -24,7 +24,7 @@
 
 				<AuthRegistration
 					v-else-if="activeTab == 'registration'"
-					@changeActiveTab="tab => changeActiveTab(tab)"
+					@changeActiveTab="(tab) => changeActiveTab(tab)"
 				/>
 			</div>
 
@@ -47,6 +47,15 @@
 			</div>
 		</div>
 	</div>
+	<div class="auth__text auth__bottomtext">
+		Перейти на сайт
+		<NuxtLink
+			class="auth__link"
+			to="https://compas.pro/"
+		>
+			Compas.pro
+		</NuxtLink>
+	</div>
 </template>
 
 <script setup>
@@ -66,7 +75,7 @@
 	const authRef = ref(null);
 	const router = useRoute();
 
-	const changeActiveTab = tab => {
+	const changeActiveTab = (tab) => {
 		userStore.authError.text = "";
 		activeTab.value = tab;
 		navigateTo(`/auth/${tab}`);

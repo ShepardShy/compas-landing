@@ -47,18 +47,41 @@
 						class="fines__button"
 						:data-fancybox="`finesBlock`"
 						data-src="#video"
+						@click="openFancy"
 					>
-						<iframe
+						<div
 							id="video"
-							width="720"
-							height="405"
-							:src="`${videoMap[route.params?.type ?? 'default'].link}?getPlayOptions=thumbnail_url`"
-							frameBorder="0"
-							allow="clipboard-write; autoplay"
-							webkitAllowFullScreen
-							mozallowfullscreen
-							allowFullScreen
-						></iframe>
+							class="fines-video__top"
+						>
+							<iframe
+								ref="videoRef"
+								width="720"
+								height="405"
+								:src="`${videoMap[route.params?.type ?? 'default'].link}?getPlayOptions=thumbnail_url`"
+								frameBorder="0"
+								allow="clipboard-write; autoplay"
+								webkitAllowFullScreen
+								mozallowfullscreen
+								allowFullScreen
+							></iframe>
+							<div
+								v-if="!isVideoStarted"
+								@click="startVideo"
+								class="fines-video__cover"
+							>
+								<img
+									:src="`https://rutube.ru/api/video/${videoId}/thumbnail/?redirect=1`"
+									alt=""
+								/>
+								<div class="guide__video-play play-video">
+									<img
+										src="/icons/play-rutube.svg"
+										alt=""
+									/>
+								</div>
+							</div>
+						</div>
+
 						<figure class="ibg fines__icon">
 							<img
 								src="/icons/youtube_blue.svg"
@@ -130,15 +153,15 @@
 
 	const videoMap = {
 		"po-sts": {
-			link: "https://rutube.ru/play/embed/15f4b3bced1a43b00648295076c493fa/?p=MVJiI4Bm08aXsKK95L2_4A",
+			link: "https://rutube.ru/play/embed/15f4b3bced1a43b00648295076c493fa/",
 			duration: "3 мин 3 сек",
 		},
 		"po-voditelskomu-udostovereniyu": {
-			link: "https://rutube.ru/play/embed/873651c2fbcea2f7936eaa96d4e537f3/?p=fBqzfWQSsZgkfK_z-GKWhA",
+			link: "https://rutube.ru/play/embed/873651c2fbcea2f7936eaa96d4e537f3/",
 			duration: "3 мин 1 сек",
 		},
 		"po-nomeru-postanovleniya": {
-			link: "https://rutube.ru/play/embed/6857b8a657ff4ec260b2a6ac2b3c4f6c/?p=b8uwGHql8LHP421gBmBFTA",
+			link: "https://rutube.ru/play/embed/6857b8a657ff4ec260b2a6ac2b3c4f6c/",
 			duration: "3 мин 1 сек",
 		},
 		"po-nomeru-avto": {
@@ -146,13 +169,69 @@
 			duration: "3 мин 4 сек",
 		},
 		"po-inn": {
-			link: "https://rutube.ru/play/embed/a7264a4686a95aaf930521e381d11611/?p=7SL3jEghPu6g5hDJIj5bMA",
+			link: "https://rutube.ru/play/embed/a7264a4686a95aaf930521e381d11611/",
 			duration: "3 мин 7 сек",
 		},
 		default: {
-			link: "https://rutube.ru/play/embed/15f4b3bced1a43b00648295076c493fa/?p=MVJiI4Bm08aXsKK95L2_4A",
+			link: "https://rutube.ru/play/embed/15f4b3bced1a43b00648295076c493fa/",
 			duration: "3 мин 3 сек",
 		},
+	};
+
+	const videoLinkArr = videoMap[route.params?.type ?? "default"].link.split("/");
+	// id Видео
+	let videoId = videoLinkArr[videoLinkArr.length - 1];
+	if (videoLinkArr[videoLinkArr.length - 1] == "") {
+		videoLinkArr.splice(videoLinkArr.length - 1, 1);
+		videoId = videoLinkArr[videoLinkArr.length - 1];
+	}
+
+	let timeoutLoadVideo = false;
+	const openFancy = () => {
+		setTimeout(() => {
+			timeoutLoadVideo = true;
+		}, 1500);
+		const checkIsIframeOpen = (e) => {
+			if (!e.target.closest("#video")) {
+				document.removeEventListener("pointerdown", checkIsIframeOpen);
+				isVideoStarted.value = false;
+			}
+		};
+		document.addEventListener("pointerdown", checkIsIframeOpen);
+	};
+	const isVideoStarted = ref(false);
+	const videoRef = ref(null);
+
+	function play() {
+		if (!timeoutLoadVideo) {
+			setTimeout(() => {
+				var player = videoRef.value;
+				player.contentWindow.postMessage(
+					JSON.stringify({
+						type: "player:play",
+
+						data: {},
+					}),
+					"*"
+				);
+			}, 1500);
+			return;
+		}
+		var player = videoRef.value;
+		player.contentWindow.postMessage(
+			JSON.stringify({
+				type: "player:play",
+
+				data: {},
+			}),
+			"*"
+		);
+	}
+
+	const startVideo = async () => {
+		isVideoStarted.value = true;
+		await nextTick();
+		play();
 	};
 
 	let fields = computed(() => {

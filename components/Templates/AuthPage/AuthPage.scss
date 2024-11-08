@@ -21,8 +21,6 @@
 // }
 
 .auth {
-	padding-bottom: 200px;
-
 	.form-item__title {
 		color: variables.$color-dark-grey;
 	}
@@ -199,13 +197,26 @@
 	color: variables.$color-light-red;
 }
 
+.page:has(.auth) {
+	grid-template-rows: unset;
+}
+.container:has(.auth) {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
 .auth__text {
 	font-size: 16px;
 	&.auth__subtext {
 		position: relative;
 		z-index: 2;
 		margin-top: 16px;
+		margin-bottom: 16px;
 		font-size: 16px;
+	}
+	&.auth__bottomtext {
+		margin: auto auto 0 auto;
 	}
 }
 

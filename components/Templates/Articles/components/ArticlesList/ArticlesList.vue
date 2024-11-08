@@ -1,6 +1,9 @@
 <template>
 	<div class="articles__list">
-		<template v-for="{ name, views, slug, preview_picture, created_at } in articlesList">
+		<template
+			v-if="!isLoading"
+			v-for="{ name, views, slug, preview_picture, created_at } in articlesList"
+		>
 			<ArticleItem
 				v-if="name"
 				:date="created_at"
@@ -12,7 +15,7 @@
 		</template>
 	</div>
 	<AppPagination
-		v-if="countPages > 1"
+		v-if="countPages > 1 && !isLoading"
 		:totalPages="countPages"
 		:perPageOptions
 		:perPage
@@ -31,7 +34,7 @@
 
 	const articlesStore = useArticlesStore();
 
-	const { page, perPage, countPages, total } = storeToRefs(articlesStore);
+	const { page, perPage, countPages, isLoading } = storeToRefs(articlesStore);
 
 	const showMore = () => {
 		articlesStore.showMore();

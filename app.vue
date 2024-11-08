@@ -1,11 +1,17 @@
 <template>
-	<NuxtLoadingIndicator color="#de7403" />
+	<NuxtLoadingIndicator
+		v-if="!route.fullPath.includes('/auth')"
+		color="#de7403"
+	/>
 	<div class="wrapper">
 		<div
 			class="page"
 			:class="route.path == '/auth' ? 'page_auth' : ''"
 		>
-			<AppMenu :isShowMobile="false" />
+			<AppMenu
+				v-if="!route.fullPath.includes('/auth')"
+				:isShowMobile="false"
+			/>
 			<AppMain>
 				<NuxtPage />
 			</AppMain>
