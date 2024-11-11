@@ -5,20 +5,21 @@
 <script setup>
 	import TemplateGuides from "@/components/Templates/Guides/Guides.vue";
 
-	// Мета теги
-	useHead({
-		// title: "Блог Compas.pro: Полезные статьи о штрафах, ПДД и правах водителей | Compas.pro",
-		// meta: [
-		// 	{
-		// 		name: "description",
-		// 		content: "Читайте наш блог на Compas.pro — здесь собраны полезные статьи и советы для водителей о штрафах, правилах дорожного движения и защите своих прав. Узнайте, как проверить штрафы ГИБДД, избежать и оспорить их.",
-		// 	},
-		// ],
-		link: [
-			{
-				rel: "canonical",
-				href: `https://compas.pro/guides-category`,
-			},
-		],
-	});
+	const config = useRuntimeConfig();
+	const route = useRoute()
+	const canonicalUrl = ref(null)
+	
+	onMounted(() => {
+		canonicalUrl.value = `${config.public.baseURL}${route.path.replace('/landing', '')}`;
+
+		// Мета теги
+		useHead({
+			link: [
+				{
+					rel: 'canonical',
+					href: canonicalUrl.value,
+				},
+			],
+		});
+	})
 </script>

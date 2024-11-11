@@ -5,6 +5,25 @@
 <script setup>
 	import TemplateMain from "@/components/Templates/FinesList/Main.vue";
 
+	
+	const config = useRuntimeConfig();
+	const route = useRoute()
+	const canonicalUrl = ref(null)
+	
+	onMounted(() => {
+		canonicalUrl.value = `${config.public.baseURL}${route.path.replace('/landing', '')}`;
+
+		// Мета теги
+		useHead({
+			link: [
+				{
+					rel: 'canonical',
+					href: canonicalUrl.value,
+				},
+			],
+		});
+	})
+
 	// Мета теги
 	useHead({
 		title: "Проверка и оплата штрафов ГИБДД онлайн | Compas.pro",
@@ -18,12 +37,6 @@
 				name: "robots",
 				content: "noindex, nofollow",
 			},
-		],
-		link: [
-			{
-				rel: "canonical",
-				href: `https://compas.pro/products/fines/list`,
-			},
-		],
+		]
 	});
 </script>

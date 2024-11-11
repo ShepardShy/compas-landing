@@ -14,12 +14,25 @@
 				content:
 					"Нужна помощь или дополнительная информация? Свяжитесь с нами через удобные каналы — телефон, email или форму обратной связи. Мы всегда рады помочь вам с любыми вопросами, связанными с нашими услугами и продуктами.",
 			},
-		],
-		link: [
-			{
-				rel: "canonical",
-				href: `https://compas.pro/contacts`,
-			},
-		],
+		]
 	});
+
+	
+	const config = useRuntimeConfig();
+	const route = useRoute()
+	const canonicalUrl = ref(null)
+	
+	onMounted(() => {
+		canonicalUrl.value = `${config.public.baseURL}${route.path.replace('/landing', '')}`;
+
+		// Мета теги
+		useHead({
+			link: [
+				{
+					rel: 'canonical',
+					href: canonicalUrl.value,
+				},
+			],
+		});
+	})
 </script>

@@ -6,7 +6,23 @@
 	import Distance from "~/components/Templates/Distance/Distance.vue";
 	import meta from "/assets/json/distance/meta.json";
 
-	const route = useRoute();
+	const config = useRuntimeConfig();
+	const route = useRoute()
+	const canonicalUrl = ref(null)
+	
+	onMounted(() => {
+		canonicalUrl.value = `${config.public.baseURL}${route.path.replace('/landing', '')}`;
+
+		// Мета теги
+		useHead({
+			link: [
+				{
+					rel: 'canonical',
+					href: canonicalUrl.value,
+				},
+			],
+		});
+	})
 
 	// Мета теги
 	useHead({
@@ -16,12 +32,6 @@
 				name: "description",
 				content: `${meta[route.params.tab].description}`,
 			},
-		],
-		link: [
-			{
-				rel: "canonical",
-				href: `https://compas.pro/products/distance/${route.params.tab}`,
-			},
-		],
+		]
 	});
 </script>

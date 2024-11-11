@@ -3,22 +3,21 @@
 <script setup>
 	import ArticleOne from "@/components/Templates/ArticleOne/ArticleOne.vue";
 
-	const route = useRoute();
+	const config = useRuntimeConfig();
+	const route = useRoute()
+	const canonicalUrl = ref(null)
+	
+	onMounted(() => {
+		canonicalUrl.value = `${config.public.baseURL}${route.path.replace('/landing', '')}`;
 
-	// Мета теги
-	useHead({
-		// title: "Вопросы ответы | Compas.pro",
-		// meta: [
-		// 	{
-		// 		name: "description",
-		// 		content: "Описание.",
-		// 	},
-		// ],
-		link: [
-			{
-				rel: "canonical",
-				href: `https://compas.pro/articles/${route.params.id}`,
-			},
-		],
-	});
+		// Мета теги
+		useHead({
+			link: [
+				{
+					rel: 'canonical',
+					href: canonicalUrl.value,
+				},
+			],
+		});
+	})
 </script>

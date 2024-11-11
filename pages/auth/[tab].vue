@@ -7,14 +7,17 @@
 
 	import AuthPage from "~/components/Templates/AuthPage/AuthPage.vue";
 
-	const route = useRoute();
-
 	import { useCommonStore } from "@/stores/commonStore.js";
 	import { storeToRefs } from "pinia";
 	const commonStore = useCommonStore();
 	const { accounts } = storeToRefs(commonStore);
 
-	onMounted(async () => {
+
+	const config = useRuntimeConfig();
+	const route = useRoute()
+	const canonicalUrl = ref(null)
+	
+	onMounted(() => {
 		if (route.params?.tab == "accounts") {
 			watch(
 				() => accounts.value,
@@ -26,7 +29,20 @@
 				{ immediate: true }
 			);
 		}
-	});
+
+		canonicalUrl.value = `${config.public.baseURL}${route.path.replace('/landing', '')}`;
+
+		// Мета теги
+		useHead({
+			link: [
+				{
+					rel: 'canonical',
+					href: canonicalUrl.value,
+				},
+			],
+		});
+	})
+
 
 	// Мета теги
 	useHead({
@@ -36,13 +52,7 @@
 				name: "description",
 				content: "Описание.",
 			},
-		],
-		link: [
-			{
-				rel: "canonical",
-				href: `https://compas.pro/auth/${route.params.tab}`,
-			},
-		],
+		]
 	});
 
 	onMounted(() => {

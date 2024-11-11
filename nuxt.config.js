@@ -15,7 +15,7 @@ export default defineNuxtConfig({
 	// },
 	runtimeConfig: {
 		public: {
-			baseURL: "https://compas.pro/",
+			baseURL: "https://compas.pro",
 		},
 	},
 
@@ -70,7 +70,7 @@ export default defineNuxtConfig({
 				allow: ["C:/node_modules/ufo/dist", "C:/node_modules/defu/dist"],
 			},
 			hmr: {
-				clientPort: 3000,
+				clientPort: 3001,
 			},
 		},
 	},

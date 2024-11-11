@@ -5,7 +5,6 @@
 <script setup>
 	import TemplateMain from "@/components/Templates/Main/Main.vue";
 
-	const route = useRoute();
 	const titles = {
 		"po-sts": "Штрафы ГИБДД по СТС: проверка и оплата штрафов онлайн",
 		"po-voditelskomu-udostovereniyu": "Проверка штрафов ГИБДД по водительскому удостоверению",
@@ -26,6 +25,24 @@
 			"Узнайте свои штрафы ГИБДД для юридических лиц по ИНН. Введите индивидуальный номер налогоплательщика и получите информацию о штрафах. Быстрая и безопасная оплата онлайн, без очередей и задержек.",
 	};
 
+	const config = useRuntimeConfig();
+	const route = useRoute()
+	const canonicalUrl = ref(null)
+	
+	onMounted(() => {
+		canonicalUrl.value = `${config.public.baseURL}${route.path.replace('/landing', '')}`;
+
+		// Мета теги
+		useHead({
+			link: [
+				{
+					rel: 'canonical',
+					href: canonicalUrl.value,
+				},
+			],
+		});
+	})
+
 	// Мета теги
 	useHead({
 		title: `${titles[route.params.type]} | Compas.pro`,
@@ -34,12 +51,6 @@
 				name: "description",
 				content: descriptions[route.params.type],
 			},
-		],
-		link: [
-			{
-				rel: "canonical",
-				href: `https://compas.pro/products/fines/${route.params.type}`,
-			},
-		],
+		]
 	});
 </script>
