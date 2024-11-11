@@ -5,7 +5,7 @@
 			<Search
 				class="guides__search"
 				@changeValue="changeValueSearch"
-				placeholder="Поиск по статьям"
+				placeholder="Поиск по гайдам"
 				:options="searchOptions"
 			/>
 			<AppNav
@@ -38,7 +38,7 @@
 
 	page.value = 1;
 	perPage.value = 12;
-	await useAsyncData("guides", async () => await guidesStore.loadGuides());
+	await useLazyAsyncData("guides", async () => await guidesStore.loadGuides());
 
 	watch(
 		() => [page.value, perPage.value],
@@ -47,12 +47,12 @@
 		}
 	);
 
-	watch(
-		() => currentCategoryId.value,
-		async () => {
-			await guidesStore.loadGuides();
-		}
-	);
+	// watch(
+	// 	() => currentCategoryId.value,
+	// 	async () => {
+	// 		await guidesStore.loadGuides();
+	// 	}
+	// );
 
 	const searchOptions = ref([]);
 	const changeValueSearch = async (search) => {

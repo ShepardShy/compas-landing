@@ -6,7 +6,7 @@
 
 
         <div class="warning__actions">
-            <form ref="paymentFormRef" target="_blank" class="button" method="get" action="https://www.payanyway.ru/assistant.htm?version=v3">
+            <form ref="paymentFormRef" @submit.prevent="getMonetaPayID" class="button" method="get" action="https://www.payanyway.ru/assistant.htm?version=v3">
                 <input type="hidden" name="MNT_ID" value="70116321">
                 <input type="hidden" name="MNT_SUCCESS_URL" value="https://compas.pro/payment">
                 <input type="hidden" name="MNT_CURRENCY_CODE" value="RUB">
@@ -17,7 +17,7 @@
                 <input type="hidden" name="javascriptEnabled" value="true">
                 <input type="hidden" name="followup" value="true">
                 <input type="hidden" name="paymentSystem.unitId" :value="activePayment.slugIDForm">
-                <input type="submit" class="pseudo-button" value="Оплатить" @click.prevent="() => getMonetaPayID()">
+                <input type="submit" class="pseudo-button" value="Оплатить">
             </form>
 
             <AppButton class="warning__button" @click="() => showWarning()">
@@ -43,7 +43,7 @@
         const res = await tableScripts.getMonetaPayID({...activePayment.value, value: activePayment.value?.percentValue})
 
         if(res?.success){
-            paymentFormRef.value.submit()
+            paymentFormRef.value.submit();
         }else if(res?.error){
             commonScripts.showNotification(
 				{

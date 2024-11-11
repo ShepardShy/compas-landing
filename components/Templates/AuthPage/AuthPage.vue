@@ -5,14 +5,8 @@
 	>
 		<div class="auth__main">
 			<div class="auth__wrapper">
-				<AuthAccounts
-					v-if="activeTab == 'accounts'"
-					:authRef="authRef"
-					@changeActiveTab="(tab) => changeActiveTab(tab)"
-				/>
-
 				<AuthEntry
-					v-else-if="activeTab == 'entry'"
+					v-if="activeTab == 'entry'"
 					:authRef="authRef"
 					@changeActiveTab="(tab) => changeActiveTab(tab)"
 				/>
@@ -34,16 +28,15 @@
 					alt=""
 				/>
 			</figure>
-
-			<div class="auth__text auth__subtext">
-				Вернуться на
-				<NuxtLink
-					class="auth__link"
-					to="/"
-				>
-					основной сайт
-				</NuxtLink>
-			</div>
+		</div>
+		<div class="auth__text auth__subtext">
+			Вернуться на
+			<NuxtLink
+				class="auth__link"
+				to="/"
+			>
+				основной сайт
+			</NuxtLink>
 		</div>
 	</div>
 </template>
@@ -52,7 +45,6 @@
 	import "./AuthPage.scss";
 
 	import AuthEntry from "./Entry/Entry.vue";
-	import AuthAccounts from "./Accounts/Accounts.vue";
 	import AuthRegistration from "./Registration/Registration.vue";
 	import { useUserStore } from "@/stores/userStore.js";
 	import { useCommonStore } from "@/stores/commonStore.js";
@@ -72,7 +64,7 @@
 	};
 
 	onMounted(() => {
-		if (activeTab.value != "registration" && activeTab.value != "entry" && activeTab.value != "accounts") {
+		if (activeTab.value != "registration" && activeTab.value != "entry") {
 			navigateTo("/404");
 		}
 	});
@@ -81,11 +73,9 @@
 		if (router.params.tab) {
 			activeTab.value = router.params.tab;
 		} else {
-			commonStore.accounts.length > 0 ? (activeTab.value = "accounts") : (activeTab.value = "entry");
+			activeTab.value = "entry";
 			navigateTo(`/auth/${activeTab.value}`);
 		}
-
-		localStorage.clear();
 	});
 
 	onMounted(() => {
@@ -115,7 +105,7 @@
 			if (router.params.tab) {
 				activeTab.value = router.params.tab;
 			} else {
-				commonStore.accounts.length > 0 ? (activeTab.value = "accounts") : (activeTab.value = "entry");
+				activeTab.value = "entry";
 				navigateTo(`/auth/${activeTab.value}`);
 			}
 		},

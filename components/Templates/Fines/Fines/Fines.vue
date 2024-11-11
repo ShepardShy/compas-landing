@@ -171,8 +171,8 @@
 			duration: "3 мин 7 сек",
 		},
 		default: {
-			link: "https://rutube.ru/play/embed/15f4b3bced1a43b00648295076c493fa/",
-			duration: "3 мин 3 сек",
+			link: "https://rutube.ru/play/embed/8e8987113cc8cda11efb0b2f2c245f7c/",
+			duration: "5 мин 38 сек",
 		},
 	};
 

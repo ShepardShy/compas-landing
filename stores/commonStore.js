@@ -14,7 +14,12 @@ export const useCommonStore = defineStore("commonStore", {
 		};
 	},
 
-	persist: true,
+	persist: {
+		afterRestore: (ctx) => {
+			console.log(`about to restore '${ctx.store.$id}'`);
+		},
+		storage: persistedState.localStorage,
+	},
 
 	// actions
 	actions: {},

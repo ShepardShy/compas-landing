@@ -1,9 +1,11 @@
 <template>
 	<div class="tarif">
-		<p
-			v-html="content"
-			class="tarif__text"
-		></p>
+		<ClientOnly>
+			<p
+				v-html="contents[route.params?.tab]"
+				class="tarif__text"
+			></p>
+		</ClientOnly>
 	</div>
 </template>
 
@@ -12,9 +14,8 @@
 	import contents from "../../composables/content.json";
 
 	const route = useRoute();
-	const content = computed(() => contents[route.params?.tab]);
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	@import url(./Tarif.scss);
 </style>

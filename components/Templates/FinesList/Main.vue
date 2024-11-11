@@ -30,14 +30,13 @@
 	import MainBase from "./Base/Base.vue";
 	import MainFines from "./Fines/Fines.vue";
 	import MainPluses from "./Pluses/Pluses.vue";
-	import MainSteps from "./Steps/Steps.vue";
+	import MainSteps from "@/components/Templates/Common/Steps/Steps.vue";
 	import MainAbout from "@/components/Templates/Common/WrapText/WrapText.vue";
 	import MainQuestions from "~/components/Templates/Common/QuestionsBlock/QuestionsBlock.vue";
 	import MainArticles from "~/components/Templates/Common/ArticlesBlock/ArticlesBlock.vue";
 	import CommonSocial from "@/components/Templates/Common/Social/Social.vue";
 	import MainCompanies from "@/components/Templates/Common/Companies/Companies.vue";
 	import CommonProgramm from "@/components/Templates/Common/ProgrammBig/Programm.vue";
-	// import MainTariffs from '@/components/Templates/Main/Tariffs/Tariffs.vue';
 	import PlusesFines from "./PlusesFines/PlusesFines.vue";
 	import AppTabs from "~/components/AppTabs/Tabs.vue";
 	import FinesList from "./FinesList/FinesList.vue";
@@ -70,7 +69,7 @@
 	};
 
 	// Смена вкладки
-	const changeTab = async tab => {
+	const changeTab = async (tab) => {
 		activeTab.value.tab = tab.value;
 		await navigateTo(`/products/fines${activeTab.value.tab ? `/${activeTab.value.tab}` : ""}`);
 	};

@@ -25,7 +25,7 @@
 						mozallowfullscreen
 						allowFullScreen
 					></iframe>
-					<!-- <div
+					<div
 						v-if="!isVideoStarted"
 						@click="startVideo"
 						class="fines-video__cover"
@@ -40,7 +40,7 @@
 								alt=""
 							/>
 						</div>
-					</div> -->
+					</div>
 				</div>
 
 				<figure class="ibg fines__icon">

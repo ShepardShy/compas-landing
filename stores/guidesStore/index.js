@@ -72,6 +72,7 @@ export const useGuidesStore = defineStore("guidesStore", {
 	actions: {
 		async loadGuides() {
 			if (this.canUpdate) {
+				this.guides = [];
 				const { categories } = await api.callMethod("GET", `guides`, {});
 				this.categories = categories;
 				const categoryId = this.categories?.find((category) => category.slug == route.params.category)?.id;

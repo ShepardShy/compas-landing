@@ -70,7 +70,7 @@ export default defineNuxtConfig({
 				allow: ["C:/node_modules/ufo/dist", "C:/node_modules/defu/dist"],
 			},
 			hmr: {
-				clientPort: 3001,
+				clientPort: 3000,
 			},
 		},
 	},

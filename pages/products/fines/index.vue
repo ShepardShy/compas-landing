@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-	import TemplateMain from "@/components/Templates/Main/Main.vue";
+	import TemplateMain from "@/components/Templates/Fines/Main.vue";
 
 
 	const config = useRuntimeConfig();

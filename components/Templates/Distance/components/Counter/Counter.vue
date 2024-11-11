@@ -31,6 +31,6 @@
 	const emits = defineEmits(["reset"]);
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 	@import url("./Counter.scss");
 </style>

@@ -29,7 +29,7 @@
 			>
 				<img
 					class="steps__video-img"
-					src="https://rutube.ru/api/video/15f4b3bced1a43b00648295076c493fa/thumbnail/?redirect=1"
+					src="https://rutube.ru/api/video/8e8987113cc8cda11efb0b2f2c245f7c/thumbnail/?redirect=1"
 					alt="background-img"
 				/>
 				<div class="steps__video-play">
@@ -44,7 +44,7 @@
 					data-fancybox
 					width="720"
 					height="405"
-					src="https://rutube.ru/play/embed/07d0473704735c6266920f9d89c011ca/"
+					src="https://rutube.ru/play/embed/8e8987113cc8cda11efb0b2f2c245f7c/"
 					frameBorder="0"
 					allow="clipboard-write; autoplay"
 					webkitAllowFullScreen

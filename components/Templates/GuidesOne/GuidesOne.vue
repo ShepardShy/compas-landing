@@ -9,19 +9,19 @@
 			ref="$guideContent"
 			class="guide__left"
 		>
-			<AppH1 class="guide__left-title video-guide">{{ name?.value }}</AppH1>
+			<AppH1 class="guide__left-title video-guide">{{ guideDetail.name?.value }}</AppH1>
 			<Header
-				:title="name?.value"
-				:image="detail_picture.value?.[0]?.file"
+				:title="guideDetail.name?.value"
+				:image="guideDetail.detail_picture?.value?.[0]?.file"
 				:authorAvatar="author?.avatar"
 				:authorName="author?.name"
 				:authorDesc="author?.desc"
 				:authorColor="author?.color"
-				:date="created_at.value"
-				:update="updated_at.value"
-				:views="views?.value"
-				:video="video?.value"
-				:readingTime="reading_time.value"
+				:date="guideDetail.created_at?.value"
+				:update="guideDetail.updated_at?.value"
+				:views="guideDetail.views?.value"
+				:video="guideDetail.video?.value"
+				:readingTime="guideDetail.reading_time?.value"
 			/>
 			<div class="guide__content">
 				<component
@@ -36,16 +36,16 @@
 					:date
 					:type
 					:isShowMore="true"
-					v-for="{ type, body, image, title, items, answer, views, id, date } in detail_text.value"
+					v-for="{ type, body, image, title, items, answer, views, id, date } in guideDetail.detail_text?.value"
 				/>
 			</div>
 		</div>
 
 		<div class="guide__right">
-			<Nav v-if="detail_text" />
+			<Nav v-if="guideDetail?.detail_text" />
 		</div>
 	</div>
-	<Articles />
+	<!-- <Articles /> -->
 	<Social class="guide__social" />
 </template>
 
@@ -75,8 +75,7 @@
 	provide("$guideWrapper", $guideWrapper);
 	provide("$guideContent", $guideContent);
 
-	await useAsyncData("guides", async () => (guidesList.value.length == 0 ? await guidesStore.loadGuides() : 0));
-	await useAsyncData("guide", async () => await guidesStore.loadGuide(route.params.id));
+	await useLazyAsyncData("guide", async () => await guidesStore.loadGuide(route.params.id));
 
 	// const article = computed(() => articleDetail.value);
 	// console.log(article.value);
@@ -93,14 +92,13 @@
 		question,
 	};
 
-	let { created_at, user_id, updated_at, detail_picture, name, views, video, detail_text, seo_description, seo_title, reading_time } = guideDetail.value;
 	console.log(guideDetail.value, "guideDetail.value");
 
 	const author = {
-		name: user_id?.value?.localOptions?.[0]?.label?.text ?? "Темур Киселев",
+		name: guideDetail.value?.user_id?.value?.localOptions?.[0]?.label?.text ?? "Темур Киселев",
 		desc: "Эксперт компании Компас Дайнамикс",
-		avatar: user_id?.value?.localOptions?.[0]?.label?.file ?? "",
-		color: user_id?.value?.localOptions?.[0]?.label?.color ?? "",
+		avatar: guideDetail.value?.user_id?.value?.localOptions?.[0]?.label?.file ?? "",
+		color: guideDetail.value?.user_id?.value?.localOptions?.[0]?.label?.color ?? "",
 	};
 
 	// if (route.params?.id) {
@@ -128,16 +126,16 @@
 			link: "/guides",
 		},
 		{
-			title: name?.value,
+			title: guideDetail.value?.name?.value,
 			link: "/guides/za-chto-vypisan-shtraf",
 		},
 	];
 	useHead({
-		title: `${seo_title.value.value ? seo_title.value.value : seo_title.value} | Гайды | Compas.pro`,
+		title: `${guideDetail.value?.seo_title?.value?.value ? guideDetail.value?.seo_title?.value.value : guideDetail.value?.seo_title?.value} | Гайды | Compas.pro`,
 		meta: [
 			{
 				name: "description",
-				content: seo_description.value.value ? seo_description.value.value : seo_description.value,
+				content: guideDetail.value?.seo_description.value.value ? guideDetail.value?.seo_description.value.value : guideDetail.value?.seo_description.value,
 			},
 		],
 	});

@@ -7,11 +7,12 @@
 				ref="videoRef"
 			/> -->
 			<iframe
+				v-if="videoId"
 				class="header__video"
 				ref="videoRef"
 				width="720"
 				height="405"
-				:src="video"
+				:src="`https://rutube.ru/play/embed/${videoId}`"
 				frameBorder="0"
 				allow="clipboard-write; autoplay"
 				webkitAllowFullScreen

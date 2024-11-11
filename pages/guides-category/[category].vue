@@ -13,11 +13,8 @@
 		async () => {
 			await guidesStore.loadGuides();
 		},
-		{ deep: true, immediate: true }
+		{ deep: true }
 	);
-	onUnmounted(async () => {
-		await guidesStore.loadGuides();
-	});
 
 	const config = useRuntimeConfig();
 	const route = useRoute()

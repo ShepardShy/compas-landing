@@ -23,7 +23,6 @@
 		desc="Сервис «Compas.pro» собирает данные из официальных источников: ГИБДД, МАДИ, АМПП, ГИС ГМП. После проверки вы получите общее количество и сумму всех штрафов. Отчет также включает историю штрафов и детальную информацию по каждому нарушению ГИБДД."
 	/>
 	<PlusesFines />
-	<!-- <MainTariffs /> -->
 	<MainAbout :text="route.params?.type in aboutJson ? aboutJson[route.params.type].text : aboutJson.default.text" />
 
 	<MainQuestions />

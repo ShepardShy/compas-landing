@@ -26,7 +26,7 @@
                             class="table-mobile__field table__item" 
                             :class="[
                                 !item.enabled ? 'table__item_hidden' : '',
-                                !['checkbox', 'payment', 'actions', 'iconDrag', 'iconDelete'].includes(item.type) && (!item.visible_always && isEmpty(item.type == 'relation' ? row[item.key].value : row[item.key] != null ? String(row[item.key]) : row[item.key])) ? 'table__item_unvisible' : ''
+                                !['checkbox', 'payment', 'actions', 'iconDrag', 'iconDelete'].includes(item.type) && (!item.visible_always && isEmpty(item.type == 'relation' ? row[item.key]?.value : row[item.key] != null ? String(row[item.key]) : row[item.key])) ? 'table__item_unvisible' : ''
                                 ]"
                             :style="`--colorItem: ${item.color}`"
                             @click="(event) => doubleClick(event, row, item)" 
@@ -50,14 +50,14 @@
                                     id: row.id,
                                     key: item.key,
                                     title: item.title,
-                                    value: row[item.key] ? row[item.key].value : null,
+                                    value: row[item.key] ? row[item.key]?.value : null,
                                     state: row[item.key] ? row[item.key].state : null,
                                     isCanClick: item.can_edit
                                 }"
-                                @initPayment="callAction({
-                                    action: 'initPayment',
-                                    value: row[item.key]
-                                })"
+                                @initPayment="(data) => emit('callAction', {action: 'initPayment', value: {
+                                    id: row.id,
+                                    value: data.value
+                                }})"
                             />
                             <AppRelation 
                                 v-else-if="item.type == 'relation'"
@@ -96,7 +96,7 @@
                                     substring: item.unit,
                                     required: Boolean(item.required),
                                     external_link: ![null, undefined].includes(row[item.key]) && row[item.key] != '' ? row[item.key].external_link : null,
-                                    value: [null, undefined].includes(row[item.key]) ? null : typeof row[item.key] == 'object' ? String(row[item.key].value) : String(row[item.key]),
+                                    value: [null, undefined].includes(row[item.key]) ? null : typeof row[item.key] == 'object' ? String(row[item.key]?.value) : String(row[item.key]),
                                 }"
                                 :disabled="false"
                                 :isUseEnter="false"
@@ -139,7 +139,7 @@
                                 :permissions="props.permissions"
                                 :userID="userID"
                                 :is_admin="is_admin"
-                                :relationID="row.user_id.value"
+                                :relationID="row.user_id?.value"
                                 @callAction="(data) => callAction({action: data.value, value: row})"
                             />
                             <AppStatus 

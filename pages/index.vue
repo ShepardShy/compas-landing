@@ -1,16 +1,16 @@
 <template>
-	<TemplateMain /> 
+	<TemplateMainPage />
 </template>
 
 <script setup>
-	import TemplateMain from "@/components/Templates/MainPage/Main.vue";
+	import TemplateMainPage from "@/components/Templates/MainPage/Main.vue";
 
 	const config = useRuntimeConfig();
-	const route = useRoute()
-	const canonicalUrl = ref(null)
-	
+	const route = useRoute();
+	const canonicalUrl = ref(null);
+
 	onMounted(() => {
-		canonicalUrl.value = `${config.public.baseURL}${route.path.replace('/landing', '')}`;
+		canonicalUrl.value = `${config.public.baseURL}${route.path.replace("/landing", "")}`;
 
 		// Мета теги
 		useHead({
@@ -23,13 +23,12 @@
 			],
 			link: [
 				{
-					rel: 'canonical',
+					rel: "canonical",
 					href: canonicalUrl.value,
 				},
 			],
 		});
-	})
+	});
 
-	
 	// <link rel="canonical" href="https://compas.pro/">
 </script>

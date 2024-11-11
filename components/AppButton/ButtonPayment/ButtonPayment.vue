@@ -8,13 +8,12 @@
             v-show="props.item.title != null && props.item.title != ''"
             :title="props.item.title"
         />
-
         <div 
             class="button-payment" 
             @click="emit('initPayment', {
                 value: props.item.value,
                 key: props.item.key
-            })" 
+            })"
             :class="
                 [null, undefined].includes(props.item) || 
                 [null, undefined].includes(props.item.value) || 
