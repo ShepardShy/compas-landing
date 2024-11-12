@@ -1,5 +1,7 @@
 <template>
-	<AuthPage />
+	<ClientOnly>
+		<AuthPage />
+	</ClientOnly>
 </template>
 
 <script setup>

@@ -1,9 +1,11 @@
 <template>
-	<AuthPage />
+	<ClientOnly>
+		<AuthPage />
+	</ClientOnly>
 </template>
 
 <script setup>
-	import './Auth.scss'
+	import "./Auth.scss";
 
 	import AuthPage from "~/components/Templates/AuthPage/AuthPage.vue";
 
@@ -25,28 +27,28 @@
 	});
 
 	const config = useRuntimeConfig();
-	const route = useRoute()
-	const canonicalUrl = ref(null)
-	
+	const route = useRoute();
+	const canonicalUrl = ref(null);
+
 	onMounted(() => {
 		nextTick(() => {
-			document.querySelector('.page').classList.add('page_auth')
-		})
+			document.querySelector(".page").classList.add("page_auth");
+		});
 
-		canonicalUrl.value = `${config.public.baseURL}${route.path.replace('/landing', '')}`;
+		canonicalUrl.value = `${config.public.baseURL}${route.path.replace("/landing", "")}`;
 
 		// Мета теги
 		useHead({
 			link: [
 				{
-					rel: 'canonical',
+					rel: "canonical",
 					href: canonicalUrl.value,
 				},
 			],
 		});
-	})
+	});
 
 	onUnmounted(() => {
-		document.querySelector('.page').classList.remove('page_auth')
-	})
+		document.querySelector(".page").classList.remove("page_auth");
+	});
 </script>
