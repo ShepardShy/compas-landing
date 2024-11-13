@@ -90,7 +90,9 @@ body.body__cursor-style {
 }
 
 #__nuxt {
-	height: 100%;
+	min-height: 100vh;
+	min-width: 100vw;
+	background: radial-gradient(circle at 30% 23%, #000, #1c2734 73%) !important
 }
 
 .grabbing * {

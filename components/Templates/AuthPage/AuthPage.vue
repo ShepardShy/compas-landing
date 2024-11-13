@@ -30,14 +30,13 @@
 			</figure>
 		</div>
 		<div class="auth__text auth__subtext">
-			Вернуться на
-			<a
-				target="_blank"
+			Открыть сайт
+			<NuxtLink
 				class="auth__link"
 				href="/"
 			>
-				основной сайт
-			</a>
+				Compas.pro
+			</NuxtLink>
 		</div>
 	</div>
 </template>

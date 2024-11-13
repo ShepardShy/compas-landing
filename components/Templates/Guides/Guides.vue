@@ -38,7 +38,7 @@
 
 	page.value = 1;
 	perPage.value = 12;
-	await useLazyAsyncData("guides", async () => await guidesStore.loadGuides());
+	await useAsyncData("guides", async () => await guidesStore.loadGuides());
 
 	watch(
 		() => [page.value, perPage.value],

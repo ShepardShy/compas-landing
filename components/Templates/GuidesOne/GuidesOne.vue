@@ -75,7 +75,7 @@
 	provide("$guideWrapper", $guideWrapper);
 	provide("$guideContent", $guideContent);
 
-	await useLazyAsyncData("guide", async () => await guidesStore.loadGuide(route.params.id));
+	await useAsyncData("guide", async () => await guidesStore.loadGuide(route.params.id));
 
 	// const article = computed(() => articleDetail.value);
 	// console.log(article.value);

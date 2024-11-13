@@ -31,13 +31,11 @@ export default defineNuxtConfig({
 			});
 		},
 	},
-	// router: {
-	// 	base: "/",
-	// },
 
 	// generate: {
-	// 	dir: "dist/landing", // Указываем путь для генерации файлов
-	// 	fallback: true,
+	// 	generate: {
+	// 		exclude: [/^\/guides\/.*$/, /^\/guides-category\/.*$/], // Исключаем страницу из генерации
+	// 	},
 	// },
 
 	app: {
