@@ -31,12 +31,13 @@
 		</div>
 		<div class="auth__text auth__subtext">
 			Открыть сайт
-			<NuxtLink
+			<a
 				class="auth__link"
 				href="/"
+				target="_blank"
 			>
 				Compas.pro
-			</NuxtLink>
+			</a>
 		</div>
 	</div>
 </template>
