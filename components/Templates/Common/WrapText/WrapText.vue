@@ -6,14 +6,18 @@
 			alt="image"
 			class="wrap__image"
 		/>
-		<div
-			ref="$text"
-			class="wrap__text"
-		></div>
+		<FansyBox>
+			<div
+				ref="$text"
+				class="wrap__text"
+			></div>
+		</FansyBox>
 	</div>
 </template>
 
 <script setup>
+	import FansyBox from "@/components/AppFansyBox/FansyBox.vue";
+
 	const props = defineProps({
 		text: { type: String },
 		image: { type: String },
@@ -49,6 +53,12 @@
 				// Вставляем table-swipe и table внутрь table__wrapper
 				wrapper.appendChild(swipeWrapper);
 				wrapper.appendChild(tableWrapper);
+			});
+
+			// Add data-fancybox="gallery" to all img elements in .wrap__text
+			const images = $text.value.querySelectorAll("img");
+			images.forEach((img) => {
+				img.setAttribute("data-fancybox", "gallery");
 			});
 		}
 	});

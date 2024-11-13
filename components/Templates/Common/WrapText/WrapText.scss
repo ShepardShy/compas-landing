@@ -79,6 +79,12 @@
 		ol {
 			padding-left: 16px;
 		}
+		img {
+			border-radius: 10px;
+			cursor: zoom-in;
+			height: 100%;
+			max-width: 100%;
+		}
 		& .table {
 			overflow: auto;
 			border-radius: 10px;

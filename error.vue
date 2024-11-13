@@ -34,3 +34,7 @@
 		console.log(error);
 	});
 </script>
+
+<style>
+	@import "./error.scss";
+</style>
