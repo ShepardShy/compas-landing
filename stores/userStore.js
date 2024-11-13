@@ -69,7 +69,6 @@ export const useUserStore = defineStore("userStore", {
 							text: "",
 						};
 						const commonStore = useCommonStore();
-						console.log(commonStore.accounts);
 						const isInside = commonStore.accounts.find(i => i.toLowerCase() == this.authData.domain.toLowerCase());
 						!isInside && commonStore.accounts.push(this.authData.domain.toLowerCase());
 						console.log(commonStore.accounts);

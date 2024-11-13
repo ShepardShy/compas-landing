@@ -31,12 +31,13 @@
 		</div>
 		<div class="auth__text auth__subtext">
 			Вернуться на
-			<NuxtLink
+			<a
+				target="_blank"
 				class="auth__link"
-				to="/"
+				href="/"
 			>
 				основной сайт
-			</NuxtLink>
+			</a>
 		</div>
 	</div>
 </template>
