@@ -19,6 +19,15 @@ export default defineNuxtConfig({
 		},
 	},
 
+	// routeRules: {
+	// 	"/guides/": {
+	// 		ssr: false,
+	// 	},
+	// 	"/guides/sozdanie-portala": {
+	// 		ssr: false,
+	// 	},
+	// },
+
 	hooks: {
 		async "prerender:routes"(ctx) {
 			const res = await fetch("https://compas.pro/api/pages");

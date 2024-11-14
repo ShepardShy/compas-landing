@@ -4,8 +4,12 @@
 		ref="docsNavRef"
 	>
 		<div class="nav__header">Содержание</div>
-		<div class="nav__list">
+		<div
+			ref="navList"
+			class="nav__list"
+		>
 			<a
+				ref="navItems"
 				:href="item.link"
 				@click.prevent="() => scroll(item.link, item.nodeName)"
 				class="nav__item"
@@ -24,6 +28,7 @@
 
 	let docsNav = ref([]);
 	const docsNavRef = ref(null);
+	const navList = ref(null);
 	const headers = ref([]);
 
 	const scroll = (link, tag) => {
@@ -39,6 +44,7 @@
 		window.scrollBy({ top: -200 });
 	};
 
+	let navItems = ref(null);
 	onMounted(() => {
 		setTimeout(() => {
 			const titles = $articleContent.value.querySelectorAll("h2,h3");
@@ -55,6 +61,36 @@
 					});
 				}
 			}
+			watch(
+				() => navItems.value,
+				() => {
+					for (let i = 0; i < titles.length; i++) {
+						if (["H1", "H2", "H3", "H4", "H5", "H6"].includes(titles[i].nodeName)) {
+							docsNav.value[i].navItem = navItems.value[i];
+						}
+					}
+				}
+			);
+
+			watch(
+				() => docsNav.value,
+				() => {
+					const activeNavItem = docsNav.value.find((i) => i.isActive)?.navItem;
+					if (activeNavItem) {
+						const navItemTop = activeNavItem.getBoundingClientRect().top;
+						const navListTop = navList.value.getBoundingClientRect().top;
+						const offsetTop = navItemTop - navListTop;
+
+						// Calculate the offset needed to center navItem in navList
+						const centerPosition = offsetTop - navList.value.clientHeight / 2 + activeNavItem.clientHeight / 2;
+
+						// Smooth scroll to the calculated position
+						navList.value.scrollTop += centerPosition;
+					}
+				},
+				{ deep: true }
+			);
+
 			headers.value = $articleContent.value.querySelectorAll(".header-link");
 		}, 100);
 
@@ -71,14 +107,14 @@
 		for (let i = 0; i < headers.value.length; i++) {
 			if (headers.value[i].getBoundingClientRect().top < 300) {
 				data.push(headers.value[i]);
-				docsNav.value.find(element => element.id == headers.value[i].id).isScrolled = true;
+				docsNav.value.find((element) => element.id == headers.value[i].id).isScrolled = true;
 			} else {
-				docsNav.value.find(element => element.id == headers.value[i].id).isScrolled = false;
+				docsNav.value.find((element) => element.id == headers.value[i].id).isScrolled = false;
 			}
 		}
 
 		if (data.length > 0) {
-			docsNav.value.forEach(element => {
+			docsNav.value.forEach((element) => {
 				if (element.id == data[data.length - 1].id) {
 					element.isActive = true;
 				} else {

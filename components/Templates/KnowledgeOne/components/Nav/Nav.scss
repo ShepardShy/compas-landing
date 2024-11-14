@@ -31,10 +31,14 @@
 .nav__list {
 	display: flex;
 	flex-direction: column;
+	max-height: calc(100vh - 200px);
+	overflow: auto;
 }
 .nav__item {
 	padding: 10px 15px;
+	display: block;
 	position: relative;
+	flex-shrink: 0;
 
 	&.nav__item_H3,
 	&.nav__item_H4,
