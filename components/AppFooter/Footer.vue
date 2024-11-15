@@ -34,6 +34,7 @@
 					<NuxtLink
 						v-for="icon in icons"
 						:to="icon.link"
+						target="_blank"
 					>
 						<figure class="ibg footer__icon">
 							<img
