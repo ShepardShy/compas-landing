@@ -1,7 +1,9 @@
 <template>
 	<AppSection class="questions-block section_without-background">
 		<AppH2> Часто задаваемые вопросы </AppH2>
-		<QuestionsSlider />
+		<ClientOnly>
+			<QuestionsSlider />
+		</ClientOnly>
 	</AppSection>
 </template>
 

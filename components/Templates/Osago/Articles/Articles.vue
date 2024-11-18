@@ -1,9 +1,7 @@
 <template>
-	<AppSection class="section_without-background articles-block">
+	<AppSection class="section_without-background articles">
 		<AppH2> Статьи которые вас заитнересуют</AppH2>
-		<ClientOnly>
-			<ArticlesSlider />
-		</ClientOnly>
+		<ArticlesSlider />
 	</AppSection>
 </template>
 
@@ -13,6 +11,6 @@
 	import ArticlesSlider from "@/components/Templates/Common/ArticlesSlider/ArticlesSlider.vue";
 </script>
 
-<style>
-	@import url(./ArticlesBlock.scss);
+<style scoped>
+	@import url(./Articles.scss);
 </style>
