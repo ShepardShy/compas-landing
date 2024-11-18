@@ -21,10 +21,21 @@ export default defineNuxtConfig({
 
 	// routeRules: {
 	// 	"/guides/": {
-	// 		ssr: false,
+	// 		ssr: true,
+	// 		// prerender: false,
 	// 	},
-	// 	"/guides/sozdanie-portala": {
-	// 		ssr: false,
+	// 	"/guides/**": {
+	// 		ssr: true,
+	// 		// prerender: false,
+	// 	},
+	// 	"/guides-category/": {
+	// 		ssr: true,
+	// 		// prerender: false,
+	// 	},
+	// 	"/guides-category/**": {
+	// 		// ssr: false,
+	// 		ssr: true,
+	// 		// prerender: false,
 	// 	},
 	// },
 
@@ -41,11 +52,9 @@ export default defineNuxtConfig({
 		},
 	},
 
-	// generate: {
-	// 	generate: {
-	// 		exclude: [/^\/guides\/.*$/, /^\/guides-category\/.*$/], // Исключаем страницу из генерации
-	// 	},
-	// },
+	generate: {
+		fallback: true, // Создает `200.html` для обработки всех маршрутов
+	},
 
 	app: {
 		cdnURL: "https://compas.pro/landing/",
@@ -56,6 +65,7 @@ export default defineNuxtConfig({
 	},
 	spaLoadingTemplate: false,
 	ssr: true,
+	target: "hybrid",
 	experimental: {
 		asyncContext: true,
 	},
