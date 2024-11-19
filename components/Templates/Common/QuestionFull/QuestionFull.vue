@@ -25,9 +25,9 @@
 						{{ views ? views : 0 }}
 					</span>
 				</p>
-				<div class="header__duration duration">
+				<!-- <div class="header__duration duration">
 					Читать вопрос-ответ: <span class="duration_black">{{ readingTime }} мин</span>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>
@@ -59,7 +59,7 @@
 
 			// Ищем все элементы <table>
 			const tables = questionText.value.querySelectorAll("table");
-			tables.forEach(table => {
+			tables.forEach((table) => {
 				// Создаем div с классом "table__wrapper"
 				const wrapper = document.createElement("div");
 				wrapper.classList.add("table__wrapper");

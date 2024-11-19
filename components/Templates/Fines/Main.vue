@@ -25,7 +25,7 @@
 	<PlusesFines />
 	<MainAbout :text="route.params?.type in aboutJson ? aboutJson[route.params.type].text : aboutJson.default.text" />
 
-	<MainQuestions />
+	<!-- <MainQuestions /> -->
 	<MainArticles class="main__questinos" />
 	<CommonSocial class="main__social" />
 </template>

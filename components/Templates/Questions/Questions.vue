@@ -87,12 +87,14 @@
 
 	watchEffect(() => {
 		if (questionId.value) {
+			console.log(questionDetail.value, "questionDetail");
+
 			useHead({
-				title: questionDetail.value?.seo_title?.value?.value + " | Вопрос-ответ | Compas.pro",
+				title: questionDetail.value?.seo_title?.value?.value ?? questionDetail.value?.seo_title?.value + " | Вопрос-ответ | Compas.pro",
 				meta: [
 					{
 						name: "description",
-						content: questionDetail.value?.seo_description?.value?.value,
+						content: questionDetail.value?.seo_description?.value?.value ?? questionDetail.value?.seo_description?.value,
 					},
 				],
 			});

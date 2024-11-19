@@ -3,7 +3,7 @@
 
 	<MainFines />
 
-	<MainQuestions />
+	<!-- <MainQuestions /> -->
 	<MainArticles class="main__questinos" />
 	<CommonSocial class="main__social" />
 </template>

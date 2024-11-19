@@ -268,9 +268,9 @@
 			{
 				module: '<div class="table__cell-group"> Штрафы ГИБДД <span class="table-cell__desc">Комиссия за оплату</span> </div>',
 				free: "2.7%",
-				base: "2.4%",
-				business: "1.9%",
-				prof: "1.6%",
+				base: "2.43%",
+				business: "2.16%",
+				prof: "1.62%",
 			},
 			{
 				module: "Автопарк",

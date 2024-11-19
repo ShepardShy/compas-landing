@@ -22,5 +22,11 @@ export const useCommonStore = defineStore("commonStore", {
 	},
 
 	// actions
-	actions: {},
+	actions: {
+		// async loadQuestions(route,slug, ids) {
+		// 	const query =
+		// 	return await api.callMethod("GET", `${route}/${slug}`, {});
+		// 	// this.articleDetail = await api.callMethod("GET", `blog/${slug}`, {});
+		// },
+	},
 });

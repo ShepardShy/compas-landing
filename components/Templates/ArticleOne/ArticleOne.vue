@@ -92,6 +92,10 @@
 
 	let { created_at, user_id, updated_at, detail_picture, name, views, detail_text, seo_description, seo_title, reading_time } = articleDetail.value;
 
+	const questionIds = detail_text.value?.filter((i) => i?.type == "question").map((i) => i.questionId);
+
+	console.log(questionIds, "questionIds");
+
 	const author = {
 		name: user_id?.value?.localOptions?.[0]?.label?.text ?? "Темур Киселев",
 		desc: "Эксперт компании Компас Дайнамикс",
