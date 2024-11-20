@@ -24,20 +24,30 @@
 				:readingTime="guideDetail.reading_time?.value"
 			/>
 			<div class="guide__content">
-				<component
-					:is="conmponentsMap?.[type]"
-					:text="body"
-					:title
-					:items
-					:image
-					:answer
-					:views
-					:id
-					:date
-					:type
-					:isShowMore="true"
-					v-for="{ type, body, image, title, items, answer, views, id, date } in guideDetail.detail_text?.value"
-				/>
+				<template v-for="{ type, body, image, title, items, answer, id, views, questionId, date, readingTime } in guideDetail?.detail_text?.value">
+					{{ questionById(questionId) }}
+					<component
+						v-if="type == 'question'"
+						:is="conmponentsMap?.[type]"
+						:text="body"
+						:title="questionById(questionId)?.name"
+						:items
+						:image="questionById(questionId)?.detail_picture?.[0]?.file"
+						:answer="questionById(questionId)?.detail_text?.[0].body"
+						:views="questionById(questionId)?.views"
+						:id="questionById(questionId)?.slug"
+						:date="questionById(questionId)?.created_at"
+						:type
+						:isShowMore="true"
+					/>
+					<component
+						v-else
+						:is="conmponentsMap?.[type]"
+						:text="body"
+						:title
+						:isShowMore="true"
+					/>
+				</template>
 			</div>
 		</div>
 
@@ -91,6 +101,8 @@
 		interestItems,
 		question,
 	};
+
+	const questionById = (id) => guideDetail.value?.questions?.data?.find((i) => i.id == id);
 
 	console.log(guideDetail.value, "guideDetail.value");
 

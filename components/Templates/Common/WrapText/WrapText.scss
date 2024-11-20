@@ -127,6 +127,14 @@
 		tr:not(:first-child) td:first-child {
 			background: rgb(223, 220, 215);
 		}
+		blockquote {
+			padding: 20px 0; /* Отступы сверху и снизу */
+			padding-left: 15px; /* Отступ слева для текста */
+			border-left: 5px solid #ccc; /* Серая полоса слева */
+			color: #555; /* Цвет текста */
+			font-style: italic; /* Наклонный текст (опционально) */
+			background-color: #f9f9f9;
+		}
 	}
 	&__image {
 		max-height: 206px;

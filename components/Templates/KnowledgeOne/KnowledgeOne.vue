@@ -22,19 +22,29 @@
 				class="article__content"
 				ref="$articleContent"
 			>
-				<component
-					:is="conmponentsMap?.[type]"
-					:text="body"
-					:title
-					:items
-					:image
-					:answer
-					:views
-					:id
-					:date
-					:isShowMore="true"
-					v-for="{ type, body, image, title, items, answer, views, id, date } in detail_text.value"
-				/>
+				<template v-for="{ type, body, image, title, items, answer, id, views, questionId, date, readingTime } in detail_text.value">
+					<component
+						v-if="type == 'question'"
+						:is="conmponentsMap?.[type]"
+						:text="body"
+						:title="questionById(questionId)?.name"
+						:items
+						:image="questionById(questionId)?.detail_picture?.[0]?.file"
+						:answer="questionById(questionId)?.detail_text?.[0].body"
+						:views="questionById(questionId)?.views"
+						:id="questionById(questionId)?.slug"
+						:date="questionById(questionId)?.created_at"
+						:type
+						:isShowMore="true"
+					/>
+					<component
+						v-else
+						:is="conmponentsMap?.[type]"
+						:text="body"
+						:title
+						:isShowMore="true"
+					/>
+				</template>
 			</div>
 		</div>
 
@@ -85,7 +95,9 @@
 	};
 	console.log(articleDetail.value, 123);
 
-	let { created_at, user_id, updated_at, detail_picture, name, views, detail_text, seo_description, seo_title, reading_time } = articleDetail.value;
+	let { created_at, user_id, questions, updated_at, detail_picture, name, views, detail_text, seo_description, seo_title, reading_time } = articleDetail.value;
+
+	const questionById = (id) => questions?.data?.find((i) => i.id == id);
 
 	const author = {
 		name: user_id?.value?.localOptions?.[0]?.label?.text ?? "Темур Киселев",
