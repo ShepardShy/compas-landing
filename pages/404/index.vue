@@ -10,7 +10,7 @@
 	const canonicalUrl = ref(null)
 	
 	onMounted(() => {
-		document.body.classList.add("error");
+		// document.body.classList.add("error");
 		canonicalUrl.value = `${config.public.baseURL}${route.path.replace('/landing', '')}`;
 
 		// Мета теги
@@ -26,6 +26,6 @@
 
 	
 	onUnmounted(() => {
-		document.body.classList.remove("error");
+		// document.body.classList.remove("error");
 	});
 </script>

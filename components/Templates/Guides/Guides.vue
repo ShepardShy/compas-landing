@@ -24,6 +24,7 @@
 
 <script setup>
 	import Search from "./components/Search/Search.vue";
+	л;
 	import Title from "./components/Title/Title.vue";
 	import List from "./components/List/List.vue";
 	import { storeToRefs } from "pinia";
@@ -34,7 +35,7 @@
 
 	const guidesStore = useGuidesStore();
 
-	const { categories, page, countPages, currentCategory, perPage, guidesCategories, currentTitle, guidesList, guides, currentCategoryId, options } = storeToRefs(guidesStore);
+	const { page, perPage, guidesCategories, currentTitle, guidesList } = storeToRefs(guidesStore);
 
 	page.value = 1;
 	perPage.value = 12;

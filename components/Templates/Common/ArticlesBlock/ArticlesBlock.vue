@@ -1,6 +1,6 @@
 <template>
 	<AppSection class="section_without-background articles-block">
-		<AppH2> Статьи которые вас заитнересуют</AppH2>
+		<AppH2> Статьи которые вас заинтересуют</AppH2>
 		<ClientOnly>
 			<ArticlesSlider />
 		</ClientOnly>

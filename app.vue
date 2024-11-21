@@ -6,7 +6,7 @@
 	<div class="wrapper">
 		<div
 			class="page"
-			:class="route.path == '/auth' ? 'page_auth' : ''"
+			:class="{ page_auth: route.path == '/auth', error: route.path == '/404' }"
 		>
 			<AppMenu
 				v-if="!route.fullPath.includes('/auth')"
