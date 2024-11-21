@@ -83,6 +83,20 @@
 	const menu = inject("menu");
 
 	const emit = defineEmits(["callAction"]);
+
+	let activeTab = ref({
+		type: null,
+		tab: "mkad"
+	});
+
+	provide("activeTab", activeTab);
+
+	// Cмена вкладки
+	const changeTab = async tab => {
+		activeTab.value.tab = tab.value;
+		await navigateTo(tab.value);
+	};
+
 </script>
 
 <style>
