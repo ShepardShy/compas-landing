@@ -39,7 +39,6 @@
 	import CommonProgramm from "@/components/Templates/Common/ProgrammBig/Programm.vue";
 	import MainTariffs from "@/components/Templates/MainPage/Tariffs/Tariffs.vue";
 	import PlusesFines from "./PlusesFines/PlusesFines.vue";
-	import AppTabs from "~/components/AppTabs/Tabs.vue";
 	import FinesList from "./FinesList/FinesList.vue";
 
 	import aboutJson from "./data/about.json";

@@ -6,7 +6,7 @@
 		<slot />
 	</NuxtLink>
 
-	<AppTabs
+	<MenuDetails
 		v-else
 		:tabs="[props.item]"
 		:isShowActions="false"
@@ -16,6 +16,8 @@
 </template>
 
 <script setup>
+	import MenuDetails from '../Details/Details.vue';
+
 	let activeTab = ref({
 		type: null,
 		tab: "mkad",

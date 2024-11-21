@@ -29,7 +29,5 @@
 
 	const emit = defineEmits(["callAction"]);
 
-	let menu = ref(menuItems);
-
-	provide("menu", menu);
+	provide("menu", menuItems);
 </script>

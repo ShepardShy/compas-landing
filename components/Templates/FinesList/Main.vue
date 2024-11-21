@@ -38,7 +38,6 @@
 	import MainCompanies from "@/components/Templates/Common/Companies/Companies.vue";
 	import CommonProgramm from "@/components/Templates/Common/ProgrammBig/Programm.vue";
 	import PlusesFines from "./PlusesFines/PlusesFines.vue";
-	import AppTabs from "~/components/AppTabs/Tabs.vue";
 	import FinesList from "./FinesList/FinesList.vue";
 
 	import aboutJson from "./data/about.json";
