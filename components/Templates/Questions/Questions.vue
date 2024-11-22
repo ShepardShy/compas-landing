@@ -56,10 +56,9 @@
 	const questionsStore = useQuestionsStore();
 	const { questionsCategories, questionsList, questionDetail, page, perPage, currentCategory } = storeToRefs(questionsStore);
 
-	// watchEffect(async () => {
-	// 	route.params.category;
-	// 	await questionsStore.loadQuestions();
-	// });
+	page.value = route.query.page ?? 1;
+	perPage.value = 12;
+
 	watch(
 		() => [page.value, perPage.value],
 		async () => {

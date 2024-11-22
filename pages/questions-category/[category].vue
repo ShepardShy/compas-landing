@@ -10,6 +10,8 @@
 	const questionsStore = useQuestionsStore();
 	const { questionsCategories } = storeToRefs(questionsStore);
 
+	const route = useRoute()
+
 	watch(
 		() => route.params.category,
 		async () => {
@@ -38,7 +40,6 @@
 
 
 	const config = useRuntimeConfig();
-	const route = useRoute()
 	const canonicalUrl = ref(null)
 	
 	onMounted(() => {

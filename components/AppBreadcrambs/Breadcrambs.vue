@@ -1,13 +1,15 @@
 <template>
 	<div class="breadcrambs">
-		<template v-for="breadcrumb in props.breadcrumbs">
-			<NuxtLink
+		<template v-for="(breadcrumb, idx) in props.breadcrumbs">
+			<div
 				class="breadcrambs__item"
 				v-if="breadcrumb?.title"
-				:to="breadcrumb?.link"
+				:title="breadcrumb?.title"
 			>
-				{{ breadcrumb?.title }}
-			</NuxtLink>
+				<NuxtLink :to="breadcrumb?.link">
+					{{ breadcrumb?.title }}
+				</NuxtLink>
+			</div>
 		</template>
 	</div>
 </template>

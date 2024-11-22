@@ -41,6 +41,7 @@
 						v-else
 						:is="conmponentsMap?.[type]"
 						:text="body"
+						:type
 						:title
 						:isShowMore="true"
 					/>

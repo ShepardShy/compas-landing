@@ -34,6 +34,7 @@
 	import AppSelect from "@/components/AppSelects/Select/Select.vue";
 
 	const emit = defineEmits(["showMore"]);
+	const router = useRouter();
 
 	const props = defineProps({
 		totalPages: {
@@ -62,11 +63,17 @@
 	const perPage = defineModel("perPage");
 
 	// Выбор текущей страницы
-	const changePage = data => {
+	const changePage = (data) => {
 		activePage.value = data.value;
+		router.push({
+			query: {
+				...route.query, // Сохраняем остальные параметры запроса
+				page: data.value, // Добавляем или изменяем параметр page
+			},
+		});
 	};
 	// Выбор количества элементов на странице
-	const changeOnPage = data => {
+	const changeOnPage = (data) => {
 		perPage.value = data.value;
 	};
 </script>

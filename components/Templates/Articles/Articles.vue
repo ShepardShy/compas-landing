@@ -31,12 +31,13 @@
 	import AppNav from "~/components/AppNav/AppNav.vue";
 
 	const route = useRoute();
+	const router = useRoute();
 
 	const articlesStore = useArticlesStore();
 
 	const { categories, isLoading, page, countPages, currentCategory, perPage, articlesCategories, currentTitle, articlesList, articles, currentCategoryId, options } = storeToRefs(articlesStore);
 
-	page.value = 1;
+	page.value = route.query.page ?? 1;
 	perPage.value = 12;
 	console.log(currentCategoryId.value, "currentCategoryId");
 	!currentCategoryId.value ? await useAsyncData("articles", async () => await articlesStore.loadArticles()) : 0;

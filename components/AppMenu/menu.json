@@ -28,6 +28,15 @@
 				"alias": "/products/fines"
 			},
 			{
+				"id": 3,
+				"title": "Расчет ОСАГО",
+				"slug": "main",
+				"sort": 0,
+				"is_hidden": 0,
+				"enabled": 1,
+				"alias": "/osago"
+			},
+			{
 				"id": 12,
 				"title": "Расчет расстояния",
 				"slug": "main",

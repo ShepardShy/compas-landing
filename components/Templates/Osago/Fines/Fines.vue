@@ -42,7 +42,8 @@
 			<div class="fines__check">
 				<div class="fines__politics"><span style="color: #000">Нет гос. номера</span> (Если у вас ещё нет номера или вы планируете его сменить, продолжайте оформление без него)</div>
 				<AppCheckbox
-					class="main-page__checkbox main-page__checkbox_long"
+					class="fines__checkbox"
+					style="width: 100%"
 					:item="{
 						id: 2,
 						title: checkboxLink,

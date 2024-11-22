@@ -3,7 +3,7 @@
 		<div class="tabs__list">
 				<AppPopup
 					ref="popupRef"
-					v-for="tab in props.tabs.filter(p => p.enabled)"
+					v-for="tab in tabs.filter(p => p.enabled)"
 					class="popup__tabs"
 					:closeByClick="false"
 					:isCanSelect="false"

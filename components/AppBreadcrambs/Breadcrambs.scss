@@ -11,10 +11,23 @@
 }
 
 .breadcrambs__item {
-	display: flex;
+	display: inline-block;
 	gap: 5px;
 	color: #383838;
 	flex-wrap: wrap;
+	max-width: 460px; /* Устанавливает максимальную ширину блока */
+	white-space: nowrap; /* Отключает перенос строк */
+	overflow: hidden; /* Обрезает текст, выходящий за границы */
+	text-overflow: ellipsis; /* Добавляет троеточие */
+	cursor: pointer;
+
+	&:last-child {
+		cursor: default;
+	}
+
+	a {
+		margin-right: 5px;
+	}
 
 	&:not(:last-child)::after {
 		content: "•";
@@ -22,8 +35,10 @@
 	}
 
 	&:last-child {
-		pointer-events: none;
-		color: #8f8f8f;
+		a {
+			color: #8f8f8f;
+			pointer-events: none;
+		}
 	}
 }
 

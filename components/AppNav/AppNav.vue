@@ -6,8 +6,8 @@
 				v-for="category in categories"
 				:key="category.value"
 			>
-				<div
-					@click="() => (category.value == 'all' ? navigateTo(`/${path}`) : navigateTo(`/${path}/${category.value}`))"
+				<NuxtLink
+					:href="category.value == 'all' ? `/${path}` : `/${path}/${category.value}`"
 					class="nav__item"
 					:class="{ nav__item_active: category.value == activeNav, nav__item_main: category?.isMain }"
 				>
@@ -17,9 +17,9 @@
 						class="nav__item-triangle"
 						v-if="category.children.length > 0"
 					/>
-				</div>
-				<div
-					@click="() => navigateTo(`/${path}/${child.value}`)"
+				</NuxtLink>
+				<NuxtLink
+					:href="`/${path}/${child.value}`"
 					v-if="category.isOpen"
 					v-for="child in category.children"
 					:key="child.value"
@@ -27,7 +27,7 @@
 					class="nav__item nav__item_child"
 				>
 					{{ child.title }}
-				</div>
+				</NuxtLink>
 			</template>
 		</div>
 	</nav>
@@ -45,7 +45,7 @@
 
 	const { categories, title, navParam, path } = toRefs(props);
 
-	const activeParent = computed(() => categories.value.find(category => category.children?.some(child => route.fullPath.includes(child.value))));
+	const activeParent = computed(() => categories.value.find((category) => category.children?.some((child) => route.fullPath.includes(child.value))));
 
 	// Отрытие списка если у родителя активный ребенок
 	onMounted(() => (activeParent.value ? (activeParent.value.isOpen = true) : null));

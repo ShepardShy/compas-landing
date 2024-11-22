@@ -86,7 +86,7 @@ export const useKnowledgeStore = defineStore("knowledgeStore", {
 			this.articleDetail = await api.callMethod("GET", `knowledge/${slug}`, {});
 		},
 		async searchOptions(search) {
-			const res = await api.callMethod("GET", `knowledge/search?q=${search}&entity=articles`, {});
+			const res = await api.callMethod("GET", `knowledge/search?q=${search}&entity=knowledge`, {});
 			if (res?.length > 0) {
 				return res;
 			}

@@ -36,6 +36,41 @@
 	}
 }
 
+.fines__checkbox {
+	width: 100%;
+	align-items: self-start;
+	input {
+		opacity: 0;
+		min-height: auto;
+		cursor: pointer;
+		position: absolute;
+		width: 15px;
+		height: 15px;
+		&:checked {
+			& + label {
+				position: relative;
+				display: grid;
+				place-items: center;
+				background: #0584fe;
+				border: 1px solid #0584fe;
+			}
+		}
+	}
+	label {
+		margin-top: 2px;
+		min-width: 15px;
+		pointer-events: none;
+		display: grid;
+		place-items: center;
+		border-width: 1px;
+		border-style: solid;
+		border-color: #bcbcbc;
+		border-radius: 3px;
+		width: 15px;
+		height: 15px;
+	}
+}
+
 .fines-video {
 	&__cover {
 		position: absolute;

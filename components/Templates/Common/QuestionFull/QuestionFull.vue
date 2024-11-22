@@ -13,7 +13,7 @@
 				class="question__text"
 			></p>
 			<NuxtLink
-				:href="`/questions/${id}`"
+				:href="`/questions/${id?.value ?? id}`"
 				v-if="isShowMore"
 				class="question__more"
 				>Подробнее</NuxtLink

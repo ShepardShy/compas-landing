@@ -1,6 +1,6 @@
 <template>
 	<NuxtLink
-		@click="navigateTo(`/knowledge/${id}`)"
+		:href="`/knowledge/${id}`"
 		class="knowledge__item"
 	>
 		<div class="knowledge__body">
