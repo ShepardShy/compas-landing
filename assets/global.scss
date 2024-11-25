@@ -18,6 +18,14 @@
 	}
 }
 
+.link {
+	color: #1253a2;
+	text-decoration: underline;
+	&:hover {
+		text-decoration: none;
+	}
+}
+
 .play-video {
 	width: 48px;
 	height: 48px;

@@ -1,7 +1,12 @@
 <template>
 	<div class="header">
 		<div class="header__top">
-			<h1 class="header__title">{{ title }}</h1>
+			<h1
+				class="header__title"
+				:class="{ header__title_little: title.length > 160 }"
+			>
+				{{ title }}
+			</h1>
 			<figure class="ibg header__image">
 				<img
 					:src="image ? image : defaultImage"
@@ -10,39 +15,13 @@
 			</figure>
 		</div>
 		<div class="header__bottom">
-			<!-- <div class="header__author">
-				<img
-					v-if="authorAvatar"
-					:src="authorAvatar ? authorAvatar : defaultAvatar"
-					:alt="authorName"
-					class="header__author-avatar"
-				/>
-				<div
-					v-else
-					:style="`background:${authorColor};`"
-					class="header__author-avatar"
-				>
-					{{ authorName[0] }}
-				</div>
-				<div class="header__author-info">
-					<div class="header__author-name">{{ authorName }}</div>
-					<div class="header__author-desc">{{ authorDesc }}</div>
-				</div>
-			</div> -->
 			<div class="header__info">
-				<!-- <div class="header__date date">
-					{{ dayjs(date).locale("ru").format("D MMMM YYYY") }}
-					<div v-if="update && dayjs(update).startOf('date') != dayjs(date).startOf('date')">(<span class="header__date-green">Обновлено</span> {{ dayjs(update).locale("ru").format("DD.MM.YYYY") }})</div>
-				</div> -->
 				<div class="header__views views">
 					<IconPasswordEye class="header__views-eye" />
 					<span>
 						{{ views }}
 					</span>
 				</div>
-				<!-- <div class="header__duration duration">
-					Читать статью: <span class="duration_black">{{ readingTime }} мин</span>
-				</div> -->
 			</div>
 		</div>
 	</div>

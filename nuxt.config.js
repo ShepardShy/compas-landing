@@ -38,6 +38,18 @@ export default defineNuxtConfig({
 	// 		// prerender: false,
 	// 	},
 	// },
+	nitro: {
+		cache: {
+			rules: [
+				{
+					// Кэшируем запросы к API Nitro
+					path: "/api/guides/**",
+					swr: true, // stale-while-revalidate (старое отдается, пока новое регенерируется)
+					maxAge: 60, // Кэш валиден 60 секунд
+				},
+			],
+		},
+	},
 
 	hooks: {
 		async "prerender:routes"(ctx) {

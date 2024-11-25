@@ -83,6 +83,8 @@
     min-height: 60%;
     overflow: auto;
     overflow-y: hidden;
+    will-change: transform;
+    backface-visibility: hidden;
     outline: none;
     position: relative;
     @include mixins.scrollBar();

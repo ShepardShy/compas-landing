@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import api from "~/helpers/api.js";
 
 export const useCommonStore = defineStore("commonStore", {
 	// states
@@ -16,17 +17,12 @@ export const useCommonStore = defineStore("commonStore", {
 
 	persist: {
 		afterRestore: (ctx) => {
-			console.log(`about to restore '${ctx.store.$id}'`);
+			console.log(`about to restore 'commonStore'`);
+			// ctx.store.lastModified = null,
 		},
 		storage: persistedState.localStorage,
 	},
 
 	// actions
-	actions: {
-		// async loadQuestions(route,slug, ids) {
-		// 	const query =
-		// 	return await api.callMethod("GET", `${route}/${slug}`, {});
-		// 	// this.articleDetail = await api.callMethod("GET", `blog/${slug}`, {});
-		// },
-	},
+	actions: {},
 });

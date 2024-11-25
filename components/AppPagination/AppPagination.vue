@@ -35,6 +35,7 @@
 
 	const emit = defineEmits(["showMore"]);
 	const router = useRouter();
+	const route = useRoute();
 
 	const props = defineProps({
 		totalPages: {

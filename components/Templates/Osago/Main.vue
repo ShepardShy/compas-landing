@@ -4,7 +4,10 @@
 	<MainFines />
 
 	<!-- <MainQuestions /> -->
-	<MainArticles class="main__questinos" />
+	<MainArticles
+		category="4"
+		class="main__questinos"
+	/>
 	<CommonSocial class="main__social" />
 </template>
 

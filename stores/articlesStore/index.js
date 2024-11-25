@@ -71,12 +71,15 @@ export const useArticlesStore = defineStore("articlesStore", {
 		},
 	},
 	actions: {
-		async loadArticles() {
+		async loadArticles(categoryIdParam) {
 			if (this.canUpdate) {
 				this.isLoading = true;
-				const { categories } = await api.callMethod("GET", `blog`, {});
-				this.categories = categories;
-				const categoryId = this.categories?.find((category) => category.slug == route.params.category)?.id;
+				let categoryId = categoryIdParam;
+				if (!categoryId) {
+					const { categories } = await api.callMethod("GET", `blog`, {});
+					this.categories = categories;
+					categoryId = this.categories?.find((category) => category.slug == route.params.category)?.id;
+				}
 
 				this.articles = await api.callMethod("GET", `blog?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
 

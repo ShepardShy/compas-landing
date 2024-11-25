@@ -41,9 +41,9 @@
 			:isLoading="isRouteLoading"
 			:isShowButton="props.isShowInputButton"
 			:isCountDistance="props.isCountDistance"
-			@changeValue="data => changeValue(data)"
-			@searchOptions="data => searchOptions(data)"
-			@clickButton="data => changeValue(data, 'calculate')"
+			@changeValue="(data) => changeValue(data)"
+			@searchOptions="(data) => searchOptions(data)"
+			@clickButton="(data) => changeValue(data, 'calculate')"
 		/>
 
 		<AppCopy
@@ -140,6 +140,7 @@
 						},
 						{ suppressMapOpenBlock: true, suppressObsoleteBrowserNotifier: true }
 					);
+					map.behaviors.disable("drag");
 					map.options.set("suppressMapOpenBlock", true);
 					map.options.set("suppressObsoleteBrowserNotifier", true);
 
@@ -249,7 +250,7 @@
 	const emit = defineEmits(["changeValue", "selectAddress"]);
 
 	// Клик по карте
-	const clickMap = e => {
+	const clickMap = (e) => {
 		map.events.add("click", function (e) {
 			positionClick.value = e.get("coords");
 
@@ -415,7 +416,7 @@
 	};
 
 	// Нахождение меток попавших в полигон
-	const selectPoligon = status => {
+	const selectPoligon = (status) => {
 		let copyMap = toRaw(map);
 		let copyPolygon = toRaw(polygon.value);
 
@@ -492,7 +493,7 @@
 		};
 
 		// Нахождение меток
-		const filterMarkers = myPolygon => {
+		const filterMarkers = (myPolygon) => {
 			let data = [];
 			for (let marker of markers.value) {
 				if (myPolygon.geometry.contains(marker)) {
@@ -549,7 +550,7 @@
 
 	// Отрисовка точки
 
-	const renderPoint = position => {
+	const renderPoint = (position) => {
 		map.geoObjects?.remove(lastPoint.value);
 		lastPoint.value = new ymaps.Placemark(position);
 		map.geoObjects.add(lastPoint.value);
@@ -585,7 +586,7 @@
 		}
 		if (data?.value && !props.isCountDistance) {
 			markers.value.splice(
-				markers.value.findIndex(p => _.isEqual(p, value.value.coords)),
+				markers.value.findIndex((p) => _.isEqual(p, value.value.coords)),
 				1,
 				data.value.coords
 			);
@@ -617,9 +618,9 @@
 	};
 
 	// Поиск опций
-	const searchOptions = async data => {
+	const searchOptions = async (data) => {
 		// Метод для вставки запроса на получение опций
-		const getOptions = async search => {
+		const getOptions = async (search) => {
 			let request = await fetch(`https://compas.pro/api/map/geocode?address=${search}`, {
 				method: "GET",
 				// headers: {
@@ -630,9 +631,9 @@
 		};
 
 		// Установка опций
-		const setOptions = gettingData => {
+		const setOptions = (gettingData) => {
 			localOptions.value = gettingData.map(
-				option =>
+				(option) =>
 					(option = {
 						label: {
 							text: option.text,

@@ -15,6 +15,7 @@
 			<AppMain>
 				<NuxtPage />
 			</AppMain>
+			<MobileApp v-if="!route.fullPath.includes('/auth')" />
 			<AppFooter v-if="!route.fullPath.includes('/auth')" />
 		</div>
 	</div>
@@ -23,6 +24,11 @@
 <script setup>
 	import AppMenu from "@/components/AppMenu/AppMenu.vue";
 	import AppFooter from "@/components/AppFooter/Footer.vue";
+	import MobileApp from "@/components/Templates/Common/MobileApp/MobileApp.vue";
+	import { useGlobalStore } from "~/stores/globalStore";
+
+	const globalStore = useGlobalStore();
+	await globalStore.loadLastModified();
 
 	let route = useRoute();
 </script>

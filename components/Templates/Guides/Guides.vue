@@ -17,7 +17,9 @@
 		</div>
 		<div class="guides__right">
 			<Title :title="currentTitle" />
-			<List :list="guidesList" />
+			<ClientOnly>
+				<List :list="guidesList" />
+			</ClientOnly>
 		</div>
 	</div>
 </template>
@@ -28,22 +30,27 @@
 	import List from "./components/List/List.vue";
 	import { storeToRefs } from "pinia";
 	import { useGuidesStore } from "~/stores/guidesStore";
+	import { useGlobalStore } from "~/stores/globalStore";
 	import AppNav from "~/components/AppNav/AppNav.vue";
 
 	const route = useRoute();
 
 	const guidesStore = useGuidesStore();
+	const globalStore = useGlobalStore();
+
+	// console.log(globalStore.lastModified, "globalStore.lastModified");
+	// await useAsyncData("lastModified", async () => (!globalStore.lastModified ? await globalStore.loadLastModified() : 0));
 
 	const { page, perPage, guidesCategories, currentTitle, guidesList } = storeToRefs(guidesStore);
 
 	page.value = route.query.page ?? 1;
 	perPage.value = 12;
-	await useAsyncData("guides", async () => await guidesStore.loadGuides());
+	await useAsyncData("guides", async () => await guidesStore.loadGuides(route.params.category));
 
 	watch(
 		() => [page.value, perPage.value],
 		async () => {
-			await guidesStore.loadGuides();
+			await guidesStore.loadGuides(route.params.category);
 		}
 	);
 

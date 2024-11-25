@@ -37,6 +37,12 @@
 	import { useArticlesStore } from "~/stores/articlesStore";
 	import { storeToRefs } from "pinia";
 
+	const props = defineProps({
+		category: {
+			type: String,
+		},
+	});
+
 	const articlesStore = useArticlesStore();
 	const { categories, currentTitle, articlesList } = storeToRefs(articlesStore);
 
@@ -46,8 +52,8 @@
 
 	let countSlides = ref(3);
 
+	await articlesStore.loadArticles(props.category);
 	onMounted(async () => {
-		!articlesList.value.length ? await articlesStore.loadArticles() : 0;
 		window.addEventListener("resize", checkingWindowWidth);
 		checkingWindowWidth();
 	});

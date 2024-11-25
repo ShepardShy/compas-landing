@@ -7,17 +7,17 @@
 	import { useGuidesStore } from "~/stores/guidesStore";
 
 	const guidesStore = useGuidesStore();
+	const route = useRoute();
 
 	watch(
 		() => route.params.category,
 		async () => {
-			await guidesStore.loadGuides();
+			await guidesStore.loadGuides(route.params.category);
 		},
 		{ deep: true }
 	);
 
 	const config = useRuntimeConfig();
-	const route = useRoute();
 	const canonicalUrl = ref(null);
 
 	onMounted(() => {

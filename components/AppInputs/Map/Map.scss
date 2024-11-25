@@ -1,9 +1,10 @@
-@use '@/assets/variables' as variables;
-@use '@/assets/mixins' as mixins;
+@use "@/assets/variables" as variables;
+@use "@/assets/mixins" as mixins;
 
 .yandex-container {
-    border-radius: 5px;
-    overflow: hidden;
-    height: 350px;
-    width: 100%;
+	border-radius: 5px;
+	overflow: hidden;
+	height: 350px;
+	width: 100%;
+	touch-action: auto;
 }

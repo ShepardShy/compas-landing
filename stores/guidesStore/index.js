@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import api from "~/helpers/api.js";
+import { useGlobalStore } from "~/stores/globalStore";
 
 const route = useRoute();
 
@@ -7,10 +8,15 @@ export const useGuidesStore = defineStore("guidesStore", {
 	state: () => ({
 		guides: null,
 		guideDetail: null,
+		cachedGuideDetails: [],
 		categories: null,
 		page: 1,
 		perPage: 12,
 		canUpdate: true,
+		lastModifiedCache: null, // Дата последнего изменения с сервера
+		cachedGuides: null, // Закэшированные данные гайдов
+		cachedCategories: null, // Закэшированные категории
+		lastTimeCategory: null,
 	}),
 	getters: {
 		currentTitle() {
@@ -70,15 +76,51 @@ export const useGuidesStore = defineStore("guidesStore", {
 		},
 	},
 	actions: {
-		async loadGuides() {
+		async loadGuides(categoryParam) {
 			if (this.canUpdate) {
-				this.guides = [];
-				const { categories } = await api.callMethod("GET", `guides`, {});
-				this.categories = categories;
-				const categoryId = this.categories?.find((category) => category.slug == route.params.category)?.id;
+				const globalStore = useGlobalStore();
+				const lastModified = globalStore.lastModified;
 
-				this.guides = await api.callMethod("GET", `guides?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
-				console.log(this.guides, "this.guides");
+				console.log(categoryParam, "categoryParam");
+				console.log(this.lastTimeCategory, "this.lastTimeCategory");
+
+				if (categoryParam && this.lastTimeCategory != categoryParam) {
+					this.guides = [];
+					const { categories } = await api.callMethod("GET", `guides`, {});
+					this.categories = categories;
+					const categoryId = this.categories?.find((category) => category.slug == categoryParam)?.id;
+					this.guides = await api.callMethod("GET", `guides?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
+
+					this.lastTimeCategory = categoryParam;
+					this.cachedGuides = this.guides;
+					this.cachedCategories = this.categories;
+					this.lastModifiedCache = lastModified.guides;
+				} else {
+					console.log(2);
+					console.log(lastModified.guides, "lastModified");
+					console.log(this.lastModifiedCache, "this.lastModifiedCache");
+
+					// Проверяем дату последнего изменения
+
+					if (this.lastModifiedCache === lastModified.guides && this.cachedGuides && this.cachedCategories && categoryParam == this.lastTimeCategory) {
+						// Используем кэшированные данные
+						this.guides = this.cachedGuides;
+						this.categories = this.cachedCategories;
+					} else {
+						// Загружаем новые данные
+						this.guides = [];
+						const { categories } = await api.callMethod("GET", `guides`, {});
+						this.categories = categories;
+
+						this.guides = await api.callMethod("GET", `guides?page=${this.page}&per_page=${this.perPage}`, {});
+
+						// Обновляем кэш
+						this.cachedGuides = this.guides;
+						this.cachedCategories = this.categories;
+						this.lastModifiedCache = lastModified.guides;
+						this.lastTimeCategory = null;
+					}
+				}
 
 				if (this.page > this.countPages) {
 					this.page = 1;
@@ -87,6 +129,7 @@ export const useGuidesStore = defineStore("guidesStore", {
 		},
 		async loadGuide(slug) {
 			this.guideDetail = await api.callMethod("GET", `guides/${slug}`, {});
+			// this.cachedGuideDetails =
 			// this.guideDetail = await api.callMethod("GET", `guides/${slug}`, {});
 		},
 		async searchOptions(search) {

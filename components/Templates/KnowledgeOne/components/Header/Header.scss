@@ -36,7 +36,7 @@
 		z-index: -1;
 		& img {
 			width: 962px;
-			object-fit: unset;
+			// object-fit: unset;
 		}
 	}
 	&__title {
@@ -44,6 +44,9 @@
 		font-size: 36px;
 		line-height: 1.05;
 		color: #fff;
+		&_little {
+			font-size: 24px;
+		}
 	}
 	&__author {
 		display: flex;

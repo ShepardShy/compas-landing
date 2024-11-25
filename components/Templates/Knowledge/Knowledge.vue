@@ -58,7 +58,7 @@
 	const searchOptions = ref([]);
 	const changeValueSearch = async (search) => {
 		if (search.value) {
-			await navigateTo(`/articles/${search.value}`);
+			await navigateTo(`/knowledge/${search.value}`);
 			return;
 		}
 
