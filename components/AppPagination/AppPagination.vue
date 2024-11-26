@@ -1,6 +1,9 @@
 <template>
 	<div class="pagination-full">
-		<ShowMore @click="emit('showMore')" />
+		<ShowMore
+			v-if="activePage != totalPages"
+			@click="emit('showMore')"
+		/>
 
 		<div class="pagination-full__wrapper">
 			<Pagination
@@ -76,6 +79,12 @@
 	// Выбор количества элементов на странице
 	const changeOnPage = (data) => {
 		perPage.value = data.value;
+		router.push({
+			query: {
+				...route.query, // Сохраняем остальные параметры запроса
+				per_page: data.value, // Добавляем или изменяем параметр page
+			},
+		});
 	};
 </script>
 

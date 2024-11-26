@@ -38,7 +38,7 @@
 	const { categories, isLoading, page, countPages, currentCategory, perPage, articlesCategories, currentTitle, articlesList, articles, currentCategoryId, options } = storeToRefs(articlesStore);
 
 	page.value = route.query.page ?? 1;
-	perPage.value = 12;
+	perPage.value = route.query.per_page ?? 12;
 	console.log(currentCategoryId.value, "currentCategoryId");
 	!currentCategoryId.value ? await useAsyncData("articles", async () => await articlesStore.loadArticles()) : 0;
 

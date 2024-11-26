@@ -35,7 +35,7 @@
 
 	const { page, perPage, countPages, questionsList } = storeToRefs(questionsStore);
 	page.value = 1;
-	perPage.value = 12;
+	perPage.value = route.query.per_page ?? 12;
 
 	const showMore = () => {
 		questionsStore.showMore();

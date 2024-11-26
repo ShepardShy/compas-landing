@@ -46,14 +46,13 @@
 		position: absolute;
 		width: 15px;
 		height: 15px;
-		&:checked {
-			& + label {
-				position: relative;
-				display: grid;
-				place-items: center;
-				background: #0584fe;
-				border: 1px solid #0584fe;
-			}
+		pointer-events: none;
+		&:checked + label {
+			position: relative;
+			display: grid;
+			place-items: center;
+			background: #0584fe;
+			border: 1px solid #0584fe;
 		}
 	}
 	label {

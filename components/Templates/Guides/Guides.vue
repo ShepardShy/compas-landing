@@ -44,7 +44,7 @@
 	const { page, perPage, guidesCategories, currentTitle, guidesList } = storeToRefs(guidesStore);
 
 	page.value = route.query.page ?? 1;
-	perPage.value = 12;
+	perPage.value = route.query.per_page ?? 12;
 	await useAsyncData("guides", async () => await guidesStore.loadGuides(route.params.category));
 
 	watch(

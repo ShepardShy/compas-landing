@@ -140,7 +140,10 @@
 						},
 						{ suppressMapOpenBlock: true, suppressObsoleteBrowserNotifier: true }
 					);
-					map.behaviors.disable("drag");
+					// map.behaviors.disable("drag");
+					map.behaviors.disable("rightMouseButtonMagnifier");
+					map.behaviors.disable("multiTouch");
+					// map.behaviors.disable("scrollZoom");
 					map.options.set("suppressMapOpenBlock", true);
 					map.options.set("suppressObsoleteBrowserNotifier", true);
 

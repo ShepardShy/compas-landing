@@ -15,11 +15,6 @@
 			<AppInput
 				v-for="item in form"
 				:class="item.class"
-				v-show="
-					(form.find((i) => ['sts', 'vu', 'uin', 'gos'].includes(i.key)) && form[0].value != '') ||
-					['number', 'certificate', 'sts', 'vu', 'uin', 'gos', 'inn', 'kpp'].includes(item.key) ||
-					(form[0].value != '' && form[1].value != '')
-				"
 				:item="{
 					focus: false,
 					id: 0,
@@ -143,39 +138,17 @@
 	import ValidateField from "@/components/AppTable/Validate.js";
 	import AppCheckbox from "@/components/AppInputs/Checkbox/Checkbox.vue";
 	import api from "@/helpers/api.js";
-	import { storeToRefs } from "pinia";
-	import { useCommonStore } from "@/stores/commonStore.js";
 	import { useFinesStore } from "~/stores/finesStore.js";
 	import { useUserStore } from "@/stores/userStore.js";
 
 	const finesStore = useFinesStore();
-
-	// Картинки проверки штрафов
-	import vuImage from "/main/fines/preview-vu.png";
-	import stsImage from "/main/fines/preview-sts.png";
-	import gosImage from "/main/fines/preview-gos.png";
-	import postanovlenieImage from "/main/fines/preview-postanovlenie.png";
-	import innImage from "/main/fines/preview-inn.png";
-	import defaultImage from "/main/fines/preview.png";
-
-	const commonStore = useCommonStore();
 	const route = useRoute();
 
 	const userStore = useUserStore();
 
-	const { regData } = storeToRefs(userStore);
-
 	const checkboxLink = `<div class="main-page__text">
 	   Для постановки авто на учёт в ГАИ подойдёт распечатанный полис даже без вписанного номера. Номер можно будет вписать в полис после постановки авто на учёт или при следующем продлении ОСАГО
 	  </div>`;
-
-	const previewImage = {
-		"po-sts": stsImage,
-		"po-voditelskomu-udostovereniyu": vuImage,
-		"po-nomeru-postanovleniya": postanovlenieImage,
-		"po-nomeru-avto": gosImage,
-		"po-inn": innImage,
-	};
 
 	const videoMap = {
 		"po-sts": {
@@ -293,8 +266,12 @@
 	let isShow = ref(false);
 	const isLoading = ref(false);
 
-	const changeValue = (data) => {
-		confidence.value.value = data.value;
+	const changeValue = ({ key, value }) => {
+		if (key != "confidence") {
+			form.value.find((i) => i.key == key).value = value;
+			return;
+		}
+		confidence.value.value = value;
 	};
 
 	// Сохранение редактируемых полей

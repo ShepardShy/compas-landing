@@ -57,7 +57,7 @@
 	const { questionsCategories, questionsList, questionDetail, page, perPage, currentCategory } = storeToRefs(questionsStore);
 
 	page.value = route.query.page ?? 1;
-	perPage.value = 12;
+	perPage.value = route.query.per_page ?? 12;
 
 	watch(
 		() => [page.value, perPage.value],
