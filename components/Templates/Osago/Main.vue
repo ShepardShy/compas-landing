@@ -75,7 +75,7 @@
 		},
 		{
 			title: "Калькулятор ОСАГО",
-			link: "/osago",
+			link: "/products/osago",
 		},
 	]);
 
