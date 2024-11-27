@@ -18,7 +18,7 @@
 		},
 		{
 			title: "Оформление ОСАГО",
-			link: "/osago/processing",
+			link: "/products/osago/processing",
 		},
 	]);
 </script>

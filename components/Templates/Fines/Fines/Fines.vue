@@ -364,16 +364,16 @@
 	watchEffect(() => {
 		form.value = [
 			...fields.value,
-			{
-				title: "E-mail",
-				key: "email",
-				name: "email",
-				type: "text",
-				value: "",
-				required: true,
-				placeholder: "E-mail",
-				class: "input_line",
-			},
+			// {
+			// 	title: "E-mail",
+			// 	key: "email",
+			// 	name: "email",
+			// 	type: "text",
+			// 	value: "",
+			// 	required: true,
+			// 	placeholder: "E-mail",
+			// 	class: "input_line",
+			// },
 		];
 	});
 

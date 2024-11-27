@@ -27,7 +27,7 @@
 	console.log(route);
 
 	if (route.fullPath != "/404" && route.fullPath != "/403") {
-		// await navigateTo("/404");
+		await navigateTo("/404");
 	}
 
 	onMounted(async () => {
