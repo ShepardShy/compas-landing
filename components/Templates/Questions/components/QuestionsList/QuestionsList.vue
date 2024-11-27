@@ -32,6 +32,7 @@
 	import { useQuestionsStore } from "~/stores/questionsStore";
 
 	const questionsStore = useQuestionsStore();
+	const route = useRoute();
 
 	const { page, perPage, countPages, questionsList } = storeToRefs(questionsStore);
 	page.value = 1;
