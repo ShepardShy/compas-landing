@@ -2,13 +2,16 @@
 	<div class="fines-list">
 		<AppH1 class="fines-list__title">Быстрая провека штрафов</AppH1>
 		<div class="fines-list__info">
-			<div
-				v-for="(value, key) in fields"
-				class="fines-list__group"
-			>
-				<p class="fines-list__label">{{ fieldLabelsMap[key] }}</p>
-				<p class="fines-list__text">{{ value }}</p>
-			</div>
+			<template v-for="(value, key) in fields">
+				<div
+					v-if="key != 'email'"
+					class="fines-list__group"
+				>
+					<p class="fines-list__label">{{ fieldLabelsMap[key] }}</p>
+					<p class="fines-list__text">{{ value }}</p>
+				</div>
+			</template>
+
 			<div class="fines-list__group">
 				<p class="fines-list__label">Создание портала</p>
 				<p
@@ -47,7 +50,7 @@
 							:mask="null"
 							:enabledAutocomplete="true"
 							@keyup.enter="!disabledButton ? registration() : null"
-							@changeValue="data => changeValue(data)"
+							@changeValue="(data) => changeValue(data)"
 						/>
 						<p
 							v-for="error in regData.domainError"
@@ -64,7 +67,7 @@
 							:item="{
 								id: 0,
 								title: 'E-mail',
-								value: regData.email,
+								value: regData?.email,
 								placeholder: 'E-mail',
 								type: 'text',
 								key: 'email',
@@ -74,7 +77,7 @@
 							:disabled="userStore.regButtonLoad"
 							:enabledAutocomplete="true"
 							@keyup.enter="!disabledButton ? registration() : null"
-							@changeValue="data => changeValue(data)"
+							@changeValue="(data) => changeValue(data)"
 						/>
 						<p
 							v-for="error in regData.emailError"
@@ -101,7 +104,7 @@
 							:disabled="userStore.regButtonLoad"
 							:enabledAutocomplete="false"
 							@keyup.enter="!disabledButton ? registration() : null"
-							@changeValue="data => changeValue(data)"
+							@changeValue="(data) => changeValue(data)"
 						/>
 						<p
 							v-for="error in regData.passwordError"
@@ -127,7 +130,7 @@
 							:disabled="userStore.regButtonLoad"
 							:enabledAutocomplete="false"
 							@keyup.enter="!disabledButton ? registration() : null"
-							@changeValue="data => changeValue(data)"
+							@changeValue="(data) => changeValue(data)"
 						/>
 						<p
 							v-for="error in regData.passwordConfirmationError"
@@ -151,7 +154,7 @@
 						}"
 						:disabled="userStore.regButtonLoad"
 						:isTextClickable="false"
-						@changeValue="data => changeValue(data)"
+						@changeValue="(data) => changeValue(data)"
 					/>
 					<AppButton
 						:disabledOption="disabledButton"
@@ -187,13 +190,9 @@
 
 <script setup>
 	import _ from "lodash";
-	import FinesWarning from "./Warning/Warning.vue";
-	import AppSection from "@/components/AppSection/AppSection.vue";
 	import AppH1 from "@/components/AppHeaders/H1/H1.vue";
 	import AppInput from "@/components/AppInputs/Input/Input.vue";
 	import AppButton from "@/components/AppButton/AppButton.vue";
-	import FansyBox from "@/components/AppFansyBox/FansyBox.vue";
-	import ValidateField from "@/components/AppTable/Validate.js";
 	import AppCheckbox from "@/components/AppInputs/Checkbox/Checkbox.vue";
 	import api from "@/helpers/api.js";
 	import AppTable from "~/components/AppTable/AppTable.vue";
@@ -201,8 +200,6 @@
 	import { useFinesStore } from "~/stores/finesStore.js";
 	import { useUserStore } from "@/stores/userStore.js";
 	import { useCommonStore } from "@/stores/commonStore.js";
-
-	import tableKeysJson from "./tableKeys.json";
 
 	const isShowRegistraion = ref(false);
 
@@ -218,13 +215,13 @@
 	   Я понимаю и принимаю <a href="/docs/politics" class="main-page__link" target="_blank"> условия и политику конфиденциальности </a> Compas
 	  </div>`;
 
-	const changeValue = data => {
+	const changeValue = (data) => {
 		regData.value[data.key] = data.value;
 	};
 
 	const disabledButton = computed(() => {
 		let txt = /^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-		return !regData.value.confidence || regData.value.password == "" || regData.value.passwordConfirmation == "" || regData.value.email == "";
+		return !regData.value.confidence || regData.value.password == "" || regData.value.passwordConfirmation == "" || regData.value?.email == "";
 	});
 
 	const registration = () => {
@@ -240,7 +237,6 @@
 		tableRole.value++;
 		isShowRegistraion.value = !isShowRegistraion.value;
 	};
-	const commonStore = useCommonStore();
 
 	const fieldLabelsMap = {
 		sts_number: "Свидетельство о регистрации ТС *",
@@ -254,6 +250,11 @@
 	const finesStore = useFinesStore();
 	const { fields, fines } = storeToRefs(finesStore);
 
+	if (fields.value?.email) {
+		regData.value.email = fields.value.email;
+	}
+	console.log(regData.value, "regData.value123");
+
 	if (fields.value) {
 		const res = await api.callMethod("GET", `gibdd/check_by_req?` + new URLSearchParams(fields.value).toString(), {});
 		fines.value = res.map((i, idx) => {
@@ -265,7 +266,6 @@
 	}
 
 	const tableSettings = await api.callMethod("GET", `table/fines`, {});
-	console.log(tableSettings, "tableSettings");
 
 	const table = ref({
 		tableKeys: tableSettings?.fields,
@@ -290,28 +290,27 @@
 
 		loaderState: "",
 	});
-	console.log(table.value.tableData,'table');
-	
-	onMounted(() => {
-		userStore.$patch({
-			authData: {
-				domain: "",
-			},
-			regData: {
-				email: "",
-				emailError: [],
-				password: "",
-				passwordError: [],
-				domain: "",
-				tariff: "",
-				tariffError: "",
-				domainError: [],
-				passwordConfirmation: "",
-				passwordConfirmationError: [],
-				confidence: false,
-			},
-		});
-	});
+
+	// onMounted(() => {
+	// 	userStore.$patch({
+	// 		authData: {
+	// 			domain: "",
+	// 		},
+	// 		regData: {
+	// 			email: "",
+	// 			emailError: [],
+	// 			password: "",
+	// 			passwordError: [],
+	// 			domain: "",
+	// 			tariff: "",
+	// 			tariffError: "",
+	// 			domainError: [],
+	// 			passwordConfirmation: "",
+	// 			passwordConfirmationError: [],
+	// 			confidence: false,
+	// 		},
+	// 	});
+	// });
 </script>
 
 <style lang="scss">

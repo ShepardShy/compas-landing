@@ -65,7 +65,7 @@ body {
 html {
 	background-color: #fbfcfd; /* Default background color */
 	overflow: auto;
-	overscroll-behavior: contain;
+	overscroll-behavior: auto;
 	body {
 		background: #fbfcfd !important;
 	}

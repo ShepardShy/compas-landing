@@ -362,7 +362,19 @@
 
 	let form = ref([]);
 	watchEffect(() => {
-		form.value = [...fields.value];
+		form.value = [
+			...fields.value,
+			{
+				title: "E-mail",
+				key: "email",
+				name: "email",
+				type: "text",
+				value: "",
+				required: true,
+				placeholder: "E-mail",
+				class: "input_line",
+			},
+		];
 	});
 
 	const formData = computed(() => {
@@ -400,6 +412,10 @@
 
 				isLoading.value = true;
 				const res = await api.callMethod("GET", `gibdd/check_by_req?` + new URLSearchParams(formData.value).toString(), { ...formData.value, tariff: 1 });
+
+				if (res?.data?.message) {
+					isLoading.value = false;
+				}
 
 				if (Array.isArray(res)) {
 					finesStore.fields = formData.value;
