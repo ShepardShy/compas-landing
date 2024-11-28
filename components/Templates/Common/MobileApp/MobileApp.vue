@@ -3,7 +3,7 @@
 		<div class="container container_mobile">
 			<div class="mobile__wrapper">
 				<div class="mobile__left">
-					<AppH2 class="mobile__title">Скачайте приложение Compas Pro для удобного урпаления порталом</AppH2>
+					<AppH2 class="mobile__title">Скачайте приложение Compas Pro для удобного управления порталом</AppH2>
 					<SubTitle />
 					<Download />
 				</div>

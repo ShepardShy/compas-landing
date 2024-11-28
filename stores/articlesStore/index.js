@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import api from "~/helpers/api.js";
+import { useGlobalStore } from "~/stores/globalStore";
 
 const route = useRoute();
 
@@ -12,6 +13,12 @@ export const useArticlesStore = defineStore("articlesStore", {
 		perPage: 12,
 		canUpdate: true,
 		isLoading: false,
+		lastModifiedCache: null, // Дата последнего изменения с сервера
+		cachedArticles: null, // Закэшированные данные гайдов
+		cachedCategories: null, // Закэшированные категории
+		lastTimeCategory: null,
+		lastTimePage: null,
+		lastTimePerPage: null,
 	}),
 	getters: {
 		currentTitle() {
@@ -24,7 +31,6 @@ export const useArticlesStore = defineStore("articlesStore", {
 
 			return category ? category.name : "Статьи";
 		},
-
 		activeChild: (state) => {
 			if (!state?.categories) return null;
 			for (const category of state.categories) {
@@ -35,14 +41,12 @@ export const useArticlesStore = defineStore("articlesStore", {
 			}
 			return null;
 		},
-
 		articlesList() {
 			// if (route.params?.id) {
 			// 	return this.articles?.list?.data.filter((i) => i.slug != route.params.id && i?.slug?.value != route.params.id) || [];
 			// }
 			return this.articles?.list?.data || [];
 		},
-
 		articlesCategories() {
 			return this.categories?.map((category) => ({
 				...category,
@@ -57,36 +61,56 @@ export const useArticlesStore = defineStore("articlesStore", {
 				})),
 			}));
 		},
-
 		currentCategory() {
 			return this.categories?.find((category) => category.value === route.params.category);
 		},
-
 		currentCategoryId() {
 			return this.categories?.find((category) => category.slug == route.params.category)?.id;
 		},
-
 		countPages() {
 			return this.articles?.list?.last_page;
 		},
 	},
 	actions: {
-		async loadArticles(categoryIdParam) {
+		async loadArticles(categoryParam) {
+			this.articles = [];
 			if (this.canUpdate) {
-				this.isLoading = true;
-				let categoryId = categoryIdParam;
-				if (!categoryId) {
+				const globalStore = useGlobalStore();
+				const lastModified = globalStore.lastModified;
+				if (
+					this.lastModifiedCache === lastModified.articles &&
+					this.cachedArticles &&
+					this.cachedCategories &&
+					categoryParam == this.lastTimeCategory &&
+					this.lastTimePage == this.page &&
+					this.lastTimePerPage == this.perPage
+				) {
+					// Используем кэшированные данные
+					console.log(this.cachedArticles, "this.cachedArticles");
+					this.articles = this.cachedArticles;
+					this.categories = this.cachedCategories;
+				} else {
+					// Загружаем новые данные
 					const { categories } = await api.callMethod("GET", `blog`, {});
 					this.categories = categories;
-					categoryId = this.categories?.find((category) => category.slug == route.params.category)?.id;
-				}
+					const categoryId = this.categories?.find((category) => category.slug == categoryParam)?.id;
+					const resArticles = await api.callMethod("GET", `blog?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
+					this.articles = resArticles;
 
-				this.articles = await api.callMethod("GET", `blog?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
+					// Обновляем кэш
+					this.lastTimeCategory = categoryParam;
+					this.cachedArticles = resArticles;
+					console.log(resArticles, "resArticles");
+					console.log(this.cachedArticles, "this.cachedArticles");
+					this.cachedCategories = this.categories;
+					this.lastModifiedCache = lastModified.articles;
+					this.lastTimePage = this.page;
+					this.lastTimePerPage = this.perPage;
+				}
 
 				if (this.page > this.countPages) {
 					this.page = 1;
 				}
-				this.isLoading = false;
 			}
 		},
 		async loadArticle(slug) {
@@ -115,5 +139,13 @@ export const useArticlesStore = defineStore("articlesStore", {
 			}
 			this.canUpdate = true;
 		},
+	},
+	persist: {
+		afterRestore: (ctx) => {
+			console.log(`about to restore 'commonStore'`);
+			// ctx.store.lastModified = null,
+		},
+		storage: persistedState.localStorage,
+		paths: ["lastModifiedCache", "cachedCategories", "cachedArticles", "lastTimeCategory", "lastTimePage", "lastTimePerPage"],
 	},
 });

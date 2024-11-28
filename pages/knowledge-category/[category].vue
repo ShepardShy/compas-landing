@@ -3,20 +3,28 @@
 <script setup>
 	import TemplateKnowledge from "@/components/Templates/Knowledge/Knowledge.vue";
 	import { useKnowledgeStore } from "~/stores/knowledgeStore";
+	import { storeToRefs } from "pinia";
 
 	const knowledgeStore = useKnowledgeStore();
+	const { page, perPage } = storeToRefs(knowledgeStore);
 	const route = useRoute();
 
 	watch(
 		() => route.params.category,
 		async () => {
-			await knowledgeStore.loadArticles();
+			await knowledgeStore.loadArticles(route.params?.category);
 		},
-		{ deep: true, immediate: true }
+		{ immediate: true }
 	);
-	onUnmounted(async () => {
-		await knowledgeStore.loadArticles();
-	});
+	watch(
+		() => [page.value, perPage.value],
+		async () => {
+			await knowledgeStore.loadArticles(route.params?.category);
+		}
+	);
+	// onUnmounted(async () => {
+	// 	await knowledgeStore.loadArticles();
+	// });
 
 	const config = useRuntimeConfig();
 	const canonicalUrl = ref(null);

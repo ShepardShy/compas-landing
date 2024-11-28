@@ -2,7 +2,7 @@
 	<div class="pagination-full">
 		<ShowMore
 			v-if="activePage != totalPages"
-			@click="emit('showMore')"
+			@click="showMore"
 		/>
 
 		<div class="pagination-full__wrapper">
@@ -75,6 +75,16 @@
 				page: data.value, // Добавляем или изменяем параметр page
 			},
 		});
+	};
+	// Показать ещё
+	const showMore = (data) => {
+		router.push({
+			query: {
+				...route.query, // Сохраняем остальные параметры запроса
+				page: +activePage.value + 1, // Добавляем или изменяем параметр page
+			},
+		});
+		emit("showMore");
 	};
 	// Выбор количества элементов на странице
 	const changeOnPage = (data) => {

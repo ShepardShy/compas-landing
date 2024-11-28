@@ -18,6 +18,7 @@
 				:views="views?.value"
 				:readingTime="reading_time.value"
 			/>
+			<!-- <ClientOnly> -->
 			<div
 				class="article__content"
 				ref="$articleContent"
@@ -47,6 +48,7 @@
 					/>
 				</template>
 			</div>
+			<!-- </ClientOnly> -->
 		</div>
 
 		<div class="article__right">

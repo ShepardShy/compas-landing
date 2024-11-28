@@ -81,7 +81,7 @@
 	provide("$articleWrapper", $articleWrapper);
 	provide("$articleContent", $articleContent);
 
-	await useAsyncData("articles", async () => (articlesList.value.length == 0 ? await articlesStore.loadArticles() : 0));
+	// await useAsyncData("articles", async () => (articlesList.value.length == 0 ? await articlesStore.loadArticles() : 0));
 	await useAsyncData("article", async () => await articlesStore.loadArticle(route.params.id));
 
 	// const article = computed(() => articleDetail.value);

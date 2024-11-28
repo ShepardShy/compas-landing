@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import api from "~/helpers/api.js";
+import { useGlobalStore } from "~/stores/globalStore";
 
 const route = useRoute();
 
@@ -11,6 +12,12 @@ export const useKnowledgeStore = defineStore("knowledgeStore", {
 		page: 1,
 		perPage: 12,
 		canUpdate: true,
+		lastModifiedCache: null, // Дата последнего изменения с сервера
+		cachedArticles: null, // Закэшированные данные гайдов
+		cachedCategories: null, // Закэшированные категории
+		lastTimeCategory: null,
+		lastTimePage: null,
+		lastTimePerPage: null,
 	}),
 	getters: {
 		currentTitle() {
@@ -66,16 +73,45 @@ export const useKnowledgeStore = defineStore("knowledgeStore", {
 		},
 
 		countPages() {
-			return this.articles?.list.last_page;
+			return this.articles?.list?.last_page;
 		},
 	},
 	actions: {
-		async loadArticles() {
+		async loadArticles(categoryParam) {
+			this.articles = [];
 			if (this.canUpdate) {
-				const { categories } = await api.callMethod("GET", `knowledge`, {});
-				this.categories = categories;
-				const categoryId = this.categories?.find((category) => category.slug == route.params.category)?.id;
-				this.articles = await api.callMethod("GET", `knowledge?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
+				const globalStore = useGlobalStore();
+				const lastModified = globalStore.lastModified;
+				if (
+					this.lastModifiedCache === lastModified.articles &&
+					this.cachedArticles &&
+					this.cachedCategories &&
+					categoryParam == this.lastTimeCategory &&
+					this.lastTimePage == this.page &&
+					this.lastTimePerPage == this.perPage
+				) {
+					// Используем кэшированные данные
+					console.log(this.cachedArticles, "this.cachedArticles");
+					this.articles = this.cachedArticles;
+					this.categories = this.cachedCategories;
+				} else {
+					// Загружаем новые данные
+					const { categories } = await api.callMethod("GET", `knowledge`, {});
+					this.categories = categories;
+					const categoryId = this.categories?.find((category) => category.slug == categoryParam)?.id;
+					const resArticles = await api.callMethod("GET", `knowledge?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
+					this.articles = resArticles;
+
+					// Обновляем кэш
+					this.lastTimeCategory = categoryParam;
+					this.cachedArticles = resArticles;
+					console.log(resArticles, "resArticles");
+					console.log(this.cachedArticles, "this.cachedArticles");
+					this.cachedCategories = this.categories;
+					this.lastModifiedCache = lastModified.articles;
+					this.lastTimePage = this.page;
+					this.lastTimePerPage = this.perPage;
+				}
 
 				if (this.page > this.countPages) {
 					this.page = 1;
@@ -101,11 +137,19 @@ export const useKnowledgeStore = defineStore("knowledgeStore", {
 			}
 			this.page++;
 			const categoryId = this.categories?.find((category) => category.slug == route.params.category)?.id;
-			const newArticles = await api.callMethod("GET", `blog?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`);
+			const newArticles = await api.callMethod("GET", `knowledge?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`);
 			if (newArticles?.list?.data?.length > 0) {
 				this.articles.list.data = [...this.articles.list.data, ...newArticles.list.data];
 			}
 			this.canUpdate = true;
 		},
+	},
+	persist: {
+		afterRestore: (ctx) => {
+			console.log(`about to restore 'commonStore'`);
+			// ctx.store.lastModified = null,
+		},
+		storage: persistedState.localStorage,
+		paths: ["lastModifiedCache", "cachedCategories", "cachedArticles", "lastTimeCategory", "lastTimePage", "lastTimePerPage"],
 	},
 });

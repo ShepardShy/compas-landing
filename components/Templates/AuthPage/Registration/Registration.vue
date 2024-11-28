@@ -21,10 +21,10 @@
 					key: 'domain',
 					substring: '.compas.pro',
 				}"
-				:mask="null"
+				:mask="'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD'"
 				:enabledAutocomplete="true"
 				@keyup.enter="!disabledButton ? registration() : null"
-				@changeValue="data => changeValue(data)"
+				@changeValue="(data) => changeValue(data)"
 			/>
 			<p
 				v-for="error in regData.domainError"
@@ -47,11 +47,11 @@
 					key: 'email',
 				}"
 				:required="true"
-				:mask="null"
+				:mask="'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD'"
 				:disabled="userStore.regButtonLoad"
 				:enabledAutocomplete="true"
 				@keyup.enter="!disabledButton ? registration() : null"
-				@changeValue="data => changeValue(data)"
+				@changeValue="(data) => changeValue(data)"
 			/>
 			<p
 				v-for="error in regData.emailError"
@@ -78,7 +78,7 @@
 				:disabled="userStore.regButtonLoad"
 				:enabledAutocomplete="false"
 				@keyup.enter="!disabledButton ? registration() : null"
-				@changeValue="data => changeValue(data)"
+				@changeValue="(data) => changeValue(data)"
 			/>
 			<p
 				v-for="error in regData.passwordError"
@@ -104,7 +104,7 @@
 				:disabled="userStore.regButtonLoad"
 				:enabledAutocomplete="false"
 				@keyup.enter="!disabledButton ? registration() : null"
-				@changeValue="data => changeValue(data)"
+				@changeValue="(data) => changeValue(data)"
 			/>
 			<p
 				v-for="error in regData.passwordConfirmationError"
@@ -128,7 +128,7 @@
 			}"
 			:disabled="userStore.regButtonLoad"
 			:isTextClickable="false"
-			@changeValue="data => changeValue(data)"
+			@changeValue="(data) => changeValue(data)"
 		/>
 		<AppButton
 			:disabledOption="disabledButton"
@@ -171,7 +171,7 @@
 	       Я понимаю и принимаю <a href="/docs/politics" class="auth__link" target="_blank"> условия и политику конфиденциальности </a> Compas
 	   </div>`;
 
-	const changeValue = data => {
+	const changeValue = (data) => {
 		regData.value[data.key] = data.value;
 	};
 

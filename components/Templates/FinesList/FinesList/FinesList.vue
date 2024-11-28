@@ -248,7 +248,7 @@
 	};
 
 	const finesStore = useFinesStore();
-	const { fields, fines } = storeToRefs(finesStore);
+	const { fields, fines, tableSettings } = storeToRefs(finesStore);
 
 	if (fields.value?.email) {
 		regData.value.email = fields.value.email;
@@ -256,8 +256,8 @@
 	console.log(regData.value, "regData.value123");
 
 	if (fields.value) {
-		const res = await api.callMethod("GET", `gibdd/check_by_req?` + new URLSearchParams(fields.value).toString(), {});
-		fines.value = res.map((i, idx) => {
+		console.log(fines.value, "fines.value");
+		fines.value = fines.value.map((i, idx) => {
 			return { ...i, id: idx + 1 };
 		});
 	} else {
@@ -265,10 +265,13 @@
 		// navigateTo("/products/fines");
 	}
 
-	const tableSettings = await api.callMethod("GET", `table/fines`, {});
+	!tableSettings.value ? (tableSettings.value = await api.callMethod("GET", `table/fines`, {})) : 0;
+
+	console.log(fines.value, "fines.value");
+	console.log(tableSettings.value?.fields, "tableSettings?.fields");
 
 	const table = ref({
-		tableKeys: tableSettings?.fields,
+		tableKeys: tableSettings.value?.fields,
 		tableData: fines.value,
 
 		socketRows: {
@@ -278,8 +281,8 @@
 
 		// Сортировка по ключу
 		sortItem: {
-			key: tableSettings?.sort_field,
-			order: tableSettings?.sort_order,
+			key: tableSettings.value?.sort_field,
+			order: tableSettings.value?.sort_order,
 		},
 
 		tableFooter: {

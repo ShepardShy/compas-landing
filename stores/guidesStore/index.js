@@ -17,6 +17,8 @@ export const useGuidesStore = defineStore("guidesStore", {
 		cachedGuides: null, // Закэшированные данные гайдов
 		cachedCategories: null, // Закэшированные категории
 		lastTimeCategory: null,
+		lastTimePage: null,
+		lastTimePerPage: null,
 	}),
 	getters: {
 		currentTitle() {
@@ -77,40 +79,38 @@ export const useGuidesStore = defineStore("guidesStore", {
 	},
 	actions: {
 		async loadGuides(categoryParam) {
+			this.guides = [];
 			if (this.canUpdate) {
 				const globalStore = useGlobalStore();
 				const lastModified = globalStore.lastModified;
-				if (categoryParam && this.lastTimeCategory != categoryParam) {
-					this.guides = [];
+				if (
+					this.lastModifiedCache === lastModified.guides &&
+					this.cachedGuides &&
+					this.cachedCategories &&
+					categoryParam == this.lastTimeCategory &&
+					this.lastTimePage == this.page &&
+					this.lastTimePerPage == this.perPage
+				) {
+					// Используем кэшированные данные
+					this.guides = this.cachedGuides;
+					this.categories = this.cachedCategories;
+				} else {
+					// Загружаем новые данные
 					const { categories } = await api.callMethod("GET", `guides`, {});
 					this.categories = categories;
 					const categoryId = this.categories?.find((category) => category.slug == categoryParam)?.id;
-					this.guides = await api.callMethod("GET", `guides?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
+					const resGuides = await api.callMethod("GET", `guides?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
+					this.guides = resGuides;
+
+					// Обновляем кэш
 					this.lastTimeCategory = categoryParam;
-					this.cachedGuides = this.guides;
+					this.cachedGuides = resGuides;
 					this.cachedCategories = this.categories;
 					this.lastModifiedCache = lastModified.guides;
-				} else {
-					// Проверяем дату последнего изменения
-					if (this.lastModifiedCache === lastModified.guides && this.cachedGuides && this.cachedCategories && categoryParam == this.lastTimeCategory) {
-						// Используем кэшированные данные
-						this.guides = this.cachedGuides;
-						this.categories = this.cachedCategories;
-					} else {
-						// Загружаем новые данные
-						this.guides = [];
-						const { categories } = await api.callMethod("GET", `guides`, {});
-						this.categories = categories;
-
-						this.guides = await api.callMethod("GET", `guides?page=${this.page}&per_page=${this.perPage}`, {});
-
-						// Обновляем кэш
-						this.cachedGuides = this.guides;
-						this.cachedCategories = this.categories;
-						this.lastModifiedCache = lastModified.guides;
-						this.lastTimeCategory = null;
-					}
+					this.lastTimePage = this.page;
+					this.lastTimePerPage = this.perPage;
 				}
+
 				if (this.page > this.countPages) {
 					this.page = 1;
 				}
@@ -130,7 +130,6 @@ export const useGuidesStore = defineStore("guidesStore", {
 		},
 		async showMore() {
 			this.canUpdate = false;
-			console.log(this.page + 1 > this.countPages);
 			if (this.page + 1 > this.countPages) {
 				this.canUpdate = true;
 				return;
@@ -144,5 +143,13 @@ export const useGuidesStore = defineStore("guidesStore", {
 			console.log("showMore end");
 			this.canUpdate = true;
 		},
+	},
+	persist: {
+		afterRestore: (ctx) => {
+			console.log(`about to restore 'commonStore'`);
+			// ctx.store.lastModified = null,
+		},
+		storage: persistedState.localStorage,
+		paths: ["lastModifiedCache", "cachedCategories", "cachedGuides", "lastTimeCategory", "lastTimePage", "lastTimePerPage"],
 	},
 });

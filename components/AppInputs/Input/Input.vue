@@ -1,8 +1,9 @@
 <template>
 	<FormItem
 		class="form-item__input"
+		:class="`form-item__input_${props.item.type}`"
 		:required="props.item.required"
-		:style="`--substring: ${props.item.substring != undefined ? props.item.substring : ''}`"
+		:style="`--substring: ${props.item.substring != undefined ? props.item.substring : ''}; --substringPadding: ${substringPadding}px`"
 	>
 		<FormLabel
 			v-show="props.item.title != null && props.item.title != ''"
@@ -13,11 +14,13 @@
 			v-if="props.isReadOnly"
 			:isHTML="false"
 			:isLink="props.isLink"
-			:value="props.item.type == 'password' ? '**********' : props.item.value"
+			:value="props.item.type == 'password' ? '••••••••••' : props.item.value"
 			:link="props.item.external_link"
 			:substring="props.item.substring"
 			@click="() => (props.isLink ? $emit('openLink', props.item) : '')"
-		/>
+		>
+			{{ props.substring }}
+		</FormValue>
 
 		<InputField
 			v-else
@@ -25,18 +28,29 @@
 			:item="props.item"
 			:mask="props.mask"
 			:disabled="props.disabled"
+			:isUseName="props.isUseName"
+			:inputLength="props.inputLength"
 			:enabledAutocomplete="props.enabledAutocomplete"
-			@focus="data => $emit('focus', data)"
-			@blur="data => $emit('blur', data)"
-			@changeValue="data => $emit('changeValue', data)"
+			@focus="(data) => emit('focus', data)"
+			@blur="(data) => emit('blur', data)"
+			@changeValue="(data) => emit('changeValue', data)"
 		/>
 
 		<span
-			v-if="props.isShowSubstring && !props.isReadOnly && ![null, undefined].includes(props.item.substring) && props.item.substring != ''"
+			ref="substringRef"
+			v-if="!props.isReadOnly && typeof props.item.substring != 'object' && ![null, undefined].includes(props.item.substring) && props.item.substring != ''"
 			class="form-item__substring"
-			>{{ props.item.substring }}</span
 		>
+			{{ props.item.substring }}
+		</span>
 
+		<span
+			ref="substringRef"
+			v-if="!props.isReadOnly && typeof props.item.substring == 'object' && ![null, undefined].includes(props.item.substring) && props.item.substring != ''"
+			class="form-item__substring form-item__substring_component"
+		>
+			<component :is="props.item.substring" />
+		</span>
 		<slot></slot>
 	</FormItem>
 </template>
@@ -52,6 +66,8 @@
 	import FormValue from "@/components/AppForm/FormValue/FormValue.vue";
 
 	const inputRef = ref(null);
+	const substringRef = ref(null);
+	const substringPadding = ref(0);
 
 	const props = defineProps({
 		item: {
@@ -72,7 +88,7 @@
 			type: Boolean,
 		},
 		enabledAutocomplete: {
-			default: true,
+			default: false,
 			type: Boolean,
 		},
 		mask: {
@@ -87,13 +103,34 @@
 			default: false,
 			type: Boolean,
 		},
-		isShowSubstring: {
-			default: true,
+		inputLength: {
+			default: 256,
+			type: Number,
+		},
+		isUseName: {
+			default: false,
 			type: Boolean,
 		},
 	});
 
+	const emit = defineEmits(["focus", "blur", "changeValue"]);
+
 	defineExpose({
 		inputRef,
+	});
+
+	watch(
+		() => props.item.substring,
+		() => {
+			setTimeout(() => {
+				substringPadding.value = substringRef.value ? substringRef.value.offsetWidth : 0;
+			}, 5);
+		}
+	);
+
+	onMounted(() => {
+		setTimeout(() => {
+			substringPadding.value = substringRef.value ? substringRef.value.offsetWidth : 0;
+		}, 5);
 	});
 </script>

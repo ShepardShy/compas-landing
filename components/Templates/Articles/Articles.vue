@@ -17,7 +17,9 @@
 		</div>
 		<div class="articles__right">
 			<Title :title="currentTitle" />
-			<ArticlesList :articlesList />
+			<ClientOnly>
+				<ArticlesList :articlesList />
+			</ClientOnly>
 		</div>
 	</div>
 </template>
@@ -39,13 +41,12 @@
 
 	page.value = route.query.page ?? 1;
 	perPage.value = route.query.per_page ?? 12;
-	console.log(currentCategoryId.value, "currentCategoryId");
-	!currentCategoryId.value ? await useAsyncData("articles", async () => await articlesStore.loadArticles()) : 0;
+	!currentCategoryId.value && !route.fullPath.includes("category") ? await useAsyncData("articles", async () => await articlesStore.loadArticles(route.params?.category)) : 0;
 
 	watch(
 		() => [page.value, perPage.value],
 		async () => {
-			await articlesStore.loadArticles();
+			await articlesStore.loadArticles(route.params?.category);
 		}
 	);
 
@@ -62,7 +63,7 @@
 		});
 	};
 
-	const category = computed(() => articlesCategories.value.find((category) => category.slug == route.params.category));
+	const category = computed(() => articlesCategories.value?.find((category) => category.slug == route.params.category));
 
 	watch(
 		() => category.value,

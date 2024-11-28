@@ -17,7 +17,9 @@
 		</div>
 		<div class="articles__right">
 			<Title :title="currentTitle" />
-			<List :articlesList />
+			<ClientOnly>
+				<List :articlesList />
+			</ClientOnly>
 		</div>
 	</div>
 </template>
@@ -36,24 +38,26 @@
 
 	const { categories, page, countPages, currentCategory, perPage, articlesCategories, currentTitle, articlesList, articles, currentCategoryId, options } = storeToRefs(articlesStore);
 
-	page.value = route.query.page ?? 1;
-	perPage.value = route.query.per_page ?? 12;
+	page.value = route.query?.page ?? 1;
+	perPage.value = route.query?.per_page ?? 12;
 
-	await useAsyncData("knowledges", async () => await articlesStore.loadArticles());
+	console.log(!currentCategoryId.value && !route.fullPath.includes("category"), "currentCategoryId.value");
+	!currentCategoryId.value && !route.fullPath.includes("category") ? await useAsyncData("knowledges", async () => await articlesStore.loadArticles(route.params?.category)) : 0;
 
 	watch(
 		() => [page.value, perPage.value],
 		async () => {
-			await articlesStore.loadArticles();
+			if (currentCategoryId.value || route.fullPath.includes("category")) return;
+			await articlesStore.loadArticles(route.params?.category);
 		}
 	);
 
-	watch(
-		() => currentCategoryId.value,
-		async () => {
-			await articlesStore.loadArticles();
-		}
-	);
+	// watch(
+	// 	() => currentCategoryId.value,
+	// 	async () => {
+	// 		await articlesStore.loadArticles(route.params?.category);
+	// 	}
+	// );
 
 	const searchOptions = ref([]);
 	const changeValueSearch = async (search) => {
@@ -70,9 +74,9 @@
 
 	const category = computed(() => articlesCategories.value?.find((category) => category.slug == route.params.category));
 
-	onMounted(async () => {
-		await useAsyncData("knowledges", async () => await articlesStore.loadArticles());
-	});
+	// onMounted(async () => {
+	// 	await useAsyncData("knowledges", async () => await articlesStore.loadArticles(route.params?.category));
+	// });
 
 	watch(
 		() => category.value,

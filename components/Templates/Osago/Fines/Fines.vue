@@ -23,6 +23,7 @@
 					type: item.type,
 					title: item.title,
 					substring: null,
+					substring: item.name == 'number' ? setRegNumber() : undefined,
 					required: item.required,
 					external_link: null,
 					value: item.value,
@@ -146,6 +147,10 @@
 
 	const userStore = useUserStore();
 
+	const setRegNumber = () => {
+		return markRaw(defineAsyncComponent(() => import("@/components/AppIcons/regNumbers/rus.vue")));
+	};
+
 	const checkboxLink = `<div class="main-page__text">
 	   Для постановки авто на учёт в ГАИ подойдёт распечатанный полис даже без вписанного номера. Номер можно будет вписать в полис после постановки авто на учёт или при следующем продлении ОСАГО
 	  </div>`;
@@ -240,7 +245,7 @@
 				key: "number",
 				name: "number",
 				type: "text",
-				mask: "A ### AA ###",
+				mask: "R ### RR ###",
 				value: "",
 				required: true,
 				placeholder: "A 000 AA 777",

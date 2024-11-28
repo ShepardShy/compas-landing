@@ -5,6 +5,7 @@ export const useFinesStore = defineStore("finesStore", {
 		return {
 			fields: null,
 			fines: [],
+			tableSettings: null,
 		};
 	},
 

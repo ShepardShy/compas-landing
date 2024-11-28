@@ -12,9 +12,9 @@
 	watch(
 		() => route.params.category,
 		async () => {
-			await useAsyncData("articles", async () => await articlesStore.loadArticles());
+			await useAsyncData("articles", async () => await articlesStore.loadArticles(route.params?.category));
 		},
-		{ deep: true, immediate: true }
+		{ immediate: true }
 	);
 
 	const config = useRuntimeConfig();

@@ -6,6 +6,7 @@
 			@click.prevent
 		>
 			<AppH1 class="fines__form-title"> Проверка штрафов ГИБДД {{ titleMap[route.params.type] }} в 1 клик </AppH1>
+			<!-- <Radio /> -->
 			<AppInput
 				v-for="item in form"
 				:class="item.class"
@@ -23,6 +24,7 @@
 					title: item.title,
 					substring: null,
 					required: item.required,
+					substring: item.name == 'number' ? setRegNumber() : undefined,
 					external_link: null,
 					value: item.value,
 				}"
@@ -117,6 +119,7 @@
 	import FansyBox from "@/components/AppFansyBox/FansyBox.vue";
 	import ValidateField from "@/components/AppTable/Validate.js";
 	import api from "@/helpers/api.js";
+	import Radio from "~/components/AppInputs/Radio/Radio.vue";
 	import { useCommonStore } from "@/stores/commonStore.js";
 	import { useFinesStore } from "~/stores/finesStore.js";
 
@@ -176,6 +179,10 @@
 		},
 	};
 
+	const setRegNumber = () => {
+		return markRaw(defineAsyncComponent(() => import("@/components/AppIcons/regNumbers/rus.vue")));
+	};
+
 	const videoLinkArr = videoMap[route.params?.type ?? "default"].link.split("/");
 	// id Видео
 	let videoId = videoLinkArr[videoLinkArr.length - 1];
@@ -232,6 +239,7 @@
 		play();
 	};
 
+	// R###RR###
 	let fields = computed(() => {
 		switch (route.params.type) {
 			case "po-sts": {
@@ -241,7 +249,7 @@
 						key: "sts",
 						name: "sts_number",
 						type: "text",
-						mask: "## XX ######",
+						mask: "## SS ######",
 						value: "",
 						required: true,
 						placeholder: "00 XX 000000",
@@ -286,7 +294,7 @@
 						key: "gos",
 						name: "number",
 						type: "text",
-						mask: "A ### AA ###",
+						mask: "R ### RR ###",
 						value: "",
 						required: true,
 						placeholder: "A 000 AA 777",
@@ -297,7 +305,7 @@
 						key: "sts",
 						name: "sts_number",
 						type: "text",
-						mask: "## XX ######",
+						mask: "## SS ######",
 						value: "",
 						required: true,
 						placeholder: "00 AA 000000",
@@ -338,7 +346,7 @@
 						key: "number",
 						name: "number",
 						type: "text",
-						mask: "A ### AA ###",
+						mask: "R ### RR ###",
 						value: "",
 						required: true,
 						placeholder: "A 000 AA 777",
@@ -349,7 +357,7 @@
 						key: "certificate",
 						name: "sts_number",
 						type: "text",
-						mask: "## XX ######",
+						mask: "## SS ######",
 						value: "",
 						required: true,
 						placeholder: "00 AA 000000",
@@ -412,6 +420,7 @@
 
 				isLoading.value = true;
 				const res = await api.callMethod("GET", `gibdd/check_by_req?` + new URLSearchParams(formData.value).toString(), { ...formData.value, tariff: 1 });
+				console.log(res, "res");
 
 				if (res?.data?.message) {
 					isLoading.value = false;

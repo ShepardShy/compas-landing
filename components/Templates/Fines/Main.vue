@@ -27,7 +27,7 @@
 
 	<!-- <MainQuestions /> -->
 	<MainArticles
-		category="2"
+		category="proverka-strafov"
 		class="main__questinos"
 	/>
 	<CommonSocial class="main__social" />
