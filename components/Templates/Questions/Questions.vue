@@ -24,7 +24,9 @@
 		<div class="questions__right">
 			<template v-if="!questionId">
 				<Title :title="currentTitle" />
-				<QuestionsList v-if="questionsList" />
+				<ClientOnly>
+					<QuestionsList v-if="questionsList" />
+				</ClientOnly>
 			</template>
 			<Question
 				v-else-if="questionDetail"
@@ -56,20 +58,22 @@
 	const questionsStore = useQuestionsStore();
 	const { questionsCategories, questionsList, questionDetail, page, perPage, currentCategory } = storeToRefs(questionsStore);
 
+	console.log(123);
 	page.value = route.query.page ?? 1;
 	perPage.value = route.query.per_page ?? 12;
-
-	watch(
-		() => [page.value, perPage.value],
-		async () => {
-			await questionsStore.loadQuestions();
-		}
-	);
 
 	const questionId = computed(() => route.params.id);
 	questionDetail.value = null;
 	await useAsyncData("question", async () => (questionId.value ? await questionsStore.loadQuestion(route.params.id) : 0));
-	await useAsyncData("questions", async () => (!questionsList.value.length ? await questionsStore.loadQuestions() : 0));
+	await useAsyncData("questions", async () => (!route.fullPath.includes("category") ? await questionsStore.loadQuestions() : 0));
+
+	watch(
+		() => [page.value, perPage.value],
+		async () => {
+			if (route.fullPath.includes("category")) return;
+			await questionsStore.loadQuestions();
+		}
+	);
 
 	const searchOptions = ref([]);
 	const changeValueSearch = async (search) => {

@@ -79,8 +79,8 @@ export const useGuidesStore = defineStore("guidesStore", {
 	},
 	actions: {
 		async loadGuides(categoryParam) {
-			this.guides = [];
 			if (this.canUpdate) {
+				this.guides = [];
 				const globalStore = useGlobalStore();
 				const lastModified = globalStore.lastModified;
 				if (

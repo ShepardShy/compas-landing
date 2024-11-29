@@ -1,0 +1,75 @@
+@use "@/assets/variables.scss" as variables;
+@use "@/assets/mixins.scss" as mixins;
+
+.radio__wrapper {
+	display: flex;
+	gap: 20px;
+}
+
+.radio__group {
+	display: inline-flex;
+	align-items: center;
+	cursor: pointer;
+
+	input[type="radio"] {
+		display: none; // Скрываем стандартные радио-кнопки
+	}
+
+	label {
+		display: flex;
+		align-items: center;
+		position: relative;
+		padding-left: 26px; // Пространство для кастомной кнопки
+		font-size: 16px;
+		color: #333; // Цвет текста
+		cursor: pointer;
+	}
+
+	// Кастомная кнопка
+	label::before {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 17px;
+		height: 17px;
+		border: 2px solid #a6b7d4; // Неактивная рамка
+		border-radius: 50%;
+		background-color: #fff;
+		transition: border-color 0.3s, background-color 0.3s;
+	}
+
+	// Состояние выбранного варианта
+	input[type="radio"]:checked + label::before {
+		border-color: #007bff; // Синий цвет для выбранного
+		background-color: #007bff;
+	}
+
+	// Внутренняя белая точка для выбранного варианта
+	input[type="radio"]:checked + label::after {
+		content: "";
+		position: absolute;
+		left: 4px;
+		top: 50%;
+		transform: translateY(-50%);
+		background-image: url("/icons/successWhite.svg");
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-position: center;
+		width: 13px;
+		height: 13px;
+		border-radius: 50%;
+	}
+
+	// Состояние отключенной радио-кнопки
+	input[type="radio"]:disabled + label {
+		color: #aaa; // Цвет текста
+		cursor: not-allowed;
+	}
+
+	input[type="radio"]:disabled + label::before {
+		border-color: #ddd;
+		background-color: #f9f9f9;
+	}
+}

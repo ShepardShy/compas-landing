@@ -36,30 +36,19 @@
 	const route = useRoute();
 
 	const guidesStore = useGuidesStore();
-	const globalStore = useGlobalStore();
-
-	// console.log(globalStore.lastModified, "globalStore.lastModified");
-	// await useAsyncData("lastModified", async () => (!globalStore.lastModified ? await globalStore.loadLastModified() : 0));
-
 	const { page, perPage, guidesCategories, currentTitle, guidesList } = storeToRefs(guidesStore);
 
 	page.value = route.query.page ?? 1;
 	perPage.value = route.query.per_page ?? 12;
-	await useAsyncData("guides", async () => await guidesStore.loadGuides(route.params.category));
+	!route.fullPath.includes("category") ? await useAsyncData("guides", async () => await guidesStore.loadGuides(route.params.category)) : 0;
 
 	watch(
 		() => [page.value, perPage.value],
 		async () => {
+			if (route.fullPath.includes("category")) return;
 			await guidesStore.loadGuides(route.params.category);
 		}
 	);
-
-	// watch(
-	// 	() => currentCategoryId.value,
-	// 	async () => {
-	// 		await guidesStore.loadGuides();
-	// 	}
-	// );
 
 	const searchOptions = ref([]);
 	const changeValueSearch = async (search) => {

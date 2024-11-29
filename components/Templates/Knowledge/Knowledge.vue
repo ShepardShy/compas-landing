@@ -41,13 +41,12 @@
 	page.value = route.query?.page ?? 1;
 	perPage.value = route.query?.per_page ?? 12;
 
-	console.log(!currentCategoryId.value && !route.fullPath.includes("category"), "currentCategoryId.value");
-	!currentCategoryId.value && !route.fullPath.includes("category") ? await useAsyncData("knowledges", async () => await articlesStore.loadArticles(route.params?.category)) : 0;
+	!route.fullPath.includes("category") ? await useAsyncData("knowledges", async () => await articlesStore.loadArticles(route.params?.category)) : 0;
 
 	watch(
 		() => [page.value, perPage.value],
 		async () => {
-			if (currentCategoryId.value || route.fullPath.includes("category")) return;
+			if (route.fullPath.includes("category")) return;
 			await articlesStore.loadArticles(route.params?.category);
 		}
 	);

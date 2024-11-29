@@ -73,8 +73,8 @@ export const useArticlesStore = defineStore("articlesStore", {
 	},
 	actions: {
 		async loadArticles(categoryParam) {
-			this.articles = [];
 			if (this.canUpdate) {
+				this.articles = [];
 				const globalStore = useGlobalStore();
 				const lastModified = globalStore.lastModified;
 				if (

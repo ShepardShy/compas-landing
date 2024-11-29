@@ -3,38 +3,51 @@
 		<AppH1 class="fines__title"> Проверка штрафов ГИБДД {{ titleMap[route.params.type] }} в 1 клик </AppH1>
 		<form
 			class="fines__form"
-			@click.prevent
+			@submit.prevent
 		>
 			<AppH1 class="fines__form-title"> Проверка штрафов ГИБДД {{ titleMap[route.params.type] }} в 1 клик </AppH1>
-			<!-- <Radio /> -->
-			<AppInput
-				v-for="item in form"
-				:class="item.class"
-				v-show="
-					(form.find((i) => ['sts', 'vu', 'uin', 'gos'].includes(i.key)) && form[0].value != '') ||
-					['number', 'certificate', 'sts', 'vu', 'uin', 'gos', 'inn', 'kpp'].includes(item.key) ||
-					(form[0].value != '' && form[1].value != '')
-				"
-				:item="{
-					focus: false,
-					id: 0,
-					placeholder: item.placeholder,
-					key: item.key,
-					type: item.type,
-					title: item.title,
-					substring: null,
-					required: item.required,
-					substring: item.name == 'number' ? setRegNumber() : undefined,
-					external_link: null,
-					value: item.value,
-				}"
-				:disabled="isLoading"
-				:mask="item.mask"
-				:isLink="null"
-				:isReadOnly="false"
-				:enabledAutocomplete="false"
-				@changeValue="(data) => changeValue(data)"
-			/>
+			<template v-for="item in form">
+				<Radio
+					v-if="item.type == 'radio'"
+					:item="{
+						title: item.title,
+						name: item.name,
+						key: item.key,
+						options: item.options,
+						value: item.value,
+					}"
+					@changeValue="(data) => changeValue(data)"
+				/>
+				<AppInput
+					:class="item.class"
+					v-show="
+						(item.key == 'kpp' && form[0].value != 'ip') ||
+						(form.find((i) => ['sts', 'vu', 'uin', 'gos'].includes(i.key)) && form[0].value != '') ||
+						['number', 'certificate', 'sts', 'vu', 'uin', 'gos', 'inn'].includes(item.key) ||
+						(form[0].value != '' && form[1].value != '' && item.type != 'radio')
+					"
+					:item="{
+						focus: false,
+						id: 0,
+						placeholder: item.placeholder,
+						key: item.key,
+						type: item.type,
+						title: item.title,
+						substring: null,
+						required: item.required,
+						substring: item.name == 'number' ? setRegNumber() : undefined,
+						external_link: null,
+						value: item.value,
+					}"
+					:disabled="isLoading"
+					:mask="item.mask"
+					:isLink="null"
+					:isReadOnly="false"
+					:enabledAutocomplete="false"
+					@changeValue="(data) => changeValue(data)"
+				/>
+			</template>
+
 			<div class="fines__actions">
 				<AppButton
 					class="button_blue"
@@ -239,7 +252,6 @@
 		play();
 	};
 
-	// R###RR###
 	let fields = computed(() => {
 		switch (route.params.type) {
 			case "po-sts": {
@@ -316,6 +328,19 @@
 			case "po-inn": {
 				return [
 					{
+						title: "Тип компании",
+						key: "companyType",
+						name: "companyType",
+						ignore: true,
+						type: "radio",
+						value: "ur",
+						options: [
+							{ label: "ООО, ОАО, ЗАО…", value: "ur" },
+							{ label: "ИП", value: "ip" },
+						],
+						class: "input_line",
+					},
+					{
 						title: "ИНН компании",
 						key: "inn",
 						name: "inn",
@@ -385,6 +410,8 @@
 		];
 	});
 
+	const formNoRadio = computed(() => form.value?.filter((i) => i.type != "radio"));
+
 	const formData = computed(() => {
 		const data = {};
 		for (let item of form.value) {
@@ -419,7 +446,7 @@
 				};
 
 				isLoading.value = true;
-				const res = await api.callMethod("GET", `gibdd/check_by_req?` + new URLSearchParams(formData.value).toString(), { ...formData.value, tariff: 1 });
+				const res = await api.callMethod("GET", `gibdd/check_by_req?` + new URLSearchParams(formData.value).toString(), { ...formData.value.filter((i) => !i.ignore), tariff: 1 });
 				console.log(res, "res");
 
 				if (res?.data?.message) {

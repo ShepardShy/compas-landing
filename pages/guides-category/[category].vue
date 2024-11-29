@@ -5,8 +5,10 @@
 <script setup>
 	import TemplateGuides from "@/components/Templates/Guides/Guides.vue";
 	import { useGuidesStore } from "~/stores/guidesStore";
+	import { storeToRefs } from "pinia";
 
 	const guidesStore = useGuidesStore();
+	const { page, perPage } = storeToRefs(guidesStore);
 	const route = useRoute();
 
 	watch(
@@ -14,7 +16,13 @@
 		async () => {
 			await guidesStore.loadGuides(route.params.category);
 		},
-		{ deep: true }
+		{ immediate: true }
+	);
+	watch(
+		() => [page.value, perPage.value],
+		async () => {
+			await guidesStore.loadGuides(route.params?.category);
+		}
 	);
 
 	const config = useRuntimeConfig();

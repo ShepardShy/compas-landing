@@ -13,6 +13,7 @@
 		() => route.params.category,
 		async () => {
 			await knowledgeStore.loadArticles(route.params?.category);
+			console.log("route.params.category");
 		},
 		{ immediate: true }
 	);
@@ -22,9 +23,6 @@
 			await knowledgeStore.loadArticles(route.params?.category);
 		}
 	);
-	// onUnmounted(async () => {
-	// 	await knowledgeStore.loadArticles();
-	// });
 
 	const config = useRuntimeConfig();
 	const canonicalUrl = ref(null);

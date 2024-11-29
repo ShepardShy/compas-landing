@@ -5,8 +5,10 @@
 <script setup>
 	import TemplateArticles from "@/components/Templates/Articles/Articles.vue";
 	import { useArticlesStore } from "~/stores/articlesStore";
+	import { storeToRefs } from "pinia";
 
 	const articlesStore = useArticlesStore();
+	const { page, perPage } = storeToRefs(articlesStore);
 	const route = useRoute();
 
 	watch(
@@ -15,6 +17,12 @@
 			await useAsyncData("articles", async () => await articlesStore.loadArticles(route.params?.category));
 		},
 		{ immediate: true }
+	);
+	watch(
+		() => [page.value, perPage.value],
+		async () => {
+			await articlesStore.loadArticles(route.params?.category);
+		}
 	);
 
 	const config = useRuntimeConfig();

@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { useGlobalStore } from "~/stores/globalStore";
 import api from "~/helpers/api.js";
 
 const route = useRoute();
@@ -11,6 +12,12 @@ export const useQuestionsStore = defineStore("questionsStore", {
 		page: 1,
 		perPage: 12,
 		canUpdate: true,
+		lastModifiedCache: null, // Дата последнего изменения с сервера
+		cachedQuestions: null, // Закэшированные данные гайдов
+		cachedCategories: null, // Закэшированные категории
+		lastTimeCategory: null,
+		lastTimePage: null,
+		lastTimePerPage: null,
 	}),
 	getters: {
 		currentTitle() {
@@ -64,14 +71,43 @@ export const useQuestionsStore = defineStore("questionsStore", {
 		},
 	},
 	actions: {
-		async loadQuestions() {
-			console.log(123);
+		async loadQuestions(categoryParam) {
 			if (this.canUpdate) {
-				const { categories } = await api.callMethod("GET", `faq`, {});
-				this.categories = categories;
-				const categoryId = this.categories?.find((category) => category.slug == route.params.category)?.id;
+				console.log(123);
+				console.log(this.page, "this.page");
+				this.questions = [];
+				const globalStore = useGlobalStore();
+				const lastModified = globalStore.lastModified;
+				if (
+					this.lastModifiedCache === lastModified.faq &&
+					this.cachedQuestions &&
+					this.cachedCategories &&
+					categoryParam == this.lastTimeCategory &&
+					this.lastTimePage == this.page &&
+					this.lastTimePerPage == this.perPage
+				) {
+					// Используем кэшированные данные
+					this.questions = this.cachedQuestions;
+					this.categories = this.cachedCategories;
+				} else {
+					// Загружаем новые данные
+					const { categories } = await api.callMethod("GET", `faq`, {});
+					console.log(this.page, "this.page");
+					this.categories = categories;
+					const categoryId = this.categories?.find((category) => category.slug == categoryParam)?.id;
+					console.log(this.lastTimePage, "this.lastTimePage");
+					console.log(this.page, "this.page");
+					const resQuestions = await api.callMethod("GET", `faq?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
+					this.questions = resQuestions;
 
-				this.questions = await api.callMethod("GET", `faq?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
+					// Обновляем кэш
+					this.lastTimeCategory = categoryParam;
+					this.cachedQuestions = resQuestions;
+					this.cachedCategories = this.categories;
+					this.lastModifiedCache = lastModified.faq;
+					this.lastTimePage = this.page;
+					this.lastTimePerPage = this.perPage;
+				}
 
 				if (this.page > this.countPages) {
 					this.page = 1;
@@ -102,5 +138,13 @@ export const useQuestionsStore = defineStore("questionsStore", {
 			}
 			this.canUpdate = true;
 		},
+	},
+	persist: {
+		afterRestore: (ctx) => {
+			console.log(`about to restore 'commonStore'`);
+			// ctx.store.lastModified = null,
+		},
+		storage: persistedState.localStorage,
+		paths: ["lastModifiedCache", "cachedCategories", "cachedQuestions", "lastTimeCategory", "lastTimePage", "lastTimePerPage"],
 	},
 });

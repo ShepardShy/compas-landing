@@ -78,8 +78,9 @@ export const useKnowledgeStore = defineStore("knowledgeStore", {
 	},
 	actions: {
 		async loadArticles(categoryParam) {
-			this.articles = [];
 			if (this.canUpdate) {
+				console.log("canUpdate");
+				this.articles = [];
 				const globalStore = useGlobalStore();
 				const lastModified = globalStore.lastModified;
 				if (
@@ -91,7 +92,6 @@ export const useKnowledgeStore = defineStore("knowledgeStore", {
 					this.lastTimePerPage == this.perPage
 				) {
 					// Используем кэшированные данные
-					console.log(this.cachedArticles, "this.cachedArticles");
 					this.articles = this.cachedArticles;
 					this.categories = this.cachedCategories;
 				} else {
@@ -105,8 +105,6 @@ export const useKnowledgeStore = defineStore("knowledgeStore", {
 					// Обновляем кэш
 					this.lastTimeCategory = categoryParam;
 					this.cachedArticles = resArticles;
-					console.log(resArticles, "resArticles");
-					console.log(this.cachedArticles, "this.cachedArticles");
 					this.cachedCategories = this.categories;
 					this.lastModifiedCache = lastModified.articles;
 					this.lastTimePage = this.page;
@@ -130,16 +128,15 @@ export const useKnowledgeStore = defineStore("knowledgeStore", {
 		},
 		async showMore() {
 			this.canUpdate = false;
-			console.log(this.page + 1 > this.countPages);
 			if (this.page + 1 > this.countPages) {
 				this.canUpdate = true;
 				return;
 			}
 			this.page++;
-			const categoryId = this.categories?.find((category) => category.slug == route.params.category)?.id;
+			const categoryId = this.categories?.find((category) => category.slug == route.params?.category)?.id;
 			const newArticles = await api.callMethod("GET", `knowledge?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`);
 			if (newArticles?.list?.data?.length > 0) {
-				this.articles.list.data = [...this.articles.list.data, ...newArticles.list.data];
+				this.articles.list.data = [...this.articles?.list?.data, ...newArticles?.list?.data];
 			}
 			this.canUpdate = true;
 		},
@@ -147,7 +144,6 @@ export const useKnowledgeStore = defineStore("knowledgeStore", {
 	persist: {
 		afterRestore: (ctx) => {
 			console.log(`about to restore 'commonStore'`);
-			// ctx.store.lastModified = null,
 		},
 		storage: persistedState.localStorage,
 		paths: ["lastModifiedCache", "cachedCategories", "cachedArticles", "lastTimeCategory", "lastTimePage", "lastTimePerPage"],
