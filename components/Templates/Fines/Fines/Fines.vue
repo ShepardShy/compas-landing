@@ -24,7 +24,7 @@
 						(item.key == 'kpp' && form[0].value != 'ip') ||
 						(form.find((i) => ['sts', 'vu', 'uin', 'gos'].includes(i.key)) && form[0].value != '') ||
 						['number', 'certificate', 'sts', 'vu', 'uin', 'gos', 'inn'].includes(item.key) ||
-						(form[0].value != '' && form[1].value != '' && item.type != 'radio')
+						(form[0].value != '' && form[1].value != '' && item.type != 'radio' && item.key != 'kpp')
 					"
 					:item="{
 						focus: false,
@@ -394,6 +394,7 @@
 	});
 
 	let form = ref([]);
+
 	watchEffect(() => {
 		form.value = [
 			...fields.value,
@@ -410,11 +411,19 @@
 		];
 	});
 
-	const formNoRadio = computed(() => form.value?.filter((i) => i.type != "radio"));
+	const fullFormData = computed(() => {
+		const data = {};
+		for (let item of form.value) {
+			const trimmedValue = item.value.replace(/\s+/g, "");
+			data[item.name] = trimmedValue;
+		}
+		return data;
+	});
 
 	const formData = computed(() => {
 		const data = {};
 		for (let item of form.value) {
+			if (item?.ignore) continue;
 			const trimmedValue = item.value.replace(/\s+/g, "");
 			data[item.name] = trimmedValue;
 		}
@@ -446,7 +455,19 @@
 				};
 
 				isLoading.value = true;
-				const res = await api.callMethod("GET", `gibdd/check_by_req?` + new URLSearchParams(formData.value).toString(), { ...formData.value.filter((i) => !i.ignore), tariff: 1 });
+
+				// Создаем копию formData, чтобы не изменять исходный объект
+				const requestData = { ...formData.value };
+
+				// Удаляем kpp, если companyType === "ip"
+				if (fullFormData.value?.companyType === "ip") {
+					delete requestData.kpp;
+				}
+
+				const res = await api.callMethod("GET", `gibdd/check_by_req?` + new URLSearchParams(requestData).toString(), {
+					...formData.value,
+					tariff: 1,
+				});
 				console.log(res, "res");
 
 				if (res?.data?.message) {
@@ -481,7 +502,14 @@
 				}
 			};
 
-			for (let field of form.value) {
+			let checkedForm;
+			if (form.value[0].value == "ip") {
+				checkedForm = form.value.toSpliced(2, 1);
+			} else {
+				checkedForm = form.value;
+			}
+
+			for (let field of checkedForm) {
 				let error = validateField(field);
 				if (error) {
 					invalidFields.value.push({
@@ -489,8 +517,8 @@
 						error: error,
 					});
 				} else {
-					let repeatPassword = form.value.find((p) => p.key == "repeatPassword");
-					let password = form.value.find((p) => p.key == "password");
+					let repeatPassword = checkedForm.find((p) => p.key == "repeatPassword");
+					let password = checkedForm.find((p) => p.key == "password");
 					if ((field.type == "password" || field.type == "repeatPassword") && password.value != repeatPassword.value) {
 						invalidFields.value.push({
 							field: field,
