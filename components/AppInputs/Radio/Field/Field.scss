@@ -32,8 +32,8 @@
 		left: 0;
 		top: 50%;
 		transform: translateY(-50%);
-		width: 15px;
-		height: 15px;
+		width: 11.7px;
+		height: 11.7px;
 		border: 2px solid #a6b7d4; // Неактивная рамка
 		border-radius: 50%;
 		background-color: #fff;
@@ -50,15 +50,15 @@
 	input[type="radio"]:checked + label::after {
 		content: "";
 		position: absolute;
-		left: 3.6px;
-		top: 50%;
+		left: 2px;
+		top: 51%;
 		transform: translateY(-50%);
 		background-image: url("/icons/successWhite.svg");
 		background-repeat: no-repeat;
 		background-size: contain;
 		background-position: center;
 		width: 11px;
-		height: 11px;
+		height: 10px;
 		border-radius: 50%;
 	}
 
