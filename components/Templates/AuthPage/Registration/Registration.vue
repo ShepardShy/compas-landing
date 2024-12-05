@@ -47,7 +47,7 @@
 					key: 'email',
 				}"
 				:required="true"
-				:mask="'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD'"
+				:mask="'UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU'"
 				:disabled="userStore.regButtonLoad"
 				:enabledAutocomplete="true"
 				@keyup.enter="!disabledButton ? registration() : null"

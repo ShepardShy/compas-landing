@@ -306,7 +306,7 @@
 						key: "gos",
 						name: "number",
 						type: "text",
-						mask: "R ### RR ###",
+						mask: "S ### SS ###",
 						value: "",
 						required: true,
 						placeholder: "A 000 AA 777",
@@ -371,7 +371,7 @@
 						key: "number",
 						name: "number",
 						type: "text",
-						mask: "R ### RR ###",
+						mask: "S ### SS ###",
 						value: "",
 						required: true,
 						placeholder: "A 000 AA 777",
@@ -395,21 +395,21 @@
 
 	let form = ref([]);
 
-	watchEffect(() => {
+	watch(() => fields.value,() => {
 		form.value = [
 			...fields.value,
-			// {
-			// 	title: "E-mail",
-			// 	key: "email",
-			// 	name: "email",
-			// 	type: "text",
-			// 	value: "",
-			// 	required: true,
-			// 	placeholder: "E-mail",
-			// 	class: "input_line",
-			// },
+			{
+				title: "E-mail",
+				key: "email",
+				name: "email",
+				type: "text",
+				value: "",
+				required: true,
+				placeholder: "E-mail",
+				class: "input_line",
+			},
 		];
-	});
+	},{ immediate: true });
 
 	const fullFormData = computed(() => {
 		const data = {};

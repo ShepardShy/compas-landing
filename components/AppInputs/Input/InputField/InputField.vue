@@ -3,7 +3,7 @@
 		v-if="(props.mask != '' && ![undefined, null].includes(props.mask)) || props.item.type == 'number'"
 		ref="inputRef"
 		v-maska
-		data-maska-tokens="A:[a-zA-Zа-яА-Я]|#:[0-9]|X:[0-9a-zA-Zа-яА-Я]|R:[а-яА-Я]|S:[0-9а-яА-Я]|E:[a-zA-Z]|D:[0-9a-zA-Z]"
+		data-maska-tokens="A:[a-zA-Zа-яА-Я]|#:[0-9]|X:[0-9a-zA-Zа-яА-Я]|R:[а-яА-Я]|S:[0-9а-яА-Я]|E:[a-zA-Z]|D:[0-9a-zA-Z]|U:[a-zA-Z.@0-9]"
 		:data-maska="props.item.type == 'number' ? '#######################' : props.mask"
 		:type="'text'"
 		autocorrect="off"

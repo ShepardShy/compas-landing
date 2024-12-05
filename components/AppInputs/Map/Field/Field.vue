@@ -41,6 +41,7 @@
 			:isLoading="isRouteLoading"
 			:isShowButton="props.isShowInputButton"
 			:isCountDistance="props.isCountDistance"
+			v-model:isDisableButton="isDisableButton"
 			@changeValue="(data) => changeValue(data)"
 			@searchOptions="(data) => searchOptions(data)"
 			@clickButton="(data) => changeValue(data, 'calculate')"
@@ -111,6 +112,7 @@
 	let routeLength = ref(null);
 	let markers = ref([]);
 	let isSelectActive = ref(false);
+	let isDisableButton = ref(false)
 	let address = ref(null);
 	let localOptions = ref([]);
 	let value = shallowRef({
@@ -266,6 +268,7 @@
 	// Прокладка маршрута
 	const renderRoute = async (positionRoute, data) => {
 		isRouteLoading.value = true;
+		isDisableButton.value = true;
 		// Данные из инпута
 		if (positionRoute) {
 			positionClick.value = positionRoute;
@@ -320,6 +323,7 @@
 		const historyItem = { address: doneAddress, distance: between, date: dayjs().format("DD.MM.YYYY"), time: dayjs().format("HH:mm") };
 		emit("selectAddress", historyItem);
 		isRouteLoading.value = false;
+		isDisableButton.value = false;
 	};
 
 	// Удаление маршрута
@@ -583,8 +587,10 @@
 					flying: false,
 				});
 
-				action == "show" && renderPoint(position);
-				action == "calculate" && renderRoute(position, data);
+				renderRoute(position, data)
+
+				// action == "show" && renderPoint(position);
+				// action == "calculate" && renderRoute(position, data);
 			}
 		}
 		if (data?.value && !props.isCountDistance) {

@@ -199,7 +199,7 @@
 	let search = ref(null);
 	let options = ref([]);
 	let backupOptions = ref([]);
-	let isDisableButton = ref(false);
+	let isDisableButton = defineModel('isDisableButton');
 
 	const actionState = inject("actionState", () => ref(null), true);
 
@@ -262,7 +262,7 @@
 			};
 
 			let localOptions = props.item.options == null ? [] : props.item.options.filter(p => p != null && typeof p == "object" && !Array.isArray(p) && !isEmpty(p)).sort((prev, next) => prev.label.sort - next.label.sort);
-			options.value = JSON.parse(JSON.stringify(localOptions));
+			options.value = JSON.parse(JSON.stringify(localOptions.filter(i => i.label.text != search.value)));
 		};
 
 		// Создание опции
@@ -325,8 +325,12 @@
 					});
 					value?.text && callAction({ action: "searchOptions", value: value.text });
 					PopupScripts.hideDetails(popupRef.value.popupRef);
+					if(value == null){
+						options.value = []
+					}
 				}, 10);
 			} else if (value == null) {
+				console.log(123);
 				emit("changeValue", null);
 			}
 		};
