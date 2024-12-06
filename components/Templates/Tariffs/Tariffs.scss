@@ -63,6 +63,10 @@
 		}
 		.table-template__buttons {
 			position: absolute;
+			top: 50% !important;
+		}
+		.scroll-button{
+			transform: translateY(-50%);
 		}
 		.scroll-button_left {
 			left: 0;

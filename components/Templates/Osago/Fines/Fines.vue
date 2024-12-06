@@ -245,7 +245,7 @@
 				key: "number",
 				name: "number",
 				type: "text",
-				mask: "S###SS###",
+				mask: "SSSSSSSSS",
 				value: "",
 				required: true,
 				placeholder: "A 000 AA 777",
