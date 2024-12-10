@@ -28,7 +28,7 @@
 
 		<img
 			class="programm-full__image"
-			src="/tariffs/program.webp"
+			src="/images/tariffs/program.webp"
 			alt=""
 		/>
 	</AppSection>

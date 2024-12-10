@@ -90,7 +90,7 @@
 								/>
 								<div class="guide__video-play play-video">
 									<img
-										src="/icons/play-rutube.svg"
+										src="/images/icons/play-rutube.svg"
 										alt=""
 									/>
 								</div>
@@ -99,7 +99,7 @@
 
 						<figure class="ibg fines__icon">
 							<img
-								src="/icons/youtube_blue.svg"
+								src="/images/icons/youtube_blue.svg"
 								alt="О сервисе"
 							/>
 						</figure>
@@ -139,12 +139,12 @@
 	const finesStore = useFinesStore();
 
 	// Картинки проверки штрафов
-	import vuImage from "/main/fines/preview-vu.png";
-	import stsImage from "/main/fines/preview-sts.png";
-	import gosImage from "/main/fines/preview-gos.png";
-	import postanovlenieImage from "/main/fines/preview-postanovlenie.png";
-	import innImage from "/main/fines/preview-inn.png";
-	import defaultImage from "/main/fines/preview.png";
+	import vuImage from "/images/main/fines/preview-vu.png";
+	import stsImage from "/images/main/fines/preview-sts.png";
+	import gosImage from "/images/main/fines/preview-gos.png";
+	import postanovlenieImage from "/images/main/fines/preview-postanovlenie.png";
+	import innImage from "/images/main/fines/preview-inn.png";
+	import defaultImage from "/images/main/fines/preview.png";
 
 	const commonStore = useCommonStore();
 	const route = useRoute();

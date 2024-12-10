@@ -1,7 +1,7 @@
 <template>
 	<figure class="ibg">
 		<img
-			src="/icons/checkmark.svg"
+			src="/images/icons/checkmark.svg"
 			alt=""
 		/>
 	</figure>

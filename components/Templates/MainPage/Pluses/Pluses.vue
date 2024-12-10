@@ -30,12 +30,12 @@
 	import AppH2 from "@/components/AppHeaders/H2/H2.vue";
 	import AppSection from "@/components/AppSection/AppSection.vue";
 
-	import infinity from "/main/pluses/infinity.svg";
-	import mileage from "/main/pluses/reducing-mileage.svg";
-	import protection from "/main/pluses/protection.svg";
-	import notification from "/main/pluses/notification.svg";
-	import receipt from "/main/pluses/receipt.svg";
-	import reduction from "/main/pluses/time-reduction.svg";
+	import infinity from "/images/main/pluses/infinity.svg";
+	import mileage from "/images/main/pluses/reducing-mileage.svg";
+	import protection from "/images/main/pluses/protection.svg";
+	import notification from "/images/main/pluses/notification.svg";
+	import receipt from "/images/main/pluses/receipt.svg";
+	import reduction from "/images/main/pluses/time-reduction.svg";
 
 	let pluses = [
 		{

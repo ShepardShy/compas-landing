@@ -19,7 +19,7 @@
 
 	&.popup__option_active {
 		&::after {
-			content: url("/icons/success.svg");
+			content: url("/images/icons/success.svg");
 		}
 
 		.popup-option__text {

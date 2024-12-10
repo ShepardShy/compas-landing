@@ -6,7 +6,7 @@
 			class="footer__link"
 		>
 			<img
-				src="/mobile/download-appstore.svg"
+				src="/images/mobile/download-appstore.svg"
 				alt=""
 			/>
 		</a>
@@ -17,7 +17,7 @@
 			@click.prevent
 		>
 			<img
-				src="/mobile/download-appstore-google-play.svg"
+				src="/images/mobile/download-appstore-google-play.svg"
 				alt=""
 			/>
 		</a>
@@ -28,7 +28,7 @@
 			@click.prevent
 		>
 			<img
-				src="/mobile/download-appstore-appgallery.svg"
+				src="/images/mobile/download-appstore-appgallery.svg"
 				alt=""
 			/>
 		</a>

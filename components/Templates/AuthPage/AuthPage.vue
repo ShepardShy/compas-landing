@@ -24,7 +24,7 @@
 
 			<figure class="ibg auth__background">
 				<img
-					src="/pages/auth/background.svg"
+					src="/images/pages/auth/background.svg"
 					alt=""
 				/>
 			</figure>

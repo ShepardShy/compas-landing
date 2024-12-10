@@ -9,7 +9,7 @@ export const useUserStore = defineStore("userStore", {
 		return {
 			user: {
 				name: "Денис Потемкин",
-				avatar: "/user/avatar.svg",
+				avatar: "/images/user/avatar.svg",
 				color: "linear-gradient(82deg, #7ba06d, #6204c4)",
 			},
 			roles: [],
@@ -69,7 +69,7 @@ export const useUserStore = defineStore("userStore", {
 							text: "",
 						};
 						const commonStore = useCommonStore();
-						const isInside = commonStore.accounts.find(i => i.toLowerCase() == this.authData.domain.toLowerCase());
+						const isInside = commonStore.accounts.find((i) => i.toLowerCase() == this.authData.domain.toLowerCase());
 						!isInside && commonStore.accounts.push(this.authData.domain.toLowerCase());
 						console.log(commonStore.accounts);
 						navigateTo(`https://${this.authData.domain}.compas.pro/`, { external: true });
@@ -121,13 +121,20 @@ export const useUserStore = defineStore("userStore", {
 				this.regData.passwordError = [];
 				this.regData.domainError = [];
 				this.regData.passwordConfirmationError = [];
-				const res = await api.callMethod("POST", "registration", { domain: payload.domain ? payload.domain : undefined, email: payload.email, password: payload.password, password_confirmation: payload.passwordConfirmation, tariff: payload.tariff ? payload.tariff : 1, ...numbers });
+				const res = await api.callMethod("POST", "registration", {
+					domain: payload.domain ? payload.domain : undefined,
+					email: payload.email,
+					password: payload.password,
+					password_confirmation: payload.passwordConfirmation,
+					tariff: payload.tariff ? payload.tariff : 1,
+					...numbers,
+				});
 
 				const { success, data, token, domain, url } = res;
 
 				if (success && token) {
 					const commonStore = useCommonStore();
-					const isInside = commonStore.accounts.find(i => i.toLowerCase() == this.regData.domain.toLowerCase());
+					const isInside = commonStore.accounts.find((i) => i.toLowerCase() == this.regData.domain.toLowerCase());
 					!isInside && commonStore.accounts.push(domain.toLowerCase());
 					console.log(success, data, token, domain, url);
 					navigateTo(`https://${domain}.compas.pro${url ? url : ""}/?token=${token}`, { external: true });

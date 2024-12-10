@@ -36,7 +36,7 @@
 						/>
 						<div class="guide__video-play play-video">
 							<img
-								src="/icons/play-rutube.svg"
+								src="/images/icons/play-rutube.svg"
 								alt=""
 							/>
 						</div>
@@ -45,7 +45,7 @@
 
 				<figure class="ibg fines__icon">
 					<img
-						src="/icons/youtube_blue.svg"
+						src="/images/icons/youtube_blue.svg"
 						alt="О сервисе"
 					/>
 				</figure>

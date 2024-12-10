@@ -29,7 +29,7 @@
 
 <script setup>
 	import IconPasswordEye from "@/components/AppIcons/PasswordEye/PasswordEye.vue";
-	import defaultImgarticle from "/articles/article.png";
+	import defaultImgarticle from "/images/articles/article.png";
 	import "dayjs/locale/ru";
 
 	const dayjs = useDayjs();

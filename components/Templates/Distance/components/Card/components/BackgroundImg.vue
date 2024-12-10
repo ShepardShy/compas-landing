@@ -1,7 +1,7 @@
 <template>
 	<img
 		class="card__img"
-		src="/pages/distance/dozatorCard.svg"
+		src="/images/pages/distance/dozatorCard.svg"
 		alt="Тележка-дозатор"
 	/>
 </template>

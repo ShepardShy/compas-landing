@@ -150,10 +150,10 @@
 
 	import IconLogo from "@/components/AppIcons/Logo/Logo.vue";
 
-	import telegram from "/footer/telegram.svg";
-	import vk from "/footer/vk.svg";
-	import rutube from "/footer/rutube.svg";
-	import youtube from "/footer/youtube.svg";
+	import telegram from "/images/footer/telegram.svg";
+	import vk from "/images/footer/vk.svg";
+	import rutube from "/images/footer/rutube.svg";
+	import youtube from "/images/footer/youtube.svg";
 
 	const route = useRoute();
 

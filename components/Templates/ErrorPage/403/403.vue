@@ -22,7 +22,7 @@
 	import "@/assets/fonts/fonts.css";
 	import "@/assets/global.scss";
 	import "./403.scss";
-	import page403 from "/pages/error/403.svg";
+	import page403 from "/images/pages/error/403.svg";
 
 	import AppH1 from "@/components/AppHeaders/H1/H1.vue";
 </script>

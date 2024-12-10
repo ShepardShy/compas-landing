@@ -30,7 +30,7 @@
 				/>
 				<div class="guide__video-play play-video">
 					<img
-						src="/icons/play-rutube.svg"
+						src="/images/icons/play-rutube.svg"
 						alt=""
 					/>
 				</div>
@@ -73,8 +73,8 @@
 
 <script setup>
 	import IconPasswordEye from "@/components/AppIcons/PasswordEye/PasswordEye.vue";
-	import defaultImage from "/articles/defaultBg.png";
-	import defaultAvatar from "/articles/defaultAvatar.png";
+	import defaultImage from "/images/articles/defaultBg.png";
+	import defaultAvatar from "/images/articles/defaultAvatar.png";
 	import Video from "../Video/Video.vue";
 	import "dayjs/locale/ru";
 

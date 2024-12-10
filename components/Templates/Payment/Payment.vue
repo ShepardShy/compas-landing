@@ -2,7 +2,7 @@
 	<div class="payment">
 		<img
 			class="payment__img"
-			src="/pages/payment/success.png"
+			src="/images/pages/payment/success.png"
 			alt="success"
 		/>
 		<div class="payment__text">Ваш платеж в обработке</div>

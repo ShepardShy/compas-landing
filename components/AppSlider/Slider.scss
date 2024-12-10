@@ -38,7 +38,7 @@
 		transform: translateX(3px);
 		right: 20px;
 		&::after {
-			content: url("/icons/scrollButtonRight.svg");
+			content: url("/images/icons/scrollButtonRight.svg");
 		}
 	}
 
@@ -47,7 +47,7 @@
 		transform: translateX(-3px);
 		left: 20px;
 		&::after {
-			content: url("/icons/scrollButtonLeft.svg");
+			content: url("/images/icons/scrollButtonLeft.svg");
 		}
 	}
 }

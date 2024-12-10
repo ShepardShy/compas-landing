@@ -1,7 +1,7 @@
 <template>
 	<figure class="ibg error__img">
 		<img
-			src="/pages/error/404.svg"
+			src="/images/pages/error/404.svg"
 			alt="Страница не найдена"
 		/>
 	</figure>

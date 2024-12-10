@@ -17,7 +17,7 @@
 		<template #image>
 			<figure class="ibg programm__image">
 				<img
-					src="/tariffs/program.webp"
+					src="/images/tariffs/program.webp"
 					alt=""
 				/>
 			</figure>

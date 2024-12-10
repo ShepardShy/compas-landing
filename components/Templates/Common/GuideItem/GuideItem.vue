@@ -15,7 +15,7 @@
 				/>
 				<div class="guide__video-play">
 					<img
-						src="/icons/play-rutube.svg"
+						src="/images/icons/play-rutube.svg"
 						alt=""
 					/>
 				</div>
@@ -37,7 +37,7 @@
 
 <script setup>
 	import IconPasswordEye from "@/components/AppIcons/PasswordEye/PasswordEye.vue";
-	import defaultImgguide from "/articles/article.png";
+	import defaultImgguide from "/images/articles/article.png";
 	import "dayjs/locale/ru";
 
 	const props = defineProps({

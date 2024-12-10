@@ -33,7 +33,7 @@
 
 <script setup>
 	import IconPasswordEye from "@/components/AppIcons/PasswordEye/PasswordEye.vue";
-	import defaultImgQuestion from "/main/questions/question.jpg";
+	import defaultImgQuestion from "/images/main/questions/question.jpg";
 
 	const props = defineProps({
 		title: {

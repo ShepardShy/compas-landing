@@ -34,7 +34,7 @@
 	provide("menuVisible", menuVisible);
 
 	// Вызов действий
-	const callAction = data => {
+	const callAction = (data) => {
 		// Устновка данных пользователя
 		const setUser = () => {
 			if ([null, undefined].includes(userStore.user) && typeof userStore.user != "object") {
@@ -42,7 +42,7 @@
 					name: "Неизвестный",
 					last_name: "Пользователь",
 					avatar: {
-						file: "/user/avatar.svg",
+						file: "/images/user/avatar.svg",
 					},
 					color: "linear-gradient(82deg, #7ba06d, #6204c4)",
 				};
@@ -58,19 +58,19 @@
 
 		// Установка полей в меню
 		const setFields = () => {
-			menuVisible.value = menu.value.filter(item => !item.is_hidden);
-			menuHidden.value = menu.value.filter(item => item.is_hidden);
+			menuVisible.value = menu.value.filter((item) => !item.is_hidden);
+			menuHidden.value = menu.value.filter((item) => item.is_hidden);
 		};
 
 		// Установка активной ссылки
 		const setActiveLink = () => {
 			// Проверка переменной на число
-			const isInteger = value => {
+			const isInteger = (value) => {
 				return /^\d+$/.test(value);
 			};
 
 			// Определение является ли ссылка активной
-			const matchLink = link => {
+			const matchLink = (link) => {
 				let routeMatch = route.path.match(link);
 				if (routeMatch != null) {
 					if (routeMatch.input.substr(routeMatch.input.length - 1) == "/") {
@@ -86,11 +86,11 @@
 				return routeMatch != null;
 			};
 
-			activeLink.value = menu.value.find(option => matchLink(option.link)) ?? menu.value[0];
+			activeLink.value = menu.value.find((option) => matchLink(option.link)) ?? menu.value[0];
 		};
 
 		// Сохранение значений в настройках
-		const saveSettings = data => {
+		const saveSettings = (data) => {
 			commonStore.updateMenu(data);
 		};
 

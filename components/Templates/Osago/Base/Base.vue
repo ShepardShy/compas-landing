@@ -31,11 +31,11 @@
 	import AppH2 from "@/components/AppHeaders/H2/H2.vue";
 	import AppSection from "@/components/AppSection/AppSection.vue";
 
-	import gibdd from "/main/base/gibdd.svg";
-	import parking from "/main/base/moscow-parking.svg";
-	import mugand from "/main/base/mugand.svg";
-	import madi from "/main/base/madi.svg";
-	import fspp from "/main/base/fspp.svg";
+	import gibdd from "/images/main/base/gibdd.svg";
+	import parking from "/images/main/base/moscow-parking.svg";
+	import mugand from "/images/main/base/mugand.svg";
+	import madi from "/images/main/base/madi.svg";
+	import fspp from "/images/main/base/fspp.svg";
 
 	let fines = [
 		{

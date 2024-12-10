@@ -34,7 +34,7 @@
 				/>
 				<div class="steps__video-play">
 					<img
-						src="/icons/play-rutube.svg"
+						src="/images/icons/play-rutube.svg"
 						alt=""
 					/>
 				</div>

@@ -139,7 +139,7 @@ body.body__cursor-style {
 		position: relative;
 
 		&::after {
-			content: url("/icons/new/require.svg");
+			content: url("/images/icons/new/require.svg");
 			bottom: 5px;
 			position: absolute;
 			color: variables.$color-red;

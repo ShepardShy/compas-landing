@@ -8,7 +8,7 @@
 					<Download />
 				</div>
 				<img
-					src="/mobile/phoneBg.png"
+					src="/images/mobile/phoneBg.png"
 					alt="Скачайте приложение Compas Pro"
 					class="mobile__img"
 				/>

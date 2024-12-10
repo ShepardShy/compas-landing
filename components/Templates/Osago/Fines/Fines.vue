@@ -97,7 +97,7 @@
 								/>
 								<div class="guide__video-play play-video">
 									<img
-										src="/icons/play-rutube.svg"
+										src="/images/icons/play-rutube.svg"
 										alt=""
 									/>
 								</div>
@@ -106,7 +106,7 @@
 
 						<figure class="ibg fines__icon">
 							<img
-								src="/icons/youtube_blue.svg"
+								src="/images/icons/youtube_blue.svg"
 								alt="О сервисе"
 							/>
 						</figure>
@@ -119,7 +119,7 @@
 
 		<figure class="ibg fines__image">
 			<img
-				src="/main/fines/main-preview.png"
+				src="/images/main/fines/main-preview.png"
 				alt="Проверьте штрафы и зарегистрируйтесь в 1 клик"
 			/>
 		</figure>

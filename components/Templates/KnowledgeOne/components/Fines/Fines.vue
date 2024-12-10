@@ -61,7 +61,7 @@
 						></iframe>
 						<figure class="ibg fines__icon">
 							<img
-								src="/icons/youtube_blue.svg"
+								src="/images/icons/youtube_blue.svg"
 								alt="О сервисе"
 							/>
 						</figure>
@@ -75,7 +75,7 @@
 
 		<figure class="ibg fines__image">
 			<img
-				src="/articles/registration.png"
+				src="/images/articles/registration.png"
 				alt="Проверьте штрафы и зарегистрируйтесь в 1 клик"
 			/>
 		</figure>

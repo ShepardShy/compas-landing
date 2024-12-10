@@ -133,32 +133,32 @@
 		{
 			id: 0,
 			title: "Аэроэкспресс",
-			link: "/main/companies/aeroexpress.svg",
+			link: "/images/main/companies/aeroexpress.svg",
 		},
 		{
 			id: 1,
 			title: "Бургер Кинг",
-			link: "/main/companies/burger-king-logo.svg",
+			link: "/images/main/companies/burger-king-logo.svg",
 		},
 		{
 			id: 2,
 			title: "Комус",
-			link: "/main/companies/komus.svg",
+			link: "/images/main/companies/komus.svg",
 		},
 		{
 			id: 3,
 			title: "Почта России",
-			link: "/main/companies/russian-post-logo.svg",
+			link: "/images/main/companies/russian-post-logo.svg",
 		},
 		{
 			id: 4,
 			title: "Спортмастер",
-			link: "/main/companies/sberbank-logo.svg",
+			link: "/images/main/companies/sberbank-logo.svg",
 		},
 		{
 			id: 5,
 			title: "Сбербанк",
-			link: "/main/companies/sportmaster.svg",
+			link: "/images/main/companies/sportmaster.svg",
 		},
 	];
 </script>

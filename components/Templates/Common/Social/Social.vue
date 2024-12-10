@@ -28,9 +28,9 @@
 	import AppH2 from "@/components/AppHeaders/H2/H2.vue";
 	import AppSection from "@/components/AppSection/AppSection.vue";
 
-	import telegram from "/social/telegram.svg";
-	import vk from "/social/vk.svg";
-	import rutube from "/social/rutube.svg";
+	import telegram from "/images/social/telegram.svg";
+	import vk from "/images/social/vk.svg";
+	import rutube from "/images/social/rutube.svg";
 
 	let icons = [
 		{
