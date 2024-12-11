@@ -19,7 +19,7 @@
         position: absolute;
 
         &::before {
-            content: url('/public/icons/scrollButtonLeft.svg');
+            content: url('/public/images/icons/scrollButtonLeft.svg');
         }
     }
 
@@ -28,7 +28,7 @@
         position: absolute;
 
         &::before {
-            content: url('/public/icons/scrollButtonRight.svg');
+            content: url('/public/images/icons/scrollButtonRight.svg');
         }
     }
 }

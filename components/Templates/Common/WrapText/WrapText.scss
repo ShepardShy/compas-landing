@@ -34,6 +34,28 @@
 		display: flex;
 		flex-direction: column;
 		gap: 25px;
+		z-index: 10;
+
+		.subtitle-wrapper{
+			display: flex;
+			flex-direction: column;
+			gap: 25px;
+			position: relative;
+			z-index: 11;
+			&.active-bg{
+				&::before{
+					content: '';
+					position: absolute;
+					left: -25px;
+					right: -25px;
+					bottom: -15px;
+					top: -15px;
+					z-index: -1;
+					background-color: #fffbe2 !important;
+				}
+			}
+		}
+
 		a {
 			color: #1253a2;
 			cursor: pointer;

@@ -16,6 +16,8 @@
 			content: url("/images/icons/arrow-right.svg");
 			height: 14px;
 			transition: 0.4s all;
+			position: relative;
+			top: 2px;
 			display: flex;
 			align-items: center;
 		}

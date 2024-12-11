@@ -60,6 +60,28 @@
 			images.forEach((img) => {
 				img.setAttribute("data-fancybox", "gallery");
 			});
+
+			// Group <h3> and elements after it into a single div
+			const headings = Array.from($text.value.querySelectorAll("h3"));
+			headings.forEach((h3) => {
+				const groupWrapper = document.createElement("div");
+				groupWrapper.classList.add("subtitle-wrapper");
+
+				// Перемещаем сам h3 в group-wrapper
+				h3.parentNode.insertBefore(groupWrapper, h3);
+				groupWrapper.appendChild(h3);
+
+				// Перемещаем все следующие элементы до следующего h3
+				let nextSibling = groupWrapper.nextSibling;
+				while (nextSibling && nextSibling.nodeName !== "H3") {
+					const currentSibling = nextSibling;
+					nextSibling = nextSibling.nextSibling;
+
+					if (currentSibling.nodeType === Node.ELEMENT_NODE || (currentSibling.nodeType === Node.TEXT_NODE && currentSibling.textContent.trim())) {
+						groupWrapper.appendChild(currentSibling);
+					}
+				}
+			});
 		}
 	});
 </script>

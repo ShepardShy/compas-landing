@@ -20,7 +20,7 @@
             align-items: center;
 
             &::after {
-                content: url('/icons/new/require.svg');
+                content: url('/images/icons/new/require.svg');
                 bottom: 5px;
                 position: relative;
                 color: variables.$color-red;

@@ -5,6 +5,7 @@
 <script setup>
 	import TemplateQuestions from "@/components/Templates/Questions/Questions.vue";
 
+	await navigateTo('/questions');
 
 	const config = useRuntimeConfig();
 	const route = useRoute()

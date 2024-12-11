@@ -5,6 +5,7 @@
 <script setup>
 	import TemplateArticles from "@/components/Templates/Articles/Articles.vue";
 
+	await navigateTo('/articles');
 
 	const config = useRuntimeConfig();
 	const route = useRoute()

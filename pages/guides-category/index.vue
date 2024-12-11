@@ -5,6 +5,8 @@
 <script setup>
 	import TemplateGuides from "@/components/Templates/Guides/Guides.vue";
 
+	await navigateTo('/guides');
+
 	const config = useRuntimeConfig();
 	const route = useRoute();
 	const canonicalUrl = ref(null);

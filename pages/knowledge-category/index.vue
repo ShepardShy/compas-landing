@@ -5,6 +5,8 @@
 <script setup>
 	import TemplateKnowledge from "@/components/Templates/Knowledge/Knowledge.vue";
 
+	await navigateTo('/knowledge');
+
 	const config = useRuntimeConfig();
 	const route = useRoute()
 	const canonicalUrl = ref(null)
