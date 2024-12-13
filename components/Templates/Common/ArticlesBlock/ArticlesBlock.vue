@@ -2,7 +2,10 @@
 	<AppSection class="section_without-background articles-block">
 		<AppH2> Статьи которые вас заинтересуют</AppH2>
 		<ClientOnly>
-			<ArticlesSlider :category="props.category" />
+			<ArticlesSlider
+				:categoryId="props?.categoryId"
+				:category="props?.category"
+			/>
 		</ClientOnly>
 	</AppSection>
 </template>
@@ -16,8 +19,10 @@
 		category: {
 			type: String,
 		},
+		categoryId: {
+			type: String,
+		},
 	});
-	console.log(props.category, "props");
 </script>
 
 <style>

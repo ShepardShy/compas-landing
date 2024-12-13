@@ -103,7 +103,7 @@
 		},
 		{
 			title: "Статьи",
-			link: "/images/articles",
+			link: "/articles",
 		},
 		category.value
 			? {

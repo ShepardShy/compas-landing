@@ -41,10 +41,13 @@
 		category: {
 			type: String,
 		},
+		categoryId: {
+			type: String,
+		},
 	});
 
 	const articlesStore = useArticlesStore();
-	const { categories, currentTitle, articlesList } = storeToRefs(articlesStore);
+	const { articlesList } = storeToRefs(articlesStore);
 
 	const route = useRoute();
 
@@ -52,7 +55,7 @@
 
 	let countSlides = ref(3);
 
-	await articlesStore.loadArticles(props.category);
+	await articlesStore.loadArticles(props.category, props.categoryId);
 	onMounted(async () => {
 		window.addEventListener("resize", checkingWindowWidth);
 		checkingWindowWidth();

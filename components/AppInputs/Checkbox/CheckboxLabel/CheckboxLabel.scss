@@ -6,6 +6,6 @@
         margin-bottom: 0px;
         color: variables.$color-black;
         font-size: variables.$font-size-default;
-        @include mixins.userSelect($value: none);
+        // @include mixins.userSelect($value: none);
     }
 }

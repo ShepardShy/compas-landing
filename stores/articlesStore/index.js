@@ -72,7 +72,7 @@ export const useArticlesStore = defineStore("articlesStore", {
 		},
 	},
 	actions: {
-		async loadArticles(categoryParam) {
+		async loadArticles(categoryParam, categoryIdParam) {
 			if (this.canUpdate) {
 				this.articles = [];
 				const globalStore = useGlobalStore();
@@ -83,17 +83,22 @@ export const useArticlesStore = defineStore("articlesStore", {
 					this.cachedCategories &&
 					categoryParam == this.lastTimeCategory &&
 					this.lastTimePage == this.page &&
-					this.lastTimePerPage == this.perPage
+					this.lastTimePerPage == this.perPage &&
+					!categoryIdParam
 				) {
 					// Используем кэшированные данные
-					console.log(this.cachedArticles, "this.cachedArticles");
 					this.articles = this.cachedArticles;
 					this.categories = this.cachedCategories;
 				} else {
 					// Загружаем новые данные
-					const { categories } = await api.callMethod("GET", `blog`, {});
-					this.categories = categories;
-					const categoryId = this.categories?.find((category) => category.slug == categoryParam)?.id;
+					let categoryId;
+					if (!categoryIdParam) {
+						const { categories } = await api.callMethod("GET", `blog`, {});
+						this.categories = categories;
+						categoryId = this.categories?.find((category) => category.slug == categoryParam)?.id;
+					} else {
+						categoryId = categoryIdParam;
+					}
 					const resArticles = await api.callMethod("GET", `blog?page=${this.page}&per_page=${this.perPage}&q=${categoryId ? `&filter[category_id]=${categoryId}` : ""}`, {});
 					this.articles = resArticles;
 

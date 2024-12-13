@@ -156,7 +156,7 @@
                 @include mixins.flexBlock($vertical: center, $horizontal: flex-start, $gap: 10px);
 
                 &::after {
-                    content: url('/icons/arrow.svg');
+                    content: url('/images/icons/arrow.svg');
                 }
             }
 

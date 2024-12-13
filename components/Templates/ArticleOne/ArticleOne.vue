@@ -55,7 +55,10 @@
 			<Nav v-if="detail_text" />
 		</div>
 	</div>
-	<Articles />
+	<Articles
+		v-if="category_id"
+		:categoryId="category_id?.value?.value?.[0]"
+	/>
 	<Social class="article__social" />
 </template>
 
@@ -87,9 +90,6 @@
 	await useAsyncData("articles", async () => (articlesList.value.length == 0 ? await articlesStore.loadArticles() : 0));
 	await useAsyncData("article", async () => await articlesStore.loadArticle(route.params.id));
 
-	// const article = computed(() => articleDetail.value);
-	// console.log(article.value);
-
 	const conmponentsMap = {
 		wrap,
 		registration,
@@ -102,7 +102,7 @@
 		question,
 	};
 
-	let { created_at, user_id, questions, updated_at, detail_picture, name, views, detail_text, seo_description, seo_title, reading_time } = articleDetail.value;
+	let { created_at, user_id, questions, updated_at, detail_picture, name, views, detail_text, seo_description, seo_title, reading_time, category_id } = articleDetail.value;
 
 	const questionById = (id) => questions?.data?.find((i) => i.id == id);
 
