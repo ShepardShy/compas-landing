@@ -10,6 +10,7 @@
 			class="guide__left"
 		>
 			<AppH1 class="guide__left-title video-guide">{{ guideDetail.name?.value }}</AppH1>
+			<Nav class="guide__left-nav" v-if="guideDetail?.detail_text" />
 			<Header
 				:title="guideDetail.name?.value"
 				:image="guideDetail.detail_picture?.value?.[0]?.file"

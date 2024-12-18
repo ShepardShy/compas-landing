@@ -31,9 +31,9 @@
 
 		if (tag) {
 			if (link == "#0") {
-				item.nextElementSibling.classList.add("active-bg");
+				item.nextElementSibling.nextElementSibling.classList.add("active-bg");
 				setTimeout(() => {
-					item.nextElementSibling.classList.remove("active-bg");
+					item.nextElementSibling.nextElementSibling.classList.remove("active-bg");
 				}, 2000);
 			} else {
 				item.parentNode.classList.add("active-bg");

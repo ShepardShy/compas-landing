@@ -26,13 +26,20 @@
 		position: relative;
 		min-width: 263px;
 		@media (max-width: 768px) {
-			order: -1;
+			display: none;
 		}
 	}
 	&__left {
 		width: calc(100% - 263px - 15px);
 		@media (max-width: 768px) {
 			width: 100%;
+		}
+		&-nav {
+			margin-top: 35px;
+			display: none;
+			@media (max-width: 768px) {
+				display: block;
+			}
 		}
 	}
 

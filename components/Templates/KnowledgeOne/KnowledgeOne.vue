@@ -18,6 +18,7 @@
 				:views="views?.value"
 				:readingTime="reading_time.value"
 			/>
+			<Nav class="article__left-nav" v-if="detail_text" />
 			<div
 				class="article__content"
 				ref="$articleContent"

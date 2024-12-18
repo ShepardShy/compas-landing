@@ -26,7 +26,7 @@
 		position: relative;
 		min-width: 263px;
 		@media (max-width: 768px) {
-			order: -1;
+			display: none;
 		}
 	}
 	&__left {
@@ -37,6 +37,13 @@
 		&-title {
 			margin-bottom: 35px;
 			font-size: 35px;
+		}
+		&-nav {
+			margin-bottom: 35px !important;
+			display: none !important;
+			@media (max-width: 768px) {
+				display: block !important;
+			}
 		}
 	}
 
