@@ -262,6 +262,7 @@
 			renderPoint(positionClick.value);
 			positionClick.value = [(+positionClick.value[0]).toFixed(6), (+positionClick.value[1]).toFixed(6)];
 			address.value = positionClick.value.join(", ");
+			renderRoute();
 		});
 	};
 

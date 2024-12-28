@@ -260,9 +260,10 @@
 				}
 				return true;
 			};
-
+			console.log(props.item.options,'props.item.options1');
+			
 			let localOptions = props.item.options == null ? [] : props.item.options.filter(p => p != null && typeof p == "object" && !Array.isArray(p) && !isEmpty(p)).sort((prev, next) => prev.label.sort - next.label.sort);
-			options.value = JSON.parse(JSON.stringify(localOptions.filter(i => i.label.text != search.value)));
+			options.value = JSON.parse(JSON.stringify(localOptions));
 		};
 
 		// Создание опции
