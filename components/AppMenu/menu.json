@@ -20,12 +20,12 @@
 		"childs": [
 			{
 				"id": 3,
-				"title": "Проверка штрафов",
+				"title": "Управление автопарком",
 				"slug": "main",
 				"sort": 0,
 				"is_hidden": 0,
 				"enabled": 1,
-				"alias": "/products/fines"
+				"alias": "/products/autopark"
 			},
 			{
 				"id": 3,

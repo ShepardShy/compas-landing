@@ -22,12 +22,12 @@
 				/>
 			</div>
 
-			<figure class="ibg auth__background">
+			<!-- <figure class="ibg auth__background">
 				<img
 					src="/images/pages/auth/background.svg"
 					alt=""
 				/>
-			</figure>
+			</figure> -->
 		</div>
 		<div class="auth__text auth__subtext">
 			Открыть сайт
