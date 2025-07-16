@@ -13,11 +13,11 @@ export default defineNuxtConfig({
 	// 		},
 	// 	},
 	// },
-	runtimeConfig: {
-		public: {
-			baseURL: "https://compas.pro",
-		},
-	},
+	// runtimeConfig: {
+	// 	public: {
+	// 		baseURL: "https://compas.pro",
+	// 	},
+	// },
 
 	// routeRules: {
 	// 	"/guides/": {
@@ -52,27 +52,28 @@ export default defineNuxtConfig({
 	},
 
 	hooks: {
-		async "prerender:routes"(ctx) {
-			const res = await fetch("https://compas.pro/api/pages");
-			let pages = await res.json();
-			pages = pages.map((i) => i.replace("https://compas.pro", "")).filter((i) => i);
+		// async "prerender:routes"(ctx) {
+		// 	const res = await fetch("https://compas.pro/api/pages");
+		// 	let pages = await res.json();
+		// 	pages = pages.map((i) => i.replace("https://compas.pro", "")).filter((i) => i);
 
-			// Добавляем маршруты на основе данных из API
-			pages.forEach((page) => {
-				ctx.routes.add(page);
-			});
-		},
+		// 	// Добавляем маршруты на основе данных из API
+		// 	pages.forEach((page) => {
+		// 		ctx.routes.add(page);
+		// 	});
+		// },
 	},
 
-	generate: {
-		fallback: true, // Создает `200.html` для обработки всех маршрутов
-	},
+	// generate: {
+	// 	fallback: true, // Создает `200.html` для обработки всех маршрутов
+	// },
 
 	app: {
-		cdnURL: "https://compas.pro/landing/",
+		// cdnURL: "https://compas.pro/landing/",
+		buildAssetsDir: '/public/_nuxt/',
 		head: {
 			viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0",
-			link: [{ rel: "icon", type: "image/svg+xml", href: "/landing/favicon.svg" }],
+			link: [{ rel: "icon", type: "image/svg+xml", href: "/images/favicon.svg" }],
 		},
 	},
 	spaLoadingTemplate: false,
