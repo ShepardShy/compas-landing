@@ -61,6 +61,24 @@
 					>
 						Логистика
 					</NuxtLink> -->
+					<!-- <NuxtLink
+						to="/products/fines"
+						class="footer-link__href"
+					>
+						Проверка штрафов
+					</NuxtLink> -->
+					<NuxtLink
+						to="/products/distance"
+						class="footer-link__href"
+					>
+						Расчёт расстояния
+					</NuxtLink>
+				</li>
+			</div>
+
+			<div class="footer__column footer__column_possibilities">
+				<div class="footer__title">В разработке</div>
+				<li class="footer__list">
 					<NuxtLink
 						to="/products/fines"
 						class="footer-link__href"
@@ -68,10 +86,10 @@
 						Проверка штрафов
 					</NuxtLink>
 					<NuxtLink
-						to="/products/distance"
+						to="/products/osago"
 						class="footer-link__href"
 					>
-						Расчёт расстояния
+						Расчет ОСАГО
 					</NuxtLink>
 				</li>
 			</div>
@@ -150,10 +168,10 @@
 
 	import IconLogo from "@/components/AppIcons/Logo/Logo.vue";
 
-	import telegram from "/images/footer/telegram.svg";
-	import vk from "/images/footer/vk.svg";
 	import rutube from "/images/footer/rutube.svg";
-	import youtube from "/images/footer/youtube.svg";
+import telegram from "/images/footer/telegram.svg";
+import vk from "/images/footer/vk.svg";
+import youtube from "/images/footer/youtube.svg";
 
 	const route = useRoute();
 

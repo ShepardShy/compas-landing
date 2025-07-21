@@ -25,12 +25,12 @@
 </template>
 
 <script setup>
-	import Search from "./components/Search/Search.vue";
-	import Title from "./components/Title/Title.vue";
-	import List from "./components/List/List.vue";
-	import { storeToRefs } from "pinia";
-	import { useKnowledgeStore } from "~/stores/knowledgeStore";
-	import AppNav from "~/components/AppNav/AppNav.vue";
+	import {storeToRefs} from "pinia";
+import AppNav from "~/components/AppNav/AppNav.vue";
+import {useKnowledgeStore} from "~/stores/knowledgeStore";
+import List from "./components/List/List.vue";
+import Search from "./components/Search/Search.vue";
+import Title from "./components/Title/Title.vue";
 
 	const route = useRoute();
 
@@ -94,7 +94,7 @@
 			}
 			// Мета теги
 			useHead({
-				title: "Полезные статьи об эффективном управлении автопарком | Compas.pro",
+				title: "База знаний | Compas.pro",
 				meta: [
 					{
 						name: "description",

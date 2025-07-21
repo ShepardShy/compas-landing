@@ -12,7 +12,7 @@
 			>
 				<span
 					class="auth__link"
-					@click="navigateTo(`http://${account}.compas.pro/`, { external: true })"
+					@click="handleAccountClick(account)"
 					>{{ `${account}.compas.pro` }}</span
 				>
 				<AppExit
@@ -69,16 +69,15 @@
 <script setup>
 	import "./Entry.scss";
 
-	import AppInput from "~/components/AppInputs/Input/Input.vue";
-	import AppCheckbox from "@/components/AppInputs/Checkbox/Checkbox.vue";
-	import AppExit from "@/components/AppIcons/Exit/Exit.vue";
 	import AppButton from "@/components/AppButton/AppButton.vue";
-	import AppSection from "@/components/AppSection/AppSection.vue";
-	import AppH1 from "@/components/AppHeaders/H1/H1.vue";
-	import { useCommonStore } from "@/stores/commonStore.js";
-	import { storeToRefs } from "pinia";
+import AppH1 from "@/components/AppHeaders/H1/H1.vue";
+import AppExit from "@/components/AppIcons/Exit/Exit.vue";
+import AppSection from "@/components/AppSection/AppSection.vue";
+import {useCommonStore} from "@/stores/commonStore.js";
+import {useUserStore} from "@/stores/userStore.js";
+import {storeToRefs} from "pinia";
+import AppInput from "~/components/AppInputs/Input/Input.vue";
 	const commonStore = useCommonStore();
-	import { useUserStore } from "@/stores/userStore.js";
 	const userStore = useUserStore();
 
 	const props = defineProps({
@@ -88,9 +87,29 @@
 	});
 
 	const { accounts } = storeToRefs(commonStore);
+	
+	// Отслеживание состояния навигации для предотвращения множественных кликов
+	const isNavigating = ref(false);
 
 	const deleteAccount = (accToDelete) => {
 		accounts.value = accounts.value.filter((acc) => acc != accToDelete);
+	};
+
+	const handleAccountClick = (account) => {
+		// Предотвращаем множественные клики
+		if (isNavigating.value) {
+			return;
+		}
+
+		isNavigating.value = true;
+		
+		// Переходим на портал
+		navigateTo(`http://${account}.compas.pro/`, { external: true });
+		
+		// Сбрасываем состояние через небольшую задержку
+		setTimeout(() => {
+			isNavigating.value = false;
+		}, 4000);
 	};
 
 	const changeValue = (data) => {

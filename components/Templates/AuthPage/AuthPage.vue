@@ -16,6 +16,11 @@
 					@changeActiveTab="tab => changeActiveTab(tab)"
 				/> -->
 
+				<AuthVerifyEmail
+					v-else-if="activeTab == 'verify-email'"
+					@changeActiveTab="(tab) => changeActiveTab(tab)"
+				/>
+
 				<AuthRegistration
 					v-else-if="activeTab == 'registration'"
 					@changeActiveTab="(tab) => changeActiveTab(tab)"
@@ -45,10 +50,11 @@
 <script setup>
 	import "./AuthPage.scss";
 
-	import AuthEntry from "./Entry/Entry.vue";
-	import AuthRegistration from "./Registration/Registration.vue";
-	import { useUserStore } from "@/stores/userStore.js";
-	import { useCommonStore } from "@/stores/commonStore.js";
+	import {useCommonStore} from "@/stores/commonStore.js";
+import {useUserStore} from "@/stores/userStore.js";
+import AuthEntry from "./Entry/Entry.vue";
+import AuthRegistration from "./Registration/Registration.vue";
+import AuthVerifyEmail from "./VerifyEmail/VerifyEmail.vue";
 	const userStore = useUserStore();
 	const commonStore = useCommonStore();
 
@@ -65,7 +71,7 @@
 	};
 
 	onMounted(() => {
-		if (activeTab.value != "registration" && activeTab.value != "entry") {
+		if (activeTab.value != "registration" && activeTab.value != "entry" && activeTab.value != "verify-email") {
 			navigateTo("/404");
 		}
 	});
